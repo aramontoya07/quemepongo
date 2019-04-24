@@ -52,7 +52,7 @@ public class Main {
 		Prenda jeanD = aborrador2.crearPrenda();
 		Prenda zapatillasDPrenda = aborrador3.crearPrenda();
 		
-		Guardarropas guardarropa1 = new Guardarropas([remeraAzul], [jeanRojo], [zapatillasVerde], []);
+		//Guardarropas guardarropa1 = new Guardarropas([remeraAzul], [jeanRojo], [zapatillasVerde], []);
 		
 		//Usuario azul = new Usuario(guardarropas);
 		
