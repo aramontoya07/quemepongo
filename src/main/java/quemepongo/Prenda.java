@@ -16,4 +16,13 @@ public class Prenda {
 		this.colorSecundario = colorSecundario;
 	}
 
+	//Esto es para el test
+	public TipoPrenda getTipo() {
+		return tipo;
+	}
+	
+	public Categoria getCategoria() {
+		return tipo.getCategoria();
+	}
+
 }

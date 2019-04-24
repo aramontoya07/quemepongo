@@ -5,5 +5,7 @@ public enum Material {
 	JEAN,
 	CUERO,
 	LANA,
+	PLASTICO,
+	VIDRIO,
 	SEDA;
 }

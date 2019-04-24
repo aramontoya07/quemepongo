@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 public class TipoPrenda {
 	public Categoria categoria;
-	public ArrayList<Material> materialesPermitidos; //ESTO ES UNA MIERDA
+	public ArrayList<Material> materialesPermitidos;
 
-	public TipoPrenda(Categoria categoria) {
+	public TipoPrenda(Categoria categoria, ArrayList<Material> materialesPermitidos) {
 		this.categoria = categoria;
+		this.materialesPermitidos = materialesPermitidos;
 	}
 
 	public Categoria getCategoria() {
@@ -17,7 +18,4 @@ public class TipoPrenda {
 	public boolean permiteMaterial(Material material) {
 		return materialesPermitidos.contains(material);
 	}
-
-TipoPrenda remera = new TipoPrenda(Categoria.PARTE_SUPERIOR);
-
 }
