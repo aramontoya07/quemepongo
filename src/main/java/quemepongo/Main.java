@@ -6,7 +6,7 @@ import java.util.Set;
 public class Main {
 	
 	public static void main(String[] args) {
-		TipoPrenda remera = new TipoPrenda(Categoria.PARTE_SUPERIOR);
+		/*TipoPrenda remera = new TipoPrenda(Categoria.PARTE_SUPERIOR);
 		Borrador borrador1 = new Borrador();
 		borrador1.definirColorPrimario(new Color(255,255,0));
 		borrador1.definirTipo(remera);
@@ -51,7 +51,8 @@ public class Main {
 		Prenda remeraHola = aborrador1.crearPrenda();
 		Prenda jeanD = aborrador2.crearPrenda();
 		Prenda zapatillasDPrenda = aborrador3.crearPrenda();
-		
+		*/
+		System.out.println("hice algo");
 		//Guardarropas guardarropa1 = new Guardarropas([remeraAzul], [jeanRojo], [zapatillasVerde], []);
 		
 		//Usuario azul = new Usuario(guardarropas);
