@@ -13,7 +13,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import junit.framework.AssertionFailedError;
 import quemepongo.Borrador;
 import quemepongo.Categoria;
 import quemepongo.Guardarropas;
@@ -109,16 +108,23 @@ class PrimerTest {
 			Borrador borradorPrueba = new Borrador();
 			borradorPrueba.definirTipo(zapatilla);
 			borradorPrueba.definirMaterial(Material.ALGODON);
-			fail("Se supone que tiene que tirar una excepcion al intentar introducir un material no consistente con el tipo de prenda");
+			fail("Deberia tirar una excepcion al intentar introducir un material no consistente con el tipo de prenda");
 		} catch (Exception e) {
 			assertEquals(e.getMessage(),"El material no esta permitido para este tipo de prenda");
 		}
 	}
 	
 	@Test
-	@DisplayName("Debe saberse a que categoria pertenece una prenda")
-	void categoriaDePrenda() {
-		assertEquals(remeraAzul.getCategoria(),Categoria.PARTE_SUPERIOR);
+	@DisplayName("La prenda debe tener un color primario y opcionalmente un color secundario DISTINTO")
+	void coloresDistintos() {
+		try {
+			Borrador borradorPrueba = new Borrador();
+			borradorPrueba.definirColorPrimario(new Color(100,100,100));
+			borradorPrueba.definirColorSecundario(new Color(100,100,100));
+			fail("Deberia tirar una excepcion al introducir dos colores iguales");
+		} catch (Exception e) {
+			assertEquals(e.getMessage(),"El color secundario debe diferir del primario");
+		}
 	}
 	
 	@Test
@@ -149,7 +155,6 @@ class PrimerTest {
 		guardarropas.add(otroGuardarropa);
 		
 		Usuario azul = new Usuario(guardarropas);
-		assertEquals("ASD","ASD");
 	}
 
 }
