@@ -23,22 +23,22 @@ import quemepongo.Usuario;
 
 class PrimerTest {
 	
-	TipoPrenda remera = new TipoPrenda(Categoria.PARTE_SUPERIOR,new ArrayList<Material>(Arrays.asList(Material.ALGODON,Material.SEDA)));
-	TipoPrenda pantalon = new TipoPrenda(Categoria.PARTE_INFERIOR,new ArrayList<Material>(Arrays.asList(Material.JEAN,Material.CUERO,Material.ALGODON)));
-	TipoPrenda zapatilla = new TipoPrenda(Categoria.CALZADO,new ArrayList<Material>(Arrays.asList(Material.CUERO)));
-	TipoPrenda anteojo = new TipoPrenda(Categoria.ACCESORIO,new ArrayList<Material>(Arrays.asList(Material.VIDRIO,Material.PLASTICO)));
+	static TipoPrenda remera = new TipoPrenda(Categoria.PARTE_SUPERIOR,new ArrayList<Material>(Arrays.asList(Material.ALGODON,Material.SEDA)));
+	static TipoPrenda pantalon = new TipoPrenda(Categoria.PARTE_INFERIOR,new ArrayList<Material>(Arrays.asList(Material.JEAN,Material.CUERO,Material.ALGODON)));
+	static TipoPrenda zapatilla = new TipoPrenda(Categoria.CALZADO,new ArrayList<Material>(Arrays.asList(Material.CUERO)));
+	static TipoPrenda anteojo = new TipoPrenda(Categoria.ACCESORIO,new ArrayList<Material>(Arrays.asList(Material.VIDRIO,Material.PLASTICO)));
 	
-	Prenda remeraAzul;
-	Prenda jeanRojo;
-	Prenda zapatillasVerde;
-	Prenda remeraDeportiva;
-	Prenda jeanNegro;
-	Prenda ojotas;
-	Prenda anteojos;
-	Prenda anteojosDeSol;
+	static Prenda remeraAzul;
+	static Prenda jeanRojo;
+	static Prenda zapatillasVerde;
+	static Prenda remeraDeportiva;
+	static Prenda jeanNegro;
+	static Prenda ojotas;
+	static Prenda anteojos;
+	static Prenda anteojosDeSol;
 	
 	@BeforeAll
-	public void setUp() {
+	public static void setUp() {
 		Borrador borrador1 = new Borrador();
 		borrador1.definirColorPrimario(new Color(255,255,0));
 		borrador1.definirTipo(remera);
