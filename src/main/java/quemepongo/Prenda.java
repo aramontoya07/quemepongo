@@ -7,6 +7,7 @@ public class Prenda {
 	Trama trama;
 	Color colorPrimario;
 	Color colorSecundario;
+	String nombre;
 
 	public Prenda(TipoPrenda tipo, Material material,Trama trama, Color colorPrimario, Color colorSecundario) {
 		this.tipo = tipo;
@@ -24,5 +25,17 @@ public class Prenda {
 	public Categoria getCategoria() {
 		return tipo.getCategoria();
 	}
+
+	
+	
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	
+	
 
 }

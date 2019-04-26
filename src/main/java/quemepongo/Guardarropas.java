@@ -21,15 +21,12 @@ public class Guardarropas { //Usuario.
 		this.accesorios = accesorios;
 	}
 
-	//@FIXME: No entiendo este warning, ni el codigo, ni java y lo escondi. 
+	//@FIXME: No entiendo este warning, ni el codigo, ni java y lo escondi.
 	@SuppressWarnings("unchecked")
 	public List<Atuendo> generarSugerencia() {
 		return Sets.cartesianProduct(superiores, inferiores, calzados,accesorios).stream()
 				.map((list) -> new Atuendo(list.get(0), list.get(1), list.get(2), list.get(3))).collect(Collectors.toList());
 	}
-	
-	//Guardarropas azul = new Guardarropas(superiores, inferiores, calzados, accesorios);
-	
 }
 
 

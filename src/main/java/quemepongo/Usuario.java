@@ -10,7 +10,7 @@ public class Usuario {
 	public Usuario(List<Guardarropas> guardarropas) {
 		this.guardarropas = guardarropas;
 	}
-	public List<Atuendo>pedirSugerencia(){
+	public List<Atuendo> pedirSugerencia(){
 		return guardarropas.stream().map(unGuardarropa -> unGuardarropa.generarSugerencia()).flatMap(atuendos -> atuendos.stream()).collect(Collectors.toList());
 	}
 }
