@@ -10,13 +10,16 @@ public class Borrador{
 	Material material;
 	Trama trama = Trama.LISA;
 	Color colorPrimario;
-	Color colorSecundario = null;
+	Color colorSecundario;
 
 	public void definirTipo(TipoPrenda tipo) {
-		this.tipo = Objects.requireNonNull(tipo, "tipo de prenda es obligatorio"); //Preguntar!
+		this.tipo = tipo;
 	}
-
+	
 	public void definirMaterial(Material material) {
+		if (tipo == null) {
+			throw new RuntimeErrorException(null,"Se debe definir el tipo de prenda antes de elegir un material");
+		}
 		if (!tipo.permiteMaterial(material)) {
 			throw new RuntimeErrorException(null,"El material no esta permitido para este tipo de prenda");
 		}
@@ -28,7 +31,10 @@ public class Borrador{
 	}
 
 	public void definirColorSecundario(Color colorSecundario) {
-		if (colorSecundario != colorPrimario) {
+		if (colorPrimario == null) {
+			throw new RuntimeErrorException(null,"Se debe definir un color primario antes de elegir uno secundario");
+		}
+		if (colorPrimario.equals(colorSecundario)) {
 			throw new RuntimeErrorException(null,"El color secundario debe diferir del primario");
 		}
 		this.colorSecundario = colorSecundario;
@@ -39,10 +45,10 @@ public class Borrador{
 	}
 	
 	public Prenda crearPrenda() {
-		this.material = Objects.requireNonNull(material, "material es obligatorio");
-		this.trama = Objects.requireNonNull(trama, "trama es obligatorio");
-		this.colorPrimario = Objects.requireNonNull(colorPrimario, "color es obligatorio");
-		Prenda prenda = new Prenda(tipo, material, trama, colorPrimario, colorSecundario);
-		return prenda;
+		if (tipo == null) throw new RuntimeErrorException(null,"tipo de prenda es obligatorio");
+		if (material == null) throw new RuntimeErrorException(null,"material es obligatorio");
+		if (trama == null) throw new RuntimeErrorException(null,"trama es obligatorio");
+		if (colorPrimario == null) throw new RuntimeErrorException(null,"color primario es obligatorio");
+		return new Prenda(tipo, material, trama, colorPrimario, colorSecundario);
 	}
 }

@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -51,10 +50,10 @@ class PrimerTest {
 	
 	public static boolean esAtuendoValido(Atuendo atuendo){
 		return 
-				atuendo.getSuperior().getCategoria() == Categoria.PARTE_SUPERIOR &&
-				atuendo.getInferior().getCategoria() == Categoria.PARTE_INFERIOR &&
-				atuendo.getCalzado().getCategoria() == Categoria.CALZADO &&
-				atuendo.getAccesorio().getCategoria() == Categoria.ACCESORIO;
+			atuendo.getSuperior().getCategoria() == Categoria.PARTE_SUPERIOR &&
+			atuendo.getInferior().getCategoria() == Categoria.PARTE_INFERIOR &&
+			atuendo.getCalzado().getCategoria() == Categoria.CALZADO &&
+			atuendo.getAccesorio().getCategoria() == Categoria.ACCESORIO;
 	}
 	
 	@BeforeAll
@@ -90,6 +89,7 @@ class PrimerTest {
 		Set<Prenda> inferioreSet = new HashSet<Prenda>();
 		Set<Prenda> calzadoSet = new HashSet<Prenda>();
 		Set<Prenda> accesorioSet = new HashSet<Prenda>();
+		superioreSet.add(remeraDeportiva);
 		superioreSet.add(remeraAzul);
 		inferioreSet.add(jeanRojo);
 		calzadoSet.add(zapatillasVerde);
@@ -99,6 +99,7 @@ class PrimerTest {
 		Set<Prenda> inferioreSet2 = new HashSet<Prenda>();
 		Set<Prenda> calzadoSet2 = new HashSet<Prenda>();
 		Set<Prenda> accesorioSet2 = new HashSet<Prenda>();
+		superioreSet2.add(remeraAzul);
 		superioreSet2.add(remeraDeportiva);
 		inferioreSet2.add(jeanNegro);
 		calzadoSet2.add(ojotas);
@@ -125,6 +126,17 @@ class PrimerTest {
 	void categoriaDePrenda() {
 		assertEquals(remeraAzul.getCategoria(),Categoria.PARTE_SUPERIOR);
 	}
+
+	@Test
+	@DisplayName("Para definir un color secundario primero se debe definir uno primario")
+	void ordenColores() {
+		try {
+			Borrador prueba = new Borrador();
+			prueba.definirColorSecundario(new Color(255,9,0));
+		} catch (Exception e) {
+			assertEquals(e.getMessage(),"Se debe definir un color primario antes de elegir uno secundario");
+		}
+	}
 	
 	@Test
 	@DisplayName("El materia tiene que ser consistente con el tipo de prenda")
@@ -140,6 +152,12 @@ class PrimerTest {
 	@Test
 	@DisplayName("La prenda debe tener un color primario y opcionalmente un color secundario DISTINTO")
 	void coloresDistintos() {
+		/*
+		 Throwable exception = expectThrows(IllegalArgumentException.class, () -> {
+            throw new IllegalArgumentException("a message");
+        });
+        assertEquals("a message", exception.getMessage()); 
+		*/
 		try {
 			Borrador borradorPrueba = new Borrador();
 			borradorPrueba.definirColorPrimario(new Color(100,100,100));
@@ -161,6 +179,6 @@ class PrimerTest {
 	@DisplayName("Se deben generar todas las combinaciones posibles de ropa")
 	void contarSugerencias(){
 		List<Atuendo> listaSugerencias = pedro.pedirSugerencia();
-		assertEquals(2,listaSugerencias.size());
+		assertEquals(4,listaSugerencias.size());
 	}
 }
