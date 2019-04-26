@@ -1,6 +1,9 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -9,9 +12,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import com.google.common.collect.Sets;
 
 import quemepongo.Atuendo;
 import quemepongo.Borrador;
@@ -22,13 +28,14 @@ import quemepongo.Prenda;
 import quemepongo.TipoPrenda;
 import quemepongo.Usuario;
 
-class PrimerTest {
+public class PrendaTest {
 	
-	static TipoPrenda remera = new TipoPrenda(Categoria.PARTE_SUPERIOR,new ArrayList<Material>(Arrays.asList(Material.ALGODON,Material.SEDA)));
-	static TipoPrenda pantalon = new TipoPrenda(Categoria.PARTE_INFERIOR,new ArrayList<Material>(Arrays.asList(Material.JEAN,Material.CUERO,Material.ALGODON)));
-	static TipoPrenda zapatilla = new TipoPrenda(Categoria.CALZADO,new ArrayList<Material>(Arrays.asList(Material.CUERO)));
-	static TipoPrenda anteojo = new TipoPrenda(Categoria.ACCESORIO,new ArrayList<Material>(Arrays.asList(Material.VIDRIO,Material.PLASTICO)));
+	TipoPrenda remera = new TipoPrenda(Categoria.PARTE_SUPERIOR,new ArrayList<Material>(Arrays.asList(Material.ALGODON,Material.SEDA)));
+	TipoPrenda pantalon = new TipoPrenda(Categoria.PARTE_INFERIOR,new ArrayList<Material>(Arrays.asList(Material.JEAN,Material.CUERO,Material.ALGODON)));
+	TipoPrenda zapatilla = new TipoPrenda(Categoria.CALZADO,new ArrayList<Material>(Arrays.asList(Material.CUERO)));
+	TipoPrenda anteojo = new TipoPrenda(Categoria.ACCESORIO,new ArrayList<Material>(Arrays.asList(Material.VIDRIO,Material.PLASTICO)));
 	
+	//TODO remover statics que no son necesarios
 	static Prenda remeraAzul;
 	static Prenda jeanRojo;
 	static Prenda zapatillasVerde;
@@ -49,15 +56,16 @@ class PrimerTest {
 	}
 	
 	public static boolean esAtuendoValido(Atuendo atuendo){
-		return 
-			atuendo.getSuperior().getCategoria() == Categoria.PARTE_SUPERIOR &&
-			atuendo.getInferior().getCategoria() == Categoria.PARTE_INFERIOR &&
+		return //TODO traten de encapsular mas. Por ejemplo atuendo.getSuperior().esDeCategoria(...)
+			atuendo.getSuperior().getCategoria() == Categoria.PARTE_SUPERIOR && // o tambien atuendo.getSuperior().esSuperior()
+			atuendo.getInferior().getCategoria() == Categoria.PARTE_INFERIOR && //method chain
 			atuendo.getCalzado().getCategoria() == Categoria.CALZADO &&
 			atuendo.getAccesorio().getCategoria() == Categoria.ACCESORIO;
 	}
 	
-	@BeforeAll
-	public static void setUp(){
+	@BeforeEach
+	public void setUp(){
+		//TODO renombrar los borradores
 		Borrador borrador1 = crearBorrador(new Color(255,255,0),remera,Material.ALGODON);
 		Borrador borrador2 = crearBorrador(new Color(255,0,0),pantalon,Material.JEAN);
 		Borrador borrador3 = crearBorrador(new Color(55,123,60),zapatilla,Material.CUERO);
@@ -76,6 +84,7 @@ class PrimerTest {
 		anteojos = borrador7.crearPrenda();
 		anteojosDeSol = borrador8.crearPrenda();
 		
+		// FIXME eliminen el nombre
 		remeraAzul.setNombre("remera azul");
 		jeanRojo.setNombre("jean rojo");
 		zapatillasVerde.setNombre("zapatillasVerde");
@@ -95,7 +104,7 @@ class PrimerTest {
 		calzadoSet.add(zapatillasVerde);
 		accesorioSet.add(anteojos);
 		
-		Set<Prenda> superioreSet2 = new HashSet<Prenda>();
+		Set<Prenda> superioreSet2 = new HashSet<>();
 		Set<Prenda> inferioreSet2 = new HashSet<Prenda>();
 		Set<Prenda> calzadoSet2 = new HashSet<Prenda>();
 		Set<Prenda> accesorioSet2 = new HashSet<Prenda>();
@@ -107,12 +116,7 @@ class PrimerTest {
 		
 		Guardarropas guardarropa = new Guardarropas(superioreSet,inferioreSet,calzadoSet,accesorioSet);
 		Guardarropas otroGuardarropa = new Guardarropas(superioreSet2,inferioreSet2,calzadoSet2,accesorioSet2);
-		
-		List<Guardarropas> guardarropas = new ArrayList<Guardarropas>();
-		guardarropas.add(guardarropa);
-		guardarropas.add(otroGuardarropa);
-		
-		pedro = new Usuario(guardarropas);
+		pedro = new Usuario(Arrays.asList(guardarropa, otroGuardarropa));
 	}
 	
 	@Test
@@ -130,9 +134,13 @@ class PrimerTest {
 	@Test
 	@DisplayName("Para definir un color secundario primero se debe definir uno primario")
 	void ordenColores() {
+		// TODO usar assertThrows
+		// @Rule ExpectedException
 		try {
 			Borrador prueba = new Borrador();
 			prueba.definirColorSecundario(new Color(255,9,0));
+			fail("zaraza TODO zaraza");
+
 		} catch (Exception e) {
 			assertEquals(e.getMessage(),"Se debe definir un color primario antes de elegir uno secundario");
 		}
@@ -172,9 +180,12 @@ class PrimerTest {
 	@DisplayName("Las sugerencias de prenda deben ser validas")
 	void generarSugerencias() {
 		List<Atuendo> listaSugerencias = pedro.pedirSugerencia();
-        assert(listaSugerencias.stream().allMatch(sugerencia -> esAtuendoValido(sugerencia)));
+        assertTrue(listaSugerencias.stream().allMatch(sugerencia -> esAtuendoValido(sugerencia)));
 	}
-	
+	// TODO no prueben solo el Camino Feliz 
+	// Prueben caminos de error.
+	// Ejemplos: guardarropas sin ropa, sin zapatos, 
+	// con mucha ropa, con una sola opcion, etc
 	@Test
 	@DisplayName("Se deben generar todas las combinaciones posibles de ropa")
 	void contarSugerencias(){

@@ -17,8 +17,8 @@ public class Borrador{
 	}
 	
 	public void definirMaterial(Material material) {
-		if (tipo == null) {
-			throw new RuntimeErrorException(null,"Se debe definir el tipo de prenda antes de elegir un material");
+		if (tipo == null) { // TODO subclasifiquen excepciones. No usen RuntimeErrorException, es tipo.... whaaaat
+			throw new RuntimeException("Se debe definir el tipo de prenda antes de elegir un material");
 		}
 		if (!tipo.permiteMaterial(material)) {
 			throw new RuntimeErrorException(null,"El material no esta permitido para este tipo de prenda");

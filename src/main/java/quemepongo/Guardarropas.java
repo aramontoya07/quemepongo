@@ -21,7 +21,6 @@ public class Guardarropas { //Usuario.
 		this.accesorios = accesorios;
 	}
 
-	//@FIXME: No entiendo este warning, ni el codigo, ni java y lo escondi.
 	@SuppressWarnings("unchecked")
 	public List<Atuendo> generarSugerencia() {
 		return Sets.cartesianProduct(superiores, inferiores, calzados,accesorios).stream()

@@ -1,10 +1,11 @@
 package quemepongo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TipoPrenda {
 	public Categoria categoria;
-	public ArrayList<Material> materialesPermitidos;
+	public List<Material> materialesPermitidos;
 
 	public TipoPrenda(Categoria categoria, ArrayList<Material> materialesPermitidos) {
 		this.categoria = categoria;
