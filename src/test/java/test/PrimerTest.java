@@ -99,10 +99,10 @@ class PrimerTest {
 		Set<Prenda> inferioreSet2 = new HashSet<Prenda>();
 		Set<Prenda> calzadoSet2 = new HashSet<Prenda>();
 		Set<Prenda> accesorioSet2 = new HashSet<Prenda>();
-		superioreSet.add(remeraDeportiva);
-		inferioreSet.add(jeanNegro);
-		calzadoSet.add(ojotas);
-		accesorioSet.add(anteojosDeSol);
+		superioreSet2.add(remeraDeportiva);
+		inferioreSet2.add(jeanNegro);
+		calzadoSet2.add(ojotas);
+		accesorioSet2.add(anteojosDeSol);
 		
 		Guardarropas guardarropa = new Guardarropas(superioreSet,inferioreSet,calzadoSet,accesorioSet);
 		Guardarropas otroGuardarropa = new Guardarropas(superioreSet2,inferioreSet2,calzadoSet2,accesorioSet2);
@@ -154,15 +154,13 @@ class PrimerTest {
 	@DisplayName("Las sugerencias de prenda deben ser validas")
 	void generarSugerencias() {
 		List<Atuendo> listaSugerencias = pedro.pedirSugerencia();
-        //assert(listaSugerencias.stream().allMatch(sugerencia -> esAtuendoValido(sugerencia)));
-		List<String> listaString = listaSugerencias.stream().map(atuendo -> atuendo.getSuperior().getNombre()).collect(Collectors.toList());
-		assertEquals(2,listaSugerencias.stream().map(atuendo -> atuendo.getSuperior().getNombre()).collect(Collectors.toList()));
+        assert(listaSugerencias.stream().allMatch(sugerencia -> esAtuendoValido(sugerencia)));
 	}
 	
 	@Test
 	@DisplayName("Se deben generar todas las combinaciones posibles de ropa")
 	void contarSugerencias(){
 		List<Atuendo> listaSugerencias = pedro.pedirSugerencia();
-		assertEquals(1,listaSugerencias.size());
+		assertEquals(2,listaSugerencias.size());
 	}
 }
