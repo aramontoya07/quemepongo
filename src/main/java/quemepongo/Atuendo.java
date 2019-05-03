@@ -12,22 +12,12 @@ public class Atuendo {
 		this.calzado = calzado;
 		this.accesorio = accesorio;
 	}
-//para tests
-	public Prenda getSuperior() {
-		return superior;
-	}
-
-	public Prenda getInferior() {
-		return inferior;
-	}
-
-	public Prenda getCalzado() {
-		return calzado;
-	}
-
-	public Prenda getAccesorio() {
-		return accesorio;
-	}
 	
-	
+	public boolean esAtuendoValido(Atuendo atuendo){
+		return 
+			this.superior.esDeCategoria(Categoria.PARTE_SUPERIOR) && 
+			this.inferior.esDeCategoria(Categoria.PARTE_INFERIOR) && 
+			this.calzado.esDeCategoria(Categoria.CALZADO) &&
+			this.accesorio.esDeCategoria(Categoria.ACCESORIO);
+	}
 }
