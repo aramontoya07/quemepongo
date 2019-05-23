@@ -26,6 +26,28 @@ public class Guardarropas { //Usuario.
 		return Sets.cartesianProduct(superiores, inferiores, calzados,accesorios).stream()
 				.map((list) -> new Atuendo(list.get(0), list.get(1), list.get(2), list.get(3))).collect(Collectors.toList());
 	}
+
+	public int cantidadDePrendas() {
+		return superiores.size() + inferiores.size() + calzados.size() + accesorios.size();
+	}
+
+	public void agregarPrenda(Prenda prenda) {
+		switch (prenda.getCategoria()) {
+		case PARTE_SUPERIOR:
+			superiores.add(prenda);
+			break;
+		case PARTE_INFERIOR:
+			inferiores.add(prenda);
+			break;
+		case CALZADO:
+			calzados.add(prenda);
+			break;
+		case ACCESORIO:
+			accesorios.add(prenda);
+			break;
+		}
+		
+	}
 }
 
 
