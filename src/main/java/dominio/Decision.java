@@ -1,4 +1,4 @@
-package quemepongo;
+package dominio;
 
 
 public interface Decision {

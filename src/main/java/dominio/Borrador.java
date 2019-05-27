@@ -1,4 +1,4 @@
-package quemepongo;
+package dominio;
 
 public class Borrador{
 	TipoPrenda tipo;

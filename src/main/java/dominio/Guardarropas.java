@@ -1,4 +1,4 @@
-package quemepongo;
+package dominio;
 
 
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.Sets;
 
-public class Guardarropas { //Usuario.
+public class Guardarropas {
 	
 	public Set<Prenda> superiores;
 	public Set<Prenda> inferiores;
@@ -23,8 +23,8 @@ public class Guardarropas { //Usuario.
 
 	@SuppressWarnings("unchecked")
 	public List<Atuendo> generarSugerencia() {
-		return Sets.cartesianProduct(superiores, inferiores, calzados,accesorios).stream()
-				.map((list) -> new Atuendo(list.get(0), list.get(1), list.get(2), list.get(3))).collect(Collectors.toList());
+		return Sets.cartesianProduct(superiores, inferiores, calzados, accesorios).stream()
+				.map((list) -> new Atuendo(list.get(0), list.get(1), list.get(2), list.get(3))).collect(Collectors.toList());	
 	}
 
 	public int cantidadDePrendas() {
@@ -46,8 +46,8 @@ public class Guardarropas { //Usuario.
 			accesorios.add(prenda);
 			break;
 		}
-		
 	}
+	
 }
 
 

@@ -8,12 +8,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import quemepongo.Borrador;
-import quemepongo.Categoria;
-import quemepongo.ColorRGB;
-import quemepongo.Material;
-import quemepongo.Prenda;
-import quemepongo.TipoPrenda;
+import dominio.Borrador;
+import dominio.Categoria;
+import dominio.ColorRGB;
+import dominio.Material;
+import dominio.Prenda;
+import dominio.TipoPrenda;
 
 public class PrendaTest {
 	TipoPrenda remera = new TipoPrenda(Categoria.PARTE_SUPERIOR,new ArrayList<Material>(Arrays.asList(Material.ALGODON,Material.SEDA)));

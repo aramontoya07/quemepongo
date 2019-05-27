@@ -1,4 +1,4 @@
-package quemepongo;
+package dominio;
 
 public class SubscripcionGratuita implements TipoSubscripcion {
 	private int cantidadMaxima;

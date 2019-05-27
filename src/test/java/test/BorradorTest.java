@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import quemepongo.Borrador;
-import quemepongo.ColorRGB;
+import dominio.Borrador;
+import dominio.ColorRGB;
 
 class BorradorTest {
 	

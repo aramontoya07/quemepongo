@@ -1,13 +1,15 @@
-package quemepongo;
+package dominio;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TipoPrenda {
-	private List<TipoPrenda> tiposAceptados;
+	
 	public int nivelAbrigo;
 	public Categoria categoria;
 	public List<Material> materialesPermitidos;
+	private List<TipoPrenda> tiposAceptados;
+	public boolean suficiente;
 
 	public TipoPrenda(Categoria categoria, ArrayList<Material> materialesPermitidos) {
 		this.categoria = categoria;

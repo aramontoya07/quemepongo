@@ -1,4 +1,4 @@
-package quemepongo;
+package dominio;
 
 public class SubscripcionPremium implements TipoSubscripcion {
 

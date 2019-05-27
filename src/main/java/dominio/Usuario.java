@@ -1,8 +1,10 @@
-package quemepongo;
+package dominio;
 
 import java.util.List;
 import java.util.Queue;
 import java.util.stream.Collectors;
+
+import excepciones.AgregarPrendaException;
 
 public class Usuario {
 	public Decision ultimaDecision;
@@ -25,9 +27,9 @@ public class Usuario {
 	}
 
 	public List<Atuendo> pedirSugerencia() {
-		return guardarropas.stream() //
-				.map(unGuardarropa -> unGuardarropa.generarSugerencia()) //
-				.flatMap(atuendos -> atuendos.stream()) //
+		return guardarropas.stream() 
+				.map(unGuardarropa -> unGuardarropa.generarSugerencia()) 
+				.flatMap(atuendos -> atuendos.stream()) 
 				.collect(Collectors.toList());
 	}
 	
