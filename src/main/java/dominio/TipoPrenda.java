@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TipoPrenda {
-	
+	public boolean TipoBasico;
 	public int nivelAbrigo;
 	public Categoria categoria;
 	public List<Material> materialesPermitidos;
@@ -14,6 +14,10 @@ public class TipoPrenda {
 	public TipoPrenda(Categoria categoria, ArrayList<Material> materialesPermitidos) {
 		this.categoria = categoria;
 		this.materialesPermitidos = materialesPermitidos;
+	}
+	
+	public boolean esTipoBasico() {
+		return TipoBasico;
 	}
 
 	public Categoria getCategoria() {

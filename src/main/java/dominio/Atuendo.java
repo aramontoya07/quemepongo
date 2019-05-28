@@ -1,23 +1,21 @@
 package dominio;
 
+import java.util.List;
+import java.util.Set;
+
 public class Atuendo {
-	public Prenda superior; 
-	public Prenda inferior;
-	public Prenda calzado;
-	public Prenda accesorio;
+	public List<Prenda> superiores; 
+	public List<Prenda> inferiores;
+	public List<Prenda> calzados;
+	public List<Prenda> accesorios;
 	
-	public Atuendo(Prenda superior, Prenda inferior, Prenda calzado, Prenda accesorio) {
-		this.superior = superior;
-		this.inferior = inferior;
-		this.calzado = calzado;
-		this.accesorio = accesorio;
+	public Atuendo(Prenda superior, Prenda inferior, Prenda calzado) {
+		this.superiores.add(superior);
+		this.inferiores.add(inferior);
+		this.calzados.add(calzado);
 	}
-	
+
 	public boolean esAtuendoValido(Atuendo atuendo){
-		return 
-			this.superior.esDeCategoria(Categoria.PARTE_SUPERIOR) && 
-			this.inferior.esDeCategoria(Categoria.PARTE_INFERIOR) && 
-			this.calzado.esDeCategoria(Categoria.CALZADO) &&
-			this.accesorio.esDeCategoria(Categoria.ACCESORIO);
+		return true;
 	}
 }

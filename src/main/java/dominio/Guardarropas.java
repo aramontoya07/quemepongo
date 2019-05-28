@@ -3,6 +3,7 @@ package dominio;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Sets;
@@ -22,9 +23,28 @@ public class Guardarropas {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Atuendo> generarSugerencia() {
-		return Sets.cartesianProduct(superiores, inferiores, calzados, accesorios).stream()
-				.map((list) -> new Atuendo(list.get(0), list.get(1), list.get(2), list.get(3))).collect(Collectors.toList());	
+	public List<AtuendoBasico> generarSugerenciaBasica(){ //PARTE_SUP,PARTE_INF,CALZADO,ACCESORIO
+			return Sets.cartesianProduct(basicas(superiores), basicas(inferiores), basicas(calzados)).stream()
+					.map((list) -> new AtuendoBasico(list.get(0), list.get(1), list.get(2))).collect(Collectors.toList());	
+	}
+	
+	public Set<Prenda> basicas(Set<Prenda> prendas){
+		return prendas.stream().filter(prenda -> prenda.esBasica()).collect(Collectors.toSet());
+	}
+
+	public List<Atuendo> generarSugerencia(){
+		List<AtuendoBasico> atuendosBasicos = generarSugerenciaBasica();
+		List<Atuendo> sugerencias;
+		atuendosBasicos.stream().map(atuendo -> combinarConSecundarios(atuendo)).collect(Collectors.toSet());
+		return atuendosBasicos;
+	}
+
+	private Object combinarConSecundarios(AtuendoBasico atuendoBasico) {
+		Set<Prenda> prendasSecundarias = atuendoBasico.prendasPermitidas(superiores,inferiores,calzados);
+		prendasSecundarias.addAll(accesorios);
+		Set<Set<Prenda>> combinacionesSecundarias = Sets.powerSet(prendasSecundarias);
+		combinacionesSecundarias.stream().map(prendasSecundarias -> atuendoBasico.agregarPrendas(prenda))
+		return null;
 	}
 
 	public int cantidadDePrendas() {
