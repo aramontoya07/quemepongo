@@ -51,6 +51,7 @@ class UsuarioTest {
 	
 	@BeforeEach
 	public void setUp(){
+		
 		borrador_remeraAzul.crearBorrador(new ColorRGB(255,255,0),remera,Material.ALGODON);
 		borrador_jeanRojo.crearBorrador(new ColorRGB(255,0,0),pantalon,Material.JEAN);
 		borrador_zapatilla.crearBorrador(new ColorRGB(55,123,60),zapatilla,Material.CUERO);
