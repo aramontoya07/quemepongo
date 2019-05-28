@@ -4,7 +4,12 @@ import java.util.List;
 import java.util.Queue;
 import java.util.stream.Collectors;
 
+import decisiones.Decision;
+import decisiones.DecisionAceptar;
+import decisiones.DecisionRechazar;
 import excepciones.AgregarPrendaException;
+import prenda.Prenda;
+import subscripciones.TipoSubscripcion;
 
 public class Usuario {
 	public Decision ultimaDecision;

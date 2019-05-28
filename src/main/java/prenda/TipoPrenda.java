@@ -1,4 +1,4 @@
-package dominio;
+package prenda;
 
 import java.util.ArrayList;
 import java.util.List;

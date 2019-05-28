@@ -1,4 +1,4 @@
-package dominio;
+package prenda;
 
 public class Borrador{
 	TipoPrenda tipo;

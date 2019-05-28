@@ -1,4 +1,4 @@
-package dominio;
+package prenda;
 
 public enum Material {
 	ALGODON,

@@ -1,4 +1,4 @@
-package dominio;
+package subscripciones;
 
 public class SubscripcionGratuita implements TipoSubscripcion {
 	private int cantidadMaxima;

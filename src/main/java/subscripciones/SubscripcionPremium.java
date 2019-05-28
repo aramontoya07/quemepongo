@@ -1,4 +1,4 @@
-package dominio;
+package subscripciones;
 
 public class SubscripcionPremium implements TipoSubscripcion {
 

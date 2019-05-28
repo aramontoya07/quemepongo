@@ -1,6 +1,4 @@
-package dominio;
-
-import java.util.List;
+package prenda;
 
 public class Prenda {
 

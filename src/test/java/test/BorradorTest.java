@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import dominio.Borrador;
-import dominio.ColorRGB;
+import prenda.Borrador;
+import prenda.ColorRGB;
 
 class BorradorTest {
 	

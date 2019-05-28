@@ -8,12 +8,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import dominio.Borrador;
-import dominio.Categoria;
-import dominio.ColorRGB;
-import dominio.Material;
-import dominio.Prenda;
-import dominio.TipoPrenda;
+import prenda.Borrador;
+import prenda.Categoria;
+import prenda.ColorRGB;
+import prenda.Material;
+import prenda.Prenda;
+import prenda.TipoPrenda;
 
 public class PrendaTest {
 	TipoPrenda remera = new TipoPrenda(Categoria.PARTE_SUPERIOR,new ArrayList<Material>(Arrays.asList(Material.ALGODON,Material.SEDA)));

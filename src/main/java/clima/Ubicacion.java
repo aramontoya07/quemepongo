@@ -1,4 +1,4 @@
-package dominio;
+package clima;
 
 public class Ubicacion {
 	String key;

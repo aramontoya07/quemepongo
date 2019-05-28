@@ -3,10 +3,11 @@ package dominio;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Sets;
+
+import prenda.Prenda;
 
 public class Guardarropas {
 	
@@ -23,9 +24,9 @@ public class Guardarropas {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<AtuendoBasico> generarSugerenciaBasica(){ //PARTE_SUP,PARTE_INF,CALZADO,ACCESORIO
+	public List<Atuendo> generarSugerenciaBasica(){ //PARTE_SUP,PARTE_INF,CALZADO,ACCESORIO
 			return Sets.cartesianProduct(basicas(superiores), basicas(inferiores), basicas(calzados)).stream()
-					.map((list) -> new AtuendoBasico(list.get(0), list.get(1), list.get(2))).collect(Collectors.toList());	
+					.map((list) -> new Atuendo(list.get(0), list.get(1), list.get(2))).collect(Collectors.toList());	
 	}
 	
 	public Set<Prenda> basicas(Set<Prenda> prendas){
@@ -33,17 +34,17 @@ public class Guardarropas {
 	}
 
 	public List<Atuendo> generarSugerencia(){
-		List<AtuendoBasico> atuendosBasicos = generarSugerenciaBasica();
+		List<Atuendo> atuendosBasicos = generarSugerenciaBasica();
 		List<Atuendo> sugerencias;
-		atuendosBasicos.stream().map(atuendo -> combinarConSecundarios(atuendo)).collect(Collectors.toSet());
-		return atuendosBasicos;
+		sugerencias = atuendosBasicos.stream().map(atuendo -> combinarConSecundarios(atuendo)).flatMap(atuendos -> atuendos.stream()).collect(Collectors.toList());
+		return sugerencias;
 	}
 
-	private Object combinarConSecundarios(AtuendoBasico atuendoBasico) {
+	public Set<Atuendo> combinarConSecundarios (Atuendo atuendoBasico) {
 		Set<Prenda> prendasSecundarias = atuendoBasico.prendasPermitidas(superiores,inferiores,calzados);
 		prendasSecundarias.addAll(accesorios);
 		Set<Set<Prenda>> combinacionesSecundarias = Sets.powerSet(prendasSecundarias);
-		combinacionesSecundarias.stream().map(prendasSecundarias -> atuendoBasico.agregarPrendas(prenda))
+		combinacionesSecundarias.stream().forEach(prendaSecundarias -> atuendoBasico.agregarPrendas(prendaSecundarias));
 		return null;
 	}
 

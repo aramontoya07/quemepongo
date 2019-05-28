@@ -13,14 +13,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import dominio.Atuendo;
-import dominio.Borrador;
-import dominio.Categoria;
-import dominio.ColorRGB;
 import dominio.Guardarropas;
-import dominio.Material;
-import dominio.Prenda;
-import dominio.TipoPrenda;
 import dominio.Usuario;
+import prenda.Borrador;
+import prenda.Categoria;
+import prenda.ColorRGB;
+import prenda.Material;
+import prenda.Prenda;
+import prenda.TipoPrenda;
 
 class UsuarioTest {
 	TipoPrenda remera = new TipoPrenda(Categoria.PARTE_SUPERIOR,new ArrayList<Material>(Arrays.asList(Material.ALGODON,Material.SEDA)));
