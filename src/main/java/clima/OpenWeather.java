@@ -6,6 +6,8 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
+import excepciones.HttpCodeException;
+
 public class OpenWeather implements ServicioClimatico{
     String Ciudad_actual;
     String api_key = "dd868503319e88af289ea1772d90c952";
@@ -21,7 +23,7 @@ public class OpenWeather implements ServicioClimatico{
         WebResource webResource = client.resource(request);
         ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
         if (response.getStatus() != 200) {
-           throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
+           throw new HttpCodeException(response.getStatus());
         }
         return response;
     }

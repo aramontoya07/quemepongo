@@ -1,5 +1,13 @@
 package prenda;
 
+import excepciones.ColorPrimarioObligatorioException;
+import excepciones.ColorSecundarioIgualAPrimarioException;
+import excepciones.ColorSecundarioSinPrimarioException;
+import excepciones.MaterialAntesQueTipoPrendaException;
+import excepciones.MaterialNoPermitidoException;
+import excepciones.MaterialObligatorioException;
+import excepciones.TipoPrendaObligatorioException;
+
 public class Borrador{
 	TipoPrenda tipo;
 	Material material;
@@ -12,11 +20,11 @@ public class Borrador{
 	}
 	
 	public void definirMaterial(Material material) {
-		if (tipo == null) { // TODO subclasifiquen excepciones. No usen RuntimeErrorException, es tipo.... whaaaat
-			throw new RuntimeException("Se debe definir el tipo de prenda antes de elegir un material");
+		if (tipo == null) {
+			throw new MaterialAntesQueTipoPrendaException();
 		}
 		if (!tipo.permiteMaterial(material)) {
-			throw new RuntimeException("El material no esta permitido para este tipo de prenda");
+			throw new MaterialNoPermitidoException();
 		}
 		this.material = material;
 	}
@@ -28,11 +36,11 @@ public class Borrador{
 	public void definirColorSecundario(ColorRGB colorSecundario) {
 		if (colorPrimario == null) {
 			System.out.println("exc 1");
-			throw new RuntimeException("Se debe definir un color primario antes de elegir uno secundario");
+			throw new ColorSecundarioSinPrimarioException();
 		}
 		if (colorPrimario.equals(colorSecundario)) {
 			System.out.println("exc 2");
-			throw new RuntimeException("El color secundario debe diferir del primario");
+			throw new ColorSecundarioIgualAPrimarioException();
 		}
 		this.colorSecundario = colorSecundario;
 	}
@@ -48,9 +56,9 @@ public class Borrador{
 	}
 	
 	public Prenda crearPrenda() {
-		if (tipo == null) throw new RuntimeException("tipo de prenda es obligatorio");
-		if (material == null) throw new RuntimeException("material es obligatorio");
-		if (colorPrimario == null) throw new RuntimeException("color primario es obligatorio");
+		if (tipo == null) throw new TipoPrendaObligatorioException();
+		if (material == null) throw new MaterialObligatorioException();
+		if (colorPrimario == null) throw new ColorPrimarioObligatorioException();
 		return new Prenda(tipo, material, trama, colorPrimario, colorSecundario);
 	}
 }

@@ -6,6 +6,8 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
+import excepciones.HttpCodeException;
+
 public class AccuWeather implements ServicioClimatico {
 
 	public Ubicacion ubicacionActual;
@@ -30,7 +32,7 @@ public class AccuWeather implements ServicioClimatico {
 		WebResource webResource = client.resource(request);
 		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 		if (response.getStatus() != 200) {
-			throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
+			throw new HttpCodeException(response.getStatus());
 		}
 		return response;
 	}
