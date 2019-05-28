@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.Sets;
 
+import atuendo.Atuendo;
+import atuendo.AtuendoBasico;
 import prenda.Prenda;
 
 public class Guardarropas {
@@ -24,9 +26,9 @@ public class Guardarropas {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Atuendo> generarSugerenciaBasica(){ //PARTE_SUP,PARTE_INF,CALZADO,ACCESORIO
+	public List<AtuendoBasico> generarSugerenciaBasica(){
 			return Sets.cartesianProduct(basicas(superiores), basicas(inferiores), basicas(calzados)).stream()
-					.map((list) -> new Atuendo(list.get(0), list.get(1), list.get(2))).collect(Collectors.toList());	
+					.map((list) -> new AtuendoBasico(list.get(0), list.get(1), list.get(2))).collect(Collectors.toList());	
 	}
 	
 	public Set<Prenda> basicas(Set<Prenda> prendas){
@@ -34,18 +36,21 @@ public class Guardarropas {
 	}
 
 	public List<Atuendo> generarSugerencia(){
-		List<Atuendo> atuendosBasicos = generarSugerenciaBasica();
+		List<AtuendoBasico> atuendosBasicos = generarSugerenciaBasica();
+		System.out.println(atuendosBasicos.toString());
 		List<Atuendo> sugerencias;
 		sugerencias = atuendosBasicos.stream().map(atuendo -> combinarConSecundarios(atuendo)).flatMap(atuendos -> atuendos.stream()).collect(Collectors.toList());
+		System.out.println(sugerencias.toString());
 		return sugerencias;
 	}
 
-	public Set<Atuendo> combinarConSecundarios (Atuendo atuendoBasico) {
+	@SuppressWarnings("unchecked")
+	public Set<Atuendo> combinarConSecundarios (AtuendoBasico atuendoBasico) {
 		Set<Prenda> prendasSecundarias = atuendoBasico.prendasPermitidas(superiores,inferiores,calzados);
 		prendasSecundarias.addAll(accesorios);
+		
 		Set<Set<Prenda>> combinacionesSecundarias = Sets.powerSet(prendasSecundarias);
-		combinacionesSecundarias.stream().forEach(prendaSecundarias -> atuendoBasico.agregarPrendas(prendaSecundarias));
-		return null;
+		return  (Set<Atuendo>) combinacionesSecundarias.stream().map(prendaSecundarias -> new Atuendo(atuendoBasico,prendaSecundarias));
 	}
 
 	public int cantidadDePrendas() {
