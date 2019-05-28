@@ -18,11 +18,11 @@ public class AtuendoBasico {
 
 	}
 	
-	public Set<Prenda> prendasPermitidas(Set<Prenda> superiores2, Set<Prenda> inferiores2, Set<Prenda> calzados2) {
+	public Set<Prenda> prendasPermitidas(Set<Prenda> superiores, Set<Prenda> inferiores, Set<Prenda> calzados) {
 		Set<Prenda> setPermitido = new HashSet<Prenda>();
-		setPermitido.addAll(superiores2.stream().filter(prenda -> superior.aceptaSuperponerPrenda(prenda)).collect(Collectors.toSet()));
-		setPermitido.addAll(inferiores2.stream().filter(prenda -> inferior.aceptaSuperponerPrenda(prenda)).collect(Collectors.toSet()));
-		setPermitido.addAll(calzados2.stream().filter(prenda -> calzado.aceptaSuperponerPrenda(prenda)).collect(Collectors.toSet()));
+		setPermitido.addAll(inferiores.stream().filter(prenda -> inferior.aceptaSuperponerPrenda(prenda)).collect(Collectors.toSet()));
+		setPermitido.addAll(superiores.stream().filter(prenda -> superior.aceptaSuperponerPrenda(prenda)).collect(Collectors.toSet()));
+		setPermitido.addAll(calzados.stream().filter(prenda -> calzado.aceptaSuperponerPrenda(prenda)).collect(Collectors.toSet()));		
 		return setPermitido;
 	}
 

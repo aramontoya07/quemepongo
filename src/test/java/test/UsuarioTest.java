@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,6 +27,7 @@ class UsuarioTest {
 	TipoPrenda pantalon = new TipoPrenda(Categoria.PARTE_INFERIOR,new ArrayList<Material>(Arrays.asList(Material.JEAN,Material.CUERO,Material.ALGODON)),10,true);
 	TipoPrenda zapatilla = new TipoPrenda(Categoria.CALZADO,new ArrayList<Material>(Arrays.asList(Material.CUERO)),10,true);
 	TipoPrenda anteojo = new TipoPrenda(Categoria.ACCESORIO,new ArrayList<Material>(Arrays.asList(Material.VIDRIO,Material.PLASTICO)),0,false);
+	TipoPrenda campera = new TipoPrenda(Categoria.PARTE_SUPERIOR,new ArrayList<Material>(Arrays.asList(Material.ALGODON,Material.SEDA)), 20, false);
 	
 	Borrador borrador_remeraAzul = new Borrador();
 	Borrador borrador_jeanRojo = new Borrador();
@@ -51,6 +51,8 @@ class UsuarioTest {
 	
 	@BeforeEach
 	public void setUp(){
+		remera.setTiposAceptados(new ArrayList<TipoPrenda>(Arrays.asList(campera)));
+		
 		
 		borrador_remeraAzul.crearBorrador(new ColorRGB(255,255,0),remera,Material.ALGODON);
 		borrador_jeanRojo.crearBorrador(new ColorRGB(255,0,0),pantalon,Material.JEAN);
@@ -95,7 +97,7 @@ class UsuarioTest {
 		pedro = new Usuario(Arrays.asList(guardarropa, otroGuardarropa));
 	}
 	
-	@Disabled
+
 	@Test
 	@DisplayName("Las sugerencias de prenda deben ser validas")
 	void generarSugerencias() {
@@ -107,6 +109,6 @@ class UsuarioTest {
 	@DisplayName("Se deben generar todas las combinaciones posibles de ropa")
 	void contarSugerencias(){
 		List<Atuendo> listaSugerencias = pedro.pedirSugerencia();
-		assertEquals(4,listaSugerencias.size());
+		assertEquals(8,listaSugerencias.size());
 	}
 }

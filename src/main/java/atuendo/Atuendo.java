@@ -1,12 +1,13 @@
 package atuendo;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import prenda.Prenda;
 
 public class Atuendo {
 	AtuendoBasico capaBasica;
-	Set<CapaDeAbrigo> capasAbrigos;
+	Set<CapaDeAbrigo> capasAbrigos = new HashSet<CapaDeAbrigo>();
 	
 	public Atuendo(AtuendoBasico atuendoBasico, Set<Prenda> PrendasComplementarias) {
 		capaBasica = atuendoBasico;
@@ -22,6 +23,9 @@ public class Atuendo {
 	}
 	
 	public void agregarPrendas(Set<Prenda> prendas) {
+		if(prendas.isEmpty()) {
+			return;
+		}
 		prendas.stream().forEach(prenda -> agregarPrenda(prenda));
 	}
 	

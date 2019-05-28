@@ -1,5 +1,7 @@
 package prenda;
 
+import java.util.List;
+
 public class Prenda {
 
 	private TipoPrenda tipo;
@@ -17,7 +19,11 @@ public class Prenda {
 	}
 	
 	public boolean aceptaSuperponerPrenda(Prenda prenda) {
-		return tipo.getTiposAceptados().contains(prenda.getTipo());
+		List<TipoPrenda> tiposAceptados = tipo.getTiposAceptados();
+		if(tiposAceptados == null) {
+			return false;
+		}
+		return tiposAceptados.contains(prenda.getTipo());
 	}
 
 	public boolean esBasica() {

@@ -37,20 +37,17 @@ public class Guardarropas {
 
 	public List<Atuendo> generarSugerencia(){
 		List<AtuendoBasico> atuendosBasicos = generarSugerenciaBasica();
-		System.out.println(atuendosBasicos.toString());
 		List<Atuendo> sugerencias;
 		sugerencias = atuendosBasicos.stream().map(atuendo -> combinarConSecundarios(atuendo)).flatMap(atuendos -> atuendos.stream()).collect(Collectors.toList());
-		System.out.println(sugerencias.toString());
 		return sugerencias;
 	}
 
-	@SuppressWarnings("unchecked")
 	public Set<Atuendo> combinarConSecundarios (AtuendoBasico atuendoBasico) {
 		Set<Prenda> prendasSecundarias = atuendoBasico.prendasPermitidas(superiores,inferiores,calzados);
 		prendasSecundarias.addAll(accesorios);
-		
 		Set<Set<Prenda>> combinacionesSecundarias = Sets.powerSet(prendasSecundarias);
-		return  (Set<Atuendo>) combinacionesSecundarias.stream().map(prendaSecundarias -> new Atuendo(atuendoBasico,prendaSecundarias));
+		Set<Atuendo> atuendos = combinacionesSecundarias.stream().map(prendas -> new Atuendo(atuendoBasico,prendas)).collect(Collectors.toSet());
+		return  atuendos;
 	}
 
 	public int cantidadDePrendas() {
