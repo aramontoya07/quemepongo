@@ -8,7 +8,7 @@ import excepciones.MaterialNoPermitidoException;
 import excepciones.MaterialObligatorioException;
 import excepciones.TipoPrendaObligatorioException;
 
-public class Borrador{
+public class Borrador {
 	TipoPrenda tipo;
 	Material material;
 	Trama trama = Trama.LISA;
@@ -18,7 +18,7 @@ public class Borrador{
 	public void definirTipo(TipoPrenda tipo) {
 		this.tipo = tipo;
 	}
-	
+
 	public void definirMaterial(Material material) {
 		if (tipo == null) {
 			throw new MaterialAntesQueTipoPrendaException();
@@ -42,21 +42,24 @@ public class Borrador{
 		}
 		this.colorSecundario = colorSecundario;
 	}
-	
+
 	public void definirTrama(Trama trama) {
 		this.trama = trama;
 	}
-	
+
 	public void crearBorrador(ColorRGB color, TipoPrenda tipo, Material material) {
 		this.definirColorPrimario(color);
 		this.definirTipo(tipo);
 		this.definirMaterial(material);
 	}
-	
+
 	public Prenda crearPrenda() {
-		if (tipo == null) throw new TipoPrendaObligatorioException();
-		if (material == null) throw new MaterialObligatorioException();
-		if (colorPrimario == null) throw new ColorPrimarioObligatorioException();
+		if (tipo == null)
+			throw new TipoPrendaObligatorioException();
+		if (material == null)
+			throw new MaterialObligatorioException();
+		if (colorPrimario == null)
+			throw new ColorPrimarioObligatorioException();
 		return new Prenda(tipo, material, trama, colorPrimario, colorSecundario);
 	}
 }

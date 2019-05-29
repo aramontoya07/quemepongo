@@ -1,5 +1,5 @@
 package prenda;
 
 public enum TipoUso {
-	PRIMARIA,SECUNDARIA;
+	PRIMARIA, SECUNDARIA;
 }

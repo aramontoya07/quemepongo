@@ -10,7 +10,7 @@ public class TipoPrenda {
 	private List<Material> materialesPermitidos;
 	private List<TipoPrenda> tiposAceptados = new ArrayList<TipoPrenda>();
 
-	public TipoPrenda(Categoria categoria, List<Material> materialesPermitidos,int nivelAbrigo,TipoUso tipoBasico) {
+	public TipoPrenda(Categoria categoria, List<Material> materialesPermitidos, int nivelAbrigo, TipoUso tipoBasico) {
 		super();
 		TipoBasico = tipoBasico;
 		this.nivelAbrigo = nivelAbrigo;
@@ -21,7 +21,7 @@ public class TipoPrenda {
 	public boolean esPrimaria() {
 		return TipoBasico.equals(TipoUso.PRIMARIA);
 	}
-	
+
 	public int nivelAbrigo() {
 		return nivelAbrigo;
 	}
@@ -29,7 +29,7 @@ public class TipoPrenda {
 	public Categoria getCategoria() {
 		return categoria;
 	}
-	
+
 	public boolean permiteMaterial(Material material) {
 		return materialesPermitidos.contains(material);
 	}

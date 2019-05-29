@@ -17,12 +17,18 @@ import prenda.TipoPrenda;
 import prenda.TipoUso;
 
 public class PrendaTest {
-	TipoPrenda remera = new TipoPrenda(Categoria.PARTE_SUPERIOR,new ArrayList<Material>(Arrays.asList(Material.ALGODON,Material.SEDA)), 10, TipoUso.PRIMARIA);
-	TipoPrenda campera = new TipoPrenda(Categoria.PARTE_SUPERIOR,new ArrayList<Material>(Arrays.asList(Material.ALGODON,Material.SEDA)), 20, TipoUso.SECUNDARIA);
-	TipoPrenda pantalon = new TipoPrenda(Categoria.PARTE_INFERIOR,new ArrayList<Material>(Arrays.asList(Material.JEAN,Material.CUERO,Material.ALGODON)), 10, TipoUso.PRIMARIA);
-	TipoPrenda zapatilla = new TipoPrenda(Categoria.CALZADO,new ArrayList<Material>(Arrays.asList(Material.CUERO)), 10, TipoUso.PRIMARIA);
-	TipoPrenda anteojo = new TipoPrenda(Categoria.ACCESORIO,new ArrayList<Material>(Arrays.asList(Material.VIDRIO,Material.PLASTICO)), 0, TipoUso.SECUNDARIA);
-	
+	TipoPrenda remera = new TipoPrenda(Categoria.PARTE_SUPERIOR,
+			new ArrayList<Material>(Arrays.asList(Material.ALGODON, Material.SEDA)), 10, TipoUso.PRIMARIA);
+	TipoPrenda campera = new TipoPrenda(Categoria.PARTE_SUPERIOR,
+			new ArrayList<Material>(Arrays.asList(Material.ALGODON, Material.SEDA)), 20, TipoUso.SECUNDARIA);
+	TipoPrenda pantalon = new TipoPrenda(Categoria.PARTE_INFERIOR,
+			new ArrayList<Material>(Arrays.asList(Material.JEAN, Material.CUERO, Material.ALGODON)), 10,
+			TipoUso.PRIMARIA);
+	TipoPrenda zapatilla = new TipoPrenda(Categoria.CALZADO, new ArrayList<Material>(Arrays.asList(Material.CUERO)), 10,
+			TipoUso.PRIMARIA);
+	TipoPrenda anteojo = new TipoPrenda(Categoria.ACCESORIO,
+			new ArrayList<Material>(Arrays.asList(Material.VIDRIO, Material.PLASTICO)), 0, TipoUso.SECUNDARIA);
+
 	Borrador borrador_remeraAzul = new Borrador();
 	Borrador borrador_jeanRojo = new Borrador();
 	Borrador borrador_zapatillas = new Borrador();
@@ -36,24 +42,24 @@ public class PrendaTest {
 	@BeforeEach
 	void crearPrendas() {
 		remera.setTiposAceptados(new ArrayList<TipoPrenda>(Arrays.asList(campera)));
-		
-		borrador_remeraAzul.crearBorrador(new ColorRGB(255,255,0),remera,Material.ALGODON);
-		borrador_jeanRojo.crearBorrador(new ColorRGB(255,0,0),pantalon,Material.JEAN);
-		borrador_anteojosDeSol.crearBorrador(new ColorRGB(0,0,0),anteojo,Material.PLASTICO);
-		borrador_zapatillas.crearBorrador(new ColorRGB(55,123,60),zapatilla,Material.CUERO);
-		
+
+		borrador_remeraAzul.crearBorrador(new ColorRGB(255, 255, 0), remera, Material.ALGODON);
+		borrador_jeanRojo.crearBorrador(new ColorRGB(255, 0, 0), pantalon, Material.JEAN);
+		borrador_anteojosDeSol.crearBorrador(new ColorRGB(0, 0, 0), anteojo, Material.PLASTICO);
+		borrador_zapatillas.crearBorrador(new ColorRGB(55, 123, 60), zapatilla, Material.CUERO);
+
 		remeraAzul = borrador_remeraAzul.crearPrenda();
 		jeanRojo = borrador_jeanRojo.crearPrenda();
 		anteojosDeSol = borrador_anteojosDeSol.crearPrenda();
 		zapatillas = borrador_zapatillas.crearPrenda();
 	}
-	
+
 	@Test
 	@DisplayName("Debe saberse el tipo de una prenda")
 	void tipoDePrenda() {
-		assertEquals(remeraAzul.getTipo(),remera);
+		assertEquals(remeraAzul.getTipo(), remera);
 	}
-	
+
 	@Test
 	@DisplayName("Debe saberse a que categoria pertenece una prenda")
 	void categoriaDePrenda() {

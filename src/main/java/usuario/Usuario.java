@@ -23,50 +23,45 @@ public class Usuario {
 	public Queue<Atuendo> rechazados;
 	public Set<Guardarropas> guardarropas = new HashSet<Guardarropas>();
 	public TipoSubscripcion subscripcion;
-	
+
 	public Usuario() {
 		this.subscripcion = new SubscripcionGratuita();
 	}
-	
+
 	public void agregarGuardarropa(Guardarropas guardarropa) {
 		guardarropas.add(guardarropa);
 	}
-	
-	public void agregarPrendas(Guardarropas guardarropa,Set<Prenda> prendas) {
+
+	public void agregarPrendas(Guardarropas guardarropa, Set<Prenda> prendas) {
 		prendas.stream().forEach(prenda -> agregarPrenda(guardarropa, prenda));
 	}
-	
-	public void agregarPrenda(Guardarropas guardarropa, Prenda prenda){
-		if(subscripcion.puedoAgregar(guardarropa.cantidadDePrendas())) {
+
+	public void agregarPrenda(Guardarropas guardarropa, Prenda prenda) {
+		if (subscripcion.puedoAgregar(guardarropa.cantidadDePrendas())) {
 			guardarropa.agregarPrenda(prenda);
-		}
-		else {
+		} else {
 			throw new AgregarPrendaException();
 		}
 	}
-	
+
 	public void actualizarSubscripcion() {
 		subscripcion = new SubscripcionPremium();
 	}
-	
+
 	public void cancelarPremium() {
 		subscripcion = new SubscripcionGratuita();
 	}
 
 	public List<Atuendo> pedirSugerencia() {
-		return guardarropas.stream() 
-				.map(unGuardarropa -> unGuardarropa.generarSugerencias()) 
-				.flatMap(atuendos -> atuendos.stream()) 
-				.collect(Collectors.toList());
+		return guardarropas.stream().map(unGuardarropa -> unGuardarropa.generarSugerencias())
+				.flatMap(atuendos -> atuendos.stream()).collect(Collectors.toList());
 	}
-	
+
 	public List<Atuendo> pedirSugerenciaSegunClima(ServicioClimatico provedor) {
-		return guardarropas.stream() 
-				.map(unGuardarropa -> unGuardarropa.generarSugerenciasSegunClima(provedor)) 
-				.flatMap(atuendos -> atuendos.stream()) 
-				.collect(Collectors.toList());
+		return guardarropas.stream().map(unGuardarropa -> unGuardarropa.generarSugerenciasSegunClima(provedor))
+				.flatMap(atuendos -> atuendos.stream()).collect(Collectors.toList());
 	}
-	
+
 	public void aceptarAtuendo(Atuendo atuendo) {
 		aceptados.add(atuendo);
 		ultimaDecision = new DecisionAceptar();

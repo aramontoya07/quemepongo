@@ -4,7 +4,7 @@ public class ColorRGB {
 	public int rojo;
 	public int verde;
 	public int azul;
-	
+
 	public ColorRGB(int rojo, int verde, int azul) {
 		this.rojo = rojo;
 		this.verde = verde;
@@ -28,5 +28,5 @@ public class ColorRGB {
 			return false;
 		return true;
 	}
-	
+
 }

@@ -1,11 +1,7 @@
 package prenda;
 
 import java.util.List;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 
 public class Prenda {
 
@@ -23,16 +19,16 @@ public class Prenda {
 		this.colorPrimario = colorPrimario;
 		this.colorSecundario = colorSecundario;
 	}
-	
+
 	public boolean aceptaSuperponerPrenda(Prenda prenda) {
 		List<TipoPrenda> tiposAceptados = tipo.getTiposAceptados();
 		return tiposAceptados.contains(prenda.getTipo());
 	}
-	
+
 	public Boolean esDeCategoria(Categoria categoria) {
 		return tipo.getCategoria() == categoria;
 	}
-	
+
 	public int nivelAbrigo() {
 		return tipo.nivelAbrigo();
 	}
@@ -48,7 +44,7 @@ public class Prenda {
 	public Trama getTrama() {
 		return trama;
 	}
-	
+
 	public ColorRGB getColorPrimario() {
 		return colorPrimario;
 	}
@@ -64,9 +60,9 @@ public class Prenda {
 	public Categoria getCategoria() {
 		return tipo.getCategoria();
 	}
-	
-	public void agregarImagen(Imagen imagenOriginal){
-		   this.imagenNormalizada = imagenOriginal.normalizar();
-		}
+
+	public void agregarImagen(Imagen imagenOriginal) {
+		this.imagenNormalizada = imagenOriginal.normalizar();
+	}
 
 }

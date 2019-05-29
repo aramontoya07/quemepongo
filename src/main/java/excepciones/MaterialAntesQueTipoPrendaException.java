@@ -1,6 +1,6 @@
 package excepciones;
 
-public class MaterialAntesQueTipoPrendaException extends RuntimeException{
+public class MaterialAntesQueTipoPrendaException extends RuntimeException {
 	private static final long serialVersionUID = 2L;
 
 	@Override
