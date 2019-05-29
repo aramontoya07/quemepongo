@@ -15,7 +15,6 @@ public class AtuendoBasico {
 		superior = prendaSuperior;
 		inferior = prendaInferior;
 		calzado = prendaCalzado;
-
 	}
 	
 	public Set<Prenda> prendasPermitidas(Set<Prenda> superiores, Set<Prenda> inferiores, Set<Prenda> calzados) {
@@ -25,7 +24,11 @@ public class AtuendoBasico {
 		setPermitido.addAll(calzados.stream().filter(prenda -> calzado.aceptaSuperponerPrenda(prenda)).collect(Collectors.toSet()));		
 		return setPermitido;
 	}
-
+	
+	public int nivelAbrigo() {
+		return superior.nivelAbrigo() + inferior.nivelAbrigo() + calzado.nivelAbrigo();
+	}
+	
 	public boolean esAtuendoValido(Atuendo atuendo){
 		return true;
 	}

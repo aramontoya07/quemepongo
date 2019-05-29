@@ -1,6 +1,6 @@
 package decisiones;
 
-import dominio.Usuario;
+import usuario.Usuario;
 
 public class DecisionAceptar implements Decision {
 	public void deshacerEn(Usuario usuario) {

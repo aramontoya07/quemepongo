@@ -13,21 +13,25 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import atuendo.Atuendo;
-import dominio.Guardarropas;
-import dominio.Usuario;
+import clima.MockCalor;
+import clima.MockFrio;
+import excepciones.AgregarPrendaException;
 import prenda.Borrador;
 import prenda.Categoria;
 import prenda.ColorRGB;
 import prenda.Material;
 import prenda.Prenda;
 import prenda.TipoPrenda;
+import prenda.TipoUso;
+import usuario.Guardarropas;
+import usuario.Usuario;
 
 class UsuarioTest {
-	TipoPrenda remera = new TipoPrenda(Categoria.PARTE_SUPERIOR,new ArrayList<Material>(Arrays.asList(Material.ALGODON,Material.SEDA)),10,true);
-	TipoPrenda pantalon = new TipoPrenda(Categoria.PARTE_INFERIOR,new ArrayList<Material>(Arrays.asList(Material.JEAN,Material.CUERO,Material.ALGODON)),10,true);
-	TipoPrenda zapatilla = new TipoPrenda(Categoria.CALZADO,new ArrayList<Material>(Arrays.asList(Material.CUERO)),10,true);
-	TipoPrenda anteojo = new TipoPrenda(Categoria.ACCESORIO,new ArrayList<Material>(Arrays.asList(Material.VIDRIO,Material.PLASTICO)),0,false);
-	TipoPrenda campera = new TipoPrenda(Categoria.PARTE_SUPERIOR,new ArrayList<Material>(Arrays.asList(Material.ALGODON,Material.SEDA)), 20, false);
+	TipoPrenda remera = new TipoPrenda(Categoria.PARTE_SUPERIOR,new ArrayList<Material>(Arrays.asList(Material.ALGODON,Material.SEDA)),10,TipoUso.PRIMARIA);
+	TipoPrenda pantalon = new TipoPrenda(Categoria.PARTE_INFERIOR,new ArrayList<Material>(Arrays.asList(Material.JEAN,Material.CUERO,Material.ALGODON)),10,TipoUso.PRIMARIA);
+	TipoPrenda zapatilla = new TipoPrenda(Categoria.CALZADO,new ArrayList<Material>(Arrays.asList(Material.CUERO)),10,TipoUso.PRIMARIA);
+	TipoPrenda anteojo = new TipoPrenda(Categoria.ACCESORIO,new ArrayList<Material>(Arrays.asList(Material.VIDRIO,Material.PLASTICO)),0,TipoUso.SECUNDARIA);
+	TipoPrenda campera = new TipoPrenda(Categoria.PARTE_SUPERIOR,new ArrayList<Material>(Arrays.asList(Material.ALGODON,Material.SEDA)), 20, TipoUso.SECUNDARIA);
 	
 	Borrador borrador_remeraAzul = new Borrador();
 	Borrador borrador_jeanRojo = new Borrador();
@@ -38,21 +42,19 @@ class UsuarioTest {
 	Borrador borrador_anteojos = new Borrador();
 	Borrador borrador_anteojosDeSol = new Borrador();
 
-	Prenda remeraAzul;
-	Prenda jeanRojo;
-	Prenda zapatillasVerde;
-	Prenda remeraDeportiva;
-	Prenda jeanNegro;
-	Prenda ojotas;
-	Prenda anteojos;
-	Prenda anteojosDeSol;
+    
+    Set<Prenda> prendasGlobales = new HashSet<Prenda>();
+    
 	
-    Usuario pedro;
+    Guardarropas guardarropa = new Guardarropas();
+    Guardarropas otroGuardarropa = new Guardarropas();
+    
+    Usuario pedro = new Usuario();
+    
 	
 	@BeforeEach
 	public void setUp(){
 		remera.setTiposAceptados(new ArrayList<TipoPrenda>(Arrays.asList(campera)));
-		
 		
 		borrador_remeraAzul.crearBorrador(new ColorRGB(255,255,0),remera,Material.ALGODON);
 		borrador_jeanRojo.crearBorrador(new ColorRGB(255,0,0),pantalon,Material.JEAN);
@@ -63,44 +65,32 @@ class UsuarioTest {
 		borrador_anteojos.crearBorrador(new ColorRGB(0,0,0),anteojo,Material.VIDRIO);
 		borrador_anteojosDeSol.crearBorrador(new ColorRGB(0,0,0),anteojo,Material.PLASTICO);
 		
-		remeraAzul = borrador_remeraAzul.crearPrenda();
-		jeanRojo = borrador_jeanRojo.crearPrenda();
-		zapatillasVerde = borrador_zapatilla.crearPrenda();
-		remeraDeportiva = borrador_remeraDeportiva.crearPrenda();
-		jeanNegro = borrador_jeanNegro.crearPrenda();
-		ojotas = borrador_ojotas.crearPrenda();
-		anteojos = borrador_anteojos.crearPrenda();
-		anteojosDeSol = borrador_anteojosDeSol.crearPrenda();
+		Prenda remeraAzul = borrador_remeraAzul.crearPrenda();
+		Prenda remeraDeportiva = borrador_remeraDeportiva.crearPrenda();
+		Prenda jeanRojo = borrador_jeanRojo.crearPrenda();
+		Prenda jeanNegro = borrador_jeanNegro.crearPrenda();
+		Prenda ojotas = borrador_ojotas.crearPrenda();
+		Prenda zapatillasVerde = borrador_zapatilla.crearPrenda();
+		Prenda anteojos = borrador_anteojos.crearPrenda();
+		Prenda anteojosDeSol = borrador_anteojosDeSol.crearPrenda();
 		
-		Set<Prenda> superioreSet = new HashSet<Prenda>();
-		Set<Prenda> inferioreSet = new HashSet<Prenda>();
-		Set<Prenda> calzadoSet = new HashSet<Prenda>();
-		Set<Prenda> accesorioSet = new HashSet<Prenda>();
-		superioreSet.add(remeraDeportiva);
-		superioreSet.add(remeraAzul);
-		inferioreSet.add(jeanRojo);
-		calzadoSet.add(zapatillasVerde);
-		accesorioSet.add(anteojos);
-		
-		Set<Prenda> superioreSet2 = new HashSet<>();
-		Set<Prenda> inferioreSet2 = new HashSet<Prenda>();
-		Set<Prenda> calzadoSet2 = new HashSet<Prenda>();
-		Set<Prenda> accesorioSet2 = new HashSet<Prenda>();
-		superioreSet2.add(remeraAzul);
-		superioreSet2.add(remeraDeportiva);
-		inferioreSet2.add(jeanNegro);
-		calzadoSet2.add(ojotas);
-		accesorioSet2.add(anteojosDeSol);
-		
-		Guardarropas guardarropa = new Guardarropas(superioreSet,inferioreSet,calzadoSet,accesorioSet);
-		Guardarropas otroGuardarropa = new Guardarropas(superioreSet2,inferioreSet2,calzadoSet2,accesorioSet2);
-		pedro = new Usuario(Arrays.asList(guardarropa, otroGuardarropa));
+		prendasGlobales.add(remeraAzul);
+		prendasGlobales.add(remeraDeportiva);
+		prendasGlobales.add(jeanNegro);
+		prendasGlobales.add(jeanRojo);
+		prendasGlobales.add(ojotas);
+		prendasGlobales.add(zapatillasVerde);
+		prendasGlobales.add(anteojos);
+		prendasGlobales.add(anteojosDeSol);
 	}
 	
 
 	@Test
 	@DisplayName("Las sugerencias de prenda deben ser validas")
 	void generarSugerencias() {
+		pedro.agregarGuardarropa(guardarropa);
+		pedro.actualizarSubscripcion();
+		pedro.agregarPrendas(guardarropa, prendasGlobales);
 		List<Atuendo> listaSugerencias = pedro.pedirSugerencia();
         assertTrue(listaSugerencias.stream().allMatch(sugerencia -> sugerencia.esAtuendoValido(sugerencia)));
 	}
@@ -108,7 +98,50 @@ class UsuarioTest {
 	@Test
 	@DisplayName("Se deben generar todas las combinaciones posibles de ropa")
 	void contarSugerencias(){
+		//#FIXME Testear esto es medio raro
+		pedro.agregarGuardarropa(guardarropa);
+		pedro.actualizarSubscripcion();
+		pedro.agregarPrendas(guardarropa, prendasGlobales);
 		List<Atuendo> listaSugerencias = pedro.pedirSugerencia();
-		assertEquals(8,listaSugerencias.size());
+		assertEquals(32,listaSugerencias.size());
+	}
+	
+	@Test
+	@DisplayName("Al tener una solucion gratuita no se puede agregar mas de 5 prendas")
+	void maximoPrendasConGratuidas() {
+		assertThrows(AgregarPrendaException.class, ()-> {
+			pedro.agregarGuardarropa(guardarropa);
+			pedro.agregarPrendas(guardarropa, prendasGlobales);
+		});
+	}
+	
+	@Test
+	@DisplayName("Al tener una solucion premium se puede agregar mas de 5 prendas")
+	void maximoPrendasConPremium() {
+		pedro.actualizarSubscripcion();
+		pedro.agregarGuardarropa(guardarropa);
+		pedro.agregarPrendas(guardarropa, prendasGlobales);
+		
+		assertEquals(8, guardarropa.cantidadDePrendas());
+	}
+	
+	@Test
+	@DisplayName("Devuelve sugerencias aptas para un clima frio")
+	void prendasParaFrio() {
+		pedro.actualizarSubscripcion();
+		pedro.agregarGuardarropa(guardarropa);
+		pedro.agregarPrendas(guardarropa, prendasGlobales);
+		List<Atuendo> listaSugerencias = pedro.pedirSugerenciaSegunClima(new MockFrio());
+		assertTrue(listaSugerencias.stream().allMatch(sugerencia -> sugerencia.soportaClima(new MockFrio().obtenerClima())));
+	}
+	
+	@Test
+	@DisplayName("Devuelve sugerencias aptas para un clima calido")
+	void prendasParaCalor() {
+		pedro.actualizarSubscripcion();
+		pedro.agregarGuardarropa(guardarropa);
+		pedro.agregarPrendas(guardarropa, prendasGlobales);
+		List<Atuendo> listaSugerencias = pedro.pedirSugerenciaSegunClima(new MockCalor());
+		assertTrue(listaSugerencias.stream().allMatch(sugerencia -> sugerencia.soportaClima(new MockCalor().obtenerClima())));
 	}
 }

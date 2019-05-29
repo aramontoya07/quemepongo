@@ -1,16 +1,16 @@
 package prenda;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TipoPrenda {
-	public boolean TipoBasico;
+	public TipoUso TipoBasico;
 	public int nivelAbrigo;
-	public Categoria categoria;
-	public List<Material> materialesPermitidos;
-	private List<TipoPrenda> tiposAceptados;
+	private Categoria categoria;
+	private List<Material> materialesPermitidos;
+	private List<TipoPrenda> tiposAceptados = new ArrayList<TipoPrenda>();
 
-
-	public TipoPrenda(Categoria categoria, List<Material> materialesPermitidos,int nivelAbrigo,boolean tipoBasico) {
+	public TipoPrenda(Categoria categoria, List<Material> materialesPermitidos,int nivelAbrigo,TipoUso tipoBasico) {
 		super();
 		TipoBasico = tipoBasico;
 		this.nivelAbrigo = nivelAbrigo;
@@ -18,8 +18,12 @@ public class TipoPrenda {
 		this.materialesPermitidos = materialesPermitidos;
 	}
 
-	public boolean esTipoBasico() {
-		return TipoBasico;
+	public boolean esPrimaria() {
+		return TipoBasico.equals(TipoUso.PRIMARIA);
+	}
+	
+	public int nivelAbrigo() {
+		return nivelAbrigo;
 	}
 
 	public Categoria getCategoria() {

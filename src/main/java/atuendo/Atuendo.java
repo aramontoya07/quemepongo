@@ -1,8 +1,10 @@
 package atuendo;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
+import clima.Clima;
 import prenda.Prenda;
 
 public class Atuendo {
@@ -16,6 +18,10 @@ public class Atuendo {
 
 	public void agregarCapa(CapaDeAbrigo capa) {
 		capasAbrigos.add(capa);
+	}
+	
+	public int nivelAbrigo() {
+		return capaBasica.nivelAbrigo() + capasAbrigos.stream().mapToInt(capa -> capa.nivelAbrigo()).sum();
 	}
 	
 	public boolean esAtuendoValido(Atuendo atuendo){
@@ -34,8 +40,12 @@ public class Atuendo {
 			CapaDeAbrigo CapaNueva = new CapaDeAbrigo();
 			agregarCapa(CapaNueva);
 			return CapaNueva;
-		});
+		});	
 		capaDisponible.agregarPrenda(prenda);
+	}
+
+	public boolean soportaClima(Clima climaActual) {
+		return this.nivelAbrigo() >= climaActual.nivelAbrigoRequerido();
 	}
 	
 }

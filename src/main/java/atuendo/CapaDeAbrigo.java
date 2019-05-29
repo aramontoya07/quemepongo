@@ -1,49 +1,31 @@
 package atuendo;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import prenda.Categoria;
 import prenda.Prenda;
 
 public class CapaDeAbrigo {
+	//Una prenda de cada categoria por definicion
+	//Antes de agregar una prenda se pregunta si puede tener ese tipo de prenda.
 	
-	Prenda superior;
-	Prenda inferior;
-	Prenda calzado;
-	Prenda accesorio;
+	Set<Prenda> prendas = new HashSet<Prenda>(); 
 	
 	public CapaDeAbrigo() {
 		
 	}
 	
+	public int nivelAbrigo() {
+		return prendas.stream().mapToInt(prendas -> prendas.nivelAbrigo()).sum();
+ 	}
+	
 	public boolean noTieneParte(Categoria categoria) {
-		switch (categoria) {
-		case PARTE_SUPERIOR:
-			return superior.equals(null);
-		case PARTE_INFERIOR:
-			return inferior.equals(null);
-		case CALZADO:
-			return calzado.equals(null);
-		case ACCESORIO:
-			return accesorio.equals(null);
-		default:
-			return 1+1==0;
-		}
+		return prendas.stream().anyMatch(prendas -> prendas.esDeCategoria(categoria));
 	}
 	
-	public void agregarPrenda(Prenda prenda) {
-		switch (prenda.getCategoria()) {
-		case PARTE_SUPERIOR:
-			superior = prenda;
-			break;
-		case PARTE_INFERIOR:
-			inferior = prenda;
-			break;
-		case CALZADO:
-			calzado = prenda;
-			break;
-		case ACCESORIO:
-			accesorio = prenda;
-			break;
-		}
+	public void agregarPrenda(Prenda prenda){
+		prendas.add(prenda);
 	}
 
 }

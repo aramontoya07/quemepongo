@@ -1,6 +1,6 @@
 package decisiones;
 
-import dominio.Usuario;
+import usuario.Usuario;
 
 public interface Decision {
 	public void deshacerEn(Usuario usuario);

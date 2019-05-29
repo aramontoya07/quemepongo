@@ -35,11 +35,9 @@ public class Borrador{
 
 	public void definirColorSecundario(ColorRGB colorSecundario) {
 		if (colorPrimario == null) {
-			System.out.println("exc 1");
 			throw new ColorSecundarioSinPrimarioException();
 		}
 		if (colorPrimario.equals(colorSecundario)) {
-			System.out.println("exc 2");
 			throw new ColorSecundarioIgualAPrimarioException();
 		}
 		this.colorSecundario = colorSecundario;
