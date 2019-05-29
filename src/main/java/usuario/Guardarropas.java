@@ -1,6 +1,7 @@
 package usuario;
 
 import java.util.HashSet;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -10,6 +11,7 @@ import atuendo.Atuendo;
 import atuendo.AtuendoBasico;
 import clima.ServicioClimatico;
 import prenda.Prenda;
+
 
 public class Guardarropas {
 	
@@ -78,6 +80,23 @@ public class Guardarropas {
 		}
 	}
 	
+	/*pubic void agregarImagenA(Prenda prenda, String rutaImagen){
+		   //validar si la prenda existe en el guardarropa
+		   Imagen imagenOriginal = new Imagen (rutaImagen);
+		   prenda.agregarImagen(imagenOriginal);
+		} */
+	
+	public void agregarImagenA(Prenda prenda, String rutaImagen){
+		   if(!existePrenda(prenda)){
+		         throw new NoExistePrendaEnGuardarropaException(); 
+		   }
+		   Imagen imagenOriginal = new Imagen (rutaImagen); //No sé cuál es el error en Imagen imagenOriginal
+		   prenda.agregarImagen(imagenOriginal);
+	}
+	
+	public boolean existePrenda (Prenda prenda) {
+		return (superiores.contains(prenda) ||  inferiores.contains(prenda) ||  calzados.contains(prenda) || accesorios.contains(prenda));
+	}
 }
 
 
