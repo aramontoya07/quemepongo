@@ -1,6 +1,11 @@
 package prenda;
 
 import java.util.List;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 public class Prenda {
 
@@ -9,6 +14,7 @@ public class Prenda {
 	private Trama trama;
 	private ColorRGB colorPrimario;
 	private ColorRGB colorSecundario;
+	private BufferedImage imagenNormalizada;
 
 	public Prenda(TipoPrenda tipo, Material material, Trama trama, ColorRGB colorPrimario, ColorRGB colorSecundario) {
 		this.tipo = tipo;
@@ -58,5 +64,9 @@ public class Prenda {
 	public Categoria getCategoria() {
 		return tipo.getCategoria();
 	}
+	
+	public void agregarImagen(Imagen imagenOriginal){
+		   this.imagenNormalizada = imagenOriginal.normalizar();
+		}
 
 }
