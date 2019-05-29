@@ -15,6 +15,7 @@ import prenda.Material;
 import prenda.Prenda;
 import prenda.TipoPrenda;
 import prenda.TipoUso;
+import prenda.Trama;
 
 public class PrendaTest {
 	TipoPrenda remera = new TipoPrenda(Categoria.PARTE_SUPERIOR,
@@ -47,6 +48,8 @@ public class PrendaTest {
 		borrador_jeanRojo.crearBorrador(new ColorRGB(255, 0, 0), pantalon, Material.JEAN);
 		borrador_anteojosDeSol.crearBorrador(new ColorRGB(0, 0, 0), anteojo, Material.PLASTICO);
 		borrador_zapatillas.crearBorrador(new ColorRGB(55, 123, 60), zapatilla, Material.CUERO);
+		
+		borrador_remeraAzul.definirTrama(Trama.RAYADA);
 
 		remeraAzul = borrador_remeraAzul.crearPrenda();
 		jeanRojo = borrador_jeanRojo.crearPrenda();
@@ -65,4 +68,17 @@ public class PrendaTest {
 	void categoriaDePrenda() {
 		assertTrue(remeraAzul.esDeCategoria(Categoria.PARTE_SUPERIOR));
 	}
+	
+	@Test
+	@DisplayName("La trama por defecto debe ser lisa")
+	void tramaLisaPorDefecto() {
+		assertEquals(jeanRojo.getTrama(), Trama.LISA);
+	}
+	
+	@Test
+	@DisplayName("La trama por defecto debe ser lisa")
+	void tramaRayada() {
+		assertEquals(remeraAzul.getTrama(), Trama.RAYADA);
+	}
 }
+

@@ -12,6 +12,7 @@ import excepciones.ColorPrimarioObligatorioException;
 import excepciones.ColorSecundarioIgualAPrimarioException;
 import excepciones.ColorSecundarioSinPrimarioException;
 import excepciones.MaterialAntesQueTipoPrendaException;
+import excepciones.MaterialNoPermitidoException;
 import excepciones.MaterialObligatorioException;
 import excepciones.TipoPrendaObligatorioException;
 import prenda.Borrador;
@@ -46,11 +47,21 @@ class BorradorTest {
 	}
 
 	@Test
-	@DisplayName("Antes de definir un material se debe definir los materiales que acepta el tipo de la prenda")
+	@DisplayName("Antes de definir un material se debe definir los materiales que acepta el tipo de la prenda") //se debe definir el tipo prenda
 	void materialesAntes() {
 		assertThrows(MaterialAntesQueTipoPrendaException.class, () -> {
 			Borrador prueba = new Borrador();
 			prueba.definirMaterial(Material.ALGODON);
+		});
+	}
+	
+	@Test
+	@DisplayName("El material de la prenda debe ser coherente con su tipo")
+	void materialCoherenteConTipoPrenda() {
+		assertThrows(MaterialNoPermitidoException.class, () -> {
+			Borrador prueba = new Borrador();
+			prueba.definirTipo(remera);
+			prueba.definirMaterial(Material.CUERO);
 		});
 	}
 
@@ -76,7 +87,7 @@ class BorradorTest {
 	}
 
 	@Test
-	@DisplayName("El materla es obligatorio")
+	@DisplayName("El material es obligatorio")
 	void materialObligatorio() {
 		assertThrows(MaterialObligatorioException.class, () -> {
 			Borrador prueba = new Borrador();
@@ -84,5 +95,5 @@ class BorradorTest {
 			prueba.definirColorPrimario(new ColorRGB(255, 9, 0));
 			prueba.crearPrenda();
 		});
-	}
+	}	
 }

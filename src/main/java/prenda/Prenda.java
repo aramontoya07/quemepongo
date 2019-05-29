@@ -12,6 +12,7 @@ public class Prenda {
 	private ColorRGB colorSecundario;
 	private BufferedImage imagenNormalizada;
 
+
 	public Prenda(TipoPrenda tipo, Material material, Trama trama, ColorRGB colorPrimario, ColorRGB colorSecundario) {
 		this.tipo = tipo;
 		this.material = material;
@@ -61,8 +62,11 @@ public class Prenda {
 		return tipo.getCategoria();
 	}
 
+	public BufferedImage getImagenNormalizada() {
+		return imagenNormalizada;
+	}
+	
 	public void agregarImagen(Imagen imagenOriginal) {
 		this.imagenNormalizada = imagenOriginal.normalizar();
 	}
-
 }

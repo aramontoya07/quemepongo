@@ -59,7 +59,7 @@ public class Guardarropas {
 				.collect(Collectors.toSet());
 	}
 
-	public int cantidadDePrendas() {
+	public int cantidadDePrendas() { //TODO testear
 		return superiores.size() + inferiores.size() + calzados.size() + accesorios.size();
 	}
 
@@ -67,7 +67,7 @@ public class Guardarropas {
 		prendas.parallelStream().forEach(prenda -> agregarPrenda(prenda));
 	}
 
-	public void agregarPrenda(Prenda prenda) {
+	public void agregarPrenda(Prenda prenda) { //TODO testear
 		switch (prenda.getCategoria()) {
 		case PARTE_SUPERIOR:
 			superiores.add(prenda);
@@ -86,13 +86,13 @@ public class Guardarropas {
 
 	public void agregarImagenA(Prenda prenda, String rutaImagen) throws IOException {
 		if (!existePrenda(prenda)) {
-			throw new NoExistePrendaEnGuardarropaException();
+			throw new NoExistePrendaEnGuardarropaException(); //TODO testear
 		}
 		Imagen imagenOriginal = new Imagen(rutaImagen);
 		prenda.agregarImagen(imagenOriginal);
 	}
 
-	public boolean existePrenda(Prenda prenda) {
+	public boolean existePrenda(Prenda prenda) {  //TODO testear
 		return (superiores.contains(prenda) || inferiores.contains(prenda) || calzados.contains(prenda)
 				|| accesorios.contains(prenda));
 	}
