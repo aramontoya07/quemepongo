@@ -215,3 +215,10 @@ fabric.properties
 
 # Sonarlint plugin
 .idea/sonarlint
+extern
+node_modules
+tmp
+vendor
+.idea/workspace.xml
+.idea/misc.xml
+.floo
