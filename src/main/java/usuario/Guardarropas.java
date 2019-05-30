@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import atuendo.Sugerencias;
 import com.google.common.collect.Sets;
 
 import atuendo.Atuendo;
@@ -39,7 +40,7 @@ public class Guardarropas {
 		return prendas.stream().filter(prenda -> prenda.esPrimaria()).collect(Collectors.toSet());
 	}
 
-	public Set<Atuendo> generarSugerencias() {
+	public Set<Atuendo> generarSugerenciasPosibles() {
 		Set<AtuendoBasico> atuendosBasicos = generarSugerenciaBasica();
 		return atuendosBasicos.stream().map(atuendo -> combinarConSecundarios(atuendo))
 				.flatMap(atuendos -> atuendos.stream()).collect(Collectors.toSet());
@@ -53,10 +54,10 @@ public class Guardarropas {
 				.collect(Collectors.toSet());
 	}
 
-	public Set<Atuendo> generarSugerenciasSegunClima(ServicioClimatico provedorElegido) {
-		return generarSugerencias().stream()
-				.filter(sugerencia -> sugerencia.soportaClima(provedorElegido.obtenerClima()))
-				.collect(Collectors.toSet());
+	public Sugerencias generarSugerenciasSegunClima(ServicioClimatico provedorElegido) {
+		Sugerencias sugerenciasClima = new Sugerencias(10);
+		generarSugerenciasPosibles().stream().forEach(atuendo -> sugerenciasClima.agregarAtuendoSegunClima(atuendo,provedorElegido.obtenerClima()));
+		return sugerenciasClima;
 	}
 
 	public int cantidadDePrendas() { //TODO testear
@@ -67,7 +68,7 @@ public class Guardarropas {
 		prendas.parallelStream().forEach(prenda -> agregarPrenda(prenda));
 	}
 
-	public void agregarPrenda(Prenda prenda) { //TODO testear
+	public void agregarPrenda(Prenda prenda) { //@TODO testear
 		switch (prenda.getCategoria()) {
 		case PARTE_SUPERIOR:
 			superiores.add(prenda);

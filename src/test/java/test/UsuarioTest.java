@@ -148,4 +148,6 @@ class UsuarioTest {
 		assertTrue(listaSugerencias.stream()
 				.allMatch(sugerencia -> sugerencia.soportaClima(new MockCalor().obtenerClima())));
 	}
+
+
 }
