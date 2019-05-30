@@ -30,6 +30,7 @@ public class Usuario {
 		this.subscripcion = new SubscripcionGratuita();
 	}
 
+
 	public void actualizarSubscripcion() {
 		subscripcion = new SubscripcionPremium();
 	}
