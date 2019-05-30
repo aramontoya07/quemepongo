@@ -31,6 +31,7 @@ public class Usuario {
 	}
 
 
+
 	public void actualizarSubscripcion() {
 		subscripcion = new SubscripcionPremium();
 	}
