@@ -1,8 +1,7 @@
 package eventos;
 
 
-
-import atuendo.Sugerencias;
+import atuendo.SugerenciasClima;
 import clima.ServicioClimatico;
 import excepciones.EventoLejanoException;
 import excepciones.NingunaSugerenciaParaEventoException;
@@ -18,7 +17,7 @@ public class Evento extends TimerTask {
     private String ubicacion;
     private Usuario user;
     private ServicioClimatico provedor;
-    private Set<Sugerencias> sugerenciasEvento = new HashSet<Sugerencias>();
+    private Set<SugerenciasClima> sugerenciasEvento = new HashSet<SugerenciasClima>();
 
 
     public Evento(Usuario user, Calendar fecha, String ubicacion,ServicioClimatico provedor) {
@@ -32,25 +31,18 @@ public class Evento extends TimerTask {
         sugerenciasEvento = user.pedirSugerenciaSegunClima(provedor,ubicacion);
     }
 
-<<<<<<< HEAD
-    public Calendar dateEventoCercano(){ //fecha a partir de la cual el evento esta cercano
+    public Calendar dateEventoCercano(){ 
         Calendar fechaEvento = (Calendar) fecha.clone();
         fechaEvento.add(Calendar.HOUR_OF_DAY, -12);
         return fechaEvento;
     }
 
-    public Set<Sugerencias> pedirSugerencias(){
+    public Set<SugerenciasClima> pedirSugerencias(){
         if(Calendar.getInstance().getTime().before(this.dateEventoCercano().getTime())) throw new EventoLejanoException(); //Lo pidio muy antes
         if(sugerenciasEvento.isEmpty()) throw new NingunaSugerenciaParaEventoException(); //No hay sugerencias que se adapten
         return sugerenciasEvento;
-=======
-    public Calendar dateEvento(){
-        Calendar fechaEvento = (Calendar) fecha.clone();
-        fechaEvento.add(Calendar.HOUR_OF_DAY, -12);
-        return fechaEvento;
->>>>>>> 0fa6e354bd54cd2b3805134cc0f2721d258a4978
     }
-
+        
     public Calendar getFecha() {
         return fecha;
     }
@@ -59,16 +51,8 @@ public class Evento extends TimerTask {
         return ubicacion;
     }
 
-    public void setSugerenciasEvento(Set<Sugerencias> sugerenciasEvento) {
+    public void setSugerenciasEvento(Set<SugerenciasClima> sugerenciasEvento) {
         this.sugerenciasEvento = sugerenciasEvento;
     }
-<<<<<<< HEAD
-=======
 
-    public Set<Sugerencias> pedirSugerencias(){
-        if(Calendar.getInstance().getTime().before(this.dateEvento().getTime())) throw new EventoLejanoException();
-        if(sugerenciasEvento.isEmpty()) throw new NingunaSugerenciaParaEventoException();
-        return sugerenciasEvento;
-    }
->>>>>>> 0fa6e354bd54cd2b3805134cc0f2721d258a4978
 }

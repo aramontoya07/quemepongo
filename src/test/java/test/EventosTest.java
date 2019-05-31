@@ -1,19 +1,16 @@
 package test;
 
-import atuendo.Atuendo;
-import atuendo.Sugerencias;
+import atuendo.SugerenciasClima;
+import clima.MockAgradable;
 import clima.MockCalor;
 import clima.MockFrio;
 import eventos.Evento;
-import excepciones.AgregarPrendaException;
 import excepciones.EventoLejanoException;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,7 +33,7 @@ class EventosTest extends SetUp{
         Calendar fechaTorneo = Calendar.getInstance();
         fechaTorneo.set(2021, Calendar.DECEMBER,31, 7, 0);
 
-        Evento torneoFornite = new Evento(pedro,fechaTorneo, "London",new MockCalor());
+        Evento torneoFornite = new Evento(pedro,fechaTorneo, "London",new MockAgradable());
         pedro.agregarEvento(torneoFornite);
         assertThrows(EventoLejanoException.class, () ->
                 pedro.pedirSugerenciaParaEvento(torneoFornite)
@@ -52,9 +49,9 @@ class EventosTest extends SetUp{
 
         Calendar fechaTorneo = Calendar.getInstance();
         fechaTorneo.add(Calendar.HOUR_OF_DAY, 11);
-        Evento torneoFornite = new Evento(pedro, fechaTorneo, "London",new MockFrio());
+        Evento torneoFornite = new Evento(pedro, fechaTorneo, "London",new MockAgradable());
         pedro.agregarEvento(torneoFornite);
-        Set<Sugerencias> sugerenciasParaEvento =  pedro.pedirSugerenciaParaEvento(torneoFornite);
+        Set<SugerenciasClima> sugerenciasParaEvento =  pedro.pedirSugerenciaParaEvento(torneoFornite);
         assertTrue(!sugerenciasParaEvento.isEmpty());
     }
 

@@ -25,6 +25,7 @@ public class Guardarropas {
 
 	public Guardarropas() { }
 
+	@SuppressWarnings("unchecked")
 	public Set<AtuendoBasico> generarSugerenciaBasica(){
 		return Sets
 				.cartesianProduct(prendasPrimarias(superiores), prendasPrimarias(inferiores),
@@ -52,7 +53,7 @@ public class Guardarropas {
 	}
 
 	public SugerenciasClima generarSugerenciasSegunClima(ServicioClimatico provedorElegido, String ubicacion){
-		SugerenciasClima sugerenciasClima = new Sugerencias(10);
+		SugerenciasClima sugerenciasClima = new SugerenciasClima(10);
 		generarSugerenciasPosibles().stream()
 				.forEach(atuendo -> sugerenciasClima.agregarAtuendoSegunClima(atuendo,provedorElegido.obtenerClima(ubicacion)));
 		return sugerenciasClima;

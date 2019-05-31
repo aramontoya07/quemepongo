@@ -12,11 +12,7 @@ import java.util.Set;
 
 public abstract class SetUp {
     TipoPrenda remera = new TipoPrenda(Categoria.PARTE_SUPERIOR,
-<<<<<<< HEAD
             new ArrayList<Material>(Arrays.asList(Material.ALGODON, Material.SEDA)), 12, TipoUso.PRIMARIA);
-=======
-            new ArrayList<Material>(Arrays.asList(Material.ALGODON, Material.SEDA)), 80, TipoUso.PRIMARIA);
->>>>>>> 0fa6e354bd54cd2b3805134cc0f2721d258a4978
     TipoPrenda pantalon = new TipoPrenda(Categoria.PARTE_INFERIOR,
             new ArrayList<Material>(Arrays.asList(Material.JEAN, Material.CUERO, Material.ALGODON)), 5,
             TipoUso.PRIMARIA);

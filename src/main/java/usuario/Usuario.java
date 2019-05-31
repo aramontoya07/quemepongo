@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import atuendo.Atuendo;
-import atuendo.Sugerencias;
+import atuendo.SugerenciasClima;
 import clima.ServicioClimatico;
 import decisiones.Decision;
 import decisiones.DecisionAceptar;

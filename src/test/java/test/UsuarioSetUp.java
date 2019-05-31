@@ -26,11 +26,7 @@ class UsuarioSetUp extends SetUp{
 		pedro.agregarGuardarropa(guardarropa);
 		pedro.actualizarSubscripcion();
 		pedro.agregarPrendas(guardarropa, prendasGlobales);
-<<<<<<< HEAD:src/test/java/test/UsuarioSetUp.java
 		Set <Atuendo> listaSugerencias = pedro.pedirSugerencia();
-=======
-		Set<Atuendo> listaSugerencias = pedro.pedirSugerencia();
->>>>>>> 0fa6e354bd54cd2b3805134cc0f2721d258a4978:src/test/java/test/UsuarioTest.java
 		assertTrue(listaSugerencias.stream().allMatch(atuendo -> atuendo.esAtuendoValido(atuendo)));
 	}
 
@@ -71,9 +67,9 @@ class UsuarioSetUp extends SetUp{
 		pedro.agregarGuardarropa(guardarropa);
 		pedro.actualizarSubscripcion();
 		pedro.agregarPrendas(guardarropa, prendasGlobales);
-		Set<Sugerencias> listaSugerencias = pedro.pedirSugerenciaSegunClima(new MockAgradable(), "london");
+		Set<SugerenciasClima> listaSugerencias = pedro.pedirSugerenciaSegunClima(new MockAgradable(),"London");
 		assertTrue(listaSugerencias.stream()
-				.allMatch(sugerencia -> sugerencia.esAptaParaClima(new MockAgradable().obtenerClima("Tu madre"))));
+				.allMatch(sugerencia -> sugerencia.esAptaParaClima(new MockAgradable().obtenerClima("London"))));
 	}
 
 	@Test
@@ -81,22 +77,8 @@ class UsuarioSetUp extends SetUp{
 	void prendasParaCalor() {
 		pedro.actualizarSubscripcion();
 		pedro.agregarGuardarropa(guardarropa);
-		Set<Sugerencias> listaSugerencias = pedro.pedirSugerenciaSegunClima(new MockCalor(), "Palermo");
+		Set<SugerenciasClima> listaSugerencias = pedro.pedirSugerenciaSegunClima(new MockCalor(), "Palermo");
 		assertTrue(listaSugerencias.stream()
 				.allMatch(sugerencia -> sugerencia.esAptaParaClima(new MockCalor().obtenerClima("Palermo"))));
-	}
-
-	@Disabled
-	@Test
-	@DisplayName("No se genera sugerencia si faltan mas de 12 horas .")
-	void eventoGeneraNoSugerencias() {
-		pedro.actualizarSubscripcion();
-		pedro.agregarGuardarropa(guardarropa);
-		pedro.agregarPrendas(guardarropa, prendasGlobales);
-
-		//Calendar fecha = Calendar.getInstance().set(2019, Calendar.DECEMBER,31, 7, 0);
-		//Evento torneoFornite = new Evento(torneoFortnite, "London");
-		//pedro.agregarEvento(torneoFornite);
-		//pedro.pedirSugerenciaParaEvento(torneoFornite);
 	}
 }
