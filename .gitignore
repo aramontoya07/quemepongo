@@ -158,6 +158,7 @@ $RECYCLE.BIN/
 .idea/**/dbnavigator.xml
 
 # Gradle
+.idea
 .idea/**/gradle.xml
 .idea/**/libraries
 
@@ -222,3 +223,4 @@ vendor
 .idea/workspace.xml
 .idea/misc.xml
 .floo
+.flooignore
