@@ -10,7 +10,6 @@ import excepciones.ClimaGuardadoMuyAntiguoException;
 import excepciones.HttpCodeException;
 import excepciones.NoExisteClimaGuardadoException;
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 
 import java.util.HashMap;
@@ -40,7 +39,6 @@ public class AccuWeather extends ServicioClimatico {
 			Clima climaActual = parsearClima(JsonRespuesta);
 			this.agregarClima(nombre_ciudad,climaActual);
 			return climaActual;
-
 		}
 	}
 

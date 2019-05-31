@@ -18,7 +18,9 @@ public class Clima {
 		return temp;
 	}
 
-	public boolean esValido() { return Duration.between(fechaObtencion, LocalDate.now()).toHours() < 12; }
+	public boolean esValido() {
+		return Duration.between(fechaObtencion, LocalDate.now()).toHours() < 12;
+	}
 
 	public void setTemperatura(double temperatura) {
 		this.temp = temperatura;

@@ -17,7 +17,6 @@ import prenda.Borrador;
 import prenda.ColorRGB;
 import prenda.Material;
 
-
 class BorradorTest extends SetUp{
 
 	@BeforeEach

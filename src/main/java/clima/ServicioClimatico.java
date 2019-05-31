@@ -20,8 +20,7 @@ public abstract class ServicioClimatico {
 			throws NoExisteClimaGuardadoException, ClimaGuardadoMuyAntiguoException {
 		Clima clima = consultas.get(nombre_ciudad);
 		 if(clima == null) throw new NoExisteClimaGuardadoException();
-		 if(clima.esValido()) throw new ClimaGuardadoMuyAntiguoException();
+		 if(!clima.esValido()) throw new ClimaGuardadoMuyAntiguoException();
 		 return clima;
 	}
-
 }
