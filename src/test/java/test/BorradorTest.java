@@ -51,7 +51,7 @@ class BorradorTest extends SetUp{
 			prueba.definirMaterial(Material.ALGODON);
 		});
 	}
-	
+
 	@Test
 	@DisplayName("El material de la prenda debe ser coherente con su tipo")
 	void materialCoherenteConTipoPrenda() {

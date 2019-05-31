@@ -16,6 +16,11 @@ public class CapaDeAbrigo {
 
 	}
 
+	public Prenda getPrendaDeCategoria(Categoria categoria){
+		Prenda prendaNula = new Prenda(null,null,null,null,null);
+		return prendas.stream().findFirst().filter(prenda->prenda.esDeCategoria(categoria)).orElse(prendaNula);
+	}
+
 	public int nivelAbrigo() {
 		return prendas.stream().mapToInt(prendas -> prendas.nivelAbrigo()).sum();
 	}

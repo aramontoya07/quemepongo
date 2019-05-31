@@ -41,5 +41,11 @@ public class PrendaTest extends SetUp{
 	void tramaRayada() {
 		assertEquals(Trama.RAYADA, remeraAzul.getTrama());
 	}
+
+	@Test
+	@DisplayName("Una remera acepta superponer una campera")
+	void remeraAcepta() {
+		assertTrue(remeraAzul.aceptaSuperponerPrenda(camperaGris));
+	}
 }
 

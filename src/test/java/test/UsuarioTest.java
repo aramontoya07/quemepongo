@@ -26,7 +26,7 @@ class UsuarioTest extends SetUp{
 		pedro.actualizarSubscripcion();
 		pedro.agregarPrendas(guardarropa, prendasGlobales);
 		Set<Atuendo> listaSugerencias = pedro.pedirSugerencia();
-		assertTrue(listaSugerencias.stream().allMatch(sugerencia -> sugerencia.esAtuendoValido(sugerencia)));
+		assertTrue(listaSugerencias.stream().allMatch(atuendo -> atuendo.esAtuendoValido(atuendo)));
 	}
 
 	@Test
@@ -83,7 +83,7 @@ class UsuarioTest extends SetUp{
 
 	@Disabled
 	@Test
-	@DisplayName("No se genera sugerencia si faltan mas de 12 horas.")
+	@DisplayName("No se genera sugerencia si faltan mas de 12 horas .")
 	void eventoGeneraNoSugerencias() {
 		pedro.actualizarSubscripcion();
 		pedro.agregarGuardarropa(guardarropa);

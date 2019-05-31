@@ -1,33 +1,38 @@
 package clima;
 
 import java.time.Duration;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Clima {
 	double temp;
-	LocalDate fechaObtencion;
+	LocalDateTime fechaObtencion;
 	public int constanteTermica = 100;
 
 	public Clima(double temperatura) {
 		super();
 		this.temp = temperatura;
-		this.fechaObtencion = LocalDate.now();
+		this.fechaObtencion = LocalDateTime.now();
+	}
+
+	public boolean esValido() {
+		return Duration.between(fechaObtencion,LocalDateTime.now()).toHours() <= 12;
+		// 									INICIAL -> FINAL
+	}
+
+	public double nivelAbrigoRequerido() {
+		return constanteTermica - temp;
 	}
 
 	public double getTemperatura() {
 		return temp;
 	}
 
-	public boolean esValido() {
-		return Duration.between(fechaObtencion, LocalDate.now()).toHours() < 12;
-	}
-
 	public void setTemperatura(double temperatura) {
 		this.temp = temperatura;
 	}
 
-	public double nivelAbrigoRequerido() {
-		return constanteTermica - temp;
+	public void setFechaObtencion(LocalDateTime date){
+		this.fechaObtencion = date;
 	}
 
 	@Override
