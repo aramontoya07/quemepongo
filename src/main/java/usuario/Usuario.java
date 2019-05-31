@@ -60,11 +60,7 @@ public class Usuario {
 	public void agregarEvento(Evento evento){
 		eventos.add(evento);
 		Timer tarea = new Timer();
-<<<<<<< HEAD
 		tarea.schedule(evento, evento.dateEventoCercano().getTime());
-=======
-		tarea.schedule(evento, evento.dateEvento().getTime());
->>>>>>> 0fa6e354bd54cd2b3805134cc0f2721d258a4978
 	}
 
 	public Set<Atuendo> pedirSugerencia(){
@@ -72,12 +68,12 @@ public class Usuario {
 				.flatMap(Collection::stream).collect(Collectors.toSet());
 	}
 
-	public Set<Sugerencias> pedirSugerenciaSegunClima(ServicioClimatico provedor, String ubicacion) {
+	public Set<SugerenciasClima> pedirSugerenciaSegunClima(ServicioClimatico provedor, String ubicacion) {
 		return guardarropas.stream().map(unGuardarropa -> unGuardarropa.generarSugerenciasSegunClima(provedor, ubicacion))
 				.collect(Collectors.toSet());
 	}
 
-	public Set<Sugerencias> pedirSugerenciaParaEvento(Evento evento) {
+	public Set<SugerenciasClima> pedirSugerenciaParaEvento(Evento evento) {
 		return evento.pedirSugerencias();
 	}
 

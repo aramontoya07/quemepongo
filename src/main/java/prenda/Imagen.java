@@ -15,16 +15,7 @@ public class Imagen {
 
 	public Imagen(String rutaImagen) throws IOException {
 		this.imagenOriginal = ImageIO.read(new File(rutaImagen));
-		setTipo();
-	}
-
-	public void setTipo() {
 		this.tipo = imagenOriginal.getType();
-	}
-
-	public int obtenerTipo(BufferedImage imagenOriginal) {
-		int tipo = imagenOriginal.getType();
-		return tipo;
 	}
 
 	public BufferedImage normalizar() {
@@ -34,6 +25,11 @@ public class Imagen {
 		grafico.dispose();
 		return imagenNormalizada;
 	}
+
+	public int obtenerTipo() {
+		return tipo;
+	}
+
 	/*
 	 * public void leerImagen(String ruta) throws IOException {
 	 * 

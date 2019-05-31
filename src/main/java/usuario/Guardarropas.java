@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import atuendo.Sugerencias;
+import atuendo.SugerenciasClima;
 import com.google.common.collect.Sets;
 
 import atuendo.Atuendo;
@@ -25,7 +25,6 @@ public class Guardarropas {
 
 	public Guardarropas() { }
 
-	@SuppressWarnings("unchecked")
 	public Set<AtuendoBasico> generarSugerenciaBasica(){
 		return Sets
 				.cartesianProduct(prendasPrimarias(superiores), prendasPrimarias(inferiores),
@@ -52,8 +51,8 @@ public class Guardarropas {
 				.collect(Collectors.toSet());
 	}
 
-	public Sugerencias generarSugerenciasSegunClima(ServicioClimatico provedorElegido, String ubicacion){
-		Sugerencias sugerenciasClima = new Sugerencias(10);
+	public SugerenciasClima generarSugerenciasSegunClima(ServicioClimatico provedorElegido, String ubicacion){
+		SugerenciasClima sugerenciasClima = new Sugerencias(10);
 		generarSugerenciasPosibles().stream()
 				.forEach(atuendo -> sugerenciasClima.agregarAtuendoSegunClima(atuendo,provedorElegido.obtenerClima(ubicacion)));
 		return sugerenciasClima;
