@@ -13,7 +13,7 @@ import excepciones.*;
 
 import java.util.Set;
 
-class UsuarioSetUp extends SetUp{
+class UsuarioSetUp extends SetUp {
 
 	@BeforeEach
 	private void setUp() {
@@ -26,7 +26,7 @@ class UsuarioSetUp extends SetUp{
 		pedro.agregarGuardarropa(guardarropa);
 		pedro.actualizarSubscripcion();
 		pedro.agregarPrendas(guardarropa, prendasGlobales);
-		Set <Atuendo> listaSugerencias = pedro.pedirSugerencia();
+		Set<Atuendo> listaSugerencias = pedro.pedirSugerencia();
 		assertTrue(listaSugerencias.stream().allMatch(atuendo -> atuendo.esAtuendoValido(atuendo)));
 	}
 
@@ -67,7 +67,7 @@ class UsuarioSetUp extends SetUp{
 		pedro.agregarGuardarropa(guardarropa);
 		pedro.actualizarSubscripcion();
 		pedro.agregarPrendas(guardarropa, prendasGlobales);
-		Set<SugerenciasClima> listaSugerencias = pedro.pedirSugerenciaSegunClima(new MockAgradable(),"London");
+		Set<SugerenciasClima> listaSugerencias = pedro.pedirSugerenciaSegunClima(new MockAgradable(), "London");
 		assertTrue(listaSugerencias.stream()
 				.allMatch(sugerencia -> sugerencia.esAptaParaClima(new MockAgradable().obtenerClima("London"))));
 	}
@@ -81,4 +81,5 @@ class UsuarioSetUp extends SetUp{
 		assertTrue(listaSugerencias.stream()
 				.allMatch(sugerencia -> sugerencia.esAptaParaClima(new MockCalor().obtenerClima("Palermo"))));
 	}
+
 }

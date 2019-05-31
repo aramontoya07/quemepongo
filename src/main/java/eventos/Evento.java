@@ -6,6 +6,8 @@ import clima.ServicioClimatico;
 import excepciones.EventoLejanoException;
 import excepciones.NingunaSugerenciaParaEventoException;
 import usuario.Usuario;
+
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;

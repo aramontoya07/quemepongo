@@ -52,7 +52,7 @@ public class Usuario {
 		prendas.forEach(prenda -> agregarPrenda(guardarropa, prenda));
 	}
 
-	private void agregarPrenda(Guardarropas guardarropa, Prenda prenda) {
+	public void agregarPrenda(Guardarropas guardarropa, Prenda prenda) {
 		if(!subscripcion.puedoAgregar(guardarropa.cantidadDePrendas())) throw new AgregarPrendaException();
 		guardarropa.agregarPrenda(prenda);
 	}

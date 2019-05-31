@@ -42,7 +42,7 @@ class EventosTest extends SetUp{
 
     @Test
     @DisplayName("Se genera sugerencia si faltan menos de 12 horas.")
-    void eventoGeneraSugerencias() {
+    void eventoGeneraSugerencias() throws InterruptedException {
         pedro.actualizarSubscripcion();
         pedro.agregarGuardarropa(guardarropa);
         pedro.agregarPrendas(guardarropa, prendasGlobales);
@@ -51,6 +51,7 @@ class EventosTest extends SetUp{
         fechaTorneo.add(Calendar.HOUR_OF_DAY, 11);
         Evento torneoFornite = new Evento(pedro, fechaTorneo, "London",new MockAgradable());
         pedro.agregarEvento(torneoFornite);
+        Thread.sleep(1000); //Perdon franco :C, no tengo otra forma de probar esto, te lo justifico 1 pa 1 sin camiseta.
         Set<SugerenciasClima> sugerenciasParaEvento =  pedro.pedirSugerenciaParaEvento(torneoFornite);
         assertTrue(!sugerenciasParaEvento.isEmpty());
     }

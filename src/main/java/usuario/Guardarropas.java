@@ -13,16 +13,17 @@ import atuendo.Atuendo;
 import atuendo.AtuendoBasico;
 import clima.ServicioClimatico;
 import excepciones.NoExistePrendaEnGuardarropaException;
+import excepciones.PrendaYaExisteException;
 import prenda.Imagen;
 import prenda.Prenda;
 
 public class Guardarropas {
 
 	public Set<Prenda> superiores = new HashSet<Prenda>();
+
 	public Set<Prenda> inferiores = new HashSet<Prenda>();
 	public Set<Prenda> calzados = new HashSet<Prenda>();
 	public Set<Prenda> accesorios = new HashSet<Prenda>();
-
 	public Guardarropas() { }
 
 	@SuppressWarnings("unchecked")
@@ -68,6 +69,7 @@ public class Guardarropas {
 	}
 
 	public void agregarPrenda(Prenda prenda) { //@TODO testear
+		if (existePrenda(prenda)) throw new PrendaYaExisteException();
 		switch (prenda.getCategoria()) {
 		case PARTE_SUPERIOR:
 			superiores.add(prenda);
@@ -95,5 +97,9 @@ public class Guardarropas {
 	public boolean existePrenda(Prenda prenda) {  //TODO testear
 		return (superiores.contains(prenda) || inferiores.contains(prenda) || calzados.contains(prenda)
 				|| accesorios.contains(prenda));
+	}
+
+	public Set<Prenda> getSuperiores() {
+		return superiores;
 	}
 }
