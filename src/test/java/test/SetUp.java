@@ -12,21 +12,22 @@ import java.util.Set;
 
 public abstract class SetUp {
     TipoPrenda remera = new TipoPrenda(Categoria.PARTE_SUPERIOR,
-            new ArrayList<Material>(Arrays.asList(Material.ALGODON, Material.SEDA)), 10, TipoUso.PRIMARIA);
+            new ArrayList<Material>(Arrays.asList(Material.ALGODON, Material.SEDA)), 12, TipoUso.PRIMARIA);
     TipoPrenda pantalon = new TipoPrenda(Categoria.PARTE_INFERIOR,
-            new ArrayList<Material>(Arrays.asList(Material.JEAN, Material.CUERO, Material.ALGODON)), 10,
+            new ArrayList<Material>(Arrays.asList(Material.JEAN, Material.CUERO, Material.ALGODON)), 5,
             TipoUso.PRIMARIA);
-    TipoPrenda zapatilla = new TipoPrenda(Categoria.CALZADO, new ArrayList<Material>(Arrays.asList(Material.CUERO)), 10,
+    TipoPrenda zapatilla = new TipoPrenda(Categoria.CALZADO, new ArrayList<Material>(Arrays.asList(Material.CUERO)), 3,
             TipoUso.PRIMARIA);
     TipoPrenda anteojo = new TipoPrenda(Categoria.ACCESORIO,
             new ArrayList<Material>(Arrays.asList(Material.VIDRIO, Material.PLASTICO)), 0, TipoUso.SECUNDARIA);
     TipoPrenda campera = new TipoPrenda(Categoria.PARTE_SUPERIOR,
-            new ArrayList<Material>(Arrays.asList(Material.ALGODON, Material.SEDA)), 20, TipoUso.SECUNDARIA);
+            new ArrayList<Material>(Arrays.asList(Material.LANA, Material.SEDA)), 20, TipoUso.SECUNDARIA);
 
     Borrador borrador_remeraAzul = new Borrador();
+    Borrador borrador_remeraDeportiva = new Borrador();
+    Borrador borrador_camperaGris = new Borrador();
     Borrador borrador_jeanRojo = new Borrador();
     Borrador borrador_zapatilla = new Borrador();
-    Borrador borrador_remeraDeportiva = new Borrador();
     Borrador borrador_jeanNegro = new Borrador();
     Borrador borrador_ojotas = new Borrador();
     Borrador borrador_anteojos = new Borrador();
@@ -34,6 +35,7 @@ public abstract class SetUp {
 
     Prenda remeraAzul;
     Prenda remeraDeportiva;
+    Prenda camperaGris;
     Prenda jeanRojo;
     Prenda jeanNegro;
     Prenda ojotas;
@@ -60,9 +62,11 @@ public abstract class SetUp {
         borrador_ojotas.crearBorrador(new ColorRGB(0, 0, 0), zapatilla, Material.CUERO);
         borrador_anteojos.crearBorrador(new ColorRGB(0, 0, 0), anteojo, Material.VIDRIO);
         borrador_anteojosDeSol.crearBorrador(new ColorRGB(0, 0, 0), anteojo, Material.PLASTICO);
+        borrador_camperaGris.crearBorrador(new ColorRGB(245, 5, 128), campera, Material.LANA);
 
         borrador_remeraAzul.definirTrama(Trama.RAYADA);
 
+        camperaGris = borrador_camperaGris.crearPrenda();
         remeraAzul = borrador_remeraAzul.crearPrenda();
         remeraDeportiva = borrador_remeraDeportiva.crearPrenda();
         jeanRojo = borrador_jeanRojo.crearPrenda();

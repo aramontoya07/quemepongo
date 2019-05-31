@@ -17,7 +17,7 @@ import prenda.Borrador;
 import prenda.ColorRGB;
 import prenda.Material;
 
-class BorradorTest extends SetUp{
+class BorradorSetUp extends SetUp{
 
 	@BeforeEach
 	private void setUp() {
@@ -51,7 +51,7 @@ class BorradorTest extends SetUp{
 			prueba.definirMaterial(Material.ALGODON);
 		});
 	}
-	
+
 	@Test
 	@DisplayName("El material de la prenda debe ser coherente con su tipo")
 	void materialCoherenteConTipoPrenda() {

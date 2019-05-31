@@ -7,12 +7,13 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
 import atuendo.*;
 import clima.*;
 import excepciones.*;
 
-class UsuarioTest extends SetUp{
+import java.util.Set;
+
+class UsuarioSetUp extends SetUp{
 
 	@BeforeEach
 	private void setUp() {
@@ -25,8 +26,8 @@ class UsuarioTest extends SetUp{
 		pedro.agregarGuardarropa(guardarropa);
 		pedro.actualizarSubscripcion();
 		pedro.agregarPrendas(guardarropa, prendasGlobales);
-		Set<Atuendo> listaSugerencias = pedro.pedirSugerencia();
-		assertTrue(listaSugerencias.stream().allMatch(sugerencia -> sugerencia.esAtuendoValido(sugerencia)));
+		Set <Atuendo> listaSugerencias = pedro.pedirSugerencia();
+		assertTrue(listaSugerencias.stream().allMatch(atuendo -> atuendo.esAtuendoValido(atuendo)));
 	}
 
 	@Test
@@ -36,7 +37,7 @@ class UsuarioTest extends SetUp{
 		pedro.agregarGuardarropa(guardarropa);
 		pedro.actualizarSubscripcion();
 		pedro.agregarPrendas(guardarropa, prendasGlobales);
-		pedro.agregarGuardarropa(otroGuardarropa);
+
 		Set<Atuendo> listaSugerencias = pedro.pedirSugerencia();
 		assertEquals(32, listaSugerencias.size());
 	}
@@ -61,14 +62,14 @@ class UsuarioTest extends SetUp{
 	}
 
 	@Test
-	@DisplayName("Devuelve sugerencias aptas para un clima frio")
+	@DisplayName("Devuelve sugerencias aptas para un clima agradable")
 	void prendasParaFrio() {
 		pedro.agregarGuardarropa(guardarropa);
 		pedro.actualizarSubscripcion();
 		pedro.agregarPrendas(guardarropa, prendasGlobales);
-		Set<Sugerencias> listaSugerencias = pedro.pedirSugerenciaSegunClima(new MockFrio(), "london");
+		Set<Sugerencias> listaSugerencias = pedro.pedirSugerenciaSegunClima(new MockAgradable(), "london");
 		assertTrue(listaSugerencias.stream()
-				.allMatch(sugerencia -> sugerencia.esAptaParaClima(new MockFrio().obtenerClima("Tu madre"))));
+				.allMatch(sugerencia -> sugerencia.esAptaParaClima(new MockAgradable().obtenerClima("Tu madre"))));
 	}
 
 	@Test
@@ -83,7 +84,7 @@ class UsuarioTest extends SetUp{
 
 	@Disabled
 	@Test
-	@DisplayName("No se genera sugerencia si faltan mas de 12 horas.")
+	@DisplayName("No se genera sugerencia si faltan mas de 12 horas .")
 	void eventoGeneraNoSugerencias() {
 		pedro.actualizarSubscripcion();
 		pedro.agregarGuardarropa(guardarropa);

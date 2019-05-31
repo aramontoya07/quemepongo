@@ -22,8 +22,8 @@ public class OpenWeather extends ServicioClimatico {
 		try{
 			return consultarClimaGuardado(nombre_ciudad);
 		}catch(NoExisteClimaGuardadoException | ClimaGuardadoMuyAntiguoException e){
-			ClientResponse respuesta = Api_get(
-					"http://api.openweathermap.org/data/2.5/weather?q=" + nombre_ciudad + "&lang=es&APPID=" + api_key + "&units=metric&lang=es");
+			ClientResponse respuesta = Api_get("http://api.openweathermap.org/data/2.5/weather?q="
+					+ nombre_ciudad + "&APPID=" + api_key + "&units=metric&lang=es");
 			String JsonRespuesta = respuesta.getEntity(String.class);
 			
 			Clima climaActual = parsearClima(JsonRespuesta);

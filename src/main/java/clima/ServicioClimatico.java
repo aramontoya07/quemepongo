@@ -16,7 +16,7 @@ public abstract class ServicioClimatico {
 		consultas.put(nombre_ciudad, climaActual);
 	}
 
-	Clima consultarClimaGuardado(String nombre_ciudad)
+	public Clima consultarClimaGuardado(String nombre_ciudad)
 			throws NoExisteClimaGuardadoException, ClimaGuardadoMuyAntiguoException {
 		Clima clima = consultas.get(nombre_ciudad);
 		 if(clima == null) throw new NoExisteClimaGuardadoException();

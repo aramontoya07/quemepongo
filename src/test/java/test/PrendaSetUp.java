@@ -11,7 +11,7 @@ import prenda.Categoria;
 import prenda.Prenda;
 import prenda.Trama;
 
-public class PrendaTest extends SetUp{
+public class PrendaSetUp extends SetUp{
 
 	@BeforeEach
 	private void setUp() {
@@ -40,6 +40,12 @@ public class PrendaTest extends SetUp{
 	@DisplayName("La trama es rayada")
 	void tramaRayada() {
 		assertEquals(Trama.RAYADA, remeraAzul.getTrama());
+	}
+
+	@Test
+	@DisplayName("Una remera acepta superponer una campera")
+	void remeraAcepta() {
+		assertTrue(remeraAzul.aceptaSuperponerPrenda(camperaGris));
 	}
 }
 

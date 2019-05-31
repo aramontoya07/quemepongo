@@ -42,6 +42,10 @@ public class Prenda {
 		return material;
 	}
 
+	public List<TipoPrenda> getTiposAceptados(){
+		return tipo.getTiposAceptados();
+	}
+
 	public Trama getTrama() {
 		return trama;
 	}

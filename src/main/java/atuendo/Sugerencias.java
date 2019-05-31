@@ -23,4 +23,12 @@ public class Sugerencias {
         return exactas.stream().allMatch(exacta -> exacta.nivelDeAdaptacionAlClima(clima)==0) &&
                 aproximadas.stream().allMatch(aproximada -> aproximada.nivelDeAdaptacionAlClima(clima) <= margen);
     }
+
+    public Set<Atuendo> getExactas(){
+        return exactas;
+    }
+
+    public Set<Atuendo> getAproximadas(){
+        return exactas;
+    }
 }

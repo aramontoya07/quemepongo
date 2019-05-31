@@ -29,7 +29,6 @@ public class AccuWeather extends ServicioClimatico {
 		try{
 			return consultarClimaGuardado(nombre_ciudad);
 		}catch(NoExisteClimaGuardadoException | ClimaGuardadoMuyAntiguoException e){
-
 			Ubicacion ubicacionActual = obtenerUbicacion(nombre_ciudad);
 			keys.put(nombre_ciudad,ubicacionActual);
 			ClientResponse respuesta = Api_get("http://dataservice.accuweather.com/currentconditions/v1/"
