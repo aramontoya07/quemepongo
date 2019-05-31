@@ -30,7 +30,9 @@ public class Usuario {
 		this.subscripcion = new SubscripcionGratuita();
 	}
 
-
+	public Set<Guardarropas> getGuardarropas() {
+		return guardarropas;
+	}
 
 	public void actualizarSubscripcion() {
 		subscripcion = new SubscripcionPremium();
@@ -57,6 +59,8 @@ public class Usuario {
 
 	public void agregarEvento(Evento evento){
 		eventos.add(evento);
+		Timer tarea = new Timer();
+		tarea.schedule(evento, evento.dateEvento());
 	}
 
 	public Set<Atuendo> pedirSugerencia(){
@@ -64,9 +68,13 @@ public class Usuario {
 				.flatMap(Collection::stream).collect(Collectors.toSet());
 	}
 
-	public Set<Sugerencias> pedirSugerenciaSegunClima(ServicioClimatico provedor) {
-		return guardarropas.stream().map(unGuardarropa -> unGuardarropa.generarSugerenciasSegunClima(provedor))
+	public Set<Sugerencias> pedirSugerenciaSegunClima(ServicioClimatico provedor, String ubicacion) {
+		return guardarropas.stream().map(unGuardarropa -> unGuardarropa.generarSugerenciasSegunClima(provedor, ubicacion))
 				.collect(Collectors.toSet());
+	}
+
+	public Set<Sugerencias> pedirSugerenciaParaEvento(Evento evento) {
+		return evento.pedirSugerencias();
 	}
 
 	public void aceptarAtuendo(Atuendo atuendo) {

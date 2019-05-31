@@ -17,14 +17,16 @@ public class AtuendoBasico {
 		calzado = prendaCalzado;
 	}
 
+	private void agregarLosQueAcepta(Set<Prenda> setAManipular, Set<Prenda> prendasAEvaluar, Prenda prendaCriterio){
+		setAManipular.addAll(prendasAEvaluar.stream().filter(prenda -> prendaCriterio.aceptaSuperponerPrenda(prenda))
+				.collect(Collectors.toSet()));
+	}
+
 	public Set<Prenda> prendasPermitidas(Set<Prenda> superiores, Set<Prenda> inferiores, Set<Prenda> calzados) {
 		Set<Prenda> setPermitido = new HashSet<Prenda>();
-		setPermitido.addAll(inferiores.stream().filter(prenda -> inferior.aceptaSuperponerPrenda(prenda))
-				.collect(Collectors.toSet()));
-		setPermitido.addAll(superiores.stream().filter(prenda -> superior.aceptaSuperponerPrenda(prenda))
-				.collect(Collectors.toSet()));
-		setPermitido.addAll(
-				calzados.stream().filter(prenda -> calzado.aceptaSuperponerPrenda(prenda)).collect(Collectors.toSet()));
+		agregarLosQueAcepta(setPermitido, inferiores, inferior);
+		agregarLosQueAcepta(setPermitido, superiores, superior);
+		agregarLosQueAcepta(setPermitido, calzados, calzado);
 		return setPermitido;
 	}
 

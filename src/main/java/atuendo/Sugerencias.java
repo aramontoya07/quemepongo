@@ -18,4 +18,9 @@ public class Sugerencias {
         if(atuendo.nivelDeAdaptacionAlClima(climaActual) == 0) exactas.add(atuendo);
         if(Math.abs(atuendo.nivelDeAdaptacionAlClima(climaActual)) < margen) aproximadas.add(atuendo);
     }
+
+    public boolean esAptaParaClima(Clima clima){
+        return exactas.stream().allMatch(exacta -> exacta.nivelDeAdaptacionAlClima(clima)==0) &&
+                aproximadas.stream().allMatch(aproximada -> aproximada.nivelDeAdaptacionAlClima(clima) <= margen);
+    }
 }

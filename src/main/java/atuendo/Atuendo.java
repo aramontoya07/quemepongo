@@ -44,7 +44,7 @@ public class Atuendo {
 		capaDisponible.agregarPrenda(prenda);
 	}
 
-	public double nivelDeAdaptacionAlClima(Clima climaActual) {
+	public double nivelDeAdaptacionAlClima(Clima climaActual){
 		return this.nivelAbrigo() - climaActual.nivelAbrigoRequerido();
 	}
 }

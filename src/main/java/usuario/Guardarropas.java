@@ -23,12 +23,10 @@ public class Guardarropas {
 	public Set<Prenda> calzados = new HashSet<Prenda>();
 	public Set<Prenda> accesorios = new HashSet<Prenda>();
 
-	public Guardarropas() {
-
-	}
+	public Guardarropas() { }
 
 	@SuppressWarnings("unchecked")
-	public Set<AtuendoBasico> generarSugerenciaBasica() {
+	public Set<AtuendoBasico> generarSugerenciaBasica(){
 		return Sets
 				.cartesianProduct(prendasPrimarias(superiores), prendasPrimarias(inferiores),
 						prendasPrimarias(calzados))
@@ -36,11 +34,11 @@ public class Guardarropas {
 				.collect(Collectors.toSet());
 	}
 
-	public Set<Prenda> prendasPrimarias(Set<Prenda> prendas) {
+	public Set<Prenda> prendasPrimarias(Set<Prenda> prendas){
 		return prendas.stream().filter(prenda -> prenda.esPrimaria()).collect(Collectors.toSet());
 	}
 
-	public Set<Atuendo> generarSugerenciasPosibles() {
+	public Set<Atuendo> generarSugerenciasPosibles(){
 		Set<AtuendoBasico> atuendosBasicos = generarSugerenciaBasica();
 		return atuendosBasicos.stream().map(atuendo -> combinarConSecundarios(atuendo))
 				.flatMap(atuendos -> atuendos.stream()).collect(Collectors.toSet());
@@ -54,9 +52,10 @@ public class Guardarropas {
 				.collect(Collectors.toSet());
 	}
 
-	public Sugerencias generarSugerenciasSegunClima(ServicioClimatico provedorElegido) {
+	public Sugerencias generarSugerenciasSegunClima(ServicioClimatico provedorElegido, String ubicacion){
 		Sugerencias sugerenciasClima = new Sugerencias(10);
-		generarSugerenciasPosibles().stream().forEach(atuendo -> sugerenciasClima.agregarAtuendoSegunClima(atuendo,provedorElegido.obtenerClima()));
+		generarSugerenciasPosibles().stream()
+				.forEach(atuendo -> sugerenciasClima.agregarAtuendoSegunClima(atuendo,provedorElegido.obtenerClima(ubicacion)));
 		return sugerenciasClima;
 	}
 
@@ -65,7 +64,7 @@ public class Guardarropas {
 	}
 
 	public void agregarPrendas(Set<Prenda> prendas) {
-		prendas.parallelStream().forEach(prenda -> agregarPrenda(prenda));
+		prendas.stream().forEach(prenda -> agregarPrenda(prenda));
 	}
 
 	public void agregarPrenda(Prenda prenda) { //@TODO testear

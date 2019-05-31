@@ -1,23 +1,35 @@
 package clima;
 
+import java.time.Duration;
+import java.time.LocalDate;
+
 public class Clima {
-	double temperatura;
+	double temp;
+	LocalDate fechaObtencion;
 	public int constanteTermica = 100;
 
 	public Clima(double temperatura) {
 		super();
-		this.temperatura = temperatura;
+		this.temp = temperatura;
+		this.fechaObtencion = LocalDate.now();
 	}
 
 	public double getTemperatura() {
-		return temperatura;
+		return temp;
 	}
 
+	public boolean esValido() { return Duration.between(fechaObtencion, LocalDate.now()).toHours() < 12; }
+
 	public void setTemperatura(double temperatura) {
-		this.temperatura = temperatura;
+		this.temp = temperatura;
 	}
 
 	public double nivelAbrigoRequerido() {
-		return constanteTermica - temperatura;
+		return constanteTermica - temp;
+	}
+
+	@Override
+	public String toString() {
+		return "El clima en la ciudad de: No tengo la ciudad, es: " + temp + " en la fecha: " + fechaObtencion;
 	}
 }

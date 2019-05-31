@@ -1,30 +1,54 @@
 package clima;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+
+
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
+import excepciones.ClimaGuardadoMuyAntiguoException;
 import excepciones.HttpCodeException;
+import excepciones.NoExisteClimaGuardadoException;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-public class AccuWeather implements ServicioClimatico {
 
-	public Ubicacion ubicacionActual;
+import java.util.HashMap;
+import java.util.Map;
+
+public class AccuWeather extends ServicioClimatico {     
+	private static AccuWeather single_instance = null;
+	private Map<String,Ubicacion> keys = new HashMap<>();
 	private String api_key = "hdE6Cz46t4fXquFAM65p4k1NTNqOSLhG";
 
-	public Clima obtenerClima() {
-		ClientResponse respuesta = Api_get("http://dataservice.accuweather.com/forecasts/v1/hourly/12hour/"
-				+ ubicacionActual.getKey() + "?apikey=" + api_key + "&language=es");
-		String JsonRespuesta = respuesta.getEntity(String.class);
-		return ParsearRespuesta(JsonRespuesta, Clima.class);
+	public static AccuWeather getInstance() {
+		if (single_instance == null) single_instance = new AccuWeather();
+		return single_instance;
 	}
 
-	public void definirUbicacion(String nombre_ciudad) {
+	public Clima obtenerClima(String nombre_ciudad) {
+		try{
+			return consultarClimaGuardado(nombre_ciudad);
+		}catch(NoExisteClimaGuardadoException | ClimaGuardadoMuyAntiguoException e){
+
+			Ubicacion ubicacionActual = obtenerUbicacion(nombre_ciudad);
+			keys.put(nombre_ciudad,ubicacionActual);
+			ClientResponse respuesta = Api_get("http://dataservice.accuweather.com/currentconditions/v1/"
+					+ ubicacionActual.getKey() + "?apikey=" + api_key + "&language=es");
+			String JsonRespuesta = respuesta.getEntity(String.class);
+
+			Clima climaActual = parsearClima(JsonRespuesta);
+			this.agregarClima(nombre_ciudad,climaActual);
+			return climaActual;
+
+		}
+	}
+
+	public Ubicacion obtenerUbicacion(String nombre_ciudad) {
 		ClientResponse respuesta = Api_get("http://dataservice.accuweather.com/locations/v1/cities/search?apikey="
 				+ api_key + "&q=" + nombre_ciudad + "&language=es");
 		String JsonRespuesta = respuesta.getEntity(String.class);
-		ubicacionActual = ParsearRespuesta(JsonRespuesta, Ubicacion.class);
+		return parsearUbicacion(JsonRespuesta);
 	}
 
 	public ClientResponse Api_get(String request) {
@@ -37,9 +61,13 @@ public class AccuWeather implements ServicioClimatico {
 		return response;
 	}
 
-	public <T> T ParsearRespuesta(String Json, Class<T> clase) {
-		GsonBuilder builder = new GsonBuilder();
-		Gson gson = builder.create();
-		return gson.fromJson(Json, clase);
+	public Clima parsearClima(String JSON){
+		JSONArray array = new JSONArray(JSON);
+		return new Clima(array.getJSONObject(0).getJSONObject("Temperature").getJSONObject("Metric").getDouble("Value"));
+	}
+
+	public Ubicacion parsearUbicacion(String JSON){
+		JSONArray array = new JSONArray(JSON);
+		return new Ubicacion(array.getJSONObject(0).getString("Key"));
 	}
 }

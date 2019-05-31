@@ -2,9 +2,7 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,16 +14,16 @@ import excepciones.MaterialNoPermitidoException;
 import excepciones.MaterialObligatorioException;
 import excepciones.TipoPrendaObligatorioException;
 import prenda.Borrador;
-import prenda.Categoria;
 import prenda.ColorRGB;
 import prenda.Material;
-import prenda.TipoPrenda;
-import prenda.TipoUso;
 
-class BorradorTest {
 
-	TipoPrenda remera = new TipoPrenda(Categoria.PARTE_SUPERIOR,
-			new ArrayList<Material>(Arrays.asList(Material.ALGODON, Material.SEDA)), 10, TipoUso.PRIMARIA);
+class BorradorTest extends SetUp{
+
+	@BeforeEach
+	private void setUp() {
+		setear();
+	}
 
 	@Test
 	@DisplayName("La prenda debe tener un color primario y opcionalmente un color secundario DISTINTO")

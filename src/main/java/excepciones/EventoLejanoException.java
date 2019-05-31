@@ -7,4 +7,5 @@ public class EventoLejanoException extends RuntimeException {
     public String toString() {
         return "Error: Todavia no puedo generar una sugerencia para este evento.";
     }
+
 }

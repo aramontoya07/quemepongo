@@ -6,17 +6,33 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
+import excepciones.ClimaGuardadoMuyAntiguoException;
 import excepciones.HttpCodeException;
+import excepciones.NoExisteClimaGuardadoException;
+import org.json.JSONObject;
 
-public class OpenWeather implements ServicioClimatico {
-	String Ciudad_actual;
+public class OpenWeather extends ServicioClimatico {
+	private static OpenWeather single_instance = null;
 	String api_key = "dd868503319e88af289ea1772d90c952";
 
-	public Clima obtenerClima() {
-		ClientResponse respuesta = Api_get(
-				"api.openweathermap.org/data/2.5/weather?q=" + Ciudad_actual + "&lang=es&APPID=" + api_key);
-		String JsonRespuesta = respuesta.getEntity(String.class);
-		return ParsearRespuesta(JsonRespuesta, Clima.class);
+	public static OpenWeather getInstance(){
+		if (single_instance == null) single_instance = new OpenWeather();
+		return single_instance;
+	}
+
+	public Clima obtenerClima(String nombre_ciudad) {
+		try{
+			return consultarClimaGuardado(nombre_ciudad);
+		}catch(NoExisteClimaGuardadoException | ClimaGuardadoMuyAntiguoException e){
+			ClientResponse respuesta = Api_get(
+					"http://api.openweathermap.org/data/2.5/weather?q=" + nombre_ciudad + "&lang=es&APPID=" + api_key + "&units=metric&lang=es");
+			String JsonRespuesta = respuesta.getEntity(String.class);
+			
+			Clima climaActual = parsearClima(JsonRespuesta);
+			
+			agregarClima(nombre_ciudad,climaActual);
+			return climaActual;
+		}
 	}
 
 	public ClientResponse Api_get(String request) {
@@ -28,10 +44,9 @@ public class OpenWeather implements ServicioClimatico {
 		}
 		return response;
 	}
-
-	public <T> T ParsearRespuesta(String Json, Class<T> clase) {
-		GsonBuilder builder = new GsonBuilder();
-		Gson gson = builder.create();
-		return gson.fromJson(Json, clase);
+	
+	public Clima parsearClima(String JSON){
+		JSONObject json = new JSONObject(JSON);
+		return new Clima(json.getJSONObject("main").getDouble("temp"));
 	}
 }

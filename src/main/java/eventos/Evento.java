@@ -11,20 +11,23 @@ import usuario.Usuario;
 import java.util.*;
 
 
-public class Evento {
+public class Evento extends TimerTask{
     private Calendar fecha;
     private String ubicacion;
+    private Usuario user;
+    private ServicioClimatico provedor;
     private Set<Sugerencias> sugerenciasEvento = new HashSet();
 
-    public Evento(Calendar fecha, String ubicacion) {
+
+    public Evento(Usuario user, Calendar fecha, String ubicacion,ServicioClimatico provedor) {
         this.fecha = fecha;
         this.ubicacion = ubicacion;
+        this.user = user;
+        this.provedor = provedor;
     }
 
-    public void generarSugerencias(Usuario user, ServicioClimatico servicio){
-        Timer tarea = new Timer();
-        tarea.schedule(new DarSugerenciaTime(user, this, servicio), this.dateEvento());
-        return;
+    public void run(){
+        sugerenciasEvento = user.pedirSugerenciaSegunClima(provedor,ubicacion);
     }
 
     public Date dateEvento(){
@@ -45,7 +48,7 @@ public class Evento {
         this.sugerenciasEvento = sugerenciasEvento;
     }
 
-    public Set<Sugerencias> pedirSugerencias() {
+    public Set<Sugerencias> pedirSugerencias(){
         if(Calendar.getInstance().getTime().before(this.dateEvento())) throw new EventoLejanoException();
         if(sugerenciasEvento.isEmpty()) throw new NingunaSugerenciaParaEventoException();
         return sugerenciasEvento;

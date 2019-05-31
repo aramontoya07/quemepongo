@@ -1,8 +1,8 @@
 package clima;
 
-public class MockFrio implements ServicioClimatico {
+public class MockFrio extends ServicioClimatico {
 
-	public Clima obtenerClima() {
+	public Clima obtenerClima(String nombre_ciudad) {
 		return new Clima(0);
 	}
 
