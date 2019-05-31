@@ -32,6 +32,7 @@ public class Evento extends TimerTask {
         sugerenciasEvento = user.pedirSugerenciaSegunClima(provedor,ubicacion);
     }
 
+<<<<<<< HEAD
     public Calendar dateEventoCercano(){ //fecha a partir de la cual el evento esta cercano
         Calendar fechaEvento = (Calendar) fecha.clone();
         fechaEvento.add(Calendar.HOUR_OF_DAY, -12);
@@ -42,6 +43,12 @@ public class Evento extends TimerTask {
         if(Calendar.getInstance().getTime().before(this.dateEventoCercano().getTime())) throw new EventoLejanoException(); //Lo pidio muy antes
         if(sugerenciasEvento.isEmpty()) throw new NingunaSugerenciaParaEventoException(); //No hay sugerencias que se adapten
         return sugerenciasEvento;
+=======
+    public Calendar dateEvento(){
+        Calendar fechaEvento = (Calendar) fecha.clone();
+        fechaEvento.add(Calendar.HOUR_OF_DAY, -12);
+        return fechaEvento;
+>>>>>>> 0fa6e354bd54cd2b3805134cc0f2721d258a4978
     }
 
     public Calendar getFecha() {
@@ -55,4 +62,13 @@ public class Evento extends TimerTask {
     public void setSugerenciasEvento(Set<Sugerencias> sugerenciasEvento) {
         this.sugerenciasEvento = sugerenciasEvento;
     }
+<<<<<<< HEAD
+=======
+
+    public Set<Sugerencias> pedirSugerencias(){
+        if(Calendar.getInstance().getTime().before(this.dateEvento().getTime())) throw new EventoLejanoException();
+        if(sugerenciasEvento.isEmpty()) throw new NingunaSugerenciaParaEventoException();
+        return sugerenciasEvento;
+    }
+>>>>>>> 0fa6e354bd54cd2b3805134cc0f2721d258a4978
 }

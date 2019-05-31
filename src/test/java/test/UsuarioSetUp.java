@@ -26,7 +26,11 @@ class UsuarioSetUp extends SetUp{
 		pedro.agregarGuardarropa(guardarropa);
 		pedro.actualizarSubscripcion();
 		pedro.agregarPrendas(guardarropa, prendasGlobales);
+<<<<<<< HEAD:src/test/java/test/UsuarioSetUp.java
 		Set <Atuendo> listaSugerencias = pedro.pedirSugerencia();
+=======
+		Set<Atuendo> listaSugerencias = pedro.pedirSugerencia();
+>>>>>>> 0fa6e354bd54cd2b3805134cc0f2721d258a4978:src/test/java/test/UsuarioTest.java
 		assertTrue(listaSugerencias.stream().allMatch(atuendo -> atuendo.esAtuendoValido(atuendo)));
 	}
 

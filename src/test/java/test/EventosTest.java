@@ -1,0 +1,62 @@
+package test;
+
+import atuendo.Atuendo;
+import atuendo.Sugerencias;
+import clima.MockCalor;
+import clima.MockFrio;
+import eventos.Evento;
+import excepciones.AgregarPrendaException;
+import excepciones.EventoLejanoException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+class EventosTest extends SetUp{
+
+    @BeforeEach
+    private void setUp() {
+        setear();
+    }
+
+    @Test
+    @DisplayName("No se genera sugerencia si faltan mas de 12 horas")
+    void eventoNoGeneraSugerencias() {
+        pedro.actualizarSubscripcion();
+        pedro.agregarGuardarropa(guardarropa);
+        pedro.agregarPrendas(guardarropa, prendasGlobales);
+
+        Calendar fechaTorneo = Calendar.getInstance();
+        fechaTorneo.set(2021, Calendar.DECEMBER,31, 7, 0);
+
+        Evento torneoFornite = new Evento(pedro,fechaTorneo, "London",new MockCalor());
+        pedro.agregarEvento(torneoFornite);
+        assertThrows(EventoLejanoException.class, () ->
+                pedro.pedirSugerenciaParaEvento(torneoFornite)
+        );
+    }
+
+    @Test
+    @DisplayName("Se genera sugerencia si faltan menos de 12 horas.")
+    void eventoGeneraSugerencias() {
+        pedro.actualizarSubscripcion();
+        pedro.agregarGuardarropa(guardarropa);
+        pedro.agregarPrendas(guardarropa, prendasGlobales);
+
+        Calendar fechaTorneo = Calendar.getInstance();
+        fechaTorneo.add(Calendar.HOUR_OF_DAY, 11);
+        Evento torneoFornite = new Evento(pedro, fechaTorneo, "London",new MockFrio());
+        pedro.agregarEvento(torneoFornite);
+        Set<Sugerencias> sugerenciasParaEvento =  pedro.pedirSugerenciaParaEvento(torneoFornite);
+        assertTrue(!sugerenciasParaEvento.isEmpty());
+    }
+
+}
+

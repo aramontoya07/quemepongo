@@ -60,7 +60,11 @@ public class Usuario {
 	public void agregarEvento(Evento evento){
 		eventos.add(evento);
 		Timer tarea = new Timer();
+<<<<<<< HEAD
 		tarea.schedule(evento, evento.dateEventoCercano().getTime());
+=======
+		tarea.schedule(evento, evento.dateEvento().getTime());
+>>>>>>> 0fa6e354bd54cd2b3805134cc0f2721d258a4978
 	}
 
 	public Set<Atuendo> pedirSugerencia(){

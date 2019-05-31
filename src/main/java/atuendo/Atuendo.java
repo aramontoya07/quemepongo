@@ -7,7 +7,10 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import clima.Clima;
+<<<<<<< HEAD
 import excepciones.CategoriaOcupadaException;
+=======
+>>>>>>> 0fa6e354bd54cd2b3805134cc0f2721d258a4978
 import prenda.Categoria;
 import prenda.Prenda;
 

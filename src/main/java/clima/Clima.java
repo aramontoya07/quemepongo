@@ -7,8 +7,12 @@ public class Clima {
 
 	double temp;
 	LocalDateTime fechaObtencion;
+<<<<<<< HEAD
 
 	public int constanteTermica = 40;
+=======
+	public int constanteTermica = 100;
+>>>>>>> 0fa6e354bd54cd2b3805134cc0f2721d258a4978
 
 	public Clima(double temperatura) {
 		this.temp = temperatura;
