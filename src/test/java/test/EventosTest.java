@@ -33,7 +33,7 @@ class EventosTest extends SetUp{
         Calendar fechaTorneo = Calendar.getInstance();
         fechaTorneo.set(2021, Calendar.DECEMBER,31, 7, 0);
 
-        Evento torneoFornite = new Evento(pedro,fechaTorneo, "London",new MockAgradable());
+        Evento torneoFornite = new Evento(pedro,fechaTorneo, "London");
         pedro.agregarEvento(torneoFornite);
         assertThrows(EventoLejanoException.class, () ->
                 pedro.pedirSugerenciaParaEvento(torneoFornite)
@@ -49,7 +49,7 @@ class EventosTest extends SetUp{
 
         Calendar fechaTorneo = Calendar.getInstance();
         fechaTorneo.add(Calendar.HOUR_OF_DAY, 11);
-        Evento torneoFornite = new Evento(pedro, fechaTorneo, "London",new MockAgradable());
+        Evento torneoFornite = new Evento(pedro, fechaTorneo, "London");
         pedro.agregarEvento(torneoFornite);
         Thread.sleep(1000); //Perdon franco :C, no tengo otra forma de probar esto, te lo justifico 1 pa 1 sin camiseta.
         Set<SugerenciasClima> sugerenciasParaEvento =  pedro.pedirSugerenciaParaEvento(torneoFornite);

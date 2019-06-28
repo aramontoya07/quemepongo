@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import atuendo.Atuendo;
 import atuendo.SugerenciasClima;
-import clima.ServicioClimatico;
+import clima.ProvedorClimatico;
 import decisiones.Decision;
 import decisiones.DecisionAceptar;
 import decisiones.DecisionRechazar;
@@ -68,8 +68,8 @@ public class Usuario {
 				.flatMap(Collection::stream).collect(Collectors.toSet());
 	}
 
-	public Set<SugerenciasClima> pedirSugerenciaSegunClima(ServicioClimatico provedor, String ubicacion) {
-		return guardarropas.stream().map(unGuardarropa -> unGuardarropa.generarSugerenciasSegunClima(provedor, ubicacion))
+	public Set<SugerenciasClima> pedirSugerenciaSegunClima( String ubicacion) {
+		return guardarropas.stream().map(unGuardarropa -> unGuardarropa.generarSugerenciasSegunClima(ubicacion))
 				.collect(Collectors.toSet());
 	}
 

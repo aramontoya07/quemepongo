@@ -3,7 +3,7 @@ package clima;
 import excepciones.ClimaGuardadoMuyAntiguoException;
 import excepciones.NoExisteClimaGuardadoException;
 
-public class MockCalor extends ServicioClimatico {
+public class MockCalor extends ProvedorClimatico {
 
 	public Clima obtenerClima(String nombre_ciudad) {
 		try{

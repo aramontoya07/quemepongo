@@ -11,6 +11,7 @@ import com.google.common.collect.Sets;
 
 import atuendo.Atuendo;
 import atuendo.AtuendoBasico;
+import clima.ProvedorClimatico;
 import clima.ServicioClimatico;
 import excepciones.NoExistePrendaEnGuardarropaException;
 import excepciones.PrendaYaExisteException;
@@ -53,10 +54,10 @@ public class Guardarropas {
 				.collect(Collectors.toSet());
 	}
 
-	public SugerenciasClima generarSugerenciasSegunClima(ServicioClimatico provedorElegido, String ubicacion){
+	public SugerenciasClima generarSugerenciasSegunClima(String ubicacion){
 		SugerenciasClima sugerenciasClima = new SugerenciasClima(10);
 		generarSugerenciasPosibles().stream()
-				.forEach(atuendo -> sugerenciasClima.agregarAtuendoSegunClima(atuendo,provedorElegido.obtenerClima(ubicacion)));
+				.forEach(atuendo -> sugerenciasClima.agregarAtuendoSegunClima(atuendo,ServicioClimatico.obtenerClima(ubicacion)));
 		return sugerenciasClima;
 	}
 

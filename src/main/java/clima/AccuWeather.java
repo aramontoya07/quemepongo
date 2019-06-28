@@ -15,7 +15,7 @@ import org.json.JSONArray;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AccuWeather extends ServicioClimatico {     
+public class AccuWeather extends ProvedorClimatico {     
 	private static AccuWeather single_instance = null;
 	private Map<String,Ubicacion> keys = new HashMap<>();
 	private String api_key = "hdE6Cz46t4fXquFAM65p4k1NTNqOSLhG";

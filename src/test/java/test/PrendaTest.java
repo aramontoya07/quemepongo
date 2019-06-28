@@ -11,7 +11,7 @@ import prenda.Categoria;
 import prenda.Prenda;
 import prenda.Trama;
 
-public class PrendaSetUp extends SetUp{
+public class PrendaTest extends SetUp{
 
 	@BeforeEach
 	private void setUp() {

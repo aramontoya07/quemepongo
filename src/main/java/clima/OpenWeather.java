@@ -9,7 +9,7 @@ import excepciones.HttpCodeException;
 import excepciones.NoExisteClimaGuardadoException;
 import org.json.JSONObject;
 
-public class OpenWeather extends ServicioClimatico {
+public class OpenWeather extends ProvedorClimatico {
 	private static OpenWeather single_instance = null;
 	String api_key = "dd868503319e88af289ea1772d90c952";
 

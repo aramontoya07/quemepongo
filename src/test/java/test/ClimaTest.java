@@ -17,7 +17,7 @@ class ClimaTest {
     @Test
     @DisplayName("El clima queda guardado despues de consultar una vez con la api")
     void ClimaGuardado(){
-        ServicioClimatico provedor = new MockCalor();
+        ProvedorClimatico provedor = new MockCalor();
         Clima Actual = provedor.obtenerClima("London");
         try{
             Clima sinApi = provedor.consultarClimaGuardado("London");

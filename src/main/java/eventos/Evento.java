@@ -2,7 +2,7 @@ package eventos;
 
 
 import atuendo.SugerenciasClima;
-import clima.ServicioClimatico;
+import clima.ProvedorClimatico;
 import excepciones.EventoLejanoException;
 import excepciones.NingunaSugerenciaParaEventoException;
 import usuario.Usuario;
@@ -18,19 +18,17 @@ public class Evento extends TimerTask {
     private Calendar fecha;
     private String ubicacion;
     private Usuario user;
-    private ServicioClimatico provedor;
     private Set<SugerenciasClima> sugerenciasEvento = new HashSet<SugerenciasClima>();
 
 
-    public Evento(Usuario user, Calendar fecha, String ubicacion,ServicioClimatico provedor) {
+    public Evento(Usuario user, Calendar fecha, String ubicacion) {
         this.fecha = fecha;
         this.ubicacion = ubicacion;
         this.user = user;
-        this.provedor = provedor;
     }
 
     public void run(){
-        sugerenciasEvento = user.pedirSugerenciaSegunClima(provedor,ubicacion);
+        sugerenciasEvento = user.pedirSugerenciaSegunClima(ubicacion);
     }
 
     public Calendar dateEventoCercano(){ 

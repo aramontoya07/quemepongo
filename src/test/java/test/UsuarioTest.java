@@ -13,7 +13,7 @@ import excepciones.*;
 
 import java.util.Set;
 
-class UsuarioSetUp extends SetUp {
+class UsuarioTest extends SetUp {
 
 	@BeforeEach
 	private void setUp() {
@@ -33,7 +33,7 @@ class UsuarioSetUp extends SetUp {
 	@Test
 	@DisplayName("Se deben generar todas las combinaciones posibles de ropa")
 	void contarSugerencias() {
-		// #FIXME Testear esto es medio raro
+		//#FIXME Testear esto es medio raro
 		pedro.agregarGuardarropa(guardarropa);
 		pedro.actualizarSubscripcion();
 		pedro.agregarPrendas(guardarropa, prendasGlobales);
@@ -67,7 +67,10 @@ class UsuarioSetUp extends SetUp {
 		pedro.agregarGuardarropa(guardarropa);
 		pedro.actualizarSubscripcion();
 		pedro.agregarPrendas(guardarropa, prendasGlobales);
-		Set<SugerenciasClima> listaSugerencias = pedro.pedirSugerenciaSegunClima(new MockAgradable(), "London");
+		
+		ServicioClimatico.definirProvedor(new MockFrio());
+		
+		Set<SugerenciasClima> listaSugerencias = pedro.pedirSugerenciaSegunClima( "London");
 		assertTrue(listaSugerencias.stream()
 				.allMatch(sugerencia -> sugerencia.esAptaParaClima(new MockAgradable().obtenerClima("London"))));
 	}
@@ -77,7 +80,10 @@ class UsuarioSetUp extends SetUp {
 	void prendasParaCalor() {
 		pedro.actualizarSubscripcion();
 		pedro.agregarGuardarropa(guardarropa);
-		Set<SugerenciasClima> listaSugerencias = pedro.pedirSugerenciaSegunClima(new MockCalor(), "Palermo");
+		
+		ServicioClimatico.definirProvedor(new MockCalor());
+		
+		Set<SugerenciasClima> listaSugerencias = pedro.pedirSugerenciaSegunClima("Palermo");
 		assertTrue(listaSugerencias.stream()
 				.allMatch(sugerencia -> sugerencia.esAptaParaClima(new MockCalor().obtenerClima("Palermo"))));
 	}
