@@ -1,58 +1,32 @@
 package eventos;
 
-
-import atuendo.SugerenciasClima;
-import clima.ProvedorClimatico;
-import excepciones.EventoLejanoException;
-import excepciones.NingunaSugerenciaParaEventoException;
-import usuario.Usuario;
-
-import java.time.LocalDateTime;
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TimerTask;
 
-
-public class Evento extends TimerTask {
+public class Evento{
     private Calendar fecha;
     private String ubicacion;
-    private Usuario user;
-    private Set<SugerenciasClima> sugerenciasEvento = new HashSet<SugerenciasClima>();
 
-
-    public Evento(Usuario user, Calendar fecha, String ubicacion) {
+    public Evento(Calendar fecha, String ubicacion) {
         this.fecha = fecha;
         this.ubicacion = ubicacion;
-        this.user = user;
     }
-
-    public void run(){
-        sugerenciasEvento = user.pedirSugerenciaSegunClima(ubicacion);
-    }
-
+    
     public Calendar dateEventoCercano(){ 
         Calendar fechaEvento = (Calendar) fecha.clone();
         fechaEvento.add(Calendar.HOUR_OF_DAY, -12);
         return fechaEvento;
     }
 
-    public Set<SugerenciasClima> pedirSugerencias(){
-        if(Calendar.getInstance().getTime().before(this.dateEventoCercano().getTime())) throw new EventoLejanoException(); //Lo pidio muy antes
-        if(sugerenciasEvento.isEmpty()) throw new NingunaSugerenciaParaEventoException(); //No hay sugerencias que se adapten
-        return sugerenciasEvento;
-    }
-        
-    public Calendar getFecha() {
-        return fecha;
-    }
+	public boolean esEventoLejano() {
+		return false;
+	}
+	
+	public Calendar getFecha() {
+		return fecha;
+	}
 
-    public String getUbicacion() {
-        return ubicacion;
-    }
-
-    public void setSugerenciasEvento(Set<SugerenciasClima> sugerenciasEvento) {
-        this.sugerenciasEvento = sugerenciasEvento;
-    }
+	public String getUbicacion() {
+		return ubicacion;
+	}
 
 }

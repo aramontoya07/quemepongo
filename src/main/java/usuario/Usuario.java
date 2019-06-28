@@ -9,6 +9,8 @@ import clima.ProvedorClimatico;
 import decisiones.Decision;
 import decisiones.DecisionAceptar;
 import decisiones.DecisionRechazar;
+import eventos.AsistenciaEvento;
+import eventos.Calendario;
 import eventos.Evento;
 import excepciones.AgregarPrendaException;
 import excepciones.GuardarropasNoEncontradoException;
@@ -21,10 +23,11 @@ import subscripciones.TipoSubscripcion;
 public class Usuario {
 	private Decision ultimaDecision;
 	private TipoSubscripcion subscripcion;
+	private Calendario calendarioEventos;
 	private Queue<Atuendo> aceptados = new LinkedList<>();
 	private Queue<Atuendo> rechazados = new LinkedList<>();
 	private Set<Guardarropas> guardarropas = new HashSet<>();
-	private Set<Evento> eventos = new HashSet<>();
+	private Set<AsistenciaEvento> eventos = new HashSet<>();
 
 	public Usuario() {
 		this.subscripcion = new SubscripcionGratuita();
@@ -57,10 +60,9 @@ public class Usuario {
 		guardarropa.agregarPrenda(prenda);
 	}
 
-	public void agregarEvento(Evento evento){
-		eventos.add(evento);
-		Timer tarea = new Timer();
-		tarea.schedule(evento, evento.dateEventoCercano().getTime());
+	public void asistirAEvento(Evento evento){
+		eventos.add(new AsistenciaEvento(evento));
+		evento.asistir(this);
 	}
 
 	public Set<Atuendo> pedirSugerencia(){
@@ -68,13 +70,13 @@ public class Usuario {
 				.flatMap(Collection::stream).collect(Collectors.toSet());
 	}
 
-	public Set<SugerenciasClima> pedirSugerenciaSegunClima( String ubicacion) {
+	public Set<SugerenciasClima> pedirSugerenciaSegunClima(String ubicacion) {
 		return guardarropas.stream().map(unGuardarropa -> unGuardarropa.generarSugerenciasSegunClima(ubicacion))
 				.collect(Collectors.toSet());
 	}
 
 	public Set<SugerenciasClima> pedirSugerenciaParaEvento(Evento evento) {
-		return evento.pedirSugerencias();
+		return;
 	}
 
 	public void aceptarAtuendo(Atuendo atuendo) {
