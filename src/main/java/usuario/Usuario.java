@@ -23,7 +23,7 @@ import subscripciones.TipoSubscripcion;
 public class Usuario {
 	private Decision ultimaDecision;
 	private TipoSubscripcion subscripcion;
-	private Calendario calendarioEventos;
+	private Calendario calendarioEventos = new Calendario();
 	private Queue<Atuendo> aceptados = new LinkedList<>();
 	private Queue<Atuendo> rechazados = new LinkedList<>();
 	private Set<Guardarropas> guardarropas = new HashSet<>();

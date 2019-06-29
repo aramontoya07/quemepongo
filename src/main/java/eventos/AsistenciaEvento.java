@@ -14,7 +14,6 @@ import usuario.Usuario;
 
 public class AsistenciaEvento implements Job{
 	private Evento evento;
-	private Usuario user;
 	private Set<SugerenciasClima> sugerenciasEvento = new HashSet<SugerenciasClima>();
 	
 	public AsistenciaEvento(Evento eventoAsignado) {
@@ -22,6 +21,8 @@ public class AsistenciaEvento implements Job{
 	}
 	
 	public void execute(JobExecutionContext contexto) throws JobExecutionException{
+		Usuario user = (Usuario) contexto.getJobDetail().getJobDataMap().get("usuario");
+		evento = (Evento) contexto.getJobDetail().getJobDataMap().get("evento");
 		sugerenciasEvento = user.pedirSugerenciaSegunClima(evento.getUbicacion());
 	}
 
