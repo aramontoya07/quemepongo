@@ -2,20 +2,22 @@ package usuario;
 
 import java.io.IOException;
 import java.util.HashSet;
-
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import atuendo.SugerenciasClima;
+
+import com.google.common.collect.Collections2;
 import com.google.common.collect.Sets;
+import com.mchange.v2.codegen.bean.PropsToStringGeneratorExtension;
 
 import atuendo.Atuendo;
 import atuendo.AtuendoBasico;
 import clima.ServicioClimatico;
 import excepciones.NoExistePrendaEnGuardarropaException;
 import excepciones.PrendaYaExisteException;
-import prenda.Imagen;
-import prenda.Prenda;
+import prenda.*;
 
 public class Guardarropas {
 
@@ -28,7 +30,6 @@ public class Guardarropas {
 	
 	public Guardarropas() { }
 
-<<<<<<< HEAD
 	public void usarPrenda(Prenda prenda) {
 		if(!existePrenda(prenda)) return; //TIRAR EXCEP
 		prendasUsada.add(prenda);
@@ -39,11 +40,8 @@ public class Guardarropas {
 		prendasUsada.remove(prenda);
 	}
 	
-	public Set<AtuendoBasico> generarSugerenciaBasica(){
-=======
 	@SuppressWarnings("unchecked")
 	public Set<Atuendo> generarSugerenciaBasica(){
->>>>>>> 1ee96c2afc3aa66b51fe2e23a2a944d4c15a8409
 		return Sets
 				.cartesianProduct(prendasPrimarias(superiores), inferiores, calzados)
 				.stream().map((list) -> new Atuendo(list.get(0), list.get(1), list.get(2)))
@@ -57,15 +55,29 @@ public class Guardarropas {
 	public Set<Atuendo> generarSugerenciasPosibles(){
 		Set<Atuendo> atuendosBasicos = generarSugerenciaBasica();
 		return atuendosBasicos.stream().map(atuendo -> combinarConSecundarios(atuendo))
-				.flatMap(atuendos -> atuendos.stream()).collect(Collectors.toSet());
+				.flatMap(atuendos -> atuendos.stream()).filter(atuendo->atuendo.esAtuendoValido()).collect(Collectors.toSet());
 	}
 
 	public Set<Atuendo> combinarConSecundarios(Atuendo atuendoBasico) {
 		Set<Prenda> prendasSecundarias = atuendoBasico.prendasPermitidas(superiores);
 		prendasSecundarias.addAll(accesorios);
-		Set<Set<Prenda>> combinacionesSecundarias = Sets.powerSet(prendasSecundarias);
-		return combinacionesSecundarias.stream().map(prendas -> new Atuendo(atuendoBasico, prendas))
-				.collect(Collectors.toSet());
+		Set<List<Prenda>> combinacionesSecundarias = combinacionesPosibles(prendasSecundarias);
+		return combinacionesSecundarias.stream()
+				.map(prendas -> crearAtuendoConPrendas(atuendoBasico,prendas)).collect(Collectors.toSet());
+	}
+	
+	private Set<List<Prenda>> combinacionesPosibles(Set<Prenda> prendasSecundarias) {
+		return Sets.powerSet(prendasSecundarias).stream().map(ps -> Collections2.permutations(ps)).
+				flatMap(list->list.stream()).collect(Collectors.toSet());
+	}
+
+	private Atuendo crearAtuendoConPrendas(Atuendo atuendoBasico, List<Prenda> prendas) {
+		Atuendo atuendo = new Atuendo(atuendoBasico.getSuperior(), atuendoBasico.getInferior(), atuendoBasico.getCalzado());
+		List<Prenda> abrigosOrd = prendas.stream().filter(prenda -> prenda.esDeCategoria(Categoria.PARTE_SUPERIOR)).collect(Collectors.toList());
+		List<Prenda> accesoriosOrd = prendas.stream().filter(prenda -> prenda.esDeCategoria(Categoria.ACCESORIO)).collect(Collectors.toList());
+		atuendo.ponerAbrigos(abrigosOrd);
+		atuendo.ponerAccesorios(accesoriosOrd);
+		return atuendo;
 	}
 
 	public SugerenciasClima generarSugerenciasSegunClima(String ubicacion){

@@ -22,11 +22,9 @@ public class AtuendoBasico {
 				.collect(Collectors.toSet()));
 	}
 
-	public Set<Prenda> prendasPermitidas(Set<Prenda> superiores, Set<Prenda> inferiores, Set<Prenda> calzados) {
+	public Set<Prenda> prendasPermitidas(Set<Prenda> superiores) {
 		Set<Prenda> setPermitido = new HashSet<Prenda>();
-		agregarLosQueAcepta(setPermitido, inferiores, inferior);
 		agregarLosQueAcepta(setPermitido, superiores, superior);
-		agregarLosQueAcepta(setPermitido, calzados, calzado);
 		return setPermitido;
 	}
 
