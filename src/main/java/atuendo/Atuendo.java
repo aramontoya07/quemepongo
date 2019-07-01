@@ -9,9 +9,11 @@ import clima.Clima;
 import excepciones.CategoriaOcupadaException;
 import prenda.Categoria;
 import prenda.Prenda;
+import usuario.Guardarropas;
 
 public class Atuendo {
 	AtuendoBasico capaBasica;
+	Guardarropas guardarropasOrigen;
 	Set<CapaDeAbrigo> capasAbrigos = new HashSet<CapaDeAbrigo>();
 
 	public Atuendo(AtuendoBasico atuendoBasico, Set<Prenda> PrendasComplementarias) {
@@ -63,5 +65,9 @@ public class Atuendo {
 
 	public double nivelDeAdaptacionAlClima(Clima climaActual){
 		return this.nivelAbrigo() - climaActual.nivelAbrigoRequerido();
+	}
+	
+	public void liberar() {
+		
 	}
 }

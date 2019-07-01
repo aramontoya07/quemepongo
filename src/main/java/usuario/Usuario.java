@@ -5,11 +5,9 @@ import java.util.stream.Collectors;
 
 import atuendo.Atuendo;
 import atuendo.SugerenciasClima;
-import clima.ProvedorClimatico;
 import decisiones.Decision;
 import decisiones.DecisionAceptar;
 import decisiones.DecisionRechazar;
-import eventos.AsistenciaEvento;
 import eventos.Calendario;
 import eventos.Evento;
 import excepciones.AgregarPrendaException;
@@ -27,7 +25,6 @@ public class Usuario {
 	private Queue<Atuendo> aceptados = new LinkedList<>();
 	private Queue<Atuendo> rechazados = new LinkedList<>();
 	private Set<Guardarropas> guardarropas = new HashSet<>();
-	private Set<AsistenciaEvento> eventos = new HashSet<>();
 
 	public Usuario() {
 		this.subscripcion = new SubscripcionGratuita();
@@ -61,7 +58,6 @@ public class Usuario {
 	}
 
 	public void asistirAEvento(Evento evento){
-		eventos.add(new AsistenciaEvento(evento));
 		calendarioEventos.agregarEvento(evento,this);
 	}
 
@@ -74,7 +70,7 @@ public class Usuario {
 		return guardarropas.stream().map(unGuardarropa -> unGuardarropa.generarSugerenciasSegunClima(ubicacion))
 				.collect(Collectors.toSet());
 	}
-
+	
 	public Set<SugerenciasClima> pedirSugerenciaParaEvento(Evento evento) {
 		return new HashSet<SugerenciasClima>();
 	}
@@ -94,10 +90,11 @@ public class Usuario {
 	}
 
 	public void removerAceptado() {
-		aceptados.poll();
+		Atuendo atuendo = aceptados.poll();
 	}
 
 	public void removerRechazado() {
 		rechazados.poll();
 	}
+
 }

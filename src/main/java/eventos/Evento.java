@@ -2,8 +2,10 @@ package eventos;
 
 import java.time.LocalDateTime;
 
-public class Evento{
-	private String tituloEvento;
+import org.quartz.Trigger;
+
+public abstract class Evento{
+	protected String tituloEvento;
     private LocalDateTime fecha;
     private String ubicacion;
     private final int horasEventoCercano = 12;
@@ -13,7 +15,7 @@ public class Evento{
         this.fecha = fecha;
         this.ubicacion = ubicacion;
     }
-
+    
 	public boolean esEventoLejano() {
 		return fecha.isBefore(LocalDateTime.now().minusHours(horasEventoCercano));
 	}
@@ -29,5 +31,11 @@ public class Evento{
 	public String getUbicacion() {
 		return ubicacion;
 	}
+	
+	public abstract Trigger getActivador();
+	
 
+    public LocalDateTime fechaSugerencias() {
+    	return fecha.minusHours(12);
+    }
 }

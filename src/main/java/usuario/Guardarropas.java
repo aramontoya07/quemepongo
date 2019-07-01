@@ -11,7 +11,6 @@ import com.google.common.collect.Sets;
 
 import atuendo.Atuendo;
 import atuendo.AtuendoBasico;
-import clima.ProvedorClimatico;
 import clima.ServicioClimatico;
 import excepciones.NoExistePrendaEnGuardarropaException;
 import excepciones.PrendaYaExisteException;
@@ -21,13 +20,24 @@ import prenda.Prenda;
 public class Guardarropas {
 
 	public Set<Prenda> superiores = new HashSet<Prenda>();
-
 	public Set<Prenda> inferiores = new HashSet<Prenda>();
 	public Set<Prenda> calzados = new HashSet<Prenda>();
 	public Set<Prenda> accesorios = new HashSet<Prenda>();
+	
+	public Set<Prenda> prendasUsada = new HashSet<Prenda>();
+	
 	public Guardarropas() { }
 
-	@SuppressWarnings("unchecked")
+	public void usarPrenda(Prenda prenda) {
+		if(!existePrenda(prenda)) return; //TIRAR EXCEP
+		prendasUsada.add(prenda);
+	}
+	
+	public void liberarPrenda(Prenda prenda) {
+		if(!existePrenda(prenda)) return; //TIRAR EXCEP
+		prendasUsada.remove(prenda);
+	}
+	
 	public Set<AtuendoBasico> generarSugerenciaBasica(){
 		return Sets
 				.cartesianProduct(prendasPrimarias(superiores), prendasPrimarias(inferiores),
@@ -95,7 +105,7 @@ public class Guardarropas {
 		prenda.agregarImagen(imagenOriginal);
 	}
 
-	public boolean existePrenda(Prenda prenda) {  //TODO testear
+	public boolean existePrenda(Prenda prenda) {
 		return (superiores.contains(prenda) || inferiores.contains(prenda) || calzados.contains(prenda)
 				|| accesorios.contains(prenda));
 	}
