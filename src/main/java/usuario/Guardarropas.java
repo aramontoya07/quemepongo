@@ -28,6 +28,7 @@ public class Guardarropas {
 	
 	public Guardarropas() { }
 
+<<<<<<< HEAD
 	public void usarPrenda(Prenda prenda) {
 		if(!existePrenda(prenda)) return; //TIRAR EXCEP
 		prendasUsada.add(prenda);
@@ -39,10 +40,13 @@ public class Guardarropas {
 	}
 	
 	public Set<AtuendoBasico> generarSugerenciaBasica(){
+=======
+	@SuppressWarnings("unchecked")
+	public Set<Atuendo> generarSugerenciaBasica(){
+>>>>>>> 1ee96c2afc3aa66b51fe2e23a2a944d4c15a8409
 		return Sets
-				.cartesianProduct(prendasPrimarias(superiores), prendasPrimarias(inferiores),
-						prendasPrimarias(calzados))
-				.stream().map((list) -> new AtuendoBasico(list.get(0), list.get(1), list.get(2)))
+				.cartesianProduct(prendasPrimarias(superiores), inferiores, calzados)
+				.stream().map((list) -> new Atuendo(list.get(0), list.get(1), list.get(2)))
 				.collect(Collectors.toSet());
 	}
 
@@ -51,13 +55,13 @@ public class Guardarropas {
 	}
 
 	public Set<Atuendo> generarSugerenciasPosibles(){
-		Set<AtuendoBasico> atuendosBasicos = generarSugerenciaBasica();
+		Set<Atuendo> atuendosBasicos = generarSugerenciaBasica();
 		return atuendosBasicos.stream().map(atuendo -> combinarConSecundarios(atuendo))
 				.flatMap(atuendos -> atuendos.stream()).collect(Collectors.toSet());
 	}
 
-	public Set<Atuendo> combinarConSecundarios(AtuendoBasico atuendoBasico) {
-		Set<Prenda> prendasSecundarias = atuendoBasico.prendasPermitidas(superiores, inferiores, calzados);
+	public Set<Atuendo> combinarConSecundarios(Atuendo atuendoBasico) {
+		Set<Prenda> prendasSecundarias = atuendoBasico.prendasPermitidas(superiores);
 		prendasSecundarias.addAll(accesorios);
 		Set<Set<Prenda>> combinacionesSecundarias = Sets.powerSet(prendasSecundarias);
 		return combinacionesSecundarias.stream().map(prendas -> new Atuendo(atuendoBasico, prendas))
