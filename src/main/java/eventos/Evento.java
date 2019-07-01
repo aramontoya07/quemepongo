@@ -1,28 +1,29 @@
 package eventos;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
 
 public class Evento{
-    private Calendar fecha;
+	private String tituloEvento;
+    private LocalDateTime fecha;
     private String ubicacion;
+    private final int horasEventoCercano = 12;
 
-    public Evento(Calendar fecha, String ubicacion) {
+    public Evento(String titulo,LocalDateTime fecha, String ubicacion) {
+    	this.tituloEvento = titulo;
         this.fecha = fecha;
         this.ubicacion = ubicacion;
     }
-    
-    public Calendar dateEventoCercano(){ 
-        Calendar fechaEvento = (Calendar) fecha.clone();
-        fechaEvento.add(Calendar.HOUR_OF_DAY, -12);
-        return fechaEvento;
-    }
 
 	public boolean esEventoLejano() {
-		return false;
+		return fecha.isBefore(LocalDateTime.now().minusHours(horasEventoCercano));
 	}
 	
-	public Calendar getFecha() {
+	public LocalDateTime getFecha() {
 		return fecha;
+	}
+	
+	public String getNombre() {
+		return tituloEvento;
 	}
 
 	public String getUbicacion() {

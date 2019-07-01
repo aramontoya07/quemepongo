@@ -1,7 +1,9 @@
 package eventos;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -9,11 +11,13 @@ import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
+import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
+import org.quartz.impl.matchers.GroupMatcher;
 
 import usuario.Usuario;
 
@@ -31,18 +35,20 @@ public class Calendario{
 	}
 	
 	public void agregarEvento(Evento evento, Usuario user){
-		Map<String, Usuario> contextMap = new HashMap<String, Usuario>();
-		contextMap.put("usuario", user);
-		contextMap.put("evento", evento);
-		JobDataMap contexto = new JobDataMap(contextMap);
-
+		try {
+			scheduler.getContext().put("usuario", user);
+			scheduler.getContext().put("evento", evento);
+		} catch (SchedulerException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		JobDetail job = JobBuilder.newJob(AsistenciaEvento.class)
-			      .withIdentity("JobNombreEvento", "Eventos")
-			      .usingJobData(contexto)
+			      .withIdentity("Job" + evento.getNombre(), "Eventos")
 			      .build();
 		
 		Trigger trigger = TriggerBuilder.newTrigger()
-			      .withIdentity("TriggerNombreEvento", "ActivadoresEventos")
+			      .withIdentity("Trigger" + evento.getNombre(), "ActivadoresEventos")
 			      .withSchedule(CronScheduleBuilder.cronSchedule("0/5 * * * * ?"))        
 			      .build();
 
@@ -52,9 +58,17 @@ public class Calendario{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Set<Evento> getEventos(){
-		
+		   try {
+			   for (JobKey jobKey : scheduler.getJobKeys(GroupMatcher.jobGroupEquals("Eventos"))) {		
+				   String jobName = jobKey.getName();
+				   System.out.println("[Nombre evento] : " + jobName);
+			   }
+
+		} catch (SchedulerException e) {
+			e.printStackTrace();
+		}
 		return new HashSet<Evento>();
 	}
 	

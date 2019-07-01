@@ -62,7 +62,7 @@ public class Usuario {
 
 	public void asistirAEvento(Evento evento){
 		eventos.add(new AsistenciaEvento(evento));
-		evento.asistir(this);
+		calendarioEventos.agregarEvento(evento,this);
 	}
 
 	public Set<Atuendo> pedirSugerencia(){
@@ -76,7 +76,7 @@ public class Usuario {
 	}
 
 	public Set<SugerenciasClima> pedirSugerenciaParaEvento(Evento evento) {
-		return;
+		return new HashSet<SugerenciasClima>();
 	}
 
 	public void aceptarAtuendo(Atuendo atuendo) {

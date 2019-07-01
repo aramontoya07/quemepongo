@@ -6,6 +6,8 @@ import java.util.Set;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.quartz.SchedulerContext;
+import org.quartz.SchedulerException;
 
 import atuendo.SugerenciasClima;
 import excepciones.EventoLejanoException;
@@ -21,9 +23,14 @@ public class AsistenciaEvento implements Job{
 	}
 	
 	public void execute(JobExecutionContext contexto) throws JobExecutionException{
-		Usuario user = (Usuario) contexto.getJobDetail().getJobDataMap().get("usuario");
-		evento = (Evento) contexto.getJobDetail().getJobDataMap().get("evento");
-		sugerenciasEvento = user.pedirSugerenciaSegunClima(evento.getUbicacion());
+		try {
+			SchedulerContext context = contexto.getScheduler().getContext();
+			Usuario usuario = (Usuario) context.get("usuario");
+			Evento evento = (Evento) context.get("evento");
+			sugerenciasEvento = usuario.pedirSugerenciaSegunClima(evento.getUbicacion());
+		} catch (SchedulerException e) {
+			e.printStackTrace();
+		}
 	}
 
     public Set<SugerenciasClima> pedirSugerencias(){
