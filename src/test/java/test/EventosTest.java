@@ -7,6 +7,7 @@ import clima.MockFrio;
 import eventos.Evento;
 import excepciones.EventoLejanoException;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -25,6 +26,7 @@ class EventosTest extends SetUp{
 
     @Test
     @DisplayName("No se genera sugerencia si faltan mas de 12 horas")
+    @Disabled
     void eventoNoGeneraSugerencias() {
         pedro.actualizarSubscripcion();
         pedro.agregarGuardarropa(guardarropa);
@@ -42,6 +44,7 @@ class EventosTest extends SetUp{
 
     @Test
     @DisplayName("Se genera sugerencia si faltan menos de 12 horas.")
+    @Disabled
     void eventoGeneraSugerencias() throws InterruptedException {
         pedro.actualizarSubscripcion();
         pedro.agregarGuardarropa(guardarropa);

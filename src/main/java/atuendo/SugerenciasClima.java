@@ -15,8 +15,14 @@ public class SugerenciasClima {
     }
 
     public void agregarAtuendoSegunClima(Atuendo atuendo, Clima climaActual){
-        if(atuendo.nivelDeAdaptacionAlClima(climaActual) == 0) exactas.add(atuendo);
-        if(Math.abs(atuendo.nivelDeAdaptacionAlClima(climaActual)) < margen) aproximadas.add(atuendo);
+        if(atuendo.nivelDeAdaptacionAlClima(climaActual) == 0) {
+        	exactas.add(atuendo);
+        	return;
+        }
+        if(Math.abs(atuendo.nivelDeAdaptacionAlClima(climaActual)) < margen) {
+        	aproximadas.add(atuendo);
+        	return;
+        }
     }
 
     public boolean esAptaParaClima(Clima clima){
