@@ -1,7 +1,11 @@
 package clima;
 
+import alertas.TipoAlerta;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Clima {
 
@@ -9,6 +13,7 @@ public class Clima {
 	LocalDateTime fechaObtencion;
 
 	public int constanteTermica = 40;
+	private List<TipoAlerta> tiposAlertas = new ArrayList<>();
 
 	public Clima(double temperatura) {
 		this.temp = temperatura;
@@ -39,5 +44,9 @@ public class Clima {
 	@Override
 	public String toString() {
 		return "La temperatura guardada es: " + temp + " con la fecha: " + fechaObtencion;
+	}
+
+	public List<TipoAlerta> getAlertas() {
+		return tiposAlertas;
 	}
 }

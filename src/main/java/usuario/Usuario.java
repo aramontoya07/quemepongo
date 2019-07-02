@@ -3,6 +3,8 @@ package usuario;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import alertas.Interesado;
+import alertas.TipoAlerta;
 import atuendo.Atuendo;
 import atuendo.SugerenciasClima;
 import decisiones.Decision;
@@ -25,6 +27,9 @@ public class Usuario {
 	private Queue<Atuendo> aceptados = new LinkedList<>();
 	private Queue<Atuendo> rechazados = new LinkedList<>();
 	private Set<Guardarropas> guardarropas = new HashSet<>();
+	private String mail;
+	private List<Interesado> interesados = new ArrayList<>();
+
 
 	public Usuario() {
 		this.subscripcion = new SubscripcionGratuita();
@@ -96,5 +101,23 @@ public class Usuario {
 	public void removerRechazado() {
 		rechazados.poll();
 	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void actuarAnte(TipoAlerta alerta) {
+		this.interesados.forEach(interesado -> alerta.notificarA(interesado, this));
+	}
+
+	public void notificarAlerta(Interesado interesado, TipoAlerta alerta)
+	{
+		alerta.notificarA(interesado, this);
+	}
+
 
 }
