@@ -6,11 +6,12 @@ import excepciones.NoExisteClimaGuardadoException;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import com.sun.jersey.api.client.ClientResponse;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ClimaTest {
 
@@ -50,12 +51,13 @@ class ClimaTest {
         assertTrue(!(1 == 35));
     }
 
-    @Disabled
     @Test
     @DisplayName("Accuweather responde consultas sin errores")
     void accuWeatherResponde() {
-        Clima londres = AccuWeather.getInstance().obtenerClima("London");
-        System.out.println(londres);
-        assertTrue(!(1 == 2));
+        
+        ClientResponse response = AccuWeather.getInstance().Api_get(AccuWeather.getInstance().obtenerLink("http://dataservice.accuweather.com/forecasts/v1/daily/1day/","London"));
+        assertEquals(response.getStatus(), 200);
+       
+       
     }
 }
