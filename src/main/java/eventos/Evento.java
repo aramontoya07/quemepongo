@@ -33,7 +33,6 @@ public abstract class Evento{
 	}
 	
 	public abstract Trigger getActivador();
-	
 
     public LocalDateTime fechaSugerencias() {
     	return fecha.minusHours(12);

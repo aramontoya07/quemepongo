@@ -1,5 +1,6 @@
 package eventos;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,6 +24,15 @@ public class AsistenciaEvento{
     }
 
 	public void generarSugerenciasParaEvento(Usuario usuario) {
-		sugerenciasEvento = usuario.pedirSugerenciaParaEvento(evento);
+		sugerenciasEvento = usuario.pedirSugerenciaSegunClima(evento.getUbicacion());
 	}
+
+	public boolean ocurreEntre(LocalDateTime fechaMinima, LocalDateTime fechaMaxima){
+		return evento.getFecha().isAfter(fechaMinima) && evento.getFecha().isBefore(fechaMaxima);
+	}
+
+	public Evento getEvento() {
+		return evento;
+	}
+
 }

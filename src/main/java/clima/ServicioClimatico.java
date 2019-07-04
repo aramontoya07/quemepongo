@@ -4,6 +4,7 @@ public class ServicioClimatico {
 	private static ProvedorClimatico provedorActual = new MockAgradable();
 	
 	public static Clima obtenerClima(String nombre_ciudad) {
+		//TODO excepcion si no hay provedor
 		return provedorActual.obtenerClima(nombre_ciudad);
 	}
 	

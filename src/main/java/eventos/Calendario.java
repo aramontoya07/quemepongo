@@ -1,9 +1,13 @@
 package eventos;
 
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import atuendo.SugerenciasClima;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -50,8 +54,12 @@ public class Calendario{
 			e.printStackTrace();
 		}
 	}
-		
-	public Set<AsistenciaEvento> getEventos(){
-		return eventos;
+
+	public Set<AsistenciaEvento> obtenerEventosEntre(LocalDateTime  fechaMinima, LocalDateTime fechaMaxima){
+		return eventos.stream().filter(asistenciaEvento -> asistenciaEvento.ocurreEntre(fechaMinima,fechaMaxima)).collect(Collectors.toSet());
+	}
+
+	public Set<SugerenciasClima> pedirSugerenciasParaEvento(Evento evento){
+		return eventos.stream().filter(asistencia -> asistencia.getEvento().equals(evento)).findFirst().get().pedirSugerencias();
 	}
 }

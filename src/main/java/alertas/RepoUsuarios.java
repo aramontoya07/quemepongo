@@ -5,15 +5,20 @@ import usuario.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class RepoUsuarios { //TODO
+    private static RepoUsuarios repo;
+    public Set<Usuario> listaUsuarios = new HashSet<>();
 
-    public List<Usuario> listaUsuarios = new ArrayList<>();
-
-    public List<Usuario> getTodos() {
-        return listaUsuarios;
-
+    public static RepoUsuarios getInstance() {
+        if(repo == null) repo = new RepoUsuarios();
+        return repo;
     }
 
+    public void agregarUsuario(Usuario usuario){
+        repo.add(usuario);
+    }
+
+    public Set<Usuario> getTodos() {
+        return listaUsuarios;
+    }
 }

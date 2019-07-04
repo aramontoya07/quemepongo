@@ -4,11 +4,13 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import alertas.Interesado;
+import alertas.RepoUsuarios;
 import alertas.TipoAlerta;
 import atuendo.Atuendo;
 import atuendo.SugerenciasClima;
 import decisiones.Decision;
 import decisiones.DecisionAceptar;
+import decisiones.DecisionPuntuar;
 import decisiones.DecisionRechazar;
 import eventos.Calendario;
 import eventos.Evento;
@@ -29,14 +31,20 @@ public class Usuario {
 	private Set<Guardarropas> guardarropas = new HashSet<>();
 	private String mail;
 	private List<Interesado> interesados = new ArrayList<>();
+	private PreferenciasDeAbrigo preferenciasDeAbrigo;
 
 
 	public Usuario() {
 		this.subscripcion = new SubscripcionGratuita();
+		RepoUsuarios.getInstance().agregarUsuario(this);
 	}
 
 	public Set<Guardarropas> getGuardarropas() {
 		return guardarropas;
+	}
+
+	public String getMail() {
+		return mail;
 	}
 
 	public void actualizarSubscripcion() {
@@ -57,7 +65,7 @@ public class Usuario {
 		prendas.forEach(prenda -> agregarPrenda(guardarropa, prenda));
 	}
 
-	public void agregarPrenda(Guardarropas guardarropa, Prenda prenda) {
+	private void agregarPrenda(Guardarropas guardarropa, Prenda prenda) {
 		if(!subscripcion.puedoAgregar(guardarropa.cantidadDePrendas())) throw new AgregarPrendaException();
 		guardarropa.agregarPrenda(prenda);
 	}
@@ -73,11 +81,11 @@ public class Usuario {
 
 	public Set<SugerenciasClima> pedirSugerenciaSegunClima(String ubicacion) {
 		return guardarropas.stream().map(unGuardarropa -> unGuardarropa.generarSugerenciasSegunClima(ubicacion))
-				.collect(Collectors.toSet());
+				.map(sugerencias -> sugerencias.ajustarAGustos(preferenciasDeAbrigo)).collect(Collectors.toSet());
 	}
 	
 	public Set<SugerenciasClima> pedirSugerenciaParaEvento(Evento evento) {
-		return new HashSet<SugerenciasClima>();
+		return calendarioEventos.pedirSugerenciasParaEvento(evento);
 	}
 
 	public void aceptarAtuendo(Atuendo atuendo) {
@@ -96,28 +104,41 @@ public class Usuario {
 
 	public void removerAceptado() {
 		Atuendo atuendo = aceptados.poll();
+		atuendo.liberar();
 	}
 
 	public void removerRechazado() {
 		rechazados.poll();
 	}
 
-	public void setMail(String mail) {
-		this.mail = mail;
+	public void puntuarAtuendo(Atuendo atuendo, Integer puntaje) {
+		if(puntaje >= 0 && puntaje <= 5){
+			if(puntaje >= preferenciasDeAbrigo.getPuntaje()) {
+				ultimaDecision = new DecisionPuntuar(preferenciasDeAbrigo);
+				guardarPreferenciasDeAbrigo(atuendo, puntaje);
+			}
+		}
 	}
 
-	public String getMail() {
-		return mail;
+	private void guardarPreferenciasDeAbrigo(Atuendo atuendo, Integer puntaje) {
+			PreferenciasDeAbrigo preferencias = atuendo.generarPreferencias();
+			preferencias.setPuntaje(puntaje);
 	}
 
 	public void actuarAnte(TipoAlerta alerta) {
-		this.interesados.forEach(interesado -> alerta.notificarA(interesado, this));
+		interesados.forEach(interesado -> alerta.notificarA(interesado, this));
 	}
 
-	public void notificarAlerta(Interesado interesado, TipoAlerta alerta)
-	{
+	public PreferenciasDeAbrigo getPreferenciasDeAbrigo() {
+		return preferenciasDeAbrigo;
+	}
+
+	public void notificarAlerta(Interesado interesado, TipoAlerta alerta) {
 		alerta.notificarA(interesado, this);
 	}
 
 
+	public void removerPuntuado(PreferenciasDeAbrigo preferenciaAntigua) {
+		preferenciasDeAbrigo = preferenciaAntigua;
+	}
 }

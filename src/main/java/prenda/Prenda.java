@@ -11,6 +11,7 @@ public class Prenda {
 	private ColorRGB colorPrimario;
 	private ColorRGB colorSecundario;
 	private BufferedImage imagenNormalizada;
+	private ParteAbrigada pateAbrigada;
 
 
 	public Prenda(TipoPrenda tipo, Material material, Trama trama, ColorRGB colorPrimario, ColorRGB colorSecundario) {
@@ -73,4 +74,12 @@ public class Prenda {
 	public void agregarImagen(Imagen imagenOriginal) {
 		this.imagenNormalizada = imagenOriginal.normalizar();
 	}
+
+    public Object abrigoEnParte(ParteAbrigada parte) {
+		if(pateAbrigada == parte){
+			return nivelAbrigo();
+		}else{
+			return 0;
+		}
+    }
 }

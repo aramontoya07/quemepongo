@@ -1,9 +1,12 @@
 package atuendo;
 
 import clima.Clima;
+import usuario.PreferenciasDeAbrigo;
+import usuario.Usuario;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class SugerenciasClima {
     private Set<Atuendo> exactas = new HashSet<>();
@@ -21,8 +24,13 @@ public class SugerenciasClima {
         }
         if(Math.abs(atuendo.nivelDeAdaptacionAlClima(climaActual)) < margen) {
         	aproximadas.add(atuendo);
-        	return;
         }
+    }
+
+    public SugerenciasClima ajustarAGustos(PreferenciasDeAbrigo preferencias){
+        exactas = exactas.stream().filter(atuendo -> atuendo.entraEnPreferencias(preferencias)).collect(Collectors.toSet());
+        aproximadas = aproximadas.stream().filter(atuendo -> atuendo.entraEnPreferencias(preferencias)).collect(Collectors.toSet());
+        return this;
     }
 
     public boolean esAptaParaClima(Clima clima){
