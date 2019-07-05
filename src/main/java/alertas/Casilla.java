@@ -4,6 +4,8 @@ import usuario.Usuario;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 
+import eventos.AsistenciaEvento;
+
 
 
 public class Casilla implements Interesado, CasillaDeMails {
@@ -23,6 +25,9 @@ public class Casilla implements Interesado, CasillaDeMails {
         message.setTo(direccion);
         message.setText(mail);
         mailSender.send(message);
+    }
+    public void notificarA(Usuario usuario, AsistenciaEvento evento) {
+    	enviarMail(usuario.getMail(),"Hola están tus sugerencias listas"+ evento.pedirSugerencias());
     }
 
 

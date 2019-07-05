@@ -12,6 +12,7 @@ import decisiones.Decision;
 import decisiones.DecisionAceptar;
 import decisiones.DecisionPuntuar;
 import decisiones.DecisionRechazar;
+import eventos.AsistenciaEvento;
 import eventos.Calendario;
 import eventos.Evento;
 import excepciones.AgregarPrendaException;
@@ -135,6 +136,10 @@ public class Usuario {
 
 	public void notificarAlerta(Interesado interesado, TipoAlerta alerta) {
 		alerta.notificarA(interesado, this);
+	}
+	
+	public void notificarSugerenciasListas(AsistenciaEvento asistencia) {
+		interesados.forEach(interesado -> interesado.notificarA(this, asistencia));
 	}
 
 
