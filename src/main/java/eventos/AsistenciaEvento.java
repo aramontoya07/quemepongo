@@ -25,8 +25,10 @@ public class AsistenciaEvento{
 
 	public void generarSugerenciasParaEvento(Usuario usuario) {
 		sugerenciasEvento = usuario.pedirSugerenciaSegunClima(evento.getUbicacion());
+		usuario.notificarSugerenciasListas(this);
 	}
-
+	
+	
 	public boolean ocurreEntre(LocalDateTime fechaMinima, LocalDateTime fechaMaxima){
 		return evento.getFecha().isAfter(fechaMinima) && evento.getFecha().isBefore(fechaMaxima);
 	}
