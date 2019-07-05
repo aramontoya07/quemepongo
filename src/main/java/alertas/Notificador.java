@@ -1,5 +1,6 @@
 package alertas;
 
+import eventos.AsistenciaEvento;
 import usuario.Usuario;
 
 public class Notificador implements Interesado, NotificadorSMS {
@@ -15,6 +16,10 @@ public class Notificador implements Interesado, NotificadorSMS {
 
     public void mostrarNotificacion(String mensaje) {
         notificationService.notify(mensaje);
+    }
+
+    public void notificarA(Usuario usuario, AsistenciaEvento evento) {
+
     }
 
 }

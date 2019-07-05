@@ -8,7 +8,7 @@ import eventos.AsistenciaEvento;
 
 
 
-public class Casilla implements Interesado, CasillaDeMails {
+public class Casilla implements Interesado {
 
     public MailSender mailSender;
     public SimpleMailMessage message;
@@ -27,7 +27,7 @@ public class Casilla implements Interesado, CasillaDeMails {
         mailSender.send(message);
     }
     public void notificarA(Usuario usuario, AsistenciaEvento evento) {
-    	enviarMail(usuario.getMail(),"Hola están tus sugerencias listas"+ evento.pedirSugerencias());
+    	enviarMail(usuario.getMail(),"Hola estï¿½n tus sugerencias listas"+ evento.pedirSugerencias());
     }
 
 
