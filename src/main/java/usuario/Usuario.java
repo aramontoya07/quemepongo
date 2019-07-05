@@ -146,4 +146,8 @@ public class Usuario {
 	public void removerPuntuado(PreferenciasDeAbrigo preferenciaAntigua) {
 		preferenciasDeAbrigo = preferenciaAntigua;
 	}
+
+	public Calendario getCalendarioEventos() {
+		return calendarioEventos;
+	}
 }

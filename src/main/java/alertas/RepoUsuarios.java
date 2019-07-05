@@ -3,7 +3,9 @@ package alertas;
 import usuario.Usuario;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class RepoUsuarios { //TODO
     private static RepoUsuarios repo;
@@ -15,7 +17,7 @@ public class RepoUsuarios { //TODO
     }
 
     public void agregarUsuario(Usuario usuario){
-        repo.add(usuario);
+        listaUsuarios.add(usuario);
     }
 
     public Set<Usuario> getTodos() {
