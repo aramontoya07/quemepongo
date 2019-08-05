@@ -20,7 +20,7 @@ import usuario.Usuario;
 public class BuscadorEventos {
     private LocalDateTime fechaDesde;
     private LocalDateTime fechaHasta;
-    private List<AsistenciaEvento> resultados; //Deberia poder bindear con Eventos, no AsistenciaEvento asi que no se si funciona
+    private List<AsistenciaEvento> resultados;
     private String nombre;
     private String lugar;
     private boolean tieneSugerencia; //Nuestros eventos no tienen esta propiedad. Asi que esto debe ser ILEGAL ¯\_(ツ)_/¯

@@ -17,6 +17,7 @@ import org.uqbar.arena.widgets.Button;
 
 import java.awt.*;
 
+@SuppressWarnings("serial")
 public class BuscadorEventosWindow extends SimpleWindow<BuscadorEventos> {
 
     public BuscadorEventosWindow(WindowOwner parent) {
@@ -105,6 +106,7 @@ public class BuscadorEventosWindow extends SimpleWindow<BuscadorEventos> {
         actionsPanel.setLayout(new HorizontalLayout());
 
     }
+
 
 
 }
