@@ -20,15 +20,6 @@ class UsuarioTest extends SetUp {
 		setear();
 	}
 
-	@Test
-	@DisplayName("Las sugerencias de prenda deben ser validas")
-	void generarSugerencias() {
-		pedro.agregarGuardarropa(guardarropa);
-		pedro.actualizarSubscripcion();
-		pedro.agregarPrendas(guardarropa, prendasGlobales);
-		Set<Atuendo> listaSugerencias = pedro.pedirSugerencia();
-		assertTrue(listaSugerencias.stream().allMatch(atuendo -> atuendo.esAtuendoValido(atuendo)));
-	}
 
 	@Test
 	@DisplayName("Se deben generar todas las combinaciones posibles de ropa")

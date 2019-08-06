@@ -17,7 +17,7 @@ public abstract class Evento{
     }
     
 	public boolean esEventoLejano() {
-		return fecha.isBefore(LocalDateTime.now().minusHours(horasEventoCercano));
+		return fecha.isAfter(LocalDateTime.now().plusHours(horasEventoCercano));
 	}
 	
 	public LocalDateTime getFecha() {

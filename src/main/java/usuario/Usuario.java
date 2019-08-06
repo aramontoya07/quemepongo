@@ -105,6 +105,7 @@ public class Usuario {
 
 	public void removerAceptado() {
 		Atuendo atuendo = aceptados.poll();
+		assert atuendo != null;
 		atuendo.liberar();
 	}
 
@@ -149,5 +150,9 @@ public class Usuario {
 
 	public Calendario getCalendarioEventos() {
 		return calendarioEventos;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
 	}
 }
