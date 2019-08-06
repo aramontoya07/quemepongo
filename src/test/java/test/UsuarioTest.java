@@ -10,7 +10,10 @@ import org.junit.jupiter.api.Test;
 import atuendo.*;
 import clima.*;
 import excepciones.*;
+import prenda.Prenda;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 class UsuarioTest extends SetUp {
@@ -23,14 +26,12 @@ class UsuarioTest extends SetUp {
 
 	@Test
 	@DisplayName("Se deben generar todas las combinaciones posibles de ropa")
-	void contarSugerencias() {
-		//#FIXME Testear esto es medio raro
+	void contarSugerencias(){
 		pedro.agregarGuardarropa(guardarropa);
 		pedro.actualizarSubscripcion();
 		pedro.agregarPrendas(guardarropa, prendasGlobales);
-
 		Set<Atuendo> listaSugerencias = pedro.pedirSugerencia();
-		assertEquals(32, listaSugerencias.size());
+		assertEquals(48, listaSugerencias.size());
 	}
 
 	@Test
@@ -49,11 +50,11 @@ class UsuarioTest extends SetUp {
 		pedro.actualizarSubscripcion();
 		pedro.agregarPrendas(guardarropa, prendasGlobales);
 
-		assertEquals(8, guardarropa.cantidadDePrendas());
+		assertEquals(9, guardarropa.cantidadDePrendas());
 	}
 
 	@Test
-	@DisplayName("Devuelve sugerencias aptas para un clima agradable")
+	@DisplayName("Devuelve sugerencias aptas para un clima agradable") //TODO este explota
 	void prendasParaFrio() {
 		pedro.agregarGuardarropa(guardarropa);
 		pedro.actualizarSubscripcion();

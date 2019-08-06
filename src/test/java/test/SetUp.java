@@ -1,5 +1,7 @@
 package test;
 
+import clima.MockAgradable;
+import clima.ServicioClimatico;
 import prenda.*;
 import usuario.Guardarropas;
 import usuario.Usuario;
@@ -11,6 +13,7 @@ import java.util.Set;
 
 
 public abstract class SetUp {
+
     TipoPrenda remera = new TipoPrenda(Categoria.PARTE_SUPERIOR,
             new ArrayList<Material>(Arrays.asList(Material.ALGODON, Material.SEDA)), 12, TipoUso.PRIMARIA);
     TipoPrenda pantalon = new TipoPrenda(Categoria.PARTE_INFERIOR,
@@ -52,6 +55,7 @@ public abstract class SetUp {
 
 
     public void setear(){
+        ServicioClimatico.definirProvedor(new MockAgradable());
         remera.setTiposAceptados(new ArrayList<TipoPrenda>(Arrays.asList(campera)));
 
         borrador_remeraAzul.crearBorrador(new ColorRGB(255, 255, 0), remera, Material.ALGODON);
@@ -84,5 +88,6 @@ public abstract class SetUp {
         prendasGlobales.add(zapatillasVerde);
         prendasGlobales.add(anteojos);
         prendasGlobales.add(anteojosDeSol);
+        prendasGlobales.add(camperaGris);
     }
 }

@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import clima.Clima;
 import excepciones.AbrigoException;
 import excepciones.CategoriaOcupadaException;
+import excepciones.PrendaFaultException;
 import prenda.Categoria;
 import prenda.ParteAbrigada;
 import prenda.Prenda;
@@ -19,13 +20,13 @@ import usuario.PreferenciasDeAbrigo;
 
 import static prenda.ParteAbrigada.*;
 
-public class Atuendo {
+public class Atuendo{
 	private Guardarropas guardarropasOrigen;
 	private Prenda superior;
 	private Prenda inferior;
 	private Prenda calzado;
-	private List<Prenda> accesorios = new ArrayList<Prenda>();
-	private List<Prenda> capasAbrigos = new ArrayList<Prenda>();
+	private List<Prenda> accesorios = new ArrayList<>();
+	private List<Prenda> capasAbrigos = new ArrayList<>();
 	private Integer rangoDeAceptacion = 10;
 
 	public Guardarropas getGuardarropasOrigen() {
@@ -52,10 +53,34 @@ public class Atuendo {
 		return capasAbrigos;
 	}
 
+	public boolean esIgualA(Atuendo atuendo) {
+		return superior.equals(atuendo.getSuperior())
+				&& inferior.equals(atuendo.getInferior())
+				&& calzado.equals(atuendo.getCalzado())
+				&& accesorios.equals(atuendo.getAccesorios())
+				&& capasAbrigos.equals(atuendo.getCapasAbrigos());
+	}
+
 	public Atuendo(Prenda pSuperior, Prenda pInferior, Prenda pCalzado) {
 		superior = pSuperior;
 		inferior = pInferior;
 		calzado = pCalzado;
+	}
+
+	public Atuendo clonar(){
+		Atuendo clon = new Atuendo(superior,inferior,calzado);
+		clon.setAccesorios(new ArrayList<>(accesorios));
+		clon.setAcapasAbrigos(new ArrayList<>(capasAbrigos));
+		clon.setRangoDeAceptacion(rangoDeAceptacion);
+		return clon;
+	}
+
+	private void setAccesorios(ArrayList<Prenda> prendas) {
+		accesorios = prendas;
+	}
+
+	private void setAcapasAbrigos(ArrayList<Prenda> prendas) {
+		capasAbrigos = prendas;
 	}
 
 	public boolean aceptaSuperponer(Prenda prenda){
@@ -63,7 +88,11 @@ public class Atuendo {
 			case PARTE_SUPERIOR:
 				return ultimoSuperior().aceptaSuperponerPrenda(prenda);
 			case ACCESORIO:
-				return ultimoAccesorio().aceptaSuperponerPrenda(prenda);
+				try{
+					return ultimoAccesorio().aceptaSuperponerPrenda(prenda);
+				}catch(PrendaFaultException e){
+					return true;
+				}
 		}
 		return false;
 	}
@@ -79,8 +108,11 @@ public class Atuendo {
 		}
 	}
 
-	private Prenda ultimoAccesorio() {
-		return accesorios.get(accesorios.size()-1);
+	private Prenda ultimoAccesorio() throws PrendaFaultException{
+			if(accesorios.isEmpty()){
+				throw new PrendaFaultException();
+			}
+			return accesorios.get(accesorios.size()-1);
 	}
 
 	private Prenda ultimoSuperior() {
@@ -150,4 +182,6 @@ public class Atuendo {
 	public void setRangoDeAceptacion(Integer rangoDeAceptacion) {
 		this.rangoDeAceptacion = rangoDeAceptacion;
 	}
+
+
 }

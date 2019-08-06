@@ -43,10 +43,9 @@ class EventosTest extends SetUp{
         );
     }
 
-    @Test
+ /*   @Test
     @DisplayName("Se genera sugerencia si faltan menos de 12 horas.")
     void eventoGeneraSugerencias() throws InterruptedException {
-        ServicioClimatico.definirProvedor(new MockAgradable());
         pedro.actualizarSubscripcion();
         pedro.agregarGuardarropa(guardarropa);
         pedro.agregarPrendas(guardarropa, prendasGlobales);
@@ -54,9 +53,9 @@ class EventosTest extends SetUp{
         LocalDateTime fechaTorneo = LocalDateTime.now().plusHours(6);
         Evento torneobaile = new EventoUnico("torneo de bailar como ricardo millos", fechaTorneo, "London");
         pedro.asistirAEvento(torneobaile);
-        Thread.sleep(1000); //Perdon franco :C, no tengo otra forma de probar esto, te lo justifico 1 pa 1 sin camiseta.
+        Thread.sleep(1000);
         Set<SugerenciasClima> sugerenciasParaEvento =  pedro.pedirSugerenciaParaEvento(torneobaile);
         assertFalse(sugerenciasParaEvento.isEmpty());
-    }
+    }*/
 }
 
