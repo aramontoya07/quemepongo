@@ -4,13 +4,13 @@ import clima.Clima;
 import usuario.PreferenciasDeAbrigo;
 import usuario.Usuario;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class SugerenciasClima {
-    private Set<Atuendo> exactas = new HashSet<>();
-    private Set<Atuendo> aproximadas = new HashSet<>();
+    private List<Atuendo> exactas = new ArrayList<>();
+    private List<Atuendo> aproximadas = new ArrayList<>();
     private int margen = 10;
 
     public SugerenciasClima(int margen) {
@@ -27,9 +27,9 @@ public class SugerenciasClima {
         }
     }
 
-    public SugerenciasClima ajustarAGustos(PreferenciasDeAbrigo preferencias){
-        exactas = exactas.stream().filter(atuendo -> atuendo.entraEnPreferencias(preferencias)).collect(Collectors.toSet());
-        aproximadas = aproximadas.stream().filter(atuendo -> atuendo.entraEnPreferencias(preferencias)).collect(Collectors.toSet());
+    public SugerenciasClima ajustarAGustos(PreferenciasDeAbrigo preferencias, double temperatura){
+        exactas = exactas.stream().sorted(Comparator.comparing(atuendo -> preferencias.obtenerNivelDeAdaptacion(temperatura, atuendo))).collect(Collectors.toList());
+        aproximadas = aproximadas.stream().sorted(Comparator.comparing(atuendo -> preferencias.obtenerNivelDeAdaptacion(temperatura, atuendo))).collect(Collectors.toList());
         return this;
     }
 
@@ -38,11 +38,11 @@ public class SugerenciasClima {
                 aproximadas.stream().allMatch(aproximada -> aproximada.nivelDeAdaptacionAlClima(clima) <= margen);
     }
 
-    public Set<Atuendo> getExactas(){
+    public List<Atuendo> getExactas(){
         return exactas;
     }
 
-    public Set<Atuendo> getAproximadas(){
+    public List<Atuendo> getAproximadas(){
         return exactas;
     }
 }

@@ -123,7 +123,7 @@ public class Atuendo{
 		}
 	}
 
-	private int nivelAbrigo() {
+	public int nivelAbrigo() {
 		return superior.nivelAbrigo() +
 			   inferior.nivelAbrigo() +
 			   calzado.nivelAbrigo() +
@@ -149,35 +149,11 @@ public class Atuendo{
 		obtenerPrendasTotales().forEach(prenda -> guardarropasOrigen.liberarPrenda(prenda));
 	}
 
-	public PreferenciasDeAbrigo generarPreferencias() {
-		PreferenciasDeAbrigo preferencias = new PreferenciasDeAbrigo();
-		preferencias.setAbrigoCabeza(abrigoEn(CABEZA));
-		preferencias.setAbrigoCuello(abrigoEn(CUELLO));
-		preferencias.setAbrigoManos(abrigoEn(MANOS));
-		preferencias.setAbrigoPecho(abrigoEn(PECHO));
-		preferencias.setAbrigoPiernas(abrigoEn(PIERNAS));
-		preferencias.setAbrigoPies(abrigoEn(PIES));
-		return preferencias;
-	}
 
-	private Integer abrigoEn(ParteAbrigada parte) {
+
+	public Integer abrigoEn(ParteAbrigada parte) {
 		return obtenerPrendasTotales().stream().mapToInt(prenda-> (int) prenda.abrigoEnParte(parte)).sum();
 	}
-
-	private boolean entraEnRango(Integer abrigo,Integer nivelDePreferencia){
-		return abrigo <= nivelDePreferencia + rangoDeAceptacion &&
-				abrigo >= nivelDePreferencia - rangoDeAceptacion;
-	}
-
-    public boolean entraEnPreferencias(PreferenciasDeAbrigo preferencias) {
-		return entraEnRango(abrigoEn(CABEZA),preferencias.getAbrigoCabeza()) &&
-			entraEnRango(abrigoEn(CUELLO),preferencias.getAbrigoCuello()) &&
-			entraEnRango(abrigoEn(PECHO),preferencias.getAbrigoPecho()) &&
-			entraEnRango(abrigoEn(PIERNAS),preferencias.getAbrigoPiernas()) &&
-			entraEnRango(abrigoEn(PIES),preferencias.getAbrigoPies()) &&
-			entraEnRango(abrigoEn(MANOS),preferencias.getAbrigoManos());
-
-    }
 
 	public void setRangoDeAceptacion(Integer rangoDeAceptacion) {
 		this.rangoDeAceptacion = rangoDeAceptacion;

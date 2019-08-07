@@ -6,6 +6,7 @@ import prenda.*;
 import usuario.Guardarropas;
 import usuario.Usuario;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -16,10 +17,14 @@ public abstract class SetUp {
 
     TipoPrenda remera = new TipoPrenda(Categoria.PARTE_SUPERIOR,
             new ArrayList<Material>(Arrays.asList(Material.ALGODON, Material.SEDA)), 12, TipoUso.PRIMARIA);
+    TipoPrenda gorro = new TipoPrenda(Categoria.ACCESORIO,
+            new ArrayList<Material>(Arrays.asList(Material.LANA)), 2, TipoUso.SECUNDARIA);
     TipoPrenda pantalon = new TipoPrenda(Categoria.PARTE_INFERIOR,
             new ArrayList<Material>(Arrays.asList(Material.JEAN, Material.CUERO, Material.ALGODON)), 5,
             TipoUso.PRIMARIA);
     TipoPrenda zapatilla = new TipoPrenda(Categoria.CALZADO, new ArrayList<Material>(Arrays.asList(Material.CUERO)), 3,
+            TipoUso.PRIMARIA);
+    TipoPrenda ojota = new TipoPrenda(Categoria.CALZADO, new ArrayList<Material>(Arrays.asList(Material.CUERO)), 1,
             TipoUso.PRIMARIA);
     TipoPrenda anteojo = new TipoPrenda(Categoria.ACCESORIO,
             new ArrayList<Material>(Arrays.asList(Material.VIDRIO, Material.PLASTICO)), 0, TipoUso.SECUNDARIA);
@@ -35,6 +40,7 @@ public abstract class SetUp {
     Borrador borrador_ojotas = new Borrador();
     Borrador borrador_anteojos = new Borrador();
     Borrador borrador_anteojosDeSol = new Borrador();
+    Borrador borrador_gorroLana= new Borrador();
 
     Prenda remeraAzul;
     Prenda remeraDeportiva;
@@ -45,8 +51,10 @@ public abstract class SetUp {
     Prenda zapatillasVerde;
     Prenda anteojos;
     Prenda anteojosDeSol;
+    Prenda gorroLana;
 
     Set<Prenda> prendasGlobales = new HashSet<Prenda>();
+    Set<Prenda> prendasPocas = new HashSet<Prenda>();
 
     Guardarropas guardarropa = new Guardarropas();
     Guardarropas otroGuardarropa = new Guardarropas();
@@ -63,10 +71,11 @@ public abstract class SetUp {
         borrador_zapatilla.crearBorrador(new ColorRGB(55, 123, 60), zapatilla, Material.CUERO);
         borrador_remeraDeportiva.crearBorrador(new ColorRGB(77, 4, 10), remera, Material.ALGODON);
         borrador_jeanNegro.crearBorrador(new ColorRGB(255, 0, 255), pantalon, Material.JEAN);
-        borrador_ojotas.crearBorrador(new ColorRGB(0, 0, 0), zapatilla, Material.CUERO);
+        borrador_ojotas.crearBorrador(new ColorRGB(0, 0, 0), ojota, Material.CUERO);
         borrador_anteojos.crearBorrador(new ColorRGB(0, 0, 0), anteojo, Material.VIDRIO);
         borrador_anteojosDeSol.crearBorrador(new ColorRGB(0, 0, 0), anteojo, Material.PLASTICO);
         borrador_camperaGris.crearBorrador(new ColorRGB(245, 5, 128), campera, Material.LANA);
+        borrador_gorroLana.crearBorrador(new ColorRGB(255, 0, 0), gorro, Material.LANA);
 
         borrador_remeraAzul.definirTrama(Trama.RAYADA);
 
@@ -79,6 +88,7 @@ public abstract class SetUp {
         zapatillasVerde = borrador_zapatilla.crearPrenda();
         anteojos = borrador_anteojos.crearPrenda();
         anteojosDeSol = borrador_anteojosDeSol.crearPrenda();
+        gorroLana = borrador_gorroLana.crearPrenda();
 
         prendasGlobales.add(remeraAzul);
         prendasGlobales.add(remeraDeportiva);
@@ -89,5 +99,11 @@ public abstract class SetUp {
         prendasGlobales.add(anteojos);
         prendasGlobales.add(anteojosDeSol);
         prendasGlobales.add(camperaGris);
+        //prendasGlobales.add(gorroLana);
+
+        prendasPocas.add(remeraAzul);
+        prendasPocas.add(jeanNegro);
+        prendasPocas.add(zapatillasVerde);
+        prendasPocas.add(camperaGris);
     }
 }
