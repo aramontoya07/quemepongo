@@ -81,17 +81,6 @@
           <version>3.6.3</version>
       </dependency>
 
-      <dependency>
-          <groupId>org.uqbar-project</groupId>
-          <artifactId>arena-jface</artifactId>
-          <version>3.6.3</version>
-      </dependency>
-
-      <dependency>
-          <groupId>org.eclipse.swt.gtk</groupId>
-          <artifactId>org.eclipse.swt.gtk.linux.x86_64</artifactId>
-          <version>3.5.2.v3557f</version>
-      </dependency>
 
   </dependencies>
 
