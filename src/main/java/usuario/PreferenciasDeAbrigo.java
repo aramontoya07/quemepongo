@@ -1,77 +1,55 @@
 package usuario;
 
-public class PreferenciasDeAbrigo {
-    private Integer abrigoCabeza;
-    private Integer abrigoCuello;
-    private Integer abrigoPecho;
-    private Integer abrigoManos;
-    private Integer abrigoPiernas;
-    private Integer abrigoPies;
+import atuendo.Atuendo;
+import prenda.ParteAbrigada;
 
-    private Integer puntaje;
+public class PreferenciasDeAbrigo {
+    private AdaptacionPuntuada abrigoCabeza;
+    private AdaptacionPuntuada abrigoCuello;
+    private AdaptacionPuntuada abrigoPecho;
+    private AdaptacionPuntuada abrigoManos;
+    private AdaptacionPuntuada abrigoPiernas;
+    private AdaptacionPuntuada abrigoPies;
+
 
     public PreferenciasDeAbrigo() {
-        this.abrigoCabeza = 0;
-        this.abrigoCuello = 0;
-        this.abrigoPecho = 0;
-        this.abrigoManos = 0;
-        this.abrigoPiernas = 0;
-        this.abrigoPies = 0;
+        this.abrigoCabeza = new AdaptacionPuntuada(25, 0, 0);
+        this.abrigoCuello = new AdaptacionPuntuada(25, 0, 0);
+        this.abrigoPecho = new AdaptacionPuntuada(25, 0, 0);
+        this.abrigoManos = new AdaptacionPuntuada(25, 0, 0);
+        this.abrigoPiernas = new AdaptacionPuntuada(25, 0, 0);
+        this.abrigoPies = new AdaptacionPuntuada(25, 0, 0);
     }
 
-    public Integer getPuntaje(){
-        return puntaje;
+    private double adaptacionTotal(){
+        return abrigoPiernas.getNivelDeAdaptacion() +
+                abrigoCuello.getNivelDeAdaptacion() +
+                abrigoPecho.getNivelDeAdaptacion() +
+                abrigoManos.getNivelDeAdaptacion() +
+                abrigoCabeza.getNivelDeAdaptacion() +
+                abrigoPies.getNivelDeAdaptacion();
     }
 
-    public void setPuntaje(Integer puntaje){
-        this.puntaje = puntaje;
+    public AdaptacionPuntuada getPuntaje(ParteAbrigada parte) {
+        switch (parte) {
+            case CABEZA:
+                return abrigoCabeza;
+            case PIES:
+                return abrigoPies;
+            case MANOS:
+                return abrigoManos;
+            case PECHO:
+                return abrigoPecho;
+            case CUELLO:
+                return abrigoCuello;
+            case PIERNAS:
+                return abrigoPiernas;
+        }
+        return null;
     }
 
-    public Integer getAbrigoCabeza() {
-        return abrigoCabeza;
-    }
 
-    public Integer getAbrigoCuello() {
-        return abrigoCuello;
-    }
-
-    public Integer getAbrigoPecho() {
-        return abrigoPecho;
-    }
-
-    public Integer getAbrigoManos() {
-        return abrigoManos;
-    }
-
-    public Integer getAbrigoPiernas() {
-        return abrigoPiernas;
-    }
-
-    public Integer getAbrigoPies() {
-        return abrigoPies;
-    }
-
-    public void setAbrigoCabeza(Integer abrigoCabeza) {
-        this.abrigoCabeza = abrigoCabeza;
-    }
-
-    public void setAbrigoCuello(Integer abrigoCuello) {
-        this.abrigoCuello = abrigoCuello;
-    }
-
-    public void setAbrigoPecho(Integer abrigoPecho) {
-        this.abrigoPecho = abrigoPecho;
-    }
-
-    public void setAbrigoManos(Integer abrigoManos) {
-        this.abrigoManos = abrigoManos;
-    }
-
-    public void setAbrigoPiernas(Integer abrigoPiernas) {
-        this.abrigoPiernas = abrigoPiernas;
-    }
-
-    public void setAbrigoPies(Integer abrigoPies) {
-        this.abrigoPies = abrigoPies;
+    public double obtenerNivelDeAdaptacion(double temperatura, Atuendo atuendo) {
+        return Math.abs(this.adaptacionTotal() - (atuendo.nivelAbrigo() + 6.0*temperatura));
     }
 }

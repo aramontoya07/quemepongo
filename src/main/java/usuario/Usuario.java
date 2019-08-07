@@ -8,9 +8,9 @@ import alertas.RepoUsuarios;
 import alertas.TipoAlerta;
 import atuendo.Atuendo;
 import atuendo.SugerenciasClima;
+import clima.ServicioClimatico;
 import decisiones.Decision;
 import decisiones.DecisionAceptar;
-import decisiones.DecisionPuntuar;
 import decisiones.DecisionRechazar;
 import eventos.AsistenciaEvento;
 import eventos.Calendario;
@@ -18,6 +18,7 @@ import eventos.Evento;
 import excepciones.AgregarPrendaException;
 import excepciones.GuardarropasNoEncontradoException;
 import excepciones.GuardarropasYaAgregadoException;
+import prenda.ParteAbrigada;
 import prenda.Prenda;
 import subscripciones.SubscripcionGratuita;
 import subscripciones.SubscripcionPremium;
@@ -38,6 +39,7 @@ public class Usuario {
 	public Usuario() {
 		this.subscripcion = new SubscripcionGratuita();
 		RepoUsuarios.getInstance().agregarUsuario(this);
+		preferenciasDeAbrigo = new PreferenciasDeAbrigo();
 	}
 
 	public Set<Guardarropas> getGuardarropas() {
@@ -82,7 +84,7 @@ public class Usuario {
 
 	public Set<SugerenciasClima> pedirSugerenciaSegunClima(String ubicacion) {
 		return guardarropas.stream().map(unGuardarropa -> unGuardarropa.generarSugerenciasSegunClima(ubicacion))
-				.map(sugerencias -> sugerencias.ajustarAGustos(preferenciasDeAbrigo)).collect(Collectors.toSet());
+				.map(sugerencias -> sugerencias.ajustarAGustos(preferenciasDeAbrigo, ServicioClimatico.obtenerClima(ubicacion).getTemperatura())).collect(Collectors.toSet());
 	}
 	
 	public Set<SugerenciasClima> pedirSugerenciaParaEvento(Evento evento) {
@@ -105,6 +107,7 @@ public class Usuario {
 
 	public void removerAceptado() {
 		Atuendo atuendo = aceptados.poll();
+		assert atuendo != null;
 		atuendo.liberar();
 	}
 
@@ -112,19 +115,12 @@ public class Usuario {
 		rechazados.poll();
 	}
 
-	public void puntuarAtuendo(Atuendo atuendo, Integer puntaje) {
-		if(puntaje >= 0 && puntaje <= 5){
-			if(puntaje >= preferenciasDeAbrigo.getPuntaje()) {
-				ultimaDecision = new DecisionPuntuar(preferenciasDeAbrigo);
-				guardarPreferenciasDeAbrigo(atuendo, puntaje);
-			}
-		}
+	public void puntuarParte(AdaptacionPuntuada nuevoPuntaje, ParteAbrigada parte) {
+			AdaptacionPuntuada puntajeAbrigo = preferenciasDeAbrigo.getPuntaje(parte);
+			puntajeAbrigo.setearElMejor(nuevoPuntaje);
 	}
 
-	private void guardarPreferenciasDeAbrigo(Atuendo atuendo, Integer puntaje) {
-			PreferenciasDeAbrigo preferencias = atuendo.generarPreferencias();
-			preferencias.setPuntaje(puntaje);
-	}
+
 
 	public void actuarAnte(TipoAlerta alerta) {
 		interesados.forEach(interesado -> alerta.notificarA(interesado, this));
@@ -149,5 +145,9 @@ public class Usuario {
 
 	public Calendario getCalendarioEventos() {
 		return calendarioEventos;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
 	}
 }

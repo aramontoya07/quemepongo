@@ -10,8 +10,13 @@ import org.junit.jupiter.api.Test;
 import atuendo.*;
 import clima.*;
 import excepciones.*;
+import prenda.Prenda;
+import usuario.AdaptacionPuntuada;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 class UsuarioTest extends SetUp {
 
@@ -20,26 +25,15 @@ class UsuarioTest extends SetUp {
 		setear();
 	}
 
-	@Test
-	@DisplayName("Las sugerencias de prenda deben ser validas")
-	void generarSugerencias() {
-		pedro.agregarGuardarropa(guardarropa);
-		pedro.actualizarSubscripcion();
-		pedro.agregarPrendas(guardarropa, prendasGlobales);
-		Set<Atuendo> listaSugerencias = pedro.pedirSugerencia();
-		assertTrue(listaSugerencias.stream().allMatch(atuendo -> atuendo.esAtuendoValido(atuendo)));
-	}
 
 	@Test
 	@DisplayName("Se deben generar todas las combinaciones posibles de ropa")
-	void contarSugerencias() {
-		//#FIXME Testear esto es medio raro
+	void contarSugerencias(){
 		pedro.agregarGuardarropa(guardarropa);
 		pedro.actualizarSubscripcion();
 		pedro.agregarPrendas(guardarropa, prendasGlobales);
-
 		Set<Atuendo> listaSugerencias = pedro.pedirSugerencia();
-		assertEquals(32, listaSugerencias.size());
+		assertEquals(48, listaSugerencias.size());
 	}
 
 	@Test
@@ -58,11 +52,11 @@ class UsuarioTest extends SetUp {
 		pedro.actualizarSubscripcion();
 		pedro.agregarPrendas(guardarropa, prendasGlobales);
 
-		assertEquals(8, guardarropa.cantidadDePrendas());
+		assertEquals(9, guardarropa.cantidadDePrendas());
 	}
 
 	@Test
-	@DisplayName("Devuelve sugerencias aptas para un clima agradable")
+	@DisplayName("Devuelve sugerencias aptas para un clima frio")
 	void prendasParaFrio() {
 		pedro.agregarGuardarropa(guardarropa);
 		pedro.actualizarSubscripcion();
@@ -72,7 +66,7 @@ class UsuarioTest extends SetUp {
 		
 		Set<SugerenciasClima> listaSugerencias = pedro.pedirSugerenciaSegunClima( "London");
 		assertTrue(listaSugerencias.stream()
-				.allMatch(sugerencia -> sugerencia.esAptaParaClima(new MockAgradable().obtenerClima("London"))));
+				.allMatch(sugerencia -> sugerencia.esAptaParaClima(new MockFrio().obtenerClima("London"))));
 	}
 
 	@Test
@@ -80,6 +74,7 @@ class UsuarioTest extends SetUp {
 	void prendasParaCalor() {
 		pedro.actualizarSubscripcion();
 		pedro.agregarGuardarropa(guardarropa);
+		pedro.agregarPrendas(guardarropa, prendasGlobales);
 		
 		ServicioClimatico.definirProvedor(new MockCalor());
 		
@@ -88,4 +83,17 @@ class UsuarioTest extends SetUp {
 				.allMatch(sugerencia -> sugerencia.esAptaParaClima(new MockCalor().obtenerClima("Palermo"))));
 	}
 
+	@Test
+	@Disabled
+	@DisplayName("Ordena segun las preferencias")
+	void prendasOrdenadas(){
+		pedro.actualizarSubscripcion();
+		pedro.agregarGuardarropa(guardarropa);
+		pedro.agregarPrendas(guardarropa, prendasGlobales);
+
+		ServicioClimatico.definirProvedor(new MockAgradable());
+
+		SugerenciasClima sugerencia = new ArrayList<>(pedro.pedirSugerenciaSegunClima("Bokita papa")).get(0);
+		assertEquals(1, 1);
+	}
 }

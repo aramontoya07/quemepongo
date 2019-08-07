@@ -1,6 +1,7 @@
 package usuario;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -27,12 +28,12 @@ public class Guardarropas {
 	public Guardarropas() { }
 
 	public void usarPrenda(Prenda prenda) {
-		if(!existePrenda(prenda)) return; //TIRAR EXCEP
+		if(!existePrenda(prenda)) return; //TODO: TIRAR EXCEP
 		prendasUsada.add(prenda);
 	}
 	
 	public void liberarPrenda(Prenda prenda) {
-		if(!existePrenda(prenda)) return; //TIRAR EXCEP
+		if(!existePrenda(prenda)) return; //TODO: TIRAR EXCEP
 		prendasUsada.remove(prenda);
 	}
 
@@ -60,18 +61,36 @@ public class Guardarropas {
 		return combinacionesPosibles(atuendoBasico,prendasSecundarias);
 	}
 
-	private Set<Atuendo> combinacionesPosibles(Atuendo atuendo, Set<Prenda> prendasSecundarias) {
+	private Set<Atuendo> combinacionesPosibles(Atuendo atuendo, Set<Prenda> prendasSecundarias){
 
 		class CombinadorPrendas{
 			Set<Atuendo> combinaciones = new HashSet<Atuendo>();
 
-			public Set<Atuendo> getCombinaciones() { return combinaciones; }
+			public Set<Atuendo> getCombinaciones() {
+				return eliminarDuplicados(combinaciones);
+			}
+
+			private Set<Atuendo> eliminarDuplicados(Set<Atuendo> combinaciones){
+				Set<Atuendo> listaSecundaria = new HashSet<>();
+				combinaciones.forEach(atuendo -> agregarSiNoEsta(listaSecundaria,atuendo));
+				return listaSecundaria;
+			}
+
+			private void agregarSiNoEsta(Set<Atuendo> listaSecundaria, Atuendo atuendo) {
+				if(listaSecundaria.stream().anyMatch(atuendoSec -> atuendoSec.esIgualA(atuendo))){
+					return;
+				}else{
+					listaSecundaria.add(atuendo);
+				}
+			}
 
 			public void combinarPrendas(Atuendo atuendo,Set<Prenda> prendasSecundarias){
+
 				combinaciones.add(atuendo);
 
-				Atuendo atuendoActual = atuendo;
-				Set<Prenda> prendasActuales = prendasSecundarias;
+				Atuendo atuendoActual = atuendo.clonar();
+
+				Set<Prenda> prendasActuales = new HashSet(prendasSecundarias);
 
 				for(Prenda prendaActual : prendasSecundarias){
 					if(atuendo.aceptaSuperponer(prendaActual)){
@@ -80,8 +99,8 @@ public class Guardarropas {
 
 						combinarPrendas(atuendoActual,prendasActuales);
 
-						prendasActuales = prendasSecundarias;
-						atuendoActual = atuendo;
+						prendasActuales = new HashSet(prendasSecundarias);
+						atuendoActual = atuendo.clonar();
 					}
 				}
 			}
