@@ -42,22 +42,21 @@ class ClimaTest {
         assertTrue(climaNoTanViejo.esValido());
     }
 
-    @Disabled
+    @Disabled //Este test anda, pero esta desactivado para no consultar la API de OpenWeather cada vez que corremos los tests
     @Test
     @DisplayName("Openweather responde consultas sin errores")
     void openWeatherResponde() {
-        Clima londres = OpenWeather.getInstance().obtenerClima("London");
-        System.out.println(londres);
-        assertTrue(!(1 == 35));
+        Clima londres = null;
+        londres = OpenWeather.getInstance().obtenerClima("London");
+        assertNotNull(londres);
     }
 
     @Test
+    @Disabled //idem para este test
     @DisplayName("Accuweather responde consultas sin errores")
     void accuWeatherResponde() {
-        
-        ClientResponse response = AccuWeather.getInstance().Api_get(AccuWeather.getInstance().obtenerLink("http://dataservice.accuweather.com/forecasts/v1/daily/1day/","London"));
+        ClientResponse response = AccuWeather.getInstance().Api_get(AccuWeather.getInstance()
+                .obtenerLink("http://dataservice.accuweather.com/forecasts/v1/daily/1day/","London"));
         assertEquals(response.getStatus(), 200);
-       
-       
     }
 }
