@@ -1,12 +1,6 @@
 package prenda;
 
-import excepciones.ColorPrimarioObligatorioException;
-import excepciones.ColorSecundarioIgualAPrimarioException;
-import excepciones.ColorSecundarioSinPrimarioException;
-import excepciones.MaterialAntesQueTipoPrendaException;
-import excepciones.MaterialNoPermitidoException;
-import excepciones.MaterialObligatorioException;
-import excepciones.TipoPrendaObligatorioException;
+import excepciones.BorradorException;
 
 public class Borrador {
 	TipoPrenda tipo;
@@ -19,12 +13,12 @@ public class Borrador {
 		this.tipo = tipo;
 	}
 
-	public void definirMaterial(Material material) {
+	public void definirMaterial(Material material)throws BorradorException {
 		if (tipo == null) {
-			throw new MaterialAntesQueTipoPrendaException();
+			throw new BorradorException("No se puede definir el material de una prenda antes que su tipo");
 		}
 		if (!tipo.permiteMaterial(material)) {
-			throw new MaterialNoPermitidoException();
+			throw new BorradorException("El material que se quiso definir para la prenda no es permitido por su tipo");
 		}
 		this.material = material;
 	}
@@ -33,12 +27,12 @@ public class Borrador {
 		this.colorPrimario = colorPrimario;
 	}
 
-	public void definirColorSecundario(ColorRGB colorSecundario) {
+	public void definirColorSecundario(ColorRGB colorSecundario) throws BorradorException {
 		if (colorPrimario == null) {
-			throw new ColorSecundarioSinPrimarioException();
+			throw new BorradorException("No se puede definir el color secundario de una prenda sin antes definir su color primario");
 		}
 		if (colorPrimario.equals(colorSecundario)) {
-			throw new ColorSecundarioIgualAPrimarioException();
+			throw new BorradorException("El color secundario de una prenda no puede ser igual al primario");
 		}
 		this.colorSecundario = colorSecundario;
 	}
@@ -53,13 +47,13 @@ public class Borrador {
 		this.definirMaterial(material);
 	}
 
-	public Prenda crearPrenda() {
+	public Prenda crearPrenda() throws BorradorException {
 		if (tipo == null)
-			throw new TipoPrendaObligatorioException();
+			throw new BorradorException("Es necesario definir el tipo de prenda antes de crearla");
 		if (material == null)
-			throw new MaterialObligatorioException();
+			throw new BorradorException("Es necesario definir el material de la prenda antes de crearla");
 		if (colorPrimario == null)
-			throw new ColorPrimarioObligatorioException();
+			throw new BorradorException("Es necesario definir el color primario de la prenda antes de crearla");
 		return new Prenda(tipo, material, trama, colorPrimario, colorSecundario);
 	}
 }

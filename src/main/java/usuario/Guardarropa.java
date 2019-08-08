@@ -11,9 +11,8 @@ import com.google.common.collect.Sets;
 
 import atuendo.Atuendo;
 import clima.ServicioClimatico;
-import excepciones.NoExistePrendaEnGuardarropaException;
-import excepciones.PrendaFaultException;
-import excepciones.PrendaYaExisteException;
+import excepciones.GuardarropaException;
+import excepciones.PrendaException;
 import prenda.*;
 
 public class Guardarropa {
@@ -30,16 +29,13 @@ public class Guardarropa {
 
 	public void usarPrenda(Prenda prenda) {
 		if(!existePrenda(prenda)){
-			throw new PrendaFaultException("No se puede usar la prenda porque no está disponible en el guardarropa");
+			throw new GuardarropaException("No se puede usar la prenda porque no está disponible en el guardarropa");
 		}
 		quitarDeDisponibles(prenda);
 		agregarAUsadas(prenda);
 	}
 
-	public void liberarPrenda(Prenda prenda) {
-		if(existePrenda(prenda)){
-			throw new PrendaYaExisteException();
-		}
+	public void liberarPrenda(Prenda prenda) throws PrendaException {
 		agregarADisponibles(prenda);
 		quitarDeUsadas(prenda);
 	}
@@ -160,7 +156,7 @@ public class Guardarropa {
 	}
 
 	public void agregarADisponibles(Prenda prenda) { //@TODO testear
-		if (existePrenda(prenda)) throw new PrendaYaExisteException();
+		if (existePrenda(prenda)) throw new GuardarropaException("No se puede agregar la prenda al guardarropa ya que esta ya se encuentra disponible en el");
 		switch (prenda.getCategoria()) {
 		case PARTE_SUPERIOR:
 			superiores.add(prenda);
@@ -178,7 +174,7 @@ public class Guardarropa {
 	}
 
 	public void quitarDeDisponibles(Prenda prenda) { //@TODO testear
-		if (!existePrenda(prenda)) throw new PrendaFaultException("No se puede remover la prenda porque no existe en el guardarropa");
+		if (!existePrenda(prenda)) throw new PrendaException("No se puede remover la prenda porque no existe en el guardarropa");
 		switch (prenda.getCategoria()){
 			case PARTE_SUPERIOR:
 				superiores.remove(prenda);
@@ -197,7 +193,7 @@ public class Guardarropa {
 
 	public void agregarImagenA(Prenda prenda, String rutaImagen) throws IOException {
 		if (!existePrenda(prenda)) {
-			throw new NoExistePrendaEnGuardarropaException(); //TODO testear
+			throw new GuardarropaException("No se puede agregar imagen a la prenda ya que no esta disponible en el guardarropa"); //TODO testear
 		}
 		Imagen imagenOriginal = new Imagen(rutaImagen);
 		prenda.agregarImagen(imagenOriginal);

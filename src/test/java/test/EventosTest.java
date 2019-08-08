@@ -3,7 +3,7 @@ package test;
 import atuendo.SugerenciasClima;
 import eventos.Evento;
 import eventos.EventoUnico;
-import excepciones.EventoLejanoException;
+import excepciones.EventoException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ class EventosTest extends SetUp{
         Evento torneoFornite = new EventoUnico("Torneo de Fornite", fechaTorneo, "Bokita el one");
         pedro.asistirAEvento(torneoFornite);
         Thread.sleep(1000);
-        assertThrows(EventoLejanoException.class, () ->
+        assertThrows(EventoException.class, () ->
                 pedro.pedirSugerenciaParaEvento(torneoFornite)
         );
     }

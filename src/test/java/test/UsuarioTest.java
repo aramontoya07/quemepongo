@@ -7,7 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import atuendo.*;
-import clima.*;
 import excepciones.*;
 
 import java.util.Set;
@@ -22,7 +21,7 @@ class UsuarioTest extends SetUp {
 	@Test
 	@DisplayName("Al tener una suscripcion gratuita no se puede agregar mas de 5 prendas")
 	void maximoPrendasConGratuidas() {
-		assertThrows(AgregarPrendaException.class, () -> {
+		assertThrows(GuardarropaException.class, () -> {
 			pedro.agregarGuardarropa(guardarropa);
 			pedro.agregarPrendas(guardarropa, prendasGlobales);
 		});
@@ -105,5 +104,17 @@ class UsuarioTest extends SetUp {
 		pedro.rechazarAtuendo(atuendo);
 		pedro.deshacerDecision();
 		assertFalse(pedro.getRechazados().contains(atuendo));
+	}
+
+	@Test
+	@DisplayName("Un usuario puede calificar una prenda aceptada")
+	void calificarSugerencia(){
+		pedro.actualizarSubscripcionAPremium();
+		pedro.agregarGuardarropa(guardarropa);
+		pedro.agregarPrendas(guardarropa, prendasJustito);
+
+		Set<Atuendo> sugerenciasPedro = pedro.pedirSugerencia();
+		Atuendo atuendo = sugerenciasPedro.stream().findFirst().get();
+
 	}
 }

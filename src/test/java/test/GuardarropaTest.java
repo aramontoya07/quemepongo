@@ -8,11 +8,10 @@ import clima.MockAgradable;
 import clima.MockCalor;
 import clima.MockFrio;
 import clima.ServicioClimatico;
+import excepciones.GuardarropaException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import excepciones.*;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -29,7 +28,7 @@ class GuardarropaTest extends SetUp {
     @DisplayName("Falla al querer agregar una prenda existente")
     void prendaExistente(){
         guardarropa.agregarADisponibles(remeraAzul);
-        assertThrows(PrendaYaExisteException.class, () ->
+        assertThrows(GuardarropaException.class, () ->
                 guardarropa.agregarADisponibles(remeraAzul)
         );
     }
@@ -69,7 +68,7 @@ class GuardarropaTest extends SetUp {
     @Test
     @DisplayName("No se puede agregar imagen a una prenda que no existe")
     void imagen_A_PrendaNoExistente(){
-        assertThrows(NoExistePrendaEnGuardarropaException.class, ()->
+        assertThrows(GuardarropaException.class, ()->
                 guardarropa.agregarImagenA(remeraDeportiva, "")
         );
     }

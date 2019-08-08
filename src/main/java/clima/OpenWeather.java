@@ -4,9 +4,8 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-import excepciones.ClimaGuardadoMuyAntiguoException;
+import excepciones.ClimaException;
 import excepciones.HttpCodeException;
-import excepciones.NoExisteClimaGuardadoException;
 import org.json.JSONObject;
 
 public class OpenWeather extends ProvedorClimatico {
@@ -21,7 +20,7 @@ public class OpenWeather extends ProvedorClimatico {
 	public Clima obtenerClima(String nombre_ciudad) {
 		try{
 			return consultarClimaGuardado(nombre_ciudad);
-		}catch(NoExisteClimaGuardadoException | ClimaGuardadoMuyAntiguoException e){
+		}catch(ClimaException e){
 			ClientResponse respuesta = Api_get("http://api.openweathermap.org/data/2.5/weather?q="
 					+ nombre_ciudad + "&APPID=" + api_key + "&units=metric&lang=es");
 			String JsonRespuesta = respuesta.getEntity(String.class);
@@ -38,7 +37,7 @@ public class OpenWeather extends ProvedorClimatico {
 		WebResource webResource = client.resource(request);
 		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 		if (response.getStatus() != 200) {
-			throw new HttpCodeException(response.getStatus());
+			throw new HttpCodeException("Fallo la comunicacion con la API de AccuWeather. Codigo de error \" + response.getStatus()");
 		}
 		return response;
 	}

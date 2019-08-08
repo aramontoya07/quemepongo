@@ -1,10 +1,10 @@
 package excepciones;
 
-public class PrendaFaultException extends RuntimeException{
+public class PrendaException extends RuntimeException{
 
     String mensaje;
 
-    public PrendaFaultException(String mensaje){
+    public PrendaException(String mensaje){
         this.mensaje = mensaje;
     }
 

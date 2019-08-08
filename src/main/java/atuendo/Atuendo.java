@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import clima.Clima;
-import excepciones.PrendaFaultException;
+import excepciones.PrendaException;
 import prenda.ParteAbrigada;
 import prenda.Prenda;
 import usuario.Guardarropa;
@@ -80,7 +80,7 @@ public class Atuendo{
 			case ACCESORIO:
 				try{
 					return ultimoAccesorio().aceptaSuperponerPrenda(prenda);
-				}catch(PrendaFaultException e){
+				}catch(PrendaException e){
 					return true;
 				}
 		}
@@ -98,9 +98,9 @@ public class Atuendo{
 		}
 	}
 
-	private Prenda ultimoAccesorio() throws PrendaFaultException{
+	private Prenda ultimoAccesorio() throws PrendaException {
 			if(accesorios.isEmpty()){
-				throw new PrendaFaultException("No hay accesorios en este atuendo. pinto.");
+				throw new PrendaException("No hay accesorios en este atuendo. pinto.");
 			}
 			return accesorios.get(accesorios.size()-1);
 	}

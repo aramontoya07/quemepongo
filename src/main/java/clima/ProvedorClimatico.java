@@ -1,7 +1,6 @@
 package clima;
 
-import excepciones.ClimaGuardadoMuyAntiguoException;
-import excepciones.NoExisteClimaGuardadoException;
+import excepciones.ClimaException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,11 +15,10 @@ public abstract class ProvedorClimatico {
 		consultas.put(nombre_ciudad, climaActual);
 	}
 
-	public Clima consultarClimaGuardado(String nombre_ciudad)
-			throws NoExisteClimaGuardadoException, ClimaGuardadoMuyAntiguoException {
+	public Clima consultarClimaGuardado(String nombre_ciudad) throws ClimaException {
 		Clima clima = consultas.get(nombre_ciudad);
-		 if(clima == null) throw new NoExisteClimaGuardadoException();
-		 if(!clima.esValido()) throw new ClimaGuardadoMuyAntiguoException();
+		 if(clima == null) throw new ClimaException("No existe un clima guardado para consultar");
+		 if(!clima.esValido()) throw new ClimaException("El clima consultado fue obtenido hace mucho tiempo y ya no es confiable");
 		 return clima;
 	}
 }

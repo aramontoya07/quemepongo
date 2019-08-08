@@ -6,13 +6,13 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-import excepciones.ClimaGuardadoMuyAntiguoException;
+import com.sun.xml.internal.bind.v2.TODO;
+import excepciones.ClimaException;
 import excepciones.HttpCodeException;
-import excepciones.NoExisteClimaGuardadoException;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +29,7 @@ public class AccuWeather extends ProvedorClimatico {
 	public Clima obtenerClima(String nombre_ciudad) {
 		try{
 			return consultarClimaGuardado(nombre_ciudad);
-		}catch(NoExisteClimaGuardadoException | ClimaGuardadoMuyAntiguoException e){
+		}catch(ClimaException e){
 			Ubicacion ubicacionActual = obtenerUbicacion(nombre_ciudad);
 			keys.put(nombre_ciudad,ubicacionActual);
 			ClientResponse respuesta = Api_get("http://dataservice.accuweather.com/currentconditions/v1/"
@@ -49,7 +49,7 @@ public class AccuWeather extends ProvedorClimatico {
 		return parsearPronostico(JsonRespuesta);
 		
 		
-	}
+	}//TODO: subir los links
 	
 	public String obtenerLink(String linkParcial,String nombre_ciudad) {
 		Ubicacion ubicacionActual = obtenerUbicacion(nombre_ciudad);
@@ -69,7 +69,7 @@ public class AccuWeather extends ProvedorClimatico {
 		WebResource webResource = client.resource(request);
 		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 		if (response.getStatus() != 200) {
-			throw new HttpCodeException(response.getStatus());
+			throw new HttpCodeException("Fallo la comunicacion con la API de AccuWeather. Codigo de error " + response.getStatus());
 		}
 		return response;
 	}

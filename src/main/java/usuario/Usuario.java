@@ -15,10 +15,8 @@ import decisiones.DecisionRechazar;
 import eventos.AsistenciaEvento;
 import eventos.Calendario;
 import eventos.Evento;
-import excepciones.AgregarPrendaException;
-import excepciones.GuardarropasNoEncontradoException;
-import excepciones.GuardarropasYaAgregadoException;
-import excepciones.PrendaFaultException;
+import excepciones.GuardarropaException;
+import excepciones.PrendaException;
 import prenda.ParteAbrigada;
 import prenda.Prenda;
 import subscripciones.SubscripcionGratuita;
@@ -68,17 +66,17 @@ public class Usuario {
 	}
 
 	public void agregarGuardarropa(Guardarropa guardarropa) {
-		if(guardarropas.contains(guardarropa)) throw new GuardarropasYaAgregadoException();
+		if(guardarropas.contains(guardarropa)) throw new GuardarropaException("El guardarropa que se intento agregar ya existe");
 		guardarropas.add(guardarropa);
 	}
 
 	public void agregarPrendas(Guardarropa guardarropa, Set<Prenda> prendas) {
-		if(!guardarropas.contains(guardarropa)) throw new GuardarropasNoEncontradoException();
+		if(!guardarropas.contains(guardarropa)) throw new GuardarropaException("No se puede agregar la prenda ya que el guardarropa no existe");
 		prendas.forEach(prenda -> agregarPrenda(guardarropa, prenda));
 	}
 
 	private void agregarPrenda(Guardarropa guardarropa, Prenda prenda) {
-		if(!subscripcion.puedoAgregar(guardarropa.cantidadDePrendas())) throw new AgregarPrendaException();
+		if(!subscripcion.puedoAgregar(guardarropa.cantidadDePrendas())) throw new GuardarropaException("El guardarropa posee demasiadas prendas para ser agregado por un usuario con subscripcion gratuita");
 		guardarropa.agregarADisponibles(prenda);
 	}
 
@@ -100,16 +98,16 @@ public class Usuario {
 		return calendarioEventos.pedirSugerenciasParaEvento(evento);
 	}
 
-	public void aceptarAtuendo(Atuendo atuendo) throws PrendaFaultException {
+	public void aceptarAtuendo(Atuendo atuendo) throws PrendaException {
 		chequearAtuendoDisponible(atuendo);
 		aceptados.add(atuendo);
 		atuendo.marcarPrendasComoUsadas();
 		ultimaDecision = new DecisionAceptar();
 	}
 
-	private void chequearAtuendoDisponible(Atuendo atuendo)throws PrendaFaultException {
+	private void chequearAtuendoDisponible(Atuendo atuendo)throws PrendaException {
 		if(!atuendo.estaDisponible()){
-			throw new PrendaFaultException("Algunas prendas del atuendo elegido ya no se hallan disponibles");
+			throw new PrendaException("Algunas prendas del atuendo elegido ya no se hallan disponibles");
 		}
 	}
 

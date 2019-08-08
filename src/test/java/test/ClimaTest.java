@@ -1,8 +1,7 @@
 package test;
 
 import clima.*;
-import excepciones.ClimaGuardadoMuyAntiguoException;
-import excepciones.NoExisteClimaGuardadoException;
+import excepciones.ClimaException;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +22,9 @@ class ClimaTest {
         try{
             Clima sinApi = provedor.consultarClimaGuardado("London");
             assertEquals(Actual,sinApi);
-        }catch(NoExisteClimaGuardadoException | ClimaGuardadoMuyAntiguoException e){}
+        }catch(ClimaException e){
+            fail("ocurrio una excepcion de clima: " + e.toString());
+        }
     }
 
     @Test
