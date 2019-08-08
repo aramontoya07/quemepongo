@@ -49,7 +49,7 @@ public class PreferenciasDeAbrigo {
     }
 
 
-    public double obtenerNivelDeAdaptacion(double temperatura, Atuendo atuendo) {
+    public double obtenerNivelDeAdaptacion(double temperatura, Atuendo atuendo) { //mientras menor sea el numero de nivel de adaptacion, mejor es el atuendo en cuestion
         return Math.abs(this.adaptacionTotal() - (atuendo.nivelAbrigo() + 6.0*temperatura));
     }
 }

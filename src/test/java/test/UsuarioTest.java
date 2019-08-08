@@ -83,17 +83,27 @@ class UsuarioTest extends SetUp {
 				.allMatch(sugerencia -> sugerencia.esAptaParaClima(new MockCalor().obtenerClima("Palermo"))));
 	}
 
+	boolean chequearAbrigoEn(int posicion, int abrigoBuscado, SugerenciasClima sugerencia){
+		return sugerencia.getAproximadas().get(posicion).nivelAbrigo() == abrigoBuscado;
+	}
+
 	@Test
-	@Disabled
 	@DisplayName("Ordena segun las preferencias")
 	void prendasOrdenadas(){
 		pedro.actualizarSubscripcion();
+		guardarropa.setMargenDePrendasAproximadas(1000);
 		pedro.agregarGuardarropa(guardarropa);
-		pedro.agregarPrendas(guardarropa, prendasGlobales);
-
+		pedro.agregarPrendas(guardarropa, prendasOrdenables);
 		ServicioClimatico.definirProvedor(new MockAgradable());
+		SugerenciasClima sugerencia = new ArrayList<>(pedro.pedirSugerenciaSegunClima("Bokita el mas grande")).get(0);
+		assertTrue(chequearAbrigoEn(0,30, sugerencia) &&
+				chequearAbrigoEn(1,12, sugerencia) &&
+				chequearAbrigoEn(2,0, sugerencia));
+	}
 
-		SugerenciasClima sugerencia = new ArrayList<>(pedro.pedirSugerenciaSegunClima("Bokita papa")).get(0);
-		assertEquals(1, 1);
+	@Test
+	@DisplayName("Dos usuarios pueden compartir guardarropa")
+	void guardarropaCompartido(){
+
 	}
 }

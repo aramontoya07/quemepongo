@@ -3,16 +3,10 @@ package test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import atuendo.*;
-import clima.*;
 import excepciones.*;
-import usuario.Usuario;
-
-import java.util.Set;
 
 class GuardarropaTest extends SetUp {
 
@@ -25,21 +19,21 @@ class GuardarropaTest extends SetUp {
     @Test
     @DisplayName("Falla al querer agregar una prenda existente")
     void prendaExistente(){
-        guardarropa.agregarPrenda(remeraAzul);
+        guardarropa.agregarADisponibles(remeraAzul);
         assertThrows(PrendaYaExisteException.class, () ->
-                guardarropa.agregarPrenda(remeraAzul)
+                guardarropa.agregarADisponibles(remeraAzul)
         );
     }
 
     @Test
     @DisplayName("Cantidad de ropa de un guardarropa")
     void cantidadRopa(){
-        guardarropa.agregarPrenda(remeraAzul);
-        guardarropa.agregarPrenda(remeraDeportiva);
-        guardarropa.agregarPrenda(camperaGris);
-        guardarropa.agregarPrenda(jeanRojo);
-        guardarropa.agregarPrenda(jeanNegro);
-        guardarropa.agregarPrenda(anteojosDeSol);
+        guardarropa.agregarADisponibles(remeraAzul);
+        guardarropa.agregarADisponibles(remeraDeportiva);
+        guardarropa.agregarADisponibles(camperaGris);
+        guardarropa.agregarADisponibles(jeanRojo);
+        guardarropa.agregarADisponibles(jeanNegro);
+        guardarropa.agregarADisponibles(anteojosDeSol);
 
         assertEquals(7-1, guardarropa.cantidadDePrendas());
     }
@@ -55,7 +49,7 @@ class GuardarropaTest extends SetUp {
     @Test
     @DisplayName("Agrega prenda en la lista correcta del guardarropa")
     void agregarPrendaEnListaCorrecta(){
-        guardarropa.agregarPrenda(remeraDeportiva);
+        guardarropa.agregarADisponibles(remeraDeportiva);
         assertTrue(guardarropa.getSuperiores().contains(remeraDeportiva));
     }
 

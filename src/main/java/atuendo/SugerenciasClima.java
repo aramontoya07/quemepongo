@@ -28,7 +28,7 @@ public class SugerenciasClima {
     }
 
     public SugerenciasClima ajustarAGustos(PreferenciasDeAbrigo preferencias, double temperatura){
-        exactas = exactas.stream().sorted(Comparator.comparing(atuendo -> preferencias.obtenerNivelDeAdaptacion(temperatura, atuendo))).collect(Collectors.toList());
+        exactas = exactas.stream().sorted(Comparator.comparing(atuendo -> preferencias.obtenerNivelDeAdaptacion(temperatura, atuendo))).collect(Collectors.toList()); //deberia ordenar los atuendos segun su nivel de adaptacion de menor a mayor
         aproximadas = aproximadas.stream().sorted(Comparator.comparing(atuendo -> preferencias.obtenerNivelDeAdaptacion(temperatura, atuendo))).collect(Collectors.toList());
         return this;
     }
@@ -43,6 +43,6 @@ public class SugerenciasClima {
     }
 
     public List<Atuendo> getAproximadas(){
-        return exactas;
+        return aproximadas;
     }
 }
