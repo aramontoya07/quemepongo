@@ -100,4 +100,10 @@ class UsuarioTest extends SetUp {
 				chequearAbrigoEn(1,12, sugerencia) &&
 				chequearAbrigoEn(2,0, sugerencia));
 	}
+
+	@Test
+	@DisplayName("Dos usuarios pueden compartir guardarropa")
+	void guardarropaCompartido(){
+
+	}
 }

@@ -1,27 +1,16 @@
 package atuendo;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.stream.Collectors;
 
 import clima.Clima;
-import excepciones.AbrigoException;
-import excepciones.CategoriaOcupadaException;
 import excepciones.PrendaFaultException;
-import prenda.Categoria;
 import prenda.ParteAbrigada;
 import prenda.Prenda;
-import usuario.Guardarropas;
-import usuario.PreferenciasDeAbrigo;
-
-import static prenda.ParteAbrigada.*;
+import usuario.Guardarropa;
 
 public class Atuendo{
-	private Guardarropas guardarropasOrigen;
+	private Guardarropa guardarropaOrigen;
 	private Prenda superior;
 	private Prenda inferior;
 	private Prenda calzado;
@@ -29,8 +18,8 @@ public class Atuendo{
 	private List<Prenda> capasAbrigos = new ArrayList<>();
 	private Integer rangoDeAceptacion = 10;
 
-	public Guardarropas getGuardarropasOrigen() {
-		return guardarropasOrigen;
+	public Guardarropa getGuardarropaOrigen() {
+		return guardarropaOrigen;
 	}
 
 	public Prenda getSuperior() {
@@ -61,14 +50,15 @@ public class Atuendo{
 				&& capasAbrigos.equals(atuendo.getCapasAbrigos());
 	}
 
-	public Atuendo(Prenda pSuperior, Prenda pInferior, Prenda pCalzado) {
+	public Atuendo(Prenda pSuperior, Prenda pInferior, Prenda pCalzado, Guardarropa origen) {
 		superior = pSuperior;
 		inferior = pInferior;
 		calzado = pCalzado;
+		guardarropaOrigen = origen;
 	}
 
 	public Atuendo clonar(){
-		Atuendo clon = new Atuendo(superior,inferior,calzado);
+		Atuendo clon = new Atuendo(superior,inferior,calzado,guardarropaOrigen);
 		clon.setAccesorios(new ArrayList<>(accesorios));
 		clon.setAcapasAbrigos(new ArrayList<>(capasAbrigos));
 		clon.setRangoDeAceptacion(rangoDeAceptacion);
@@ -110,7 +100,7 @@ public class Atuendo{
 
 	private Prenda ultimoAccesorio() throws PrendaFaultException{
 			if(accesorios.isEmpty()){
-				throw new PrendaFaultException();
+				throw new PrendaFaultException("No hay accesorios en este atuendo. pinto.");
 			}
 			return accesorios.get(accesorios.size()-1);
 	}
@@ -136,7 +126,7 @@ public class Atuendo{
 	}
 
 	public List<Prenda> obtenerPrendasTotales(){
-		List<Prenda> prendasTotales = new ArrayList<Prenda>();
+		List<Prenda> prendasTotales = new ArrayList<>();
 		prendasTotales.add(superior);
 		prendasTotales.add(inferior);
 		prendasTotales.add(calzado);
@@ -145,11 +135,13 @@ public class Atuendo{
 		return prendasTotales;
 	}
 
-	public void liberar() {
-		obtenerPrendasTotales().forEach(prenda -> guardarropasOrigen.liberarPrenda(prenda));
+	public void liberarPrendasUsadas() {
+		obtenerPrendasTotales().forEach(prenda -> guardarropaOrigen.liberarPrenda(prenda));
 	}
 
-
+	public void marcarPrendasComoUsadas(){
+		obtenerPrendasTotales().forEach(prenda -> guardarropaOrigen.usarPrenda(prenda));
+	}
 
 	public Integer abrigoEn(ParteAbrigada parte) {
 		return obtenerPrendasTotales().stream().mapToInt(prenda-> (int) prenda.abrigoEnParte(parte)).sum();

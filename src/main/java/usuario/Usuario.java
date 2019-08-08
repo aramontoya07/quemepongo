@@ -18,6 +18,7 @@ import eventos.Evento;
 import excepciones.AgregarPrendaException;
 import excepciones.GuardarropasNoEncontradoException;
 import excepciones.GuardarropasYaAgregadoException;
+import excepciones.PrendaFaultException;
 import prenda.ParteAbrigada;
 import prenda.Prenda;
 import subscripciones.SubscripcionGratuita;
@@ -30,7 +31,7 @@ public class Usuario {
 	private Calendario calendarioEventos = new Calendario();
 	private Queue<Atuendo> aceptados = new LinkedList<>();
 	private Queue<Atuendo> rechazados = new LinkedList<>();
-	private Set<Guardarropas> guardarropas = new HashSet<>();
+	private Set<Guardarropa> guardarropas = new HashSet<>();
 	private String mail;
 	private List<Interesado> interesados = new ArrayList<>();
 	private PreferenciasDeAbrigo preferenciasDeAbrigo;
@@ -42,7 +43,7 @@ public class Usuario {
 		preferenciasDeAbrigo = new PreferenciasDeAbrigo();
 	}
 
-	public Set<Guardarropas> getGuardarropas() {
+	public Set<Guardarropa> getGuardarropas() {
 		return guardarropas;
 	}
 
@@ -58,19 +59,19 @@ public class Usuario {
 		subscripcion = new SubscripcionGratuita();
 	}
 
-	public void agregarGuardarropa(Guardarropas guardarropa) {
+	public void agregarGuardarropa(Guardarropa guardarropa) {
 		if(guardarropas.contains(guardarropa)) throw new GuardarropasYaAgregadoException();
 		guardarropas.add(guardarropa);
 	}
 
-	public void agregarPrendas(Guardarropas guardarropa, Set<Prenda> prendas) {
+	public void agregarPrendas(Guardarropa guardarropa, Set<Prenda> prendas) {
 		if(!guardarropas.contains(guardarropa)) throw new GuardarropasNoEncontradoException();
 		prendas.forEach(prenda -> agregarPrenda(guardarropa, prenda));
 	}
 
-	private void agregarPrenda(Guardarropas guardarropa, Prenda prenda) {
+	private void agregarPrenda(Guardarropa guardarropa, Prenda prenda) {
 		if(!subscripcion.puedoAgregar(guardarropa.cantidadDePrendas())) throw new AgregarPrendaException();
-		guardarropa.agregarPrenda(prenda);
+		guardarropa.agregarADisponibles(prenda);
 	}
 
 	public void asistirAEvento(Evento evento){
@@ -78,7 +79,7 @@ public class Usuario {
 	}
 
 	public Set<Atuendo> pedirSugerencia(){
-		return guardarropas.stream().map(Guardarropas::generarSugerenciasPosibles)
+		return guardarropas.stream().map(Guardarropa::generarSugerenciasPosibles)
 				.flatMap(Collection::stream).collect(Collectors.toSet());
 	}
 
@@ -91,9 +92,15 @@ public class Usuario {
 		return calendarioEventos.pedirSugerenciasParaEvento(evento);
 	}
 
-	public void aceptarAtuendo(Atuendo atuendo) {
+	public void aceptarAtuendo(Atuendo atuendo) throws PrendaFaultException {
+		chequearAtuendoDisponible(atuendo);
 		aceptados.add(atuendo);
+		atuendo.marcarPrendasComoUsadas();
 		ultimaDecision = new DecisionAceptar();
+	}
+
+	private void chequearAtuendoDisponible(Atuendo atuendo)throws PrendaFaultException {
+
 	}
 
 	public void rechazarAtuendo(Atuendo atuendo) {
@@ -108,7 +115,7 @@ public class Usuario {
 	public void removerAceptado() {
 		Atuendo atuendo = aceptados.poll();
 		assert atuendo != null;
-		atuendo.liberar();
+		atuendo.liberarPrendasUsadas();
 	}
 
 	public void removerRechazado() {

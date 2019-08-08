@@ -1,7 +1,6 @@
 package usuario;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -13,36 +12,40 @@ import com.google.common.collect.Sets;
 import atuendo.Atuendo;
 import clima.ServicioClimatico;
 import excepciones.NoExistePrendaEnGuardarropaException;
+import excepciones.PrendaFaultException;
 import excepciones.PrendaYaExisteException;
 import prenda.*;
 
-public class Guardarropas {
+public class Guardarropa {
 
-	public Set<Prenda> superiores = new HashSet<Prenda>();
-	public Set<Prenda> inferiores = new HashSet<Prenda>();
-	public Set<Prenda> calzados = new HashSet<Prenda>();
-	public Set<Prenda> accesorios = new HashSet<Prenda>();
+	public Set<Prenda> superiores = new HashSet<>();
+	public Set<Prenda> inferiores = new HashSet<>();
+	public Set<Prenda> calzados = new HashSet<>();
+	public Set<Prenda> accesorios = new HashSet<>();
 	private int margenDePrendasAproximadas = 10;
 	
-	public Set<Prenda> prendasUsada = new HashSet<Prenda>();
+	public Set<Prenda> prendasUsada = new HashSet<>();
 	
-	public Guardarropas() { }
+	public Guardarropa() { }
 
 	public void usarPrenda(Prenda prenda) {
 		if(!existePrenda(prenda)) return; //TODO: TIRAR EXCEP
+		quitarDeDisponibles(prenda);
 		prendasUsada.add(prenda);
 	}
-	
+
 	public void liberarPrenda(Prenda prenda) {
 		if(!existePrenda(prenda)) return; //TODO: TIRAR EXCEP
+		agregarADisponibles(prenda);
 		prendasUsada.remove(prenda);
+
 	}
 
 	@SuppressWarnings("unchecked")
 	public Set<Atuendo> generarSugerenciaBasica(){
 		return Sets
 				.cartesianProduct(prendasPrimarias(superiores), inferiores, calzados)
-				.stream().map((list) -> new Atuendo(list.get(0), list.get(1), list.get(2)))
+				.stream().map((list) -> new Atuendo(list.get(0), list.get(1), list.get(2), this))
 				.collect(Collectors.toSet());
 	}
 
@@ -129,10 +132,10 @@ public class Guardarropas {
 	}
 
 	public void agregarPrendas(Set<Prenda> prendas) {
-		prendas.stream().forEach(prenda -> agregarPrenda(prenda));
+		prendas.stream().forEach(prenda -> agregarADisponibles(prenda));
 	}
 
-	public void agregarPrenda(Prenda prenda) { //@TODO testear
+	public void agregarADisponibles(Prenda prenda) { //@TODO testear
 		if (existePrenda(prenda)) throw new PrendaYaExisteException();
 		switch (prenda.getCategoria()) {
 		case PARTE_SUPERIOR:
@@ -147,6 +150,24 @@ public class Guardarropas {
 		case ACCESORIO:
 			accesorios.add(prenda);
 			break;
+		}
+	}
+
+	public void quitarDeDisponibles(Prenda prenda) { //@TODO testear
+		if (!existePrenda(prenda)) throw new PrendaFaultException("No se puede remover la prenda porque no existe en el guardarropa");
+		switch (prenda.getCategoria()){
+			case PARTE_SUPERIOR:
+				superiores.remove(prenda);
+				break;
+			case PARTE_INFERIOR:
+				inferiores.remove(prenda);
+				break;
+			case CALZADO:
+				calzados.remove(prenda);
+				break;
+			case ACCESORIO:
+				accesorios.remove(prenda);
+				break;
 		}
 	}
 

@@ -3,10 +3,9 @@ package test;
 import clima.MockAgradable;
 import clima.ServicioClimatico;
 import prenda.*;
-import usuario.Guardarropas;
+import usuario.Guardarropa;
 import usuario.Usuario;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -73,8 +72,8 @@ public abstract class SetUp {
     Set<Prenda> prendasGlobales = new HashSet<Prenda>();
     Set<Prenda> prendasOrdenables = new HashSet<Prenda>();
 
-    Guardarropas guardarropa = new Guardarropas();
-    Guardarropas otroGuardarropa = new Guardarropas();
+    Guardarropa guardarropa = new Guardarropa();
+    Guardarropa otroGuardarropa = new Guardarropa();
 
     Usuario pedro = new Usuario();
 
