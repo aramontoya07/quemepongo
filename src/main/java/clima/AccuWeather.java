@@ -19,7 +19,12 @@ import java.util.Map;
 public class AccuWeather extends ProvedorClimatico {     
 	private static AccuWeather single_instance = null;
 	private Map<String,Ubicacion> keys = new HashMap<>();
-	private String api_key = "zhfH9jKdVhV1EfPHRAHoZTZqBH7GbsDM";
+	private static String keyPropia = "zhfH9jKdVhV1EfPHRAHoZTZqBH7GbsDM";
+	private static String paginaAccuweather = "http://dataservice.accuweather.com";
+	private static String accuweatherConditions = paginaAccuweather + "/currentconditions/v1/";
+	private static String accuweatherLoqueishons = paginaAccuweather + "/locations/v1/cities/search";
+	private static String idioma = "&language=es";
+	private static String apikey = "?apikey=";
 
 	public static AccuWeather getInstance() {
 		if (single_instance == null) single_instance = new AccuWeather();
@@ -32,34 +37,28 @@ public class AccuWeather extends ProvedorClimatico {
 		}catch(ClimaException e){
 			Ubicacion ubicacionActual = obtenerUbicacion(nombre_ciudad);
 			keys.put(nombre_ciudad,ubicacionActual);
-			ClientResponse respuesta = Api_get("http://dataservice.accuweather.com/currentconditions/v1/"
-					+ ubicacionActual.getKey() + "?apikey=" + api_key + "&language=es");
+			ClientResponse respuesta = Api_get(accuweatherConditions + ubicacionActual.getKey() + apikey + keyPropia + idioma);
 			String JsonRespuesta = respuesta.getEntity(String.class);
-
 			Clima climaActual = parsearClima(JsonRespuesta);
 			this.agregarClima(nombre_ciudad,climaActual);
 			return climaActual;
 		}
 	}
 	
-	public PronosticoMetereologico obtenerPronostico (String linkParcial, String ciudad) {
-		//link = "http://dataservice.accuweather.com/forecasts/v1/daily/1day/7894?apikey="+api_key;
+	public PronosticoMetereologico obtenerPronostico(String linkParcial, String ciudad) {
 		String link = obtenerLink(linkParcial,ciudad);
 		String JsonRespuesta =obtenerRespuesta(link);
 		return parsearPronostico(JsonRespuesta);
-		
-		
-	}//TODO: subir los links
+	}
 	
 	public String obtenerLink(String linkParcial,String nombre_ciudad) {
 		Ubicacion ubicacionActual = obtenerUbicacion(nombre_ciudad);
 		keys.put(nombre_ciudad,ubicacionActual);
-		return linkParcial+ ubicacionActual.getKey() + "?apikey="+ api_key + "&language=es";
+		return linkParcial+ ubicacionActual.getKey() + apikey + keyPropia + idioma;
 	}
 
 	public Ubicacion obtenerUbicacion(String nombre_ciudad) {
-		String link ="http://dataservice.accuweather.com/locations/v1/cities/search?apikey="
-				+ api_key + "&q=" + nombre_ciudad + "&language=es";
+		String link = accuweatherLoqueishons + apikey + keyPropia + "&q=" + nombre_ciudad + idioma;
 		String JsonRespuesta =obtenerRespuesta(link);
 		return parsearUbicacion(JsonRespuesta);
 	}
@@ -67,7 +66,7 @@ public class AccuWeather extends ProvedorClimatico {
 	public ClientResponse Api_get(String request) {
 		Client client = Client.create();
 		WebResource webResource = client.resource(request);
-		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
+		ClientResponse response = webResource.accept(tipoJson).get(ClientResponse.class);
 		if (response.getStatus() != 200) {
 			throw new HttpCodeException("Fallo la comunicacion con la API de AccuWeather. Codigo de error " + response.getStatus());
 		}

@@ -43,7 +43,7 @@ class GuardarropaTest extends SetUp {
         guardarropa.agregarADisponibles(jeanNegro);
         guardarropa.agregarADisponibles(anteojosDeSol);
 
-        assertEquals(7-1, guardarropa.cantidadDePrendas());
+        assertEquals(Math.sqrt(36), guardarropa.cantidadDePrendas());
     }
 
     boolean chequearAbrigoEn(int posicion, int abrigoBuscado, SugerenciasClima sugerencia){

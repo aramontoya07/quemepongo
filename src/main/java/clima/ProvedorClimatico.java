@@ -7,6 +7,7 @@ import java.util.Map;
 
 
 public abstract class ProvedorClimatico {
+	public static String tipoJson = "application/json";
 	Map<String, Clima> consultas = new HashMap<>();
 
 	public abstract Clima obtenerClima(String nombre_ciudad);

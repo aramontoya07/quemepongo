@@ -10,7 +10,9 @@ import org.json.JSONObject;
 
 public class OpenWeather extends ProvedorClimatico {
 	private static OpenWeather single_instance = null;
-	String api_key = "dd868503319e88af289ea1772d90c952";
+	String keyPropia = "dd868503319e88af289ea1772d90c952";
+	private static String idioma = "&units=metric&lang=es";
+	private static String linkObtencion = "http://api.openweathermap.org/data/2.5/weather?q=";
 
 	public static OpenWeather getInstance(){
 		if (single_instance == null) single_instance = new OpenWeather();
@@ -21,8 +23,7 @@ public class OpenWeather extends ProvedorClimatico {
 		try{
 			return consultarClimaGuardado(nombre_ciudad);
 		}catch(ClimaException e){
-			ClientResponse respuesta = Api_get("http://api.openweathermap.org/data/2.5/weather?q="
-					+ nombre_ciudad + "&APPID=" + api_key + "&units=metric&lang=es");
+			ClientResponse respuesta = Api_get(linkObtencion + nombre_ciudad + "&APPID=" + keyPropia + idioma);
 			String JsonRespuesta = respuesta.getEntity(String.class);
 			
 			Clima climaActual = parsearClima(JsonRespuesta);
@@ -35,9 +36,9 @@ public class OpenWeather extends ProvedorClimatico {
 	public ClientResponse Api_get(String request) {
 		Client client = Client.create();
 		WebResource webResource = client.resource(request);
-		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
+		ClientResponse response = webResource.accept(tipoJson).get(ClientResponse.class);
 		if (response.getStatus() != 200) {
-			throw new HttpCodeException("Fallo la comunicacion con la API de AccuWeather. Codigo de error \" + response.getStatus()");
+			throw new HttpCodeException("Fallo la comunicacion con la API de AccuWeather. Codigo de error: " + response.getStatus());
 		}
 		return response;
 	}

@@ -147,7 +147,7 @@ public class Guardarropa {
 		this.margenDePrendasAproximadas = margenDePrendasAproximadas;
 	}
 
-	public int cantidadDePrendas() { //TODO testear
+	public int cantidadDePrendas() {
 		return superiores.size() + inferiores.size() + calzados.size() + accesorios.size();
 	}
 
@@ -155,7 +155,7 @@ public class Guardarropa {
 		prendas.stream().forEach(prenda -> agregarADisponibles(prenda));
 	}
 
-	public void agregarADisponibles(Prenda prenda) { //@TODO testear
+	public void agregarADisponibles(Prenda prenda) {
 		if (existePrenda(prenda)) throw new GuardarropaException("No se puede agregar la prenda al guardarropa ya que esta ya se encuentra disponible en el");
 		switch (prenda.getCategoria()) {
 		case PARTE_SUPERIOR:
@@ -173,7 +173,7 @@ public class Guardarropa {
 		}
 	}
 
-	public void quitarDeDisponibles(Prenda prenda) { //@TODO testear
+	public void quitarDeDisponibles(Prenda prenda) {
 		if (!existePrenda(prenda)) throw new PrendaException("No se puede remover la prenda porque no existe en el guardarropa");
 		switch (prenda.getCategoria()){
 			case PARTE_SUPERIOR:
@@ -193,7 +193,7 @@ public class Guardarropa {
 
 	public void agregarImagenA(Prenda prenda, String rutaImagen) throws IOException {
 		if (!existePrenda(prenda)) {
-			throw new GuardarropaException("No se puede agregar imagen a la prenda ya que no esta disponible en el guardarropa"); //TODO testear
+			throw new GuardarropaException("No se puede agregar imagen a la prenda ya que no esta disponible en el guardarropa");
 		}
 		Imagen imagenOriginal = new Imagen(rutaImagen);
 		prenda.agregarImagen(imagenOriginal);
