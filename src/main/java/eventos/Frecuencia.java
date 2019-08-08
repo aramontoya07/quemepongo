@@ -1,5 +1,11 @@
 package eventos;
 
-public enum Frecuencia {
-	DIARIO,SEMANAL,MENSUAL,ANUAL;
+import org.quartz.Trigger;
+
+import java.time.LocalDateTime;
+
+public interface Frecuencia {
+	
+	public Trigger getTrigger(LocalDateTime fecha, String tituloEvento);
 }
+
