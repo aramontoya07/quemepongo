@@ -2,8 +2,11 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import atuendo.Atuendo;
 import atuendo.SugerenciasClima;
 import clima.MockAgradable;
+import clima.MockCalor;
+import clima.MockFrio;
 import clima.ServicioClimatico;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import excepciones.*;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 class GuardarropaTest extends SetUp {
 
@@ -54,6 +58,7 @@ class GuardarropaTest extends SetUp {
         guardarropa.setMargenDePrendasAproximadas(1000);
         pedro.agregarGuardarropa(guardarropa);
         pedro.agregarPrendas(guardarropa, prendasOrdenables);
+
         ServicioClimatico.definirProvedor(new MockAgradable());
         SugerenciasClima sugerencia = new ArrayList <>(pedro.pedirSugerenciaSegunClima("Bokita el mas grande")).get(0);
         assertTrue(chequearAbrigoEn(0,30, sugerencia) &&
@@ -76,4 +81,42 @@ class GuardarropaTest extends SetUp {
         assertTrue(guardarropa.getSuperiores().contains(remeraDeportiva));
     }
 
+    @Test
+    @DisplayName("Se deben generar todas las combinaciones posibles de ropa")
+    void contarSugerencias(){
+        pedro.agregarGuardarropa(guardarropa);
+        pedro.actualizarSubscripcionAPremium();
+        pedro.agregarPrendas(guardarropa, prendasGlobales);
+
+        Set <Atuendo> listaSugerencias = pedro.pedirSugerencia();
+        assertEquals(48, listaSugerencias.size());
+    }
+
+    @Test
+    @DisplayName("Devuelve sugerencias aptas para un clima frio")
+    void prendasParaFrio() {
+        pedro.agregarGuardarropa(guardarropa);
+        pedro.actualizarSubscripcionAPremium();
+        pedro.agregarPrendas(guardarropa, prendasGlobales);
+
+        ServicioClimatico.definirProvedor(new MockFrio());
+
+        Set<SugerenciasClima> listaSugerencias = pedro.pedirSugerenciaSegunClima( "London");
+        assertTrue(listaSugerencias.stream()
+                .allMatch(sugerencia -> sugerencia.esAptaParaClima(new MockFrio().obtenerClima("London"))));
+    }
+
+    @Test
+    @DisplayName("Devuelve sugerencias aptas para un clima calido")
+    void prendasParaCalor() {
+        pedro.actualizarSubscripcionAPremium();
+        pedro.agregarGuardarropa(guardarropa);
+        pedro.agregarPrendas(guardarropa, prendasGlobales);
+
+        ServicioClimatico.definirProvedor(new MockCalor());
+
+        Set<SugerenciasClima> listaSugerencias = pedro.pedirSugerenciaSegunClima("Palermo");
+        assertTrue(listaSugerencias.stream()
+                .allMatch(sugerencia -> sugerencia.esAptaParaClima(new MockCalor().obtenerClima("Palermo"))));
+    }
 }

@@ -43,6 +43,14 @@ public class Usuario {
 		preferenciasDeAbrigo = new PreferenciasDeAbrigo();
 	}
 
+	public Queue <Atuendo> getRechazados() {
+		return rechazados;
+	}
+
+	public Queue <Atuendo> getAceptados() {
+		return aceptados;
+	}
+
 	public Set<Guardarropa> getGuardarropas() {
 		return guardarropas;
 	}

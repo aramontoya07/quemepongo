@@ -19,17 +19,6 @@ class UsuarioTest extends SetUp {
 		setear();
 	}
 
-
-	@Test
-	@DisplayName("Se deben generar todas las combinaciones posibles de ropa")
-	void contarSugerencias(){
-		pedro.agregarGuardarropa(guardarropa);
-		pedro.actualizarSubscripcionAPremium();
-		pedro.agregarPrendas(guardarropa, prendasGlobales);
-		Set<Atuendo> listaSugerencias = pedro.pedirSugerencia();
-		assertEquals(48, listaSugerencias.size());
-	}
-
 	@Test
 	@DisplayName("Al tener una suscripcion gratuita no se puede agregar mas de 5 prendas")
 	void maximoPrendasConGratuidas() {
@@ -47,34 +36,6 @@ class UsuarioTest extends SetUp {
 		pedro.agregarPrendas(guardarropa, prendasGlobales);
 
 		assertEquals(9, guardarropa.cantidadDePrendas());
-	}
-
-	@Test
-	@DisplayName("Devuelve sugerencias aptas para un clima frio")
-	void prendasParaFrio() {
-		pedro.agregarGuardarropa(guardarropa);
-		pedro.actualizarSubscripcionAPremium();
-		pedro.agregarPrendas(guardarropa, prendasGlobales);
-		
-		ServicioClimatico.definirProvedor(new MockFrio());
-		
-		Set<SugerenciasClima> listaSugerencias = pedro.pedirSugerenciaSegunClima( "London");
-		assertTrue(listaSugerencias.stream()
-				.allMatch(sugerencia -> sugerencia.esAptaParaClima(new MockFrio().obtenerClima("London"))));
-	}
-
-	@Test
-	@DisplayName("Devuelve sugerencias aptas para un clima calido")
-	void prendasParaCalor() {
-		pedro.actualizarSubscripcionAPremium();
-		pedro.agregarGuardarropa(guardarropa);
-		pedro.agregarPrendas(guardarropa, prendasGlobales);
-		
-		ServicioClimatico.definirProvedor(new MockCalor());
-		
-		Set<SugerenciasClima> listaSugerencias = pedro.pedirSugerenciaSegunClima("Palermo");
-		assertTrue(listaSugerencias.stream()
-				.allMatch(sugerencia -> sugerencia.esAptaParaClima(new MockCalor().obtenerClima("Palermo"))));
 	}
 
 	@Test
@@ -99,6 +60,7 @@ class UsuarioTest extends SetUp {
 		Set<Atuendo> sugerenciasPedro = pedro.pedirSugerencia();
 		Atuendo atuendo = sugerenciasPedro.stream().findFirst().get();
 		pedro.aceptarAtuendo(atuendo);
+		assertTrue(pedro.getAceptados().contains(atuendo));
 		assertTrue(guardarropa.getPrendasUsadas().containsAll(atuendo.obtenerPrendasTotales()));
 		assertFalse(guardarropa.getSuperiores().contains(atuendo.getSuperior()));
 	}
@@ -118,4 +80,30 @@ class UsuarioTest extends SetUp {
 		assertFalse(guardarropa.getPrendasUsadas().contains(atuendo.getSuperior()));
 	}
 
+	@Test
+	@DisplayName("Un usuario puede rechazar una sugerencia")
+	void rechazaSugerencia(){
+		pedro.actualizarSubscripcionAPremium();
+		pedro.agregarGuardarropa(guardarropa);
+		pedro.agregarPrendas(guardarropa, prendasJustito);
+
+		Set<Atuendo> sugerenciasPedro = pedro.pedirSugerencia();
+		Atuendo atuendo = sugerenciasPedro.stream().findFirst().get();
+		pedro.rechazarAtuendo(atuendo);
+		assertTrue(pedro.getRechazados().contains(atuendo));
+	}
+
+	@Test
+	@DisplayName("Un usuario puede deshacer la decision de rechazar una sugerencia")
+	void deshacerRechazaSugerencia(){
+		pedro.actualizarSubscripcionAPremium();
+		pedro.agregarGuardarropa(guardarropa);
+		pedro.agregarPrendas(guardarropa, prendasJustito);
+
+		Set<Atuendo> sugerenciasPedro = pedro.pedirSugerencia();
+		Atuendo atuendo = sugerenciasPedro.stream().findFirst().get();
+		pedro.rechazarAtuendo(atuendo);
+		pedro.deshacerDecision();
+		assertFalse(pedro.getRechazados().contains(atuendo));
+	}
 }

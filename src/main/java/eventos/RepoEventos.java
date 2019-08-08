@@ -21,7 +21,4 @@ public class RepoEventos {
 	    public static void agendar(Evento evento) {
 	    	eventos.add(evento);
 	    }
-	 
-	    
-	
 }
