@@ -100,7 +100,9 @@ public class Usuario {
 	}
 
 	private void chequearAtuendoDisponible(Atuendo atuendo)throws PrendaFaultException {
-
+		if(!atuendo.estaDisponible()){
+			throw new PrendaFaultException("Algunas prendas del atuendo elegido ya no se hallan disponibles");
+		}
 	}
 
 	public void rechazarAtuendo(Atuendo atuendo) {

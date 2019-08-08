@@ -114,11 +114,7 @@ public class Atuendo{
 	}
 
 	public int nivelAbrigo() {
-		return superior.nivelAbrigo() +
-			   inferior.nivelAbrigo() +
-			   calzado.nivelAbrigo() +
-			   accesorios.stream().mapToInt(Prenda::nivelAbrigo).sum() +
-			   capasAbrigos.stream().mapToInt(Prenda::nivelAbrigo).sum();
+		return obtenerPrendasTotales().stream().mapToInt(Prenda::nivelAbrigo).sum();
 	}
 
 	double nivelDeAdaptacionAlClima(Clima climaActual){
@@ -152,4 +148,7 @@ public class Atuendo{
 	}
 
 
+	public boolean estaDisponible() {
+		return obtenerPrendasTotales().stream().allMatch(prenda -> guardarropaOrigen.existePrenda(prenda));
+	}
 }
