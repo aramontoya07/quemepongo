@@ -7,8 +7,9 @@ import java.util.Set;
 import atuendo.SugerenciasClima;
 import excepciones.EventoLejanoException;
 import excepciones.NingunaSugerenciaParaEventoException;
+import org.uqbar.commons.model.annotations.Observable;
 import usuario.Usuario;
-
+@Observable
 public class AsistenciaEvento{
 	private Evento evento;
 	private Set<SugerenciasClima> sugerenciasEvento = new HashSet<>();
