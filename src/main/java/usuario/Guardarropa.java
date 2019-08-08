@@ -24,21 +24,45 @@ public class Guardarropa {
 	public Set<Prenda> accesorios = new HashSet<>();
 	private int margenDePrendasAproximadas = 10;
 	
-	public Set<Prenda> prendasUsada = new HashSet<>();
+	public Set<Prenda> prendasUsadas = new HashSet<>();
 	
 	public Guardarropa() { }
 
 	public void usarPrenda(Prenda prenda) {
-		if(!existePrenda(prenda)) return; //TODO: TIRAR EXCEP
+		if(!existePrenda(prenda)){
+			throw new PrendaFaultException("No se puede usar la prenda porque no está disponible en el guardarropa");
+		}
 		quitarDeDisponibles(prenda);
-		prendasUsada.add(prenda);
+		agregarAUsadas(prenda);
 	}
 
 	public void liberarPrenda(Prenda prenda) {
-		if(!existePrenda(prenda)) return; //TODO: TIRAR EXCEP
+		if(existePrenda(prenda)){
+			throw new PrendaYaExisteException();
+		}
 		agregarADisponibles(prenda);
-		prendasUsada.remove(prenda);
+		quitarDeUsadas(prenda);
+	}
 
+	public Set<Prenda> getPrendasUsadas(){
+		return prendasUsadas;
+	}
+
+	public Set<Prenda> prendasDisponibles(){
+		Set<Prenda> prendas = new HashSet <>();
+		prendas.addAll(superiores);
+		prendas.addAll(inferiores);
+		prendas.addAll(calzados);
+		prendas.addAll(accesorios);
+		return prendas;
+	}
+
+	public void quitarDeUsadas(Prenda prenda){
+		prendasUsadas.remove(prenda);
+	}
+
+	public void agregarAUsadas(Prenda prenda){
+		prendasUsadas.add(prenda);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -187,4 +211,5 @@ public class Guardarropa {
 	public Set<Prenda> getSuperiores() {
 		return superiores;
 	}
+
 }

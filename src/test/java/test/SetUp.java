@@ -71,11 +71,13 @@ public abstract class SetUp {
 
     Set<Prenda> prendasGlobales = new HashSet<Prenda>();
     Set<Prenda> prendasOrdenables = new HashSet<Prenda>();
+    Set<Prenda> prendasJustito = new HashSet<Prenda>();
 
     Guardarropa guardarropa = new Guardarropa();
     Guardarropa otroGuardarropa = new Guardarropa();
 
     Usuario pedro = new Usuario();
+    Usuario pedro2 = new Usuario();
 
 
     public void setear(){
@@ -133,5 +135,9 @@ public abstract class SetUp {
         prendasOrdenables.add(remeraDesabrigadaAzul);
         prendasOrdenables.add(pantalonDesabrigadoAzul);
         prendasOrdenables.add(zapatillasDesabrigadasAzules);
+
+        prendasJustito.add(remeraAzul);
+        prendasJustito.add(jeanRojo);
+        prendasJustito.add(zapatillasVerde);
     }
 }

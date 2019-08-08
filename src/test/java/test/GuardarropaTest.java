@@ -2,11 +2,16 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import atuendo.SugerenciasClima;
+import clima.MockAgradable;
+import clima.ServicioClimatico;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import excepciones.*;
+
+import java.util.ArrayList;
 
 class GuardarropaTest extends SetUp {
 
@@ -36,6 +41,24 @@ class GuardarropaTest extends SetUp {
         guardarropa.agregarADisponibles(anteojosDeSol);
 
         assertEquals(7-1, guardarropa.cantidadDePrendas());
+    }
+
+    boolean chequearAbrigoEn(int posicion, int abrigoBuscado, SugerenciasClima sugerencia){
+        return sugerencia.getAproximadas().get(posicion).nivelAbrigo() == abrigoBuscado;
+    }
+
+    @Test
+    @DisplayName("Ordena segun las preferencias")
+    void prendasOrdenadas(){
+        pedro.actualizarSubscripcionAPremium();
+        guardarropa.setMargenDePrendasAproximadas(1000);
+        pedro.agregarGuardarropa(guardarropa);
+        pedro.agregarPrendas(guardarropa, prendasOrdenables);
+        ServicioClimatico.definirProvedor(new MockAgradable());
+        SugerenciasClima sugerencia = new ArrayList <>(pedro.pedirSugerenciaSegunClima("Bokita el mas grande")).get(0);
+        assertTrue(chequearAbrigoEn(0,30, sugerencia) &&
+                chequearAbrigoEn(1,12, sugerencia) &&
+                chequearAbrigoEn(2,0, sugerencia));
     }
 
     @Test

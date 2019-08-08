@@ -51,7 +51,7 @@ public class Usuario {
 		return mail;
 	}
 
-	public void actualizarSubscripcion() {
+	public void actualizarSubscripcionAPremium() {
 		subscripcion = new SubscripcionPremium();
 	}
 
@@ -116,8 +116,9 @@ public class Usuario {
 
 	public void removerAceptado() {
 		Atuendo atuendo = aceptados.poll();
-		assert atuendo != null;
-		atuendo.liberarPrendasUsadas();
+		if(atuendo != null){
+			atuendo.liberarPrendasUsadas();
+		}
 	}
 
 	public void removerRechazado() {

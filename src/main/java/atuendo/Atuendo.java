@@ -132,7 +132,8 @@ public class Atuendo{
 	}
 
 	public void liberarPrendasUsadas() {
-		obtenerPrendasTotales().forEach(prenda -> guardarropaOrigen.liberarPrenda(prenda));
+		List <Prenda> prendas = obtenerPrendasTotales();
+		prendas.forEach(prenda -> guardarropaOrigen.liberarPrenda(prenda));
 	}
 
 	public void marcarPrendasComoUsadas(){

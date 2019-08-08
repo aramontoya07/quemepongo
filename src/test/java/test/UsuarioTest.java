@@ -3,20 +3,14 @@ package test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import atuendo.*;
 import clima.*;
 import excepciones.*;
-import prenda.Prenda;
-import usuario.AdaptacionPuntuada;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 class UsuarioTest extends SetUp {
 
@@ -30,7 +24,7 @@ class UsuarioTest extends SetUp {
 	@DisplayName("Se deben generar todas las combinaciones posibles de ropa")
 	void contarSugerencias(){
 		pedro.agregarGuardarropa(guardarropa);
-		pedro.actualizarSubscripcion();
+		pedro.actualizarSubscripcionAPremium();
 		pedro.agregarPrendas(guardarropa, prendasGlobales);
 		Set<Atuendo> listaSugerencias = pedro.pedirSugerencia();
 		assertEquals(48, listaSugerencias.size());
@@ -49,7 +43,7 @@ class UsuarioTest extends SetUp {
 	@DisplayName("Al tener una suscripcion premium se puede agregar mas de 5 prendas")
 	void maximoPrendasConPremium() {
 		pedro.agregarGuardarropa(guardarropa);
-		pedro.actualizarSubscripcion();
+		pedro.actualizarSubscripcionAPremium();
 		pedro.agregarPrendas(guardarropa, prendasGlobales);
 
 		assertEquals(9, guardarropa.cantidadDePrendas());
@@ -59,7 +53,7 @@ class UsuarioTest extends SetUp {
 	@DisplayName("Devuelve sugerencias aptas para un clima frio")
 	void prendasParaFrio() {
 		pedro.agregarGuardarropa(guardarropa);
-		pedro.actualizarSubscripcion();
+		pedro.actualizarSubscripcionAPremium();
 		pedro.agregarPrendas(guardarropa, prendasGlobales);
 		
 		ServicioClimatico.definirProvedor(new MockFrio());
@@ -72,7 +66,7 @@ class UsuarioTest extends SetUp {
 	@Test
 	@DisplayName("Devuelve sugerencias aptas para un clima calido")
 	void prendasParaCalor() {
-		pedro.actualizarSubscripcion();
+		pedro.actualizarSubscripcionAPremium();
 		pedro.agregarGuardarropa(guardarropa);
 		pedro.agregarPrendas(guardarropa, prendasGlobales);
 		
@@ -83,27 +77,45 @@ class UsuarioTest extends SetUp {
 				.allMatch(sugerencia -> sugerencia.esAptaParaClima(new MockCalor().obtenerClima("Palermo"))));
 	}
 
-	boolean chequearAbrigoEn(int posicion, int abrigoBuscado, SugerenciasClima sugerencia){
-		return sugerencia.getAproximadas().get(posicion).nivelAbrigo() == abrigoBuscado;
-	}
-
-	@Test
-	@DisplayName("Ordena segun las preferencias")
-	void prendasOrdenadas(){
-		pedro.actualizarSubscripcion();
-		guardarropa.setMargenDePrendasAproximadas(1000);
-		pedro.agregarGuardarropa(guardarropa);
-		pedro.agregarPrendas(guardarropa, prendasOrdenables);
-		ServicioClimatico.definirProvedor(new MockAgradable());
-		SugerenciasClima sugerencia = new ArrayList<>(pedro.pedirSugerenciaSegunClima("Bokita el mas grande")).get(0);
-		assertTrue(chequearAbrigoEn(0,30, sugerencia) &&
-				chequearAbrigoEn(1,12, sugerencia) &&
-				chequearAbrigoEn(2,0, sugerencia));
-	}
-
 	@Test
 	@DisplayName("Dos usuarios pueden compartir guardarropa")
 	void guardarropaCompartido(){
+		pedro.actualizarSubscripcionAPremium();
+		pedro2.actualizarSubscripcionAPremium();
+		pedro.agregarGuardarropa(guardarropa);
+		pedro2.agregarGuardarropa(guardarropa);
+		pedro.agregarPrendas(guardarropa, prendasGlobales);
 
+		assertEquals(pedro.getGuardarropas(),pedro2.getGuardarropas());
 	}
+
+	@Test
+	@DisplayName("Cuando un usuario acepta una sugerencia, las prendas se marcan como usadas en el guardarropa")
+	void prendasUsadas(){
+		pedro.actualizarSubscripcionAPremium();
+		pedro.agregarGuardarropa(guardarropa);
+		pedro.agregarPrendas(guardarropa, prendasJustito);
+
+		Set<Atuendo> sugerenciasPedro = pedro.pedirSugerencia();
+		Atuendo atuendo = sugerenciasPedro.stream().findFirst().get();
+		pedro.aceptarAtuendo(atuendo);
+		assertTrue(guardarropa.getPrendasUsadas().containsAll(atuendo.obtenerPrendasTotales()));
+		assertFalse(guardarropa.getSuperiores().contains(atuendo.getSuperior()));
+	}
+
+	@Test
+	@DisplayName("Cuando un usuario deshace la decision de aceptar una sugerencia, las prendas se liberan en el guardarropa")
+	void prendasLiberadas(){
+		pedro.actualizarSubscripcionAPremium();
+		pedro.agregarGuardarropa(guardarropa);
+		pedro.agregarPrendas(guardarropa, prendasJustito);
+
+		Set<Atuendo> sugerenciasPedro = pedro.pedirSugerencia();
+		Atuendo atuendo = sugerenciasPedro.stream().findFirst().get();
+		pedro.aceptarAtuendo(atuendo);
+		pedro.deshacerDecision();
+		assertTrue(guardarropa.prendasDisponibles().containsAll(atuendo.obtenerPrendasTotales()));
+		assertFalse(guardarropa.getPrendasUsadas().contains(atuendo.getSuperior()));
+	}
+
 }

@@ -1,21 +1,13 @@
 package test;
 
-import atuendo.SugerenciasClima;
-import clima.MockAgradable;
-import clima.MockCalor;
-import clima.MockFrio;
-import clima.ServicioClimatico;
 import eventos.Evento;
 import eventos.EventoUnico;
 import excepciones.EventoLejanoException;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -30,7 +22,7 @@ class EventosTest extends SetUp{
     @Test
     @DisplayName("No se genera sugerencia si faltan mas de 12 horas")
     void eventoNoGeneraSugerencias() {
-        pedro.actualizarSubscripcion();
+        pedro.actualizarSubscripcionAPremium();
         pedro.agregarGuardarropa(guardarropa);
         pedro.agregarPrendas(guardarropa, prendasGlobales);
 
@@ -46,7 +38,7 @@ class EventosTest extends SetUp{
  /*   @Test
     @DisplayName("Se genera sugerencia si faltan menos de 12 horas.")
     void eventoGeneraSugerencias() throws InterruptedException {
-        pedro.actualizarSubscripcion();
+        pedro.actualizarSubscripcionAPremium();
         pedro.agregarGuardarropa(guardarropa);
         pedro.agregarPrendas(guardarropa, prendasGlobales);
 
