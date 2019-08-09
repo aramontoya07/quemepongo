@@ -4,7 +4,8 @@ import java.time.LocalDateTime;
 
 import org.quartz.Trigger;
 
-public class Evento{
+
+public class Evento {
 	private String tituloEvento;
     private LocalDateTime fecha;
     private String ubicacion;

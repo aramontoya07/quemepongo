@@ -1,6 +1,9 @@
 package clima;
 
+import alertas.Alerta;
 import excepciones.ClimaException;
+
+import java.util.Set;
 
 public class ServicioClimatico {
 	private static ProvedorClimatico provedorActual = new MockAgradable();
@@ -12,5 +15,9 @@ public class ServicioClimatico {
 	
 	public static void definirProvedor(ProvedorClimatico nuevoProvedor) {
 		provedorActual = nuevoProvedor;
+	}
+
+	public static Set<Alerta> obtenerAlertas(String ubicacion) {
+		return provedorActual.obtenerAlertas(ubicacion);
 	}
 }

@@ -4,19 +4,20 @@ package alertas;
 
 import usuario.Usuario;
 
-public enum TipoAlerta {
-
+public enum TipoDeAlerta {
     GRANIZO {
-
         public void notificarA(Interesado interesado, Usuario usuario) {
             interesado.notificarGranizo(usuario);
         }
     },
-
-    TORMENTA {
-
+    LLUVIA {
         public void notificarA(Interesado interesado, Usuario usuario) {
             interesado.notificarTormenta(usuario);
+        }
+    },
+    NIEVE {
+        public void notificarA(Interesado interesado, Usuario usuario) {
+            interesado.notificarNevada(usuario);
         }
     };
 

@@ -1,6 +1,10 @@
 package clima;
 
+import alertas.Alerta;
 import excepciones.ClimaException;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class MockAgradable extends ProvedorClimatico {
 
@@ -12,5 +16,10 @@ public class MockAgradable extends ProvedorClimatico {
             agregarClima(nombre_ciudad,climaActual);
             return climaActual;
         }
+    }
+
+    @Override
+    public Set<Alerta> obtenerAlertas(String ubicacion) {
+        return new HashSet <>();
     }
 }

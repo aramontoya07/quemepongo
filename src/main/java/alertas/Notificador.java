@@ -14,6 +14,10 @@ public class Notificador implements Interesado, NotificadorSMS {
         this.mostrarNotificacion("No salgas en auto!");
     }
 
+    public void notificarNevada(Usuario usuario) {
+        this.mostrarNotificacion("Hora de hacer muñecos de nieve!");
+    }
+
     public void mostrarNotificacion(String mensaje) {
         notificationService.notify(mensaje);
     }

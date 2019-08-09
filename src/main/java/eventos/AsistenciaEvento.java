@@ -9,10 +9,11 @@ import atuendo.SugerenciasClima;
 import excepciones.EventoException;
 import usuario.Usuario;
 
-public class AsistenciaEvento{
+
+public class AsistenciaEvento {
 	private Evento evento;
 	private Set<SugerenciasClima> sugerenciasEvento = new HashSet<SugerenciasClima>();
-	
+
 	public AsistenciaEvento(Evento eventoAsignado) {
 		evento = eventoAsignado;
 	}
@@ -31,6 +32,10 @@ public class AsistenciaEvento{
 	
 	public boolean ocurreEntre(LocalDateTime fechaMinima, LocalDateTime fechaMaxima){
 		return evento.getFecha().isAfter(fechaMinima) && evento.getFecha().isBefore(fechaMaxima);
+	}
+	
+	public boolean noTieneSugerencias() {
+		return sugerenciasEvento.isEmpty();
 	}
 
 	public Evento getEvento() {

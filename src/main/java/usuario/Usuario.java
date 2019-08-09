@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import alertas.Interesado;
 import alertas.RepoUsuarios;
-import alertas.TipoAlerta;
+import alertas.TipoDeAlerta;
 import atuendo.Atuendo;
 import atuendo.SugerenciasClima;
 import clima.ServicioClimatico;
@@ -136,9 +136,7 @@ public class Usuario {
 			puntajeAbrigo.setearElMejor(nuevoPuntaje);
 	}
 
-
-
-	public void actuarAnte(TipoAlerta alerta) {
+	public void actuarAnte(TipoDeAlerta alerta) {
 		interesados.forEach(interesado -> alerta.notificarA(interesado, this));
 	}
 
@@ -146,7 +144,7 @@ public class Usuario {
 		return preferenciasDeAbrigo;
 	}
 
-	public void notificarAlerta(Interesado interesado, TipoAlerta alerta) {
+	public void notificarAlerta(Interesado interesado, TipoDeAlerta alerta) {
 		alerta.notificarA(interesado, this);
 	}
 	

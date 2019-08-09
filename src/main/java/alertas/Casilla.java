@@ -9,7 +9,6 @@ import eventos.AsistenciaEvento;
 
 
 public class Casilla implements Interesado {
-
     public MailSender mailSender;
     public SimpleMailMessage message;
 
@@ -21,13 +20,17 @@ public class Casilla implements Interesado {
         this.enviarMail(usuario.getMail(), "Ojo, va a caer granizo!");
     }
 
+    public void notificarNevada(Usuario usuario) {
+        this.enviarMail(usuario.getMail(), "Mira que va a nevar!");
+    }
+
     public void enviarMail(String direccion, String mail) {
         message.setTo(direccion);
         message.setText(mail);
         mailSender.send(message);
     }
     public void notificarA(Usuario usuario, AsistenciaEvento evento) {
-    	enviarMail(usuario.getMail(),"Hola est�n tus sugerencias listas"+ evento.pedirSugerencias());
+    	enviarMail(usuario.getMail(),"Hola estan tus sugerencias listas"+ evento.pedirSugerencias());
     }
 
 

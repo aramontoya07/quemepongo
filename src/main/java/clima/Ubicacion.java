@@ -10,6 +10,4 @@ public class Ubicacion {
 	public String getKey() {
 		return key;
 	}
-
-
 }

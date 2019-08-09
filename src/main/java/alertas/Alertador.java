@@ -1,16 +1,24 @@
 package alertas;
 
-import clima.Clima;
+import clima.ServicioClimatico;
 
 public class Alertador {
-    RepoUsuarios repoUsuarios;
-    Clima clima;
+    private RepoUsuarios repoUsuarios;
+    private String ubicacion = "London";
 
-    public void comprobarAlertas() {
-        this.clima.getAlertas().forEach(a -> informarDe(a));
+    public Alertador(){
+        repoUsuarios = RepoUsuarios.getInstance();
     }
 
-    public void informarDe(TipoAlerta alerta) {
+    public void comprobarAlertas() {
+        ServicioClimatico.obtenerAlertas(ubicacion).forEach(alerta -> informarDe(alerta.getTipo()));
+    }
+
+    public void informarDe(TipoDeAlerta alerta) {
         this.repoUsuarios.getTodos().forEach(usuario -> usuario.actuarAnte(alerta));
+    }
+
+    public void setUbicacion(String ubicacion) {
+        this.ubicacion = ubicacion;
     }
 }
