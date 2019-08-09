@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class RepoUsuarios { //TODO ???????
+public class RepoUsuarios {
     private static RepoUsuarios repo;
     public Set<Usuario> listaUsuarios = new HashSet<>();
 

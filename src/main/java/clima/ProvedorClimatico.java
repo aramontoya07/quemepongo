@@ -1,9 +1,11 @@
 package clima;
 
+import alertas.Alerta;
 import excepciones.ClimaException;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 
 public abstract class ProvedorClimatico {
@@ -22,4 +24,6 @@ public abstract class ProvedorClimatico {
 		 if(!clima.esValido()) throw new ClimaException("El clima consultado fue obtenido hace mucho tiempo y ya no es confiable");
 		 return clima;
 	}
+
+    public abstract Set<Alerta> obtenerAlertas(String ubicacion);
 }

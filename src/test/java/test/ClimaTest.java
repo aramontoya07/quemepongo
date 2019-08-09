@@ -43,7 +43,7 @@ class ClimaTest {
         assertTrue(climaNoTanViejo.esValido());
     }
 
-    @Disabled //Este test anda, pero esta desactivado para no consultar la API de OpenWeather cada vez que corremos los tests
+    //@Disabled //Este test anda, pero esta desactivado para no consultar la API de OpenWeather cada vez que corremos los tests
     @Test
     @DisplayName("Openweather responde consultas sin errores")
     void openWeatherResponde() {
@@ -53,7 +53,7 @@ class ClimaTest {
     }
 
     @Test
-    @Disabled //idem para este test
+    //@Disabled //idem para este test
     @DisplayName("Accuweather responde consultas sin errores")
     void accuWeatherResponde() {
         ClientResponse response = AccuWeather.getInstance().Api_get(AccuWeather.getInstance()

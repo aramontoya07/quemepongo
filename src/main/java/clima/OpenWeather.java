@@ -1,12 +1,17 @@
 package clima;
 
+import alertas.Alerta;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import excepciones.ClimaException;
 import excepciones.HttpCodeException;
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class OpenWeather extends ProvedorClimatico {
 	private static OpenWeather single_instance = null;
@@ -23,14 +28,30 @@ public class OpenWeather extends ProvedorClimatico {
 		try{
 			return consultarClimaGuardado(nombre_ciudad);
 		}catch(ClimaException e){
-			ClientResponse respuesta = Api_get(linkObtencion + nombre_ciudad + "&APPID=" + keyPropia + idioma);
-			String JsonRespuesta = respuesta.getEntity(String.class);
-			
+			String JsonRespuesta = obtenerJson(nombre_ciudad);
+			//System.out.println(JsonRespuesta);
 			Clima climaActual = parsearClima(JsonRespuesta);
 			
 			agregarClima(nombre_ciudad,climaActual);
 			return climaActual;
 		}
+	}
+
+	private String obtenerJson(String nombre_ciudad) {
+		ClientResponse respuesta = Api_get(linkObtencion + nombre_ciudad + "&APPID=" + keyPropia + idioma);
+		return respuesta.getEntity(String.class);
+	}
+
+	@Override
+	public Set<Alerta> obtenerAlertas(String ubicacion){
+		String JsonRespuesta = obtenerJson(ubicacion);
+		return parsearAlertas(JsonRespuesta);
+	}
+
+	private Set<Alerta> parsearAlertas(String JSON) {
+		Set<Alerta> alertas = new HashSet <>();
+		//TODO implementar alertas en openweather
+		return alertas;
 	}
 
 	public ClientResponse Api_get(String request) {

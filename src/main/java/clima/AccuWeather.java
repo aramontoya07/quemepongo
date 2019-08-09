@@ -2,11 +2,12 @@ package clima;
 
 
 
+import alertas.Alerta;
+import alertas.TipoDeAlerta;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import excepciones.ClimaException;
 import excepciones.HttpCodeException;
 
@@ -14,7 +15,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class AccuWeather extends ProvedorClimatico {     
 	private static AccuWeather single_instance = null;
@@ -35,16 +38,21 @@ public class AccuWeather extends ProvedorClimatico {
 		try{
 			return consultarClimaGuardado(nombre_ciudad);
 		}catch(ClimaException e){
-			Ubicacion ubicacionActual = obtenerUbicacion(nombre_ciudad);
-			keys.put(nombre_ciudad,ubicacionActual);
-			ClientResponse respuesta = Api_get(accuweatherConditions + ubicacionActual.getKey() + apikey + keyPropia + idioma);
-			String JsonRespuesta = respuesta.getEntity(String.class);
+			String JsonRespuesta = obtenerJson(nombre_ciudad);
+			//System.out.println(JsonRespuesta);
 			Clima climaActual = parsearClima(JsonRespuesta);
 			this.agregarClima(nombre_ciudad,climaActual);
 			return climaActual;
 		}
 	}
-	
+
+	private String obtenerJson(String nombre_ciudad) {
+		Ubicacion ubicacionActual = obtenerUbicacion(nombre_ciudad);
+		keys.put(nombre_ciudad,ubicacionActual);
+		ClientResponse respuesta = Api_get(accuweatherConditions + ubicacionActual.getKey() + apikey + keyPropia + idioma);
+		return respuesta.getEntity(String.class);
+	}
+
 	public PronosticoMetereologico obtenerPronostico(String linkParcial, String ciudad) {
 		String link = obtenerLink(linkParcial,ciudad);
 		String JsonRespuesta =obtenerRespuesta(link);
@@ -54,13 +62,19 @@ public class AccuWeather extends ProvedorClimatico {
 	public String obtenerLink(String linkParcial,String nombre_ciudad) {
 		Ubicacion ubicacionActual = obtenerUbicacion(nombre_ciudad);
 		keys.put(nombre_ciudad,ubicacionActual);
-		return linkParcial+ ubicacionActual.getKey() + apikey + keyPropia + idioma;
+		return linkParcial + ubicacionActual.getKey() + apikey + keyPropia + idioma;
 	}
 
 	public Ubicacion obtenerUbicacion(String nombre_ciudad) {
 		String link = accuweatherLoqueishons + apikey + keyPropia + "&q=" + nombre_ciudad + idioma;
 		String JsonRespuesta =obtenerRespuesta(link);
 		return parsearUbicacion(JsonRespuesta);
+	}
+
+	@Override
+	public Set<Alerta> obtenerAlertas(String ubicacion){
+		String JsonRespuesta = obtenerJson(ubicacion);
+		return parsearAlertas(JsonRespuesta);
 	}
 
 	public ClientResponse Api_get(String request) {
@@ -78,18 +92,31 @@ public class AccuWeather extends ProvedorClimatico {
 		return respuesta.getEntity(String.class);
 	}
 
-	public Clima parsearClima(String JSON){
-		JSONArray array = new JSONArray(JSON);
-		return new Clima(array.getJSONObject(0).getJSONObject("Temperature").getJSONObject("Metric").getDouble("Value"));
-	}
-
 	public PronosticoMetereologico parsearPronostico(String JSON){
 	JSONObject object = new JSONObject(JSON);
-	return new PronosticoMetereologico(object.getJSONObject("Headline").getString("Category"));
+	String headline = object.getJSONObject("Headline").getString("Category");
+	return new PronosticoMetereologico(headline);
+	}
+
+	private Set<Alerta> parsearAlertas(String JSON) {
+		Set<Alerta> alertas = new HashSet<>();
+		JSONArray array = new JSONArray(JSON);
+		String alertaDeDia = array.getJSONObject(0).getJSONObject("Day").getString("PrecipitationType");
+		String alertaDeNoche = array.getJSONObject(0).getJSONObject("Night").getString("PrecipitationType");
+		if(!alertaDeDia.equals("")) alertas.add(new Alerta(alertaDeDia));
+		if(!alertaDeNoche.equals("")) alertas.add(new Alerta(alertaDeNoche));
+		return alertas;
+	}
+
+	public Clima parsearClima(String JSON){
+		JSONArray array = new JSONArray(JSON);
+		double temperatura = array.getJSONObject(0).getJSONObject("Temperature").getJSONObject("Metric").getDouble("Value");
+		return new Clima(temperatura);
 	}
 
 	public Ubicacion parsearUbicacion(String JSON){
 		JSONArray array = new JSONArray(JSON);
-		return new Ubicacion(array.getJSONObject(0).getString("Key"));
+		String ubicacion = array.getJSONObject(0).getString("Key");
+		return new Ubicacion(ubicacion);
 	}
 }
