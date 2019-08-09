@@ -53,5 +53,18 @@ class EventosTest extends SetUp{
         Set<SugerenciasClima> sugerenciasParaEvento =  pedro.pedirSugerenciaParaEvento(torneobaile);
         assertFalse(sugerenciasParaEvento.isEmpty());
     }
+
+/*    @Test
+    @DisplayName("Un evento repetitivo genera sugerencias")
+    void eventoRepetitivoGeneraSugerencias() throws InterruptedException {
+        pedro.actualizarSubscripcionAPremium();
+        pedro.agregarGuardarropa(guardarropa);
+        pedro.agregarPrendas(guardarropa, prendasGlobales);
+
+        LocalDateTime fechaTorneo = LocalDateTime.now().plusHours(6);
+        Evento entrenamiento = new Evento("entrenar haciendo bailes de fortnite", fechaTorneo, "casita", new Diaria());
+        pedro.asistirAEvento(entrenamiento);
+        Thread.sleep(1000);
+    }*/
 }
 

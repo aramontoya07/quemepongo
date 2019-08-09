@@ -52,6 +52,7 @@ public class Calendario{
 		} catch (SchedulerException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	public Set<AsistenciaEvento> obtenerEventosEntre(LocalDateTime  fechaMinima, LocalDateTime fechaMaxima){
