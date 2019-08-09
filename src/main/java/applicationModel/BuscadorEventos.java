@@ -11,6 +11,7 @@ import java.util.Set;
 import atuendo.SugerenciasClima;
 import eventos.AsistenciaEvento;
 import eventos.Evento;
+import excepciones.EventoException;
 import org.uqbar.commons.model.annotations.Observable;
 import usuario.Usuario;
 
@@ -28,7 +29,7 @@ public class BuscadorEventos {
 	private Evento evento;
 	private Set<SugerenciasClima> sugerenciasEvento = new HashSet<>();
 
-	Usuario usuario = new Usuario(); // Si no tiene ningun usuario ROMPE! FIXME
+	Usuario usuario = new Usuario(); //Si no tiene un usuario ROMPE! FIXME
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
@@ -36,8 +37,13 @@ public class BuscadorEventos {
 
 	// ACCIONES
 	public LocalDateTime convertirALocalDateTime(Date fecha) {
-		LocalDateTime miFecha = LocalDateTime.ofInstant(fecha.toInstant(), ZoneId.systemDefault());
-		return miFecha;
+		try{
+			LocalDateTime miFecha = LocalDateTime.ofInstant(fecha.toInstant(), ZoneId.systemDefault());
+			return miFecha;
+		}catch (Exception e){
+			throw new EventoException("Alguna de las fechas ingresadas no es valida");
+		}
+
 	}
 
 	public void search() {

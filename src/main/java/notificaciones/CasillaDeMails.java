@@ -1,4 +1,4 @@
-package Notificaciones;
+package notificaciones;
 
 import usuario.Usuario;
 import org.springframework.mail.MailSender;

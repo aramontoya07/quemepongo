@@ -1,4 +1,4 @@
-package Notificaciones;
+package notificaciones;
 
 import eventos.AsistenciaEvento;
 import usuario.Usuario;

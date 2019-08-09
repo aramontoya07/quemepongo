@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import atuendo.SugerenciasClima;
+import excepciones.EventoException;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -56,7 +57,9 @@ public class Calendario{
 	}
 
 	public Set<AsistenciaEvento> obtenerEventosEntre(LocalDateTime  fechaMinima, LocalDateTime fechaMaxima){
-		return eventos.stream().filter(asistenciaEvento -> asistenciaEvento.ocurreEntre(fechaMinima,fechaMaxima)).collect(Collectors.toSet());
+		Set <AsistenciaEvento> asistencias = eventos.stream().filter(asistenciaEvento -> asistenciaEvento.ocurreEntre(fechaMinima, fechaMaxima)).collect(Collectors.toSet());
+		if(asistencias.isEmpty()) throw new EventoException("No existen eventos entre las fechas indicadas");
+		return asistencias;
 	}
 
 	public Set<SugerenciasClima> pedirSugerenciasParaEvento(Evento evento){

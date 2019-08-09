@@ -2,7 +2,7 @@ package alertas;
 
 
 
-import Notificaciones.Informante;
+import notificaciones.Informante;
 import usuario.Usuario;
 
 public enum TipoDeAlerta {

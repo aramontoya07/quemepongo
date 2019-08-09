@@ -45,4 +45,8 @@ public class AsistenciaEvento {
 	public boolean esCercanaYEsEn(String ubicacion) {
 		return evento.esEventoCercanoYOcurreEn(ubicacion);
 	}
+
+    public boolean esDeEvento(Evento eventoRecibido) {
+		return eventoRecibido.equals(evento);
+    }
 }

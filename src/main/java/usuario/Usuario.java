@@ -1,9 +1,10 @@
 package usuario;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 import alertas.Alerta;
-import Notificaciones.Informante;
+import notificaciones.Informante;
 import alertas.RepoUsuarios;
 import alertas.TipoDeAlerta;
 import atuendo.Atuendo;
@@ -34,7 +35,15 @@ public class Usuario {
 	private String mail;
 	private List<Informante> informantes = new ArrayList<>();
 	private PreferenciasDeAbrigo preferenciasDeAbrigo;
+	private boolean notificado = false; //solo se usa en los tests. perdon
 
+	public void marcarNotificado(){
+		notificado = true;
+	}
+
+	public boolean getNotificado(){
+		return notificado;
+	}
 
 	public Usuario() {
 		this.subscripcion = new SubscripcionGratuita();
@@ -66,9 +75,21 @@ public class Usuario {
 		subscripcion = new SubscripcionGratuita();
 	}
 
+	public void agregarInformante(Informante informante) {
+		informantes.add(informante);
+	}
+
+	public void quitarInformante(Informante informante){
+		informantes.remove(informante);
+	}
+
 	public void agregarGuardarropa(Guardarropa guardarropa) {
 		if(guardarropas.contains(guardarropa)) throw new GuardarropaException("El guardarropa que se intento agregar ya existe");
 		guardarropas.add(guardarropa);
+	}
+
+	public void resetearGustos(){
+		preferenciasDeAbrigo = new PreferenciasDeAbrigo();
 	}
 
 	public void agregarPrendas(Guardarropa guardarropa, Set<Prenda> prendas) {
@@ -76,7 +97,7 @@ public class Usuario {
 		prendas.forEach(prenda -> agregarPrenda(guardarropa, prenda));
 	}
 
-	private void agregarPrenda(Guardarropa guardarropa, Prenda prenda) {
+	public void agregarPrenda(Guardarropa guardarropa, Prenda prenda) {
 		if(!subscripcion.puedoAgregar(guardarropa.cantidadDePrendas())) throw new GuardarropaException("El guardarropa posee demasiadas prendas para ser agregado por un usuario con subscripcion gratuita");
 		guardarropa.agregarADisponibles(prenda);
 	}
@@ -133,7 +154,7 @@ public class Usuario {
 	}
 
 	public void puntuarParteDeAtuendoEn(Atuendo atuendo, Integer puntaje, ParteAbrigada parte) throws AtuendoException{
-			if(!aceptados.contains(atuendo)) throw new AtuendoException("No se puede puntuar un atuendo sin antes hacerlo aceptado");
+			if(!aceptados.contains(atuendo)) throw new AtuendoException("No se puede puntuar un atuendo sin antes haberlo aceptado");
 			AdaptacionPuntuada nuevoPuntaje = new AdaptacionPuntuada(atuendo.abrigoEn(parte), atuendo.getTemperaturaDeUso(), puntaje);
 			AdaptacionPuntuada puntajeAbrigo = preferenciasDeAbrigo.getPuntaje(parte);
 			puntajeAbrigo.setearElMejor(nuevoPuntaje);
@@ -172,7 +193,15 @@ public class Usuario {
 		return calendarioEventos.hayEventosCercanosEn(ubicacion);
 	}
 
+	public Set<AsistenciaEvento> obtenerEventosEntre(LocalDateTime fechaMinima, LocalDateTime fechaMaxima){
+		return calendarioEventos.obtenerEventosEntre(fechaMinima, fechaMaxima);
+	}
+
 	public int getPuntajeEn(ParteAbrigada parte) {
 		return preferenciasDeAbrigo.getPuntaje(parte).getPuntaje();
+	}
+
+	public Double getAbrigoPreferidoEn(ParteAbrigada parte) {
+		return preferenciasDeAbrigo.getPuntaje(parte).getNivelDeAdaptacion();
 	}
 }
