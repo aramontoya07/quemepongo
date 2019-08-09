@@ -2,23 +2,18 @@ package alertas;
 
 import clima.ServicioClimatico;
 
-public class Alertador {
+class Alertador {
     private RepoUsuarios repoUsuarios;
-    private String ubicacion = "London";
 
-    public Alertador(){
+    Alertador(){
         repoUsuarios = RepoUsuarios.getInstance();
     }
 
-    public void comprobarAlertas() {
-        ServicioClimatico.obtenerAlertas(ubicacion).forEach(alerta -> informarDe(alerta.getTipo()));
+    void comprobarAlertas(/*String ubicacion*/){ //La idea es obtener la ubicacion armando un repo de ubicaciones donde hay eventos cercanos
+        ServicioClimatico.obtenerAlertas("Buenos Aires").forEach(alerta -> informarDe(alerta));
     }
 
-    public void informarDe(TipoDeAlerta alerta) {
-        this.repoUsuarios.getTodos().forEach(usuario -> usuario.actuarAnte(alerta));
-    }
-
-    public void setUbicacion(String ubicacion) {
-        this.ubicacion = ubicacion;
+    private void informarDe(Alerta alerta){
+        repoUsuarios.getInteresadosEn(alerta.getUbicacion()).forEach(usuario -> usuario.actuarAnte(alerta));
     }
 }

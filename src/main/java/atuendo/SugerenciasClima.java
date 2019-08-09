@@ -1,6 +1,7 @@
 package atuendo;
 
 import clima.Clima;
+import clima.ServicioClimatico;
 import usuario.PreferenciasDeAbrigo;
 import usuario.Usuario;
 
@@ -30,6 +31,8 @@ public class SugerenciasClima {
     public SugerenciasClima ajustarAGustos(PreferenciasDeAbrigo preferencias, double temperatura){
         exactas = exactas.stream().sorted(Comparator.comparing(atuendo -> preferencias.obtenerNivelDeAdaptacion(temperatura, atuendo))).collect(Collectors.toList()); //deberia ordenar los atuendos segun su nivel de adaptacion de menor a mayor
         aproximadas = aproximadas.stream().sorted(Comparator.comparing(atuendo -> preferencias.obtenerNivelDeAdaptacion(temperatura, atuendo))).collect(Collectors.toList());
+        exactas.forEach(atuendo -> atuendo.setTemperaturaDeUso(temperatura));
+        aproximadas.forEach(atuendo -> atuendo.setTemperaturaDeUso(temperatura));
         return this;
     }
 

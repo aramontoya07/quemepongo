@@ -1,10 +1,10 @@
 package usuario;
 
 public class AdaptacionPuntuada {
-    private Integer nivelDeAdaptacion;
+    private Double nivelDeAdaptacion;
     private Integer puntaje;
 
-    public AdaptacionPuntuada(Integer nivelDeAbrigo, Integer Temperatura, Integer unPuntaje) {
+    public AdaptacionPuntuada(Integer nivelDeAbrigo, Double Temperatura, Integer unPuntaje) {
         nivelDeAdaptacion = Temperatura + nivelDeAbrigo;
         puntaje = unPuntaje;
     }
@@ -18,7 +18,7 @@ public class AdaptacionPuntuada {
         this.puntaje = puntaje;
     }
 
-    public Integer getNivelDeAdaptacion() {
+    public Double getNivelDeAdaptacion() {
         return nivelDeAdaptacion;
     }
 

@@ -42,4 +42,12 @@ public class Evento {
 	private LocalDateTime fechaSugerencias() {
     	return fecha.minusHours(12);
     }
+
+    public boolean esEventoCercanoYOcurreEn(String ubicacionDada) {
+		return esEventoCercano() && ubicacion.equals(ubicacionDada);
+    }
+
+	private boolean esEventoCercano() {
+		return !esEventoLejano();
+	}
 }

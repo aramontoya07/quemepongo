@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import atuendo.*;
 import excepciones.*;
+import prenda.ParteAbrigada;
+import usuario.AdaptacionPuntuada;
 
 import java.util.Set;
 
@@ -113,8 +115,12 @@ class UsuarioTest extends SetUp {
 		pedro.agregarGuardarropa(guardarropa);
 		pedro.agregarPrendas(guardarropa, prendasJustito);
 
-		Set<Atuendo> sugerenciasPedro = pedro.pedirSugerencia();
-		Atuendo atuendo = sugerenciasPedro.stream().findFirst().get();
+		Set<SugerenciasClima> sugerenciasPedro = pedro.pedirSugerenciaSegunClima("Bokita es lo mas");
+		SugerenciasClima sugerencias = sugerenciasPedro.stream().findFirst().get();
+		Atuendo atuendo = sugerencias.getExactas().get(0);
+		pedro.aceptarAtuendo(atuendo);
+		pedro.puntuarParteDeAtuendoEn(atuendo, 7, ParteAbrigada.CABEZA);
 
+		assertEquals(7, pedro.getPuntajeEn(ParteAbrigada.CABEZA));
 	}
 }

@@ -1,4 +1,4 @@
-package alertas;
+package Notificaciones;
 
 import usuario.Usuario;
 import org.springframework.mail.MailSender;
@@ -8,7 +8,7 @@ import eventos.AsistenciaEvento;
 
 
 
-public class Casilla implements Interesado {
+public class CasillaDeMails implements Informante {
     public MailSender mailSender;
     public SimpleMailMessage message;
 
@@ -30,7 +30,7 @@ public class Casilla implements Interesado {
         mailSender.send(message);
     }
     public void notificarA(Usuario usuario, AsistenciaEvento evento) {
-    	enviarMail(usuario.getMail(),"Hola estan tus sugerencias listas"+ evento.pedirSugerencias());
+    	enviarMail(usuario.getMail(),"Hola estan tus sugerencias listas para el evento "+ evento.toString());
     }
 
 

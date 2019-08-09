@@ -17,6 +17,7 @@ public class Atuendo{
 	private List<Prenda> accesorios = new ArrayList<>();
 	private List<Prenda> capasAbrigos = new ArrayList<>();
 	private Integer rangoDeAceptacion = 10;
+	private Double temperaturaDeUso;
 
 	public Guardarropa getGuardarropaOrigen() {
 		return guardarropaOrigen;
@@ -148,6 +149,13 @@ public class Atuendo{
 		this.rangoDeAceptacion = rangoDeAceptacion;
 	}
 
+	public void setTemperaturaDeUso(Double temperaturaDeUso) {
+		this.temperaturaDeUso = temperaturaDeUso;
+	}
+
+	public Double getTemperaturaDeUso() {
+		return temperaturaDeUso;
+	}
 
 	public boolean estaDisponible() {
 		return obtenerPrendasTotales().stream().allMatch(prenda -> guardarropaOrigen.existePrenda(prenda));

@@ -62,4 +62,8 @@ public class Calendario{
 	public Set<SugerenciasClima> pedirSugerenciasParaEvento(Evento evento){
 		return eventos.stream().filter(asistencia -> asistencia.getEvento().equals(evento)).findFirst().get().pedirSugerencias();
 	}
+
+	public boolean hayEventosCercanosEn(String ubicacion) {
+		return eventos.stream().anyMatch(asistencia -> asistencia.esCercanaYEsEn(ubicacion));
+	}
 }

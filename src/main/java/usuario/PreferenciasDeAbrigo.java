@@ -13,12 +13,12 @@ public class PreferenciasDeAbrigo {
 
 
     public PreferenciasDeAbrigo() {
-        this.abrigoCabeza = new AdaptacionPuntuada(25, 0, 0);
-        this.abrigoCuello = new AdaptacionPuntuada(25, 0, 0);
-        this.abrigoPecho = new AdaptacionPuntuada(25, 0, 0);
-        this.abrigoManos = new AdaptacionPuntuada(25, 0, 0);
-        this.abrigoPiernas = new AdaptacionPuntuada(25, 0, 0);
-        this.abrigoPies = new AdaptacionPuntuada(25, 0, 0);
+        this.abrigoCabeza = new AdaptacionPuntuada(25, 0.0, 0);
+        this.abrigoCuello = new AdaptacionPuntuada(25, 0.0, 0);
+        this.abrigoPecho = new AdaptacionPuntuada(25, 0.0, 0);
+        this.abrigoManos = new AdaptacionPuntuada(25, 0.0, 0);
+        this.abrigoPiernas = new AdaptacionPuntuada(25, 0.0, 0);
+        this.abrigoPies = new AdaptacionPuntuada(25, 0.0, 0);
     }
 
     private double adaptacionTotal(){

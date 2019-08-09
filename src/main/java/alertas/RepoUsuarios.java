@@ -1,15 +1,13 @@
 package alertas;
 
 import usuario.Usuario;
-
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class RepoUsuarios {
     private static RepoUsuarios repo;
-    public Set<Usuario> listaUsuarios = new HashSet<>();
+    private Set<Usuario> listaUsuarios = new HashSet<>();
 
     public static RepoUsuarios getInstance() {
         if(repo == null) repo = new RepoUsuarios();
@@ -22,5 +20,9 @@ public class RepoUsuarios {
 
     public Set<Usuario> getTodos() {
         return listaUsuarios;
+    }
+
+    Set<Usuario> getInteresadosEn(String ubicacion) {
+        return listaUsuarios.stream().filter(usuario -> usuario.leInteresaLaUbicacion(ubicacion)).collect(Collectors.toSet());
     }
 }

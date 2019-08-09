@@ -74,7 +74,7 @@ public class AccuWeather extends ProvedorClimatico {
 	@Override
 	public Set<Alerta> obtenerAlertas(String ubicacion){
 		String JsonRespuesta = obtenerJson(ubicacion);
-		return parsearAlertas(JsonRespuesta);
+		return parsearAlertas(JsonRespuesta, ubicacion);
 	}
 
 	public ClientResponse Api_get(String request) {
@@ -98,14 +98,28 @@ public class AccuWeather extends ProvedorClimatico {
 	return new PronosticoMetereologico(headline);
 	}
 
-	private Set<Alerta> parsearAlertas(String JSON) {
+	private Set<Alerta> parsearAlertas(String JSON, String ubicacion) {
 		Set<Alerta> alertas = new HashSet<>();
 		JSONArray array = new JSONArray(JSON);
 		String alertaDeDia = array.getJSONObject(0).getJSONObject("Day").getString("PrecipitationType");
 		String alertaDeNoche = array.getJSONObject(0).getJSONObject("Night").getString("PrecipitationType");
-		if(!alertaDeDia.equals("")) alertas.add(new Alerta(alertaDeDia));
-		if(!alertaDeNoche.equals("")) alertas.add(new Alerta(alertaDeNoche));
+		TipoDeAlerta tipoAlertaDia = obtenerTipoAlerta(alertaDeDia);
+		TipoDeAlerta tipoAlertaNoche = obtenerTipoAlerta(alertaDeNoche);
+		alertas.add(new Alerta(tipoAlertaDia, ubicacion));
+		alertas.add(new Alerta(tipoAlertaNoche, ubicacion));
 		return alertas;
+	}
+
+	private TipoDeAlerta obtenerTipoAlerta(String tipoObtenido) {
+		switch (tipoObtenido){
+			case "Rain":
+				return TipoDeAlerta.LLUVIA;
+			case "Ice":
+				return TipoDeAlerta.GRANIZO;
+			case "Snow":
+				return TipoDeAlerta.NIEVE;
+		}
+		return TipoDeAlerta.NINGUNA;
 	}
 
 	public Clima parsearClima(String JSON){

@@ -42,4 +42,7 @@ public class AsistenciaEvento {
 		return evento;
 	}
 
+	public boolean esCercanaYEsEn(String ubicacion) {
+		return evento.esEventoCercanoYOcurreEn(ubicacion);
+	}
 }

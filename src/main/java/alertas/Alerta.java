@@ -2,19 +2,15 @@ package alertas;
 
 public class Alerta {
     private TipoDeAlerta tipo;
+    private String ubicacion;
 
-    public Alerta(String tipoObtenido){
-        switch (tipoObtenido){
-            case "Rain":
-                tipo = TipoDeAlerta.LLUVIA;
-                return;
-            case "Ice":
-                tipo = TipoDeAlerta.GRANIZO;
-                return;
-            case "Snow":
-                tipo = TipoDeAlerta.NIEVE;
-                return;
-        }
+    public Alerta(TipoDeAlerta tipoAlerta, String ubicacionElegida){
+        ubicacion = ubicacionElegida;
+        tipo = tipoAlerta;
+    }
+
+    public String getUbicacion() {
+        return ubicacion;
     }
 
     public TipoDeAlerta getTipo() {
