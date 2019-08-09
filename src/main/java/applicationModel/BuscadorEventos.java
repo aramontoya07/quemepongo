@@ -2,7 +2,9 @@ package applicationModel;
 
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,40 +13,46 @@ import java.util.Set;
 import atuendo.SugerenciasClima;
 import eventos.AsistenciaEvento;
 import eventos.Evento;
-import org.uqbar.commons.applicationContext.ApplicationContext; //Es por si usabamos un repositorio???
 import org.uqbar.commons.model.annotations.Observable;
 import usuario.Usuario;
 
 
 @Observable
 public class BuscadorEventos {
-    private LocalDateTime fechaDesde;
-    private LocalDateTime fechaHasta;
+    private Date fechaDesde; // Si queremos que sea LocalDateTime tenemos que convertirlo
+    private Date fechaHasta;
     private List<AsistenciaEvento> resultados;
     private String nombre;
     private String lugar;
-    private boolean tieneSugerencia;
+    private boolean tieneSugerencia; //Nuestros eventos no tienen esta propiedad. Asi que esto debe ser ILEGAL ¯\_(ツ)_/¯
     private LocalDateTime fecha;
 
     private Evento evento;
     private Set<SugerenciasClima> sugerenciasEvento = new HashSet<>();
 
-    Usuario usuario;
-
-    public BuscadorEventos(Usuario usuario) {
+    Usuario usuario = new Usuario(); //Si no tiene ningun usuario ROMPE! FIXME
+    
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 
     
     //ACCIONES
+    public LocalDateTime convertirALocalDateTime (Date fecha) {
+    	LocalDateTime miFecha = LocalDateTime.ofInstant(fecha.toInstant(), ZoneId.systemDefault());
+    	return miFecha;
+    }
+    
     public void search() {
         this.resultados = getEventosEntre(fechaDesde, fechaHasta);
     }
 
-    public List<AsistenciaEvento> getEventosEntre(LocalDateTime fechaDesde, LocalDateTime fechaHasta) {
-       Set<AsistenciaEvento> setEventos = usuario.getCalendarioEventos().obtenerEventosEntre(fechaDesde, fechaHasta);
-       List<AsistenciaEvento> resultados = new ArrayList<>(setEventos);
-       return resultados; //Tenemos un set y aparentemente pra usar una tabla necesito una List
+    public List<AsistenciaEvento> getEventosEntre(Date fechaDesde, Date fechaHasta) {
+    	LocalDateTime fechaInicio = convertirALocalDateTime(fechaDesde);
+    	LocalDateTime fechaFin = convertirALocalDateTime(fechaHasta);
+    	Set<AsistenciaEvento> setEventos = usuario.getCalendarioEventos().obtenerEventosEntre(fechaInicio, fechaFin);
+    	List<AsistenciaEvento> resultados = new ArrayList<>(setEventos);
+    	return resultados;
     }
 
     public void clear() {
@@ -54,24 +62,25 @@ public class BuscadorEventos {
     }
 
     //ACCESORS
-
-    public List<AsistenciaEvento> getResultados() {
-        return resultados;
-    }
-    public LocalDateTime getFechaDesde() {
+    
+    public Date getFechaDesde() {
         return fechaDesde;
     }
 
-    public void setFechaDesde(LocalDateTime fechaInicio) {
+    public void setFechaDesde(Date fechaInicio) {
         this.fechaDesde = fechaInicio;
     }
 
-    public LocalDateTime getFechaHasta() {
+    public Date getFechaHasta() {
         return fechaHasta;
     }
 
-    public void setFechaHasta(LocalDateTime fechaFin) {
+    public void setFechaHasta(Date fechaFin) {
         this.fechaHasta = fechaFin;
+    }
+
+    public List<AsistenciaEvento> getResultados() {
+        return resultados;
     }
 
     public void setResultados(List<AsistenciaEvento> resultados) {
@@ -102,11 +111,11 @@ public class BuscadorEventos {
         this.lugar = lugar;
     }
 
-    public void setTieneSugerencia(boolean tieneSugerencia) {
-        this.tieneSugerencia = tieneSugerencia;
+    public boolean getTieneSugerencia() {
+        return tieneSugerencia;
     }
 
-    public boolean getTieneSugerencia() {
-        return sugerenciasEvento.size() > 0;
+    public void setTieneSugerencia(boolean tieneSugerencia) {
+        this.tieneSugerencia = tieneSugerencia;
     }
 }
