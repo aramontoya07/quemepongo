@@ -9,18 +9,13 @@ import atuendo.SugerenciasClima;
 import excepciones.EventoException;
 import usuario.Usuario;
 
-import org.uqbar.commons.model.Entity;
 
-public class AsistenciaEvento extends Entity {
+public class AsistenciaEvento {
 	private Evento evento;
 	private Set<SugerenciasClima> sugerenciasEvento = new HashSet<SugerenciasClima>();
 	
 	public AsistenciaEvento(Evento eventoAsignado) {
 		evento = eventoAsignado;
-	}
-
-	public AsistenciaEvento() {
-
 	}
 
     public Set<SugerenciasClima> pedirSugerencias(){

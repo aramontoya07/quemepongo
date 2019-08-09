@@ -7,9 +7,9 @@ import java.util.Date;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
-import org.uqbar.commons.model.Entity;
 
-public class Evento extends Entity {
+
+public class Evento {
 	private String tituloEvento;
     private LocalDateTime fecha;
     private String ubicacion;
@@ -22,17 +22,6 @@ public class Evento extends Entity {
         this.fecha = fecha;
         this.ubicacion = ubicacion;
     }
-
-	public Evento(String titulo,LocalDateTime fecha, String ubicacion) {
-
-		this.tituloEvento = titulo;
-		this.fecha = fecha;
-		this.ubicacion = ubicacion;
-	}
-
-	public Evento() {
-
-	}
     
 	public boolean esEventoLejano() {
 		return fecha.isBefore(LocalDateTime.now().minusHours(horasEventoCercano));

@@ -29,7 +29,11 @@ public class BuscadorEventos {
     private Evento evento;
     private Set<SugerenciasClima> sugerenciasEvento = new HashSet<>();
 
-    Usuario usuario = new Usuario();
+    Usuario usuario;
+
+    public BuscadorEventos(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
     
     //ACCIONES
