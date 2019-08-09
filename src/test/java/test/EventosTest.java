@@ -1,8 +1,9 @@
 package test;
 
 import atuendo.SugerenciasClima;
+import eventos.Diaria;
 import eventos.Evento;
-import eventos.EventoUnico;
+import eventos.Unico;
 import excepciones.EventoException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -30,7 +31,7 @@ class EventosTest extends SetUp{
 
         LocalDateTime fechaTorneo = LocalDateTime.now().plusHours(13);
 
-        Evento torneoFornite = new EventoUnico("Torneo de Fornite", fechaTorneo, "Bokita el one");
+        Evento torneoFornite = new Evento("Torneo de Fornite", fechaTorneo, "Bokita el one", new Unico());
         pedro.asistirAEvento(torneoFornite);
         Thread.sleep(1000);
         assertThrows(EventoException.class, () ->
@@ -46,7 +47,7 @@ class EventosTest extends SetUp{
         pedro.agregarPrendas(guardarropa, prendasGlobales);
 
         LocalDateTime fechaTorneo = LocalDateTime.now().plusHours(6);
-        Evento torneobaile = new EventoUnico("torneo de bailar como ricardo millos", fechaTorneo, "Bokita de mi vida");
+        Evento torneobaile = new Evento("torneo de bailar como ricardo millos", fechaTorneo, "Bokita de mi vida", new Unico());
         pedro.asistirAEvento(torneobaile);
         Thread.sleep(1000);
         Set<SugerenciasClima> sugerenciasParaEvento =  pedro.pedirSugerenciaParaEvento(torneobaile);
