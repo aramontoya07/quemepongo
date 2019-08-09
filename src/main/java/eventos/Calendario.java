@@ -31,20 +31,20 @@ public class Calendario{
 	
 	public void agregarEvento(Evento evento, Usuario user){
 		AsistenciaEvento nuevaAsistencia = new AsistenciaEvento(evento);
-		
+
 		eventos.add(nuevaAsistencia);
-		
+
 		try {
 			scheduler.getContext().put("usuario", user);
 			scheduler.getContext().put("AsistenciaEvento", nuevaAsistencia);
 		} catch (SchedulerException e1) {
 			e1.printStackTrace();
 		}
-		
+
 		JobDetail job = JobBuilder.newJob(ActivadorEvento.class)
-			      .withIdentity("Job" + evento.getNombre(), "Eventos")
-			      .build();
-		
+				.withIdentity("Job" + evento.getNombre(), "Eventos")
+				.build();
+
 		Trigger trigger = evento.getActivador();
 
 		try {
