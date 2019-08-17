@@ -70,6 +70,7 @@ class EventosTest extends SetUp{
         assertFalse(sugerenciasParaEvento.isEmpty());
     }
 
+    // fixme gran momento para hacerlo entonces :)
     //Aqui pondria mi test de evento repetitivo.. SI TUVIERA UNO!!
 
     @Test

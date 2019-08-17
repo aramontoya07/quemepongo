@@ -40,7 +40,7 @@ class UsuarioTest extends SetUp {
 		pedro.agregarGuardarropa(guardarropa);
 		pedro.actualizarSubscripcionAPremium();
 		pedro.agregarPrendas(guardarropa, prendasGlobales);
-
+		// todo también chequearía que la subscripción cambió (es un detalle igual)
 		assertEquals(9, guardarropa.cantidadDePrendas());
 	}
 
@@ -64,6 +64,8 @@ class UsuarioTest extends SetUp {
 		pedro.agregarPrendas(guardarropa, prendasJustito);
 
 		Set<Atuendo> sugerenciasPedro = pedro.pedirSugerencia();
+		//fixme usar findFirst devuelve un Optional, o sea que podría no tener ningún valor.
+		//Qué pasa si el optional no tiene nada? (Pista: el get() les va a explotar, sería bueno manejarlo por las dudas)
 		Atuendo atuendo = sugerenciasPedro.stream().findFirst().get();
 		pedro.aceptarAtuendo(atuendo);
 		assertTrue(pedro.getAceptados().contains(atuendo));

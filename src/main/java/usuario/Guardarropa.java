@@ -22,14 +22,14 @@ public class Guardarropa {
 	public Set<Prenda> calzados = new HashSet<>();
 	public Set<Prenda> accesorios = new HashSet<>();
 	private int margenDePrendasAproximadas = 10;
-	
+
 	public Set<Prenda> prendasUsadas = new HashSet<>();
-	
+
 	public Guardarropa() { }
 
 	public void usarPrenda(Prenda prenda) {
 		if(!existePrenda(prenda)){
-			throw new GuardarropaException("No se puede usar la prenda porque no está disponible en el guardarropa");
+			throw new GuardarropaException("No se puede usar la prenda porque no estï¿½ disponible en el guardarropa");
 		}
 		quitarDeDisponibles(prenda);
 		agregarAUsadas(prenda);
@@ -102,6 +102,7 @@ public class Guardarropa {
 
 			private void agregarSiNoEsta(Set<Atuendo> listaSecundaria, Atuendo atuendo) {
 				if(listaSecundaria.stream().anyMatch(atuendoSec -> atuendoSec.esIgualA(atuendo))){
+					//fixme este return; es innecesario, el mÃ©todo ya es void, y por lo tanto no retorna nada
 					return;
 				}else{
 					listaSecundaria.add(atuendo);

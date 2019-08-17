@@ -8,6 +8,7 @@ public class PrendaException extends RuntimeException{
         this.mensaje = mensaje;
     }
 
+    //Para qué es esto?
     private static final long serialVersionUID = 10L;
 
     @Override

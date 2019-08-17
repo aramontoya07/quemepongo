@@ -35,7 +35,7 @@ public class Usuario {
 	private String mail;
 	private List<Informante> informantes = new ArrayList<>();
 	private PreferenciasDeAbrigo preferenciasDeAbrigo;
-	private boolean notificado = false; //solo se usa en los tests. perdon
+	private boolean notificado = false; //solo se usa en los tests. perdon //fixme pon esa cosa horrorosa ahí o verás!
 
 	public void marcarNotificado(){
 		notificado = true;
@@ -88,6 +88,7 @@ public class Usuario {
 		guardarropas.add(guardarropa);
 	}
 
+	//fixme y esto?
 	public void resetearGustos(){
 		preferenciasDeAbrigo = new PreferenciasDeAbrigo();
 	}
@@ -115,7 +116,7 @@ public class Usuario {
 		return guardarropas.stream().map(unGuardarropa -> unGuardarropa.generarSugerenciasSegunClima(ubicacion))
 				.map(sugerencias -> sugerencias.ajustarAGustos(preferenciasDeAbrigo, ServicioClimatico.obtenerClima(ubicacion).getTemperatura())).collect(Collectors.toSet());
 	}
-	
+
 	public Set<SugerenciasClima> pedirSugerenciaParaEvento(Evento evento) {
 		return calendarioEventos.pedirSugerenciasParaEvento(evento);
 	}
@@ -171,7 +172,7 @@ public class Usuario {
 	public void notificarAlerta(Informante informante, TipoDeAlerta alerta) {
 		alerta.notificarA(informante, this);
 	}
-	
+
 	public void notificarSugerenciasListas(AsistenciaEvento asistencia) {
 		informantes.forEach(informante -> informante.notificarA(this, asistencia));
 	}
