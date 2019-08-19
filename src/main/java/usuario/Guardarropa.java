@@ -101,8 +101,7 @@ public class Guardarropa {
 			}
 
 			private void agregarSiNoEsta(Set<Atuendo> listaSecundaria, Atuendo atuendo) {
-				if(listaSecundaria.stream().anyMatch(atuendoSec -> atuendoSec.esIgualA(atuendo))){
-				}else{
+				if(listaSecundaria.stream().noneMatch(atuendoSec -> atuendoSec.esIgualA(atuendo))){
 					listaSecundaria.add(atuendo);
 				}
 			}
