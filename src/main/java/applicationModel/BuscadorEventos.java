@@ -29,7 +29,7 @@ public class BuscadorEventos {
 	private Evento evento;
 	private Set<SugerenciasClima> sugerenciasEvento = new HashSet<>();
 
-	Usuario usuario = new Usuario(); //Si no tiene un usuario ROMPE! FIXME
+	private Usuario usuario = new Usuario(); //Si no tiene un usuario ROMPE! FIXME
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;

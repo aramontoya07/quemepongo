@@ -102,8 +102,6 @@ public class Guardarropa {
 
 			private void agregarSiNoEsta(Set<Atuendo> listaSecundaria, Atuendo atuendo) {
 				if(listaSecundaria.stream().anyMatch(atuendoSec -> atuendoSec.esIgualA(atuendo))){
-					//fixme este return; es innecesario, el método ya es void, y por lo tanto no retorna nada
-					return;
 				}else{
 					listaSecundaria.add(atuendo);
 				}
