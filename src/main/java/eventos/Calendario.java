@@ -29,6 +29,13 @@ public class Calendario{
 			e.printStackTrace();
 		}
 	}
+
+	public void quitarEvento(Evento evento){
+		Set<AsistenciaEvento> eventosNuevos = eventos.stream()
+				.filter(asistenciaEvento -> !asistenciaEvento.esDeEvento(evento))
+				.collect(Collectors.toSet());
+		eventos = eventosNuevos;
+	}
 	
 	public void agregarEvento(Evento evento, Usuario user){
 		AsistenciaEvento nuevaAsistencia = new AsistenciaEvento(evento);

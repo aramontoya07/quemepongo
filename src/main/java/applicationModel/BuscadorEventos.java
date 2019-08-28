@@ -11,6 +11,7 @@ import java.util.Set;
 import atuendo.SugerenciasClima;
 import eventos.AsistenciaEvento;
 import eventos.Evento;
+import eventos.Frecuencia;
 import excepciones.EventoException;
 import org.uqbar.commons.model.annotations.Observable;
 import usuario.Usuario;
@@ -21,6 +22,7 @@ public class BuscadorEventos {
 	private Date fechaHasta;
 
 	private List<AsistenciaEvento> resultados;
+	private List<Evento> eventos;
 	private String nombre;
 	private String lugar;
 	private boolean noTieneSugerencia;
@@ -62,6 +64,15 @@ public class BuscadorEventos {
 		this.fechaDesde = null;
 		this.fechaHasta = null;
 		this.resultados = new ArrayList<>();
+	}
+
+	public void agregarEvento(String nombre, String ubicacion, Date fecha, Frecuencia frecuencia){
+		eventos.add(new Evento(nombre, convertirALocalDateTime(fecha), ubicacion, frecuencia));
+	}
+
+	public void quitarEvento(Evento evento){
+		eventos.remove(evento);
+		usuario.quitarEvento(evento);
 	}
 
 	// ACCESORS

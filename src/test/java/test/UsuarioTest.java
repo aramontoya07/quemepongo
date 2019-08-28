@@ -40,7 +40,7 @@ class UsuarioTest extends SetUp {
 		pedro.agregarGuardarropa(guardarropa);
 		pedro.actualizarSubscripcionAPremium();
 		pedro.agregarPrendas(guardarropa, prendasGlobales);
-		// todo también chequearía que la subscripción cambió (es un detalle igual)
+		// todo también chequearía que la subscripción cambió (es un detalle igual) Fede dice, hacer otro test.
 		assertEquals(9, guardarropa.cantidadDePrendas());
 	}
 

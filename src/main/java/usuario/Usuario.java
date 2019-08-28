@@ -35,7 +35,7 @@ public class Usuario {
 	private String mail;
 	private List<Informante> informantes = new ArrayList<>();
 	private PreferenciasDeAbrigo preferenciasDeAbrigo;
-	private boolean notificado = false; //solo se usa en los tests. perdon //fixme pon esa cosa horrorosa ahí o verás!
+	private boolean notificado = false; //solo se usa en los tests. perdon //fixme pon esa cosa horrorosa ahí o verás! Fede dice, que esto no es expresivo
 
 	public void marcarNotificado(){
 		notificado = true;
@@ -88,7 +88,7 @@ public class Usuario {
 		guardarropas.add(guardarropa);
 	}
 
-	//fixme y esto?
+	//fixme y esto? Maxi dice, que fede lo obligo a codearlo, Fede argumenta que se esta adelantando a un requerimiento.
 	public void resetearGustos(){
 		preferenciasDeAbrigo = new PreferenciasDeAbrigo();
 	}
@@ -197,7 +197,9 @@ public class Usuario {
 	public Set<AsistenciaEvento> obtenerEventosEntre(LocalDateTime fechaMinima, LocalDateTime fechaMaxima){
 		return calendarioEventos.obtenerEventosEntre(fechaMinima, fechaMaxima);
 	}
-
+	public void quitarEvento(Evento evento){
+		calendarioEventos.quitarEvento(evento);
+	}
 	public int getPuntajeEn(ParteAbrigada parte) {
 		return preferenciasDeAbrigo.getPuntaje(parte).getPuntaje();
 	}
