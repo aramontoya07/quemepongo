@@ -10,6 +10,7 @@ import atuendo.SugerenciasClima;
 import excepciones.EventoException;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
+import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
@@ -31,10 +32,15 @@ public class Calendario{
 	}
 
 	public void quitarEvento(Evento evento){
-		Set<AsistenciaEvento> eventosNuevos = eventos.stream()
+		eventos = eventos.stream()
 				.filter(asistenciaEvento -> !asistenciaEvento.esDeEvento(evento))
 				.collect(Collectors.toSet());
-		eventos = eventosNuevos;
+
+		try {
+			scheduler.deleteJob(new JobKey("Job" + evento.getNombre()));
+		} catch (SchedulerException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void agregarEvento(Evento evento, Usuario user){

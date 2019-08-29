@@ -3,19 +3,38 @@ package atuendo;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 import clima.Clima;
 import excepciones.PrendaException;
 import prenda.ParteAbrigada;
 import prenda.Prenda;
 import usuario.Guardarropa;
 
+@Entity
+@Table(name = "Atuendos")
 public class Atuendo{
+	@Id
+	@GeneratedValue
+	private Integer idAtuendo;
+	@OneToOne
 	private Guardarropa guardarropaOrigen;
+	@OneToOne
 	private Prenda superior;
+	@OneToOne
 	private Prenda inferior;
+	@OneToOne
 	private Prenda calzado;
+	@OneToMany
 	private List<Prenda> accesorios = new ArrayList<>();
+	@OneToMany
 	private List<Prenda> capasAbrigos = new ArrayList<>();
+
 	private Integer rangoDeAceptacion = 10;
 	private Double temperaturaDeUso;
 

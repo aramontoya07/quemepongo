@@ -3,6 +3,16 @@ package usuario;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import alertas.Alerta;
 import notificaciones.Informante;
 import alertas.RepoUsuarios;
@@ -25,17 +35,31 @@ import subscripciones.SubscripcionGratuita;
 import subscripciones.SubscripcionPremium;
 import subscripciones.TipoSubscripcion;
 
+@Entity
+@Table(name = "Usuarios")
 public class Usuario {
-	private Decision ultimaDecision;
-	private TipoSubscripcion subscripcion;
-	private Calendario calendarioEventos = new Calendario();
+	@Id
+	@GeneratedValue
+	private Integer idUsuario;
+	@OneToMany
 	private Queue<Atuendo> aceptados = new LinkedList<>();
+	@OneToMany
 	private Queue<Atuendo> rechazados = new LinkedList<>();
+	@ManyToMany
 	private Set<Guardarropa> guardarropas = new HashSet<>();
-	private String mail;
+	@OneToMany
 	private List<Informante> informantes = new ArrayList<>();
+	@OneToOne
+	private Decision ultimaDecision;
+	@OneToOne
+	private TipoSubscripcion subscripcion;
+	@OneToOne
+	private Calendario calendarioEventos = new Calendario();
+	@OneToOne
 	private PreferenciasDeAbrigo preferenciasDeAbrigo;
-	private boolean notificado = false; //solo se usa en los tests. perdon //fixme pon esa cosa horrorosa ahí o verás! Fede dice, que esto no es expresivo
+	private String mail;
+	@Transient
+	private boolean notificado = false;
 
 	public void marcarNotificado(){
 		notificado = true;

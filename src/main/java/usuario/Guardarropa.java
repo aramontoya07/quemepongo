@@ -5,6 +5,12 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import atuendo.SugerenciasClima;
 
 import com.google.common.collect.Sets;
@@ -15,17 +21,26 @@ import excepciones.GuardarropaException;
 import excepciones.PrendaException;
 import prenda.*;
 
+@Entity
+@Table(name = "Guardarropas")
 public class Guardarropa {
-
+	@Id
+	@GeneratedValue
+	private Integer idGuardarropa;
+	@OneToMany
 	public Set<Prenda> superiores = new HashSet<>();
+	@OneToMany
 	public Set<Prenda> inferiores = new HashSet<>();
+	@OneToMany
 	public Set<Prenda> calzados = new HashSet<>();
+	@OneToMany
 	public Set<Prenda> accesorios = new HashSet<>();
-	private int margenDePrendasAproximadas = 10;
-
+	@OneToMany
 	public Set<Prenda> prendasUsadas = new HashSet<>();
 
-	public Guardarropa() { }
+	private int margenDePrendasAproximadas = 10;
+
+	public Guardarropa() {}
 
 	public void usarPrenda(Prenda prenda) {
 		if(!existePrenda(prenda)){
