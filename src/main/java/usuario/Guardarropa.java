@@ -127,7 +127,7 @@ public class Guardarropa {
 
 				Atuendo atuendoActual = atuendo.clonar();
 
-				Set<Prenda> prendasActuales = new HashSet(prendasSecundarias);
+				Set<Prenda> prendasActuales = new HashSet<Prenda>(prendasSecundarias);
 
 				for(Prenda prendaActual : prendasSecundarias){
 					if(atuendo.aceptaSuperponer(prendaActual)){
@@ -136,7 +136,7 @@ public class Guardarropa {
 
 						combinarPrendas(atuendoActual,prendasActuales);
 
-						prendasActuales = new HashSet(prendasSecundarias);
+						prendasActuales = new HashSet<Prenda>(prendasSecundarias);
 						atuendoActual = atuendo.clonar();
 					}
 				}
