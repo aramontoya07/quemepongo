@@ -16,23 +16,23 @@ import prenda.ParteAbrigada;
 import prenda.Prenda;
 import usuario.Guardarropa;
 
-@Entity
-@Table(name = "Atuendos")
+//@Entity
+//@Table(name = "Atuendos")
 public class Atuendo{
-	@Id
-	@GeneratedValue
+	//@Id
+	//@GeneratedValue
 	private Integer idAtuendo;
-	@OneToOne
+	//@OneToOne
 	private Guardarropa guardarropaOrigen;
-	@OneToOne
+	//@OneToOne
 	private Prenda superior;
-	@OneToOne
+	//@OneToOne
 	private Prenda inferior;
-	@OneToOne
+	//@OneToOne
 	private Prenda calzado;
-	@OneToMany
+	//@OneToMany
 	private List<Prenda> accesorios = new ArrayList<>();
-	@OneToMany
+	//@OneToMany
 	private List<Prenda> capasAbrigos = new ArrayList<>();
 
 	private Integer rangoDeAceptacion = 10;

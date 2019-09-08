@@ -43,22 +43,22 @@ public class Usuario {
 	private Integer idUsuario;
 	@OneToMany
 	private Queue<Atuendo> aceptados = new LinkedList<>();
-	@OneToMany
+	//@OneToMany
 	private Queue<Atuendo> rechazados = new LinkedList<>();
-	@ManyToMany
+	//@ManyToMany
 	private Set<Guardarropa> guardarropas = new HashSet<>();
-	@OneToMany
+	//@OneToMany
 	private List<Informante> informantes = new ArrayList<>();
-	@OneToOne
+	//@OneToOne
 	private Decision ultimaDecision;
-	@OneToOne
+	//@OneToOne
 	private TipoSubscripcion subscripcion;
-	@OneToOne
+	//@OneToOne
 	private Calendario calendarioEventos = new Calendario();
-	@OneToOne
+	//@OneToOne
 	private PreferenciasDeAbrigo preferenciasDeAbrigo;
 	private String mail;
-	@Transient
+	//@Transient
 	private boolean notificado = false;
 
 	public void marcarNotificado(){

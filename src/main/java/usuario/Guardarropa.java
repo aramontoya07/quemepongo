@@ -21,21 +21,21 @@ import excepciones.GuardarropaException;
 import excepciones.PrendaException;
 import prenda.*;
 
-@Entity
-@Table(name = "Guardarropas")
+//@Entity
+//@Table(name = "Guardarropas")
 public class Guardarropa {
-	@Id
-	@GeneratedValue
+	//@Id
+	//@GeneratedValue
 	private Integer idGuardarropa;
-	@OneToMany
+	//@OneToMany
 	public Set<Prenda> superiores = new HashSet<>();
-	@OneToMany
+	//@OneToMany
 	public Set<Prenda> inferiores = new HashSet<>();
-	@OneToMany
+	//@OneToMany
 	public Set<Prenda> calzados = new HashSet<>();
-	@OneToMany
+	//@OneToMany
 	public Set<Prenda> accesorios = new HashSet<>();
-	@OneToMany
+	//@OneToMany
 	public Set<Prenda> prendasUsadas = new HashSet<>();
 
 	private int margenDePrendasAproximadas = 10;
