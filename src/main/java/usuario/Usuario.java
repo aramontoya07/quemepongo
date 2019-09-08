@@ -35,13 +35,13 @@ import subscripciones.SubscripcionGratuita;
 import subscripciones.SubscripcionPremium;
 import subscripciones.TipoSubscripcion;
 
-@Entity
-@Table(name = "Usuarios")
+//@Entity
+//@Table(name = "Usuarios")
 public class Usuario {
-	@Id
-	@GeneratedValue
+	//@Id
+	//@GeneratedValue
 	private Integer idUsuario;
-	@OneToMany
+	//@OneToMany
 	private Queue<Atuendo> aceptados = new LinkedList<>();
 	//@OneToMany
 	private Queue<Atuendo> rechazados = new LinkedList<>();
