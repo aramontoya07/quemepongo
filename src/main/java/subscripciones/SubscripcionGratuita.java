@@ -1,6 +1,11 @@
 package subscripciones;
 
-public class SubscripcionGratuita implements TipoSubscripcion {
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("suscripcion_gratuita")
+public class SubscripcionGratuita extends TipoSubscripcion{
 	private int cantidadMaxima = 5;
 
 	public boolean puedoAgregar(int numeroDePrendas) {

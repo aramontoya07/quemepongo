@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -35,32 +36,85 @@ import subscripciones.SubscripcionGratuita;
 import subscripciones.SubscripcionPremium;
 import subscripciones.TipoSubscripcion;
 
-//@Entity
-//@Table(name = "Usuarios")
-public class Usuario {
-	//@Id
-	//@GeneratedValue
-	private Integer idUsuario;
+@Entity
+@Table(name = "Usuarios")
+public class Usuario extends EntidadPersistente{
+	
 	//@OneToMany
+	@Transient
 	private Queue<Atuendo> aceptados = new LinkedList<>();
 	//@OneToMany
+	@Transient
 	private Queue<Atuendo> rechazados = new LinkedList<>();
 	//@ManyToMany
+	@Transient
 	private Set<Guardarropa> guardarropas = new HashSet<>();
 	//@OneToMany
+	@Transient
 	private List<Informante> informantes = new ArrayList<>();
 	//@OneToOne
+	@Transient
 	private Decision ultimaDecision;
-	//@OneToOne
+	@ManyToOne
 	private TipoSubscripcion subscripcion;
 	//@OneToOne
+	@Transient
 	private Calendario calendarioEventos = new Calendario();
 	//@OneToOne
+	@Transient
 	private PreferenciasDeAbrigo preferenciasDeAbrigo;
 	private String mail;
 	//@Transient
 	private boolean notificado = false;
 
+	
+	public List<Informante> getInformantes() {
+		return informantes;
+	}
+
+	public void setInformantes(List<Informante> informantes) {
+		this.informantes = informantes;
+	}
+
+	public Decision getUltimaDecision() {
+		return ultimaDecision;
+	}
+
+	public void setUltimaDecision(Decision ultimaDecision) {
+		this.ultimaDecision = ultimaDecision;
+	}
+
+	public TipoSubscripcion getSubscripcion() {
+		return subscripcion;
+	}
+
+	public void setSubscripcion(TipoSubscripcion subscripcion) {
+		this.subscripcion = subscripcion;
+	}
+
+	public void setAceptados(Queue<Atuendo> aceptados) {
+		this.aceptados = aceptados;
+	}
+
+	public void setRechazados(Queue<Atuendo> rechazados) {
+		this.rechazados = rechazados;
+	}
+
+	public void setGuardarropas(Set<Guardarropa> guardarropas) {
+		this.guardarropas = guardarropas;
+	}
+
+	public void setCalendarioEventos(Calendario calendarioEventos) {
+		this.calendarioEventos = calendarioEventos;
+	}
+
+	public void setPreferenciasDeAbrigo(PreferenciasDeAbrigo preferenciasDeAbrigo) {
+		this.preferenciasDeAbrigo = preferenciasDeAbrigo;
+	}
+
+	public void setNotificado(boolean notificado) {
+		this.notificado = notificado;
+	}
 	public void marcarNotificado(){
 		notificado = true;
 	}
