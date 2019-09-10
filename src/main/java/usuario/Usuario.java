@@ -61,8 +61,7 @@ public class Usuario extends EntidadPersistente{
 	private Decision ultimaDecision;
 	@ManyToOne
 	private TipoSubscripcion subscripcion;
-	//@OneToOne
-	@Transient
+	@OneToOne
 	private Calendario calendarioEventos = new Calendario();
 	//@OneToOne
 	@Transient
