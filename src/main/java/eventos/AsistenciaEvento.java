@@ -4,14 +4,23 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+
 import atuendo.SugerenciasClima;
 
 import excepciones.EventoException;
+import usuario.EntidadPersistente;
 import usuario.Usuario;
 
-
-public class AsistenciaEvento {
+@Entity
+public class AsistenciaEvento extends EntidadPersistente{
+	
+	@OneToOne
 	private Evento evento;
+	
+	@ManyToMany
 	private Set<SugerenciasClima> sugerenciasEvento = new HashSet<>();
 
 	public AsistenciaEvento(Evento eventoAsignado) {

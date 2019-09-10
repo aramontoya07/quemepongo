@@ -19,6 +19,8 @@ import usuario.Guardarropa;
 //@Entity
 //@Table(name = "Atuendos")
 public class Atuendo{
+	
+
 	//@Id
 	//@GeneratedValue
 	private Integer idAtuendo;
@@ -37,7 +39,25 @@ public class Atuendo{
 
 	private Integer rangoDeAceptacion = 10;
 	private Double temperaturaDeUso;
+	
+	private boolean aceptado;
+	private boolean aproximado;
+	
+	public boolean isAceptado() {
+		return aceptado;
+	}
 
+	public void setAceptado(boolean aceptado) {
+		this.aceptado = aceptado;
+	}
+
+	public boolean isAproximado() {
+		return aproximado;
+	}
+
+	public void setAproximado(boolean aproximado) {
+		this.aproximado = aproximado;
+	}
 	public Guardarropa getGuardarropaOrigen() {
 		return guardarropaOrigen;
 	}

@@ -3,6 +3,7 @@ package usuario;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,6 +41,9 @@ import subscripciones.TipoSubscripcion;
 @Table(name = "Usuarios")
 public class Usuario extends EntidadPersistente{
 	
+	@OneToMany // PREGUNTAR
+	private Queue<Atuendo> atuendos = new LinkedList<>();
+	
 	//@OneToMany
 	@Transient
 	private Queue<Atuendo> aceptados = new LinkedList<>();
@@ -64,10 +68,15 @@ public class Usuario extends EntidadPersistente{
 	@Transient
 	private PreferenciasDeAbrigo preferenciasDeAbrigo;
 	private String mail;
-	//@Transient
 	private boolean notificado = false;
 
-	
+
+	public void setAtuendos() {
+		 Queue<Atuendo> listaAux = new LinkedList<>();
+		listaAux.addAll(aceptados);
+		listaAux.addAll(rechazados);
+		atuendos = listaAux;
+	}
 	public List<Informante> getInformantes() {
 		return informantes;
 	}
@@ -94,10 +103,12 @@ public class Usuario extends EntidadPersistente{
 
 	public void setAceptados(Queue<Atuendo> aceptados) {
 		this.aceptados = aceptados;
+		//aceptados.forEach(a -> a.setAceptado(true));
 	}
 
 	public void setRechazados(Queue<Atuendo> rechazados) {
 		this.rechazados = rechazados;
+		//rechazados.forEach(r -> r.setAceptado(false));
 	}
 
 	public void setGuardarropas(Set<Guardarropa> guardarropas) {
@@ -202,6 +213,8 @@ public class Usuario extends EntidadPersistente{
 	public void aceptarAtuendo(Atuendo atuendo) throws PrendaException {
 		chequearAtuendoDisponible(atuendo);
 		aceptados.add(atuendo);
+		atuendo.setAceptado(true);
+		setAtuendos();
 		atuendo.marcarPrendasComoUsadas();
 		ultimaDecision = new DecisionAceptar();
 	}
@@ -214,6 +227,8 @@ public class Usuario extends EntidadPersistente{
 
 	public void rechazarAtuendo(Atuendo atuendo) {
 		rechazados.add(atuendo);
+		atuendo.setAceptado(false);
+		setAtuendos();
 		ultimaDecision = new DecisionRechazar();
 	}
 

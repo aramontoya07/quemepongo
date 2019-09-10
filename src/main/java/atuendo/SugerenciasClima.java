@@ -2,6 +2,7 @@ package atuendo;
 
 import clima.Clima;
 import clima.ServicioClimatico;
+import usuario.EntidadPersistente;
 import usuario.PreferenciasDeAbrigo;
 import usuario.Usuario;
 
@@ -9,8 +10,13 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class SugerenciasClima {
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+@Entity
+public class SugerenciasClima extends EntidadPersistente{
+	@Transient
     private List<Atuendo> exactas = new ArrayList<>();
+	@Transient
     private List<Atuendo> aproximadas = new ArrayList<>();
     private int margen = 10;
 
@@ -21,10 +27,12 @@ public class SugerenciasClima {
     public void agregarAtuendoSegunClima(Atuendo atuendo, Clima climaActual){
         if(atuendo.nivelDeAdaptacionAlClima(climaActual) == 0) {
         	exactas.add(atuendo);
+        	atuendo.setAproximado(false);
         	return;
         }
         if(Math.abs(atuendo.nivelDeAdaptacionAlClima(climaActual)) < margen) {
         	aproximadas.add(atuendo);
+        	atuendo.setAproximado(true);
         }
     }
 

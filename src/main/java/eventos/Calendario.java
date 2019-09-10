@@ -6,6 +6,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+
 import atuendo.SugerenciasClima;
 import excepciones.EventoException;
 import org.quartz.JobBuilder;
@@ -16,10 +20,13 @@ import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.impl.StdSchedulerFactory;
 
+import usuario.EntidadPersistente;
 import usuario.Usuario;
-
-public class Calendario{
+@Entity
+public class Calendario extends EntidadPersistente{
+	@Transient
 	private Scheduler scheduler;
+	@OneToMany
 	private Set<AsistenciaEvento> eventos = new HashSet<>();
 	
 	public Calendario(){
