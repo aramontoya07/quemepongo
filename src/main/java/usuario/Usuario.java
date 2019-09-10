@@ -42,7 +42,7 @@ import subscripciones.TipoSubscripcion;
 public class Usuario extends EntidadPersistente{
 	
 	@OneToMany // PREGUNTAR
-	private Queue<Atuendo> atuendos = new LinkedList<>();
+	private List<Atuendo> atuendos = new ArrayList<>();
 	
 	//@OneToMany
 	@Transient
@@ -72,7 +72,7 @@ public class Usuario extends EntidadPersistente{
 
 
 	public void setAtuendos() {
-		 Queue<Atuendo> listaAux = new LinkedList<>();
+		 ArrayList<Atuendo> listaAux = new ArrayList<>();
 		listaAux.addAll(aceptados);
 		listaAux.addAll(rechazados);
 		atuendos = listaAux;

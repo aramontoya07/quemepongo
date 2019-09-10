@@ -3,12 +3,18 @@ package eventos;
 import java.time.LocalDateTime;
 
 import org.quartz.Trigger;
+import usuario.EntidadPersistente;
 
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 
-public class Evento {
+@Entity
+public class Evento extends EntidadPersistente {
 	private String tituloEvento;
+	@Transient
     private LocalDateTime fecha;
     private String ubicacion;
+    @Transient
     private Frecuencia frecuencia;
 
 	public Evento(String titulo,LocalDateTime fecha, String ubicacion, Frecuencia frecuencia) {
