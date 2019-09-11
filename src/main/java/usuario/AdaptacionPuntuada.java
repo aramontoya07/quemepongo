@@ -1,6 +1,9 @@
 package usuario;
 
-public class AdaptacionPuntuada {
+import javax.persistence.Entity;
+
+@Entity
+public class AdaptacionPuntuada extends EntidadPersistente {
     private Double nivelDeAdaptacion;
     private Integer puntaje;
 

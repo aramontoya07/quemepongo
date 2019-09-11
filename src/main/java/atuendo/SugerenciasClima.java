@@ -11,6 +11,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 @Entity
 public class SugerenciasClima extends EntidadPersistente{
@@ -18,6 +19,8 @@ public class SugerenciasClima extends EntidadPersistente{
     private List<Atuendo> exactas = new ArrayList<>();
 	@Transient
     private List<Atuendo> aproximadas = new ArrayList<>();
+	@ManyToMany
+	private List<Atuendo> atuendos = new ArrayList<>();
     private int margen = 10;
 
     public SugerenciasClima(int margen) {
@@ -33,7 +36,14 @@ public class SugerenciasClima extends EntidadPersistente{
         if(Math.abs(atuendo.nivelDeAdaptacionAlClima(climaActual)) < margen) {
         	aproximadas.add(atuendo);
         	atuendo.setAproximado(true);
-        }
+        } //falta hacer el setAtuendos
+    }
+
+    public void setAtuendos() {
+        ArrayList<Atuendo> listaAux = new ArrayList<>();
+        listaAux.addAll(exactas);
+        listaAux.addAll(aproximadas);
+        atuendos = listaAux;
     }
 
     public SugerenciasClima ajustarAGustos(PreferenciasDeAbrigo preferencias, double temperatura){

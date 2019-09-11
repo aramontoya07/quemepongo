@@ -11,7 +11,6 @@ import javax.persistence.Transient;
 @Entity
 public class Evento extends EntidadPersistente {
 	private String tituloEvento;
-	@Transient
     private LocalDateTime fecha;
     private String ubicacion;
     @Transient

@@ -3,12 +3,22 @@ package usuario;
 import atuendo.Atuendo;
 import prenda.ParteAbrigada;
 
-public class PreferenciasDeAbrigo {
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+
+@Entity
+public class PreferenciasDeAbrigo extends EntidadPersistente {
+    @OneToOne
     private AdaptacionPuntuada abrigoCabeza;
+    @OneToOne
     private AdaptacionPuntuada abrigoCuello;
+    @OneToOne
     private AdaptacionPuntuada abrigoPecho;
+    @OneToOne
     private AdaptacionPuntuada abrigoManos;
+    @OneToOne
     private AdaptacionPuntuada abrigoPiernas;
+    @OneToOne
     private AdaptacionPuntuada abrigoPies;
 
 

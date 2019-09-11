@@ -5,15 +5,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 import alertas.Alerta;
 import notificaciones.Informante;
@@ -39,13 +31,13 @@ import subscripciones.TipoSubscripcion;
 
 @Entity
 @Table(name = "Usuarios")
-public class Usuario extends EntidadPersistente{
+public class Usuario extends EntidadPersistente {
 	
 	@OneToMany // PREGUNTAR
 	private List<Atuendo> atuendos = new ArrayList<>();
 	
 	//@OneToMany
-	@Transient
+	@Transient //Estas dos colas se quedan en transient. No las necesitamos.
 	private Queue<Atuendo> aceptados = new LinkedList<>();
 	//@OneToMany
 	@Transient
@@ -63,8 +55,7 @@ public class Usuario extends EntidadPersistente{
 	private TipoSubscripcion subscripcion;
 	@OneToOne
 	private Calendario calendarioEventos = new Calendario();
-	//@OneToOne
-	@Transient
+	@OneToOne
 	private PreferenciasDeAbrigo preferenciasDeAbrigo;
 	private String mail;
 	private boolean notificado = false;
