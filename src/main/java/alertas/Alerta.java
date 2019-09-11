@@ -1,10 +1,8 @@
 package alertas;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Transient;
-import usuario.EntidadPersistente;
+import db.EntidadPersistente;
 @Entity
 public class Alerta extends EntidadPersistente{
 	

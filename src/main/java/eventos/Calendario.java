@@ -20,7 +20,7 @@ import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.impl.StdSchedulerFactory;
 
-import usuario.EntidadPersistente;
+import db.EntidadPersistente;
 import usuario.Usuario;
 @Entity
 public class Calendario extends EntidadPersistente{

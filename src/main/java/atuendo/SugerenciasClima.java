@@ -1,13 +1,10 @@
 package atuendo;
 
 import clima.Clima;
-import clima.ServicioClimatico;
-import usuario.EntidadPersistente;
+import db.EntidadPersistente;
 import usuario.PreferenciasDeAbrigo;
-import usuario.Usuario;
 
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javax.persistence.Entity;

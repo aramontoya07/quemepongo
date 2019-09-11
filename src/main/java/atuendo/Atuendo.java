@@ -9,7 +9,7 @@ import clima.Clima;
 import excepciones.PrendaException;
 import prenda.ParteAbrigada;
 import prenda.Prenda;
-import usuario.EntidadPersistente;
+import db.EntidadPersistente;
 import usuario.Guardarropa;
 
 @Entity

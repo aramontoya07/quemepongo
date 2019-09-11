@@ -11,7 +11,7 @@ import javax.persistence.OneToOne;
 import atuendo.SugerenciasClima;
 
 import excepciones.EventoException;
-import usuario.EntidadPersistente;
+import db.EntidadPersistente;
 import usuario.Usuario;
 
 @Entity

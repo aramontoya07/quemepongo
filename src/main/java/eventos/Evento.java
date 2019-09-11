@@ -3,7 +3,7 @@ package eventos;
 import java.time.LocalDateTime;
 
 import org.quartz.Trigger;
-import usuario.EntidadPersistente;
+import db.EntidadPersistente;
 
 import javax.persistence.Entity;
 import javax.persistence.Transient;

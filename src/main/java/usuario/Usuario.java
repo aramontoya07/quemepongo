@@ -3,11 +3,11 @@ package usuario;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.persistence.*;
 
 import alertas.Alerta;
+import db.EntidadPersistente;
 import notificaciones.Informante;
 import alertas.RepoUsuarios;
 import alertas.TipoDeAlerta;

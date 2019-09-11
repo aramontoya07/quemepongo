@@ -1,6 +1,7 @@
 package usuario;
 
 import atuendo.Atuendo;
+import db.EntidadPersistente;
 import prenda.ParteAbrigada;
 
 import javax.persistence.Entity;

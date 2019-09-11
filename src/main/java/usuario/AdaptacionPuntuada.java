@@ -1,5 +1,7 @@
 package usuario;
 
+import db.EntidadPersistente;
+
 import javax.persistence.Entity;
 
 @Entity
