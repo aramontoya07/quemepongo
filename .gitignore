@@ -16,6 +16,9 @@ local.properties
 .loadpath
 .recommenders
 
+#algo raro de base de datos.
+persistence.xml
+
 # External tool builders
 .externalToolBuilders/
 
