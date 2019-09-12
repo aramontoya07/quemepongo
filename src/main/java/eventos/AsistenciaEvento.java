@@ -5,7 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import atuendo.SugerenciasClima;
@@ -20,7 +21,8 @@ public class AsistenciaEvento extends EntidadPersistente{
 	@OneToOne
 	private Evento evento;
 	
-	@ManyToMany
+	@OneToMany
+	@JoinColumn(name = "Id_AsistenciaEvento")
 	private Set<SugerenciasClima> sugerenciasEvento = new HashSet<>();
 
 	public AsistenciaEvento(Evento eventoAsignado) {

@@ -2,9 +2,7 @@ package atuendo;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.*;
-
 import clima.Clima;
 import excepciones.PrendaException;
 import prenda.ParteAbrigada;
@@ -13,30 +11,27 @@ import db.EntidadPersistente;
 import usuario.Guardarropa;
 
 @Entity
-
 @Table(name = "Atuendos")
 public class Atuendo extends EntidadPersistente {
-	@Transient
-	@Id
-	@GeneratedValue
-	private Integer idAtuendo;
-	//@OneToOne
-	@Transient
+
+	@OneToOne
 	private Guardarropa guardarropaOrigen;
-	//@OneToOne
-	@Transient
+
+	@OneToOne
 	private Prenda superior;
-	//@OneToOne
-	@Transient
+
+	@OneToOne
 	private Prenda inferior;
-	//@OneToOne
-	@Transient
+
+	@OneToOne
 	private Prenda calzado;
-	//@OneToMany
-	@Transient
+
+	@OneToMany
+	@JoinColumn(name = "id_atuendo")
 	private List<Prenda> accesorios = new ArrayList<>();
-	//@OneToMany
-	@Transient
+
+	@OneToMany
+	@JoinColumn(name = "id_atuendo")
 	private List<Prenda> capasAbrigos = new ArrayList<>();
 
 	public Guardarropa getGuardarropaOrigen() {
@@ -103,6 +98,8 @@ public class Atuendo extends EntidadPersistente {
 				}catch(PrendaException e){
 					return true;
 				}
+			case CALZADO: break;
+			case PARTE_INFERIOR: break;
 		}
 		return false;
 	}
@@ -115,6 +112,8 @@ public class Atuendo extends EntidadPersistente {
 			case ACCESORIO:
 				accesorios.add(prenda);
 				break;
+			case CALZADO: break;
+			case PARTE_INFERIOR: break;
 		}
 	}
 
@@ -165,6 +164,6 @@ public class Atuendo extends EntidadPersistente {
 	}
 
 	public boolean estaDisponible() {
-		return obtenerPrendasTotales().stream().allMatch(prenda -> guardarropaOrigen.existePrenda(prenda));
+		return obtenerPrendasTotales().stream().allMatch(prenda -> guardarropaOrigen.prendaDisponible(prenda));
 	}
 }

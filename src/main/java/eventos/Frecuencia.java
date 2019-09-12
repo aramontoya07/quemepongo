@@ -13,28 +13,25 @@ public enum Frecuencia {
 		public Trigger getTrigger(LocalDateTime fecha, String tituloEvento) {
 			return TriggerBuilder.newTrigger()
 					.withIdentity("Trigger" + tituloEvento, "ActivadoresEvento")
-					.startAt(this.fechaSugerenciasEnDate(fecha))
+					.startAt(fechaSugerenciasEnDate(fecha))
 					.build();
 		}
-	
 		private Date fechaSugerenciasEnDate(LocalDateTime fecha) {
 			return Date.from(fecha.atZone(ZoneId.systemDefault()).toInstant());
 		}
+
 	},
 	DIARIO(){
 		public Trigger getTrigger(LocalDateTime fecha, String tituloEvento){
 			return TriggerBuilder.newTrigger()
 					.withIdentity("Trigger" + tituloEvento, "ActivadoresEvento")
-					.startAt(this.fechaSugerenciasEnDate(fecha))
+					.startAt(fechaSugerenciasEnDate(fecha))
 					.withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInHours(24))
 					.build();
-	}
-
-	private Date fechaSugerenciasEnDate(LocalDateTime fecha) {
-		return Date.from(fecha.atZone(ZoneId.systemDefault()).toInstant());
-	}
+		}
+		private Date fechaSugerenciasEnDate(LocalDateTime fecha) {
+			return Date.from(fecha.atZone(ZoneId.systemDefault()).toInstant());
+		}
 	};
-
-	public abstract Trigger getTrigger(LocalDateTime fecha, String tituloEvento);
 }
 

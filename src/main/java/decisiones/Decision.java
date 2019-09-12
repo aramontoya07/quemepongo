@@ -14,4 +14,7 @@ public enum Decision {
 			usuario.removerRechazado();
 		}
 	};
+
+	public void deshacerEn(Usuario usuario) {
+	}
 }

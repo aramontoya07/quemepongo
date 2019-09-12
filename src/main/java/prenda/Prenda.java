@@ -1,16 +1,41 @@
 package prenda;
 
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import db.EntidadPersistente;
+
 import java.awt.image.BufferedImage;
 
-public class Prenda {
+@Entity
+@Table(name = "Prendas")
+public class Prenda extends EntidadPersistente{
 
+	@ManyToOne
 	private TipoPrenda tipo;
+
+	@Enumerated(EnumType.STRING)
 	private Material material;
+
+	@Enumerated(EnumType.STRING)
 	private Trama trama;
+
+	@ManyToOne
 	private ColorRGB colorPrimario;
+
+	@ManyToOne
 	private ColorRGB colorSecundario;
+
+	@Transient
 	private BufferedImage imagenNormalizada;
+
+	@Enumerated(EnumType.STRING)
 	private ParteAbrigada pateAbrigada;
 
 

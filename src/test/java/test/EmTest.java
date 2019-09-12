@@ -5,8 +5,6 @@ import usuario.Usuario;
 import db.EntityManagerHelper;
 
 public class EmTest {
-
-
    /* @Test public void persistir1UsuarioTest() {
 
         Usuario usuario1 = new Usuario();

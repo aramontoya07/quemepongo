@@ -1,13 +1,14 @@
 package eventos;
 
-
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import atuendo.SugerenciasClima;
@@ -24,10 +25,13 @@ import db.EntidadPersistente;
 import usuario.Usuario;
 
 @Entity
+@Table(name = "Calendarios")
 public class Calendario extends EntidadPersistente{
 	@Transient
 	private Scheduler scheduler;
+	
 	@OneToMany
+	@JoinColumn(name = "Id_calendario")
 	private Set<AsistenciaEvento> eventos = new HashSet<>();
 	
 	public Calendario(){

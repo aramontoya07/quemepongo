@@ -8,8 +8,6 @@ import javax.persistence.Entity;
 import eventos.AsistenciaEvento;
 import usuario.Usuario;
 
-
-
 @Entity
 public enum Informante {
     
@@ -42,8 +40,8 @@ public enum Informante {
     },
 
     MockSMS(){
-        public void notificar(String mensaje) {
-            System.out.println(mensaje);
+        public void notificarA(Usuario usuario, AsistenciaEvento evento) {
+            System.out.println("Motificacion enviada por medio el MOCK SMS");
         }
     },
 
@@ -64,4 +62,9 @@ public enum Informante {
             usuario.marcarNotificado();
         }
     };
+
+    public void notificarA(Usuario usuario, AsistenciaEvento asistencia) {};
+    public void notificarTormenta(Usuario usuario) {};
+    public void notificarGranizo(Usuario usuario) {};
+    public void notificarNevada(Usuario usuario) {};
 }

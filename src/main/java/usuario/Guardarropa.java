@@ -6,80 +6,94 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import atuendo.SugerenciasClima;
+import prenda.Categoria;
 
 import com.google.common.collect.Sets;
 
 import atuendo.Atuendo;
 import clima.ServicioClimatico;
+import db.EntidadPersistente;
 import excepciones.GuardarropaException;
 import excepciones.PrendaException;
 import prenda.*;
 
-//@Entity
-//@Table(name = "Guardarropas")
-public class Guardarropa {
-	//@Id
-	//@GeneratedValue
-	private Integer idGuardarropa;
-	//@OneToMany
-	public Set<Prenda> superiores = new HashSet<>();
-	//@OneToMany
-	public Set<Prenda> inferiores = new HashSet<>();
-	//@OneToMany
-	public Set<Prenda> calzados = new HashSet<>();
-	//@OneToMany
-	public Set<Prenda> accesorios = new HashSet<>();
-	//@OneToMany
-	public Set<Prenda> prendasUsadas = new HashSet<>();
+@Entity
+@Table(name = "Guardarropas")
+public class Guardarropa extends EntidadPersistente{
 
-	public Guardarropa() {}
+	@OneToMany
+	public Set<Prenda> usadas = new HashSet<>();
+	@OneToMany
+	public Set<Prenda> disponibles = new HashSet<>();
+
+	public Guardarropa(){}
+
+	public boolean prendaDisponible(Prenda prenda) {
+		return disponibles.contains(prenda);
+	}
+
+	public boolean prendaOcupada(Prenda prenda) {
+		return usadas.contains(prenda);
+	}
 
 	public void usarPrenda(Prenda prenda) {
-		if(!existePrenda(prenda)){
-			throw new GuardarropaException("No se puede usar la prenda porque no est� disponible en el guardarropa");
+		if(!prendaDisponible(prenda) || prendaOcupada(prenda)){
+			throw new GuardarropaException("No se puede usar la prenda porque no esta disponible en el guardarropa");
 		}
 		quitarDeDisponibles(prenda);
 		agregarAUsadas(prenda);
 	}
 
 	public void liberarPrenda(Prenda prenda) throws PrendaException {
+		if (prendaDisponible(prenda) || !prendaOcupada(prenda)){
+			throw new GuardarropaException("No se puede liberar la prenda porque no esta siendo usada");
+		}
 		agregarADisponibles(prenda);
 		quitarDeUsadas(prenda);
 	}
 
+	private void quitarDeDisponibles(Prenda prenda) {
+		disponibles.add(prenda);
+	}
+
+	public void quitarDeUsadas(Prenda prenda) {
+		usadas.remove(prenda);
+	}
+
+	public void agregarAUsadas(Prenda prenda) {
+		usadas.add(prenda);
+	}
+
+	public void agregarADisponibles(Prenda prenda){
+		disponibles.add(prenda);
+	}
+
 	public Set<Prenda> getPrendasUsadas(){
-		return prendasUsadas;
+		return usadas;
 	}
 
-	public Set<Prenda> prendasDisponibles(){
-		Set<Prenda> prendas = new HashSet <>();
-		prendas.addAll(superiores);
-		prendas.addAll(inferiores);
-		prendas.addAll(calzados);
-		prendas.addAll(accesorios);
-		return prendas;
-	}
-
-	public void quitarDeUsadas(Prenda prenda){
-		prendasUsadas.remove(prenda);
-	}
-
-	public void agregarAUsadas(Prenda prenda){
-		prendasUsadas.add(prenda);
+	public Set<Prenda> getPrendasDisponibles(){
+		return disponibles;
 	}
 
 	@SuppressWarnings("unchecked")
 	public Set<Atuendo> generarSugerenciaBasica(){
 		return Sets
-				.cartesianProduct(prendasPrimarias(superiores), inferiores, calzados)
+				.cartesianProduct(prendasPrimarias(
+					getPrendasDeParte(Categoria.PARTE_SUPERIOR)), 
+					getPrendasDeParte(Categoria.PARTE_INFERIOR), 
+					getPrendasDeParte(Categoria.CALZADO))
 				.stream().map((list) -> new Atuendo(list.get(0), list.get(1), list.get(2), this))
 				.collect(Collectors.toSet());
+	}
+
+	private Set<Prenda> getPrendasDeParte(Categoria categoria) {
+		return disponibles.stream().filter(prenda->prenda.esDeCategoria(categoria))
+		.collect(Collectors.toSet());
 	}
 
 	public Set<Prenda> prendasPrimarias(Set<Prenda> prendas){
@@ -93,8 +107,8 @@ public class Guardarropa {
 
 	public Set<Atuendo> combinarConSecundarios(Atuendo atuendoBasico) {
 		Set<Prenda> prendasSecundarias = new HashSet<Prenda>();
-		prendasSecundarias.addAll(superiores);
-		prendasSecundarias.addAll(accesorios);
+		prendasSecundarias.addAll(getPrendasDeParte(Categoria.PARTE_SUPERIOR));
+		prendasSecundarias.addAll(getPrendasDeParte(Categoria.ACCESORIO));
 		return combinacionesPosibles(atuendoBasico,prendasSecundarias);
 	}
 
@@ -155,64 +169,11 @@ public class Guardarropa {
 	}
 
 	public int cantidadDePrendas() {
-		return superiores.size() + inferiores.size() + calzados.size() + accesorios.size();
+		return disponibles.size();
 	}
 
 	public void agregarPrendas(Set<Prenda> prendas) {
 		prendas.stream().forEach(prenda -> agregarADisponibles(prenda));
-	}
-
-	public void agregarADisponibles(Prenda prenda) {
-		if (existePrenda(prenda)) throw new GuardarropaException("No se puede agregar la prenda al guardarropa ya que esta ya se encuentra disponible en el");
-		switch (prenda.getCategoria()) {
-		case PARTE_SUPERIOR:
-			superiores.add(prenda);
-			break;
-		case PARTE_INFERIOR:
-			inferiores.add(prenda);
-			break;
-		case CALZADO:
-			calzados.add(prenda);
-			break;
-		case ACCESORIO:
-			accesorios.add(prenda);
-			break;
-		}
-	}
-
-	public void quitarDeDisponibles(Prenda prenda) {
-		if (!existePrenda(prenda)) throw new PrendaException("No se puede remover la prenda porque no existe en el guardarropa");
-		switch (prenda.getCategoria()){
-			case PARTE_SUPERIOR:
-				superiores.remove(prenda);
-				break;
-			case PARTE_INFERIOR:
-				inferiores.remove(prenda);
-				break;
-			case CALZADO:
-				calzados.remove(prenda);
-				break;
-			case ACCESORIO:
-				accesorios.remove(prenda);
-				break;
-		}
-	}
-
-	public void agregarImagenA(Prenda prenda, String rutaImagen) throws IOException {
-		if (!existePrenda(prenda)) {
-			throw new GuardarropaException("No se puede agregar imagen a la prenda ya que no esta disponible en el guardarropa");
-		}
-		Imagen imagenOriginal = new Imagen(rutaImagen);
-		prenda.agregarImagen(imagenOriginal);
-	}
-
-	public boolean existePrenda(Prenda prenda) {
-		return (superiores.contains(prenda) || inferiores.contains(prenda) || calzados.contains(prenda)
-				|| accesorios.contains(prenda));
-	}
-
-	public Set<Prenda> getSuperiores() {
-		return superiores;
 	}
 
 }
