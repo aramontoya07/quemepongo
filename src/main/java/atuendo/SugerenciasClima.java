@@ -12,13 +12,19 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 @Entity
 public class SugerenciasClima extends EntidadPersistente{
+
 	@Transient
     private List<Atuendo> exactas = new ArrayList<>();
 	@Transient
     private List<Atuendo> aproximadas = new ArrayList<>();
+
 	@ManyToMany
-	private List<Atuendo> atuendos = new ArrayList<>();
+    private List<Atuendo> atuendos = new ArrayList<>();
+    
     private int margen = 10;
+
+    public SugerenciasClima() {
+    }
 
     public SugerenciasClima(int margen) {
         this.margen = margen;

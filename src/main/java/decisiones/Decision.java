@@ -2,6 +2,16 @@ package decisiones;
 
 import usuario.Usuario;
 
-public interface Decision {
-	public void deshacerEn(Usuario usuario);
+public enum Decision {
+
+	ACEPTAR(){
+		public void deshacerEn(Usuario usuario) {
+			usuario.removerAceptado();
+		}
+	},
+	RECHAZAR(){
+		public void deshacerEn(Usuario usuario) {
+			usuario.removerRechazado();
+		}
+	};
 }

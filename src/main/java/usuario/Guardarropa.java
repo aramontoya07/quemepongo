@@ -38,8 +38,6 @@ public class Guardarropa {
 	//@OneToMany
 	public Set<Prenda> prendasUsadas = new HashSet<>();
 
-	private int margenDePrendasAproximadas = 10;
-
 	public Guardarropa() {}
 
 	public void usarPrenda(Prenda prenda) {
@@ -150,14 +148,10 @@ public class Guardarropa {
 	}
 
 	public SugerenciasClima generarSugerenciasSegunClima(String ubicacion){
-		SugerenciasClima sugerenciasClima = new SugerenciasClima(margenDePrendasAproximadas);
+		SugerenciasClima sugerenciasClima = new SugerenciasClima();
 		Set<Atuendo> posibles = generarSugerenciasPosibles();
 		posibles.stream().forEach(atuendo -> sugerenciasClima.agregarAtuendoSegunClima(atuendo,ServicioClimatico.obtenerClima(ubicacion)));
 		return sugerenciasClima;
-	}
-
-	public void setMargenDePrendasAproximadas(int margenDePrendasAproximadas) {
-		this.margenDePrendasAproximadas = margenDePrendasAproximadas;
 	}
 
 	public int cantidadDePrendas() {

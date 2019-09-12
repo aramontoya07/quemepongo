@@ -15,8 +15,6 @@ import atuendo.Atuendo;
 import atuendo.SugerenciasClima;
 import clima.ServicioClimatico;
 import decisiones.Decision;
-import decisiones.DecisionAceptar;
-import decisiones.DecisionRechazar;
 import eventos.AsistenciaEvento;
 import eventos.Calendario;
 import eventos.Evento;
@@ -33,15 +31,8 @@ import subscripciones.TipoSubscripcion;
 @Table(name = "Usuarios")
 public class Usuario extends EntidadPersistente {
 	
-	@OneToMany // PREGUNTAR
-	private List<Atuendo> atuendos = new ArrayList<>();
-	
-	//@OneToMany
-	@Transient //Estas dos colas se quedan en transient. No las necesitamos.
-	private Queue<Atuendo> aceptados = new LinkedList<>();
-	//@OneToMany
-	@Transient
-	private Queue<Atuendo> rechazados = new LinkedList<>();
+	@OneToMany
+	private List<UsoAtuendo> atuendosUsados = new ArrayList<>();
 	//@ManyToMany
 	@Transient
 	private Set<Guardarropa> guardarropas = new HashSet<>();
@@ -58,6 +49,8 @@ public class Usuario extends EntidadPersistente {
 	@OneToOne
 	private PreferenciasDeAbrigo preferenciasDeAbrigo;
 	private String mail;
+
+	//PARA TEST
 	private boolean notificado = false;
 
 
@@ -167,7 +160,6 @@ public class Usuario extends EntidadPersistente {
 		guardarropas.add(guardarropa);
 	}
 
-	//fixme y esto? Maxi dice, que fede lo obligo a codearlo, Fede argumenta que se esta adelantando a un requerimiento.
 	public void resetearGustos(){
 		preferenciasDeAbrigo = new PreferenciasDeAbrigo();
 	}

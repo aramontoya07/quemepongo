@@ -39,27 +39,6 @@ public class Atuendo extends EntidadPersistente {
 	@Transient
 	private List<Prenda> capasAbrigos = new ArrayList<>();
 
-	private Integer rangoDeAceptacion = 10;
-	private Double temperaturaDeUso;
-	
-	private boolean aceptado;
-	private boolean aproximado;
-	
-	public boolean isAceptado() {
-		return aceptado;
-	}
-
-	public void setAceptado(boolean aceptado) {
-		this.aceptado = aceptado;
-	}
-
-	public boolean isAproximado() {
-		return aproximado;
-	}
-
-	public void setAproximado(boolean aproximado) {
-		this.aproximado = aproximado;
-	}
 	public Guardarropa getGuardarropaOrigen() {
 		return guardarropaOrigen;
 	}
@@ -103,7 +82,6 @@ public class Atuendo extends EntidadPersistente {
 		Atuendo clon = new Atuendo(superior,inferior,calzado,guardarropaOrigen);
 		clon.setAccesorios(new ArrayList<>(accesorios));
 		clon.setAcapasAbrigos(new ArrayList<>(capasAbrigos));
-		clon.setRangoDeAceptacion(rangoDeAceptacion);
 		return clon;
 	}
 
@@ -184,18 +162,6 @@ public class Atuendo extends EntidadPersistente {
 
 	public Integer abrigoEn(ParteAbrigada parte) {
 		return obtenerPrendasTotales().stream().mapToInt(prenda-> (int) prenda.abrigoEnParte(parte)).sum();
-	}
-
-	public void setRangoDeAceptacion(Integer rangoDeAceptacion) {
-		this.rangoDeAceptacion = rangoDeAceptacion;
-	}
-
-	public void setTemperaturaDeUso(Double temperaturaDeUso) {
-		this.temperaturaDeUso = temperaturaDeUso;
-	}
-
-	public Double getTemperaturaDeUso() {
-		return temperaturaDeUso;
 	}
 
 	public boolean estaDisponible() {
