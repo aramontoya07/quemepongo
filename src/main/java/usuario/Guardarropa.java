@@ -91,7 +91,7 @@ public class Guardarropa extends EntidadPersistente{
 				.collect(Collectors.toSet());
 	}
 
-	private Set<Prenda> getPrendasDeParte(Categoria categoria) {
+	public Set<Prenda> getPrendasDeParte(Categoria categoria) {
 		return disponibles.stream().filter(prenda->prenda.esDeCategoria(categoria))
 		.collect(Collectors.toSet());
 	}
@@ -161,6 +161,14 @@ public class Guardarropa extends EntidadPersistente{
 		return combinador.getCombinaciones();
 	}
 
+	public void agregarImagenA(Prenda prenda, String rutaImagen) throws IOException {
+		if (!prendaDisponible(prenda)) {
+			throw new GuardarropaException("No se puede agregar imagen a la prenda ya que no esta disponible en el guardarropa");
+		}
+		Imagen imagenOriginal = new Imagen(rutaImagen);
+		prenda.agregarImagen(imagenOriginal);
+	}
+
 	public SugerenciasClima generarSugerenciasSegunClima(String ubicacion){
 		SugerenciasClima sugerenciasClima = new SugerenciasClima();
 		Set<Atuendo> posibles = generarSugerenciasPosibles();
@@ -175,5 +183,4 @@ public class Guardarropa extends EntidadPersistente{
 	public void agregarPrendas(Set<Prenda> prendas) {
 		prendas.stream().forEach(prenda -> agregarADisponibles(prenda));
 	}
-
 }

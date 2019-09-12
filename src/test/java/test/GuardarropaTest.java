@@ -12,6 +12,7 @@ import excepciones.GuardarropaException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import prenda.Categoria;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -54,7 +55,6 @@ class GuardarropaTest extends SetUp {
     @DisplayName("Ordena segun las preferencias")
     void prendasOrdenadas(){
         pedro.actualizarSubscripcionAPremium();
-        guardarropa.setMargenDePrendasAproximadas(1000);
         pedro.agregarGuardarropa(guardarropa);
         pedro.agregarPrendas(guardarropa, prendasOrdenables);
 
@@ -77,7 +77,7 @@ class GuardarropaTest extends SetUp {
     @DisplayName("Agrega prenda en la lista correcta del guardarropa")
     void agregarPrendaEnListaCorrecta(){
         guardarropa.agregarADisponibles(remeraDeportiva);
-        assertTrue(guardarropa.getSuperiores().contains(remeraDeportiva));
+        assertTrue(guardarropa.getPrendasDeParte(Categoria.PARTE_SUPERIOR).contains(remeraDeportiva));
     }
 
     @Test

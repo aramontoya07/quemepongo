@@ -20,9 +20,13 @@ public class SugerenciasClima extends EntidadPersistente{
     @JoinColumn(name = "id_sugerencia")
     private List<SugerenciasPosibles> atuendosSugeridos = new ArrayList<SugerenciasPosibles>();
     
-    private int margen = 10;
+    private int margen = 1000;
 
     public SugerenciasClima() {
+    }
+
+    public boolean esAptaParaClima(Clima clima){
+        return atuendosSugeridos.stream().allMatch(sugerencia -> sugerencia.getAtuendo().nivelDeAdaptacionAlClima(clima) <= margen);
     }
 
     public void setMargen(int unMargen){
