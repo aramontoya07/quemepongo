@@ -23,7 +23,18 @@ public class SugerenciasClima extends EntidadPersistente{
     private int margen = 10;
 
     public SugerenciasClima() {
-        this.margen = margen;
+    }
+
+    public void setMargen(int unMargen){
+        margen = unMargen;
+    }
+
+    public List<Atuendo> getExactas(){
+        return atuendosSugeridos.stream().filter(sugerencia -> sugerencia.getTipo().equals(TipoSugerencia.EXACTA)).map(sugerencia -> sugerencia.getAtuendo()).collect(Collectors.toList());
+    }
+
+    public List<Atuendo> getAproximadas(){
+        return atuendosSugeridos.stream().filter(sugerencia -> sugerencia.getTipo().equals(TipoSugerencia.APROXIMADA)).map(sugerencia -> sugerencia.getAtuendo()).collect(Collectors.toList());
     }
 
     public void agregarAtuendoSegunClima(Atuendo atuendo, Clima climaActual){

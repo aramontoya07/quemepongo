@@ -16,7 +16,7 @@ public enum Frecuencia {
 					.startAt(fechaSugerenciasEnDate(fecha))
 					.build();
 		}
-		private Date fechaSugerenciasEnDate(LocalDateTime fecha) {
+		public  Date fechaSugerenciasEnDate(LocalDateTime fecha) {
 			return Date.from(fecha.atZone(ZoneId.systemDefault()).toInstant());
 		}
 
@@ -29,7 +29,7 @@ public enum Frecuencia {
 					.withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInHours(24))
 					.build();
 		}
-		private Date fechaSugerenciasEnDate(LocalDateTime fecha) {
+		public  Date fechaSugerenciasEnDate(LocalDateTime fecha) {
 			return Date.from(fecha.atZone(ZoneId.systemDefault()).toInstant());
 		}
 	};

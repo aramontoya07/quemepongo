@@ -157,6 +157,10 @@ public class Usuario extends EntidadPersistente {
 			collect(Collectors.toSet());
 	}
 
+	public UsoAtuendo obtenerUso(Atuendo atuendo){
+		return getAtuendosUsados().stream().filter( usoAtuendo -> usoAtuendo.getAtuendo().equals(atuendo)).collect(Collectors.toList()).get(0);
+	}
+
 	//DECISIONES
 
 	public void deshacerDecision() {
@@ -296,8 +300,13 @@ public class Usuario extends EntidadPersistente {
 		this.mail = mail;
 	}
 
+	public List<UsoAtuendo> getAtuendosUsados() {
+		return atuendosUsados;
+	}
 
-
+	public void setAtuendosUsados(List<UsoAtuendo> atuendosUsados) {
+		this.atuendosUsados = atuendosUsados;
+	}
 	
 	/*----------------------------------------------PARA TEST--------------------------------------------*/
 
@@ -306,5 +315,6 @@ public class Usuario extends EntidadPersistente {
 	public void marcarNotificado(){
 		notificado = true;
 	}
+
 
 }
