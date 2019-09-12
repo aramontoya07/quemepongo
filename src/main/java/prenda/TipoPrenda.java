@@ -3,13 +3,11 @@ package prenda;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 import db.EntidadPersistente;
 
+@Entity
 public class TipoPrenda extends EntidadPersistente{
 
 	@Enumerated(EnumType.STRING)

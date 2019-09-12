@@ -5,10 +5,11 @@ import javax.persistence.Entity;
 //import org.springframework.mail.MailSender;
 //import org.springframework.mail.SimpleMailMessage;
 
+import db.EntidadPersistente;
 import eventos.AsistenciaEvento;
 import usuario.Usuario;
 
-@Entity
+
 public enum Informante {
     
     CasillaDeMails(){

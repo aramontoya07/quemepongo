@@ -1,13 +1,16 @@
 package atuendo;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import db.EntidadPersistente;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "SugerenciasPosibles")
-public class SugerenciasPosibles {
+public class SugerenciasPosibles extends EntidadPersistente {
 
+    @OneToOne //Chequear esto
 	Atuendo atuendo;
+    @Enumerated
     TipoSugerencia tipo;
 
     public SugerenciasPosibles(Atuendo atuendo2, TipoSugerencia exacta) {

@@ -32,6 +32,9 @@ public enum Frecuencia {
 		public  Date fechaSugerenciasEnDate(LocalDateTime fecha) {
 			return Date.from(fecha.atZone(ZoneId.systemDefault()).toInstant());
 		}
+
+
 	};
+	public abstract Trigger getTrigger(LocalDateTime fecha, String tituloEvento);
 }
 
