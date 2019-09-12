@@ -6,6 +6,8 @@ import org.quartz.Trigger;
 import db.EntidadPersistente;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 
 @Entity
@@ -15,6 +17,8 @@ public class Evento extends EntidadPersistente {
     private String ubicacion;
     @Transient
     private Frecuencia frecuencia;
+    @Enumerated(EnumType.STRING)
+    private EnumFrecuencia enumFrecuencia;
 
 	public Evento(String titulo,LocalDateTime fecha, String ubicacion, Frecuencia frecuencia) {
     	this.frecuencia = frecuencia;
