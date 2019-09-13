@@ -107,4 +107,24 @@ public class Prenda extends EntidadPersistente{
 			return 0;
 		}
     }
+
+	public void setTrama(Trama trama) {
+		this.trama = trama;
+	}
+
+	public void setColorPrimario(ColorRGB colorPrimario) {
+		this.colorPrimario = colorPrimario;
+	}
+
+	public void setColorSecundario(ColorRGB colorSecundario) {
+		this.colorSecundario = colorSecundario;
+	}
+
+	public ParteAbrigada getPateAbrigada() {
+		return pateAbrigada;
+	}
+
+	public void setPateAbrigada(ParteAbrigada pateAbrigada) {
+		this.pateAbrigada = pateAbrigada;
+	}
 }

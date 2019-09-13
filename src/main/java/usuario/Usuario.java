@@ -36,7 +36,7 @@ public class Usuario extends EntidadPersistente {
 	@JoinColumn(name = "Id_usuario")
 	private List<UsoAtuendo> atuendosUsados = new ArrayList<>();
 
-
+	@Transient
 	@ManyToMany
 	private Set<Guardarropa> guardarropas = new HashSet<>();
 

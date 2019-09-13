@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Table(name = "SugerenciasPosibles")
 public class SugerenciasPosibles extends EntidadPersistente {
 
-    @OneToOne //Chequear esto
+    @OneToOne
 	Atuendo atuendo;
     @Enumerated
     TipoSugerencia tipo;
