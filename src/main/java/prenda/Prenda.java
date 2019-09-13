@@ -108,6 +108,10 @@ public class Prenda extends EntidadPersistente{
 		}
     }
 
+	public void setTipo(TipoPrenda tipo) {
+		this.tipo = tipo;
+	}
+
 	public void setTrama(Trama trama) {
 		this.trama = trama;
 	}

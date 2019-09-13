@@ -2,6 +2,7 @@ package test;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -13,14 +14,12 @@ import decisiones.Decision;
 import eventos.AsistenciaEvento;
 import eventos.Calendario;
 import notificaciones.Informante;
+import org.checkerframework.common.aliasing.qual.LeakedToResult;
 import org.hibernate.mapping.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import prenda.ColorRGB;
-import prenda.Material;
-import prenda.Prenda;
-import prenda.Trama;
+import prenda.*;
 import usuario.AdaptacionPuntuada;
 import usuario.Guardarropa;
 import usuario.PreferenciasDeAbrigo;
@@ -68,10 +67,14 @@ public class EmTest extends SetUp {
 	PreferenciasDeAbrigo abrigo = new PreferenciasDeAbrigo();
 	TipoSubscripcion suscripcion = new SubscripcionGratuita();
 
+
 	ColorRGB unColor = new ColorRGB(77, 4, 10);
-	ColorRGB otroColor = new ColorRGB(77, 4, 10);
+	ColorRGB otroColor = new ColorRGB(77, 4, 11);
 
+	TipoPrenda remera = new TipoPrenda(Categoria.PARTE_SUPERIOR,
+			new ArrayList<Material>(Arrays.asList(Material.ALGODON, Material.SEDA)), 12, TipoUso.PRIMARIA);
 
+	Prenda remeraAzul = new Prenda(remera, Material.ALGODON, Trama.RAYADA, unColor,  otroColor);
 
 	@Test
 	public void persistirSuscripcion() {
@@ -137,18 +140,31 @@ public class EmTest extends SetUp {
 	 		assertEquals(3, guardarropa.getId());
 	}*/
 
-	/*@Test
+	 @Test
+	 public void persistirColor() {
+		 EntityManagerHelper.getEntityManager().persist(unColor);
+		 EntityManagerHelper.getEntityManager().persist(otroColor);
+		 EntityManagerHelper.commit();
+	 }
+
+	 @Test
+	 public void persistirTipoPrenda() {
+		 EntityManagerHelper.getEntityManager().persist(remera);
+		 EntityManagerHelper.commit();
+	 }
+
+	@Test
 	public void persistirRemeraAzul() {
-		//Prenda remeraAzul = new Prenda(remera, Material.ALGODON, Trama.RAYADA, unColor,  otroColor);
+
 		remeraAzul.setTipo(remera);
 		remeraAzul.setColorPrimario(unColor);
 		remeraAzul.setColorSecundario(otroColor);
 		remeraAzul.setTrama(Trama.RAYADA);
-		EntityManagerHelper.getEntityManager().persist(unColor);
-		EntityManagerHelper.getEntityManager().persist(otroColor);
+		persistirTipoPrenda();
+		persistirColor();
 		EntityManagerHelper.getEntityManager().persist(remeraAzul);
 		EntityManagerHelper.commit();
-	}*/
+	}
 
     /*@Test
 	public void persistirUsuario() { //Falta
