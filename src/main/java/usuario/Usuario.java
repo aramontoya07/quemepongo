@@ -30,17 +30,21 @@ import subscripciones.TipoSubscripcion;
 @Entity
 @Table(name = "Usuarios")
 public class Usuario extends EntidadPersistente {
-	
+
+
 	@OneToMany
 	@JoinColumn(name = "Id_usuario")
 	private List<UsoAtuendo> atuendosUsados = new ArrayList<>();
 
+
 	@ManyToMany
 	private Set<Guardarropa> guardarropas = new HashSet<>();
+
 
 	@ElementCollection(targetClass = Informante.class)
 	@Enumerated(EnumType.STRING)
 	private List<Informante> informantes = new ArrayList<>();
+
 
 	@Enumerated(EnumType.STRING)
 	private Decision ultimaDecision;

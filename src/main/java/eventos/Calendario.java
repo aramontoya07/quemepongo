@@ -29,7 +29,15 @@ import usuario.Usuario;
 public class Calendario extends EntidadPersistente{
 	@Transient
 	private Scheduler scheduler;
-	
+
+	public Set<AsistenciaEvento> getEventos() {
+		return eventos;
+	}
+
+	public void setEventos(Set<AsistenciaEvento> eventos) {
+		this.eventos = eventos;
+	}
+
 	@OneToMany
 	@JoinColumn(name = "Id_calendario")
 	private Set<AsistenciaEvento> eventos = new HashSet<>();
