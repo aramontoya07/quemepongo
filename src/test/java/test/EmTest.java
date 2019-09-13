@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import atuendo.Atuendo;
 import atuendo.EstadoAtuendo;
 import atuendo.SugerenciasClima;
 import atuendo.UsoAtuendo;
@@ -73,8 +74,17 @@ public class EmTest extends SetUp {
 
 	TipoPrenda remera = new TipoPrenda(Categoria.PARTE_SUPERIOR,
 			new ArrayList<Material>(Arrays.asList(Material.ALGODON, Material.SEDA)), 12, TipoUso.PRIMARIA);
+	TipoPrenda pantalon = new TipoPrenda(Categoria.PARTE_INFERIOR,
+            new ArrayList<Material>(Arrays.asList(Material.JEAN, Material.CUERO, Material.ALGODON)), 5,
+            TipoUso.PRIMARIA);
+	TipoPrenda zapatillas = new TipoPrenda(Categoria.CALZADO,
+            new ArrayList<Material>(Arrays.asList(Material.CUERO, Material.ALGODON)), 4, TipoUso.PRIMARIA);
 
 	Prenda remeraAzul = new Prenda(remera, Material.ALGODON, Trama.RAYADA, unColor,  otroColor);
+	Prenda pantalonJean = new Prenda(pantalon, Material.JEAN, Trama.RAYADA, unColor,  otroColor);
+	Prenda zapatillasConverse = new Prenda(zapatillas, Material.ALGODON, Trama.RAYADA, unColor,  otroColor);
+	
+	Atuendo atuendo = new Atuendo(remeraAzul,pantalonJean,zapatillasConverse,guardarropa);
 
 	@Test
 	public void persistirSuscripcion() {
@@ -147,9 +157,9 @@ public class EmTest extends SetUp {
 		 EntityManagerHelper.commit();
 	 }
 
-	 @Test
-	 public void persistirTipoPrenda() {
-		 EntityManagerHelper.getEntityManager().persist(remera);
+	 
+	 public void persistirTipoPrenda(TipoPrenda tipo) {
+		 EntityManagerHelper.getEntityManager().persist(tipo);
 		 EntityManagerHelper.commit();
 	 }
 
@@ -160,12 +170,36 @@ public class EmTest extends SetUp {
 		remeraAzul.setColorPrimario(unColor);
 		remeraAzul.setColorSecundario(otroColor);
 		remeraAzul.setTrama(Trama.RAYADA);
-		persistirTipoPrenda();
+		persistirTipoPrenda(remera);
 		persistirColor();
 		EntityManagerHelper.getEntityManager().persist(remeraAzul);
 		EntityManagerHelper.commit();
 	}
-
+	
+//	public void persistirPrenda(Prenda prenda,TipoPrenda tipo, ColorRGB unColor, ColorRGB otroColor,Trama trama) {
+//
+//		prenda.setTipo( tipo);
+//		prenda.setColorPrimario(unColor);
+//		prenda.setColorSecundario(otroColor);
+//		prenda.setTrama(trama);
+//		persistirTipoPrenda( tipo);
+//		persistirColor();
+//		EntityManagerHelper.getEntityManager().persist(tipo);
+//		EntityManagerHelper.commit();
+//	}
+	
+	@Test 
+	public void persistirAtuendo(){
+		persistirRemeraAzul();
+		persistirTipoPrenda(pantalon);
+		persistirTipoPrenda(zapatilla);
+		EntityManagerHelper.getEntityManager().persist(zapatillasConverse);
+		EntityManagerHelper.getEntityManager().persist(pantalonJean);
+		persistirGuardarropa();
+		EntityManagerHelper.getEntityManager().persist(atuendo);
+		EntityManagerHelper.commit();
+		
+	}
     /*@Test
 	public void persistirUsuario() { //Falta
 		usuario1.setUltimaDecision(Decision.ACEPTAR);

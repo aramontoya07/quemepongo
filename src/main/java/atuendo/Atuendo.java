@@ -17,7 +17,8 @@ public class Atuendo extends EntidadPersistente {
 	@OneToOne
 	private Guardarropa guardarropaOrigen;
 
-	@OneToOne
+	@OneToOne // No seria un many to one? El conjunto de prendas no puede repetirse en un atuendo, pero cada prenda por separado
+	// puede repetirse en los atuendos
 	private Prenda superior;
 
 	@OneToOne
