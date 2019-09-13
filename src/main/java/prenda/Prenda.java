@@ -2,12 +2,7 @@ package prenda;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 import db.EntidadPersistente;
 
@@ -17,7 +12,7 @@ import java.awt.image.BufferedImage;
 @Table(name = "Prendas")
 public class Prenda extends EntidadPersistente{
 
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	private TipoPrenda tipo;
 
 	@Enumerated(EnumType.STRING)
@@ -26,10 +21,10 @@ public class Prenda extends EntidadPersistente{
 	@Enumerated(EnumType.STRING)
 	private Trama trama;
 
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	private ColorRGB colorPrimario;
 
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	private ColorRGB colorSecundario;
 
 	@Transient

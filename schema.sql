@@ -130,12 +130,22 @@
         fechaDeUso tinyblob,
         temperaturaDeUso double precision,
         atuendo_id integer,
+        Id_usuario integer,
         primary key (id)
+    )
+
+    create table Usuario_informantes (
+        Usuario_id integer not null,
+        informantes varchar(255)
     )
 
     create table Usuarios (
         id integer not null auto_increment,
         mail varchar(255),
+        notificado bit not null,
+        calendarioEventos_id integer,
+        preferenciasDeAbrigo_id integer,
+        subscripcion_id integer,
         primary key (id)
     )
 
@@ -274,3 +284,28 @@
         add constraint FK_giuidbqu4h2iylvlm228ukbi 
         foreign key (atuendo_id) 
         references Atuendos (id)
+
+    alter table Usos 
+        add constraint FK_oa92fer00tc33jkjqtyjpjadp 
+        foreign key (Id_usuario) 
+        references Usuarios (id)
+
+    alter table Usuario_informantes 
+        add constraint FK_ot339dqw70hfsg03bnw90gvd5 
+        foreign key (Usuario_id) 
+        references Usuarios (id)
+
+    alter table Usuarios 
+        add constraint FK_i1iqcewxitmhh12if4hurdta3 
+        foreign key (calendarioEventos_id) 
+        references Calendarios (id)
+
+    alter table Usuarios 
+        add constraint FK_rnsb1um116dbb3rit4w4x5e71 
+        foreign key (preferenciasDeAbrigo_id) 
+        references PreferenciasDeAbrigo (id)
+
+    alter table Usuarios 
+        add constraint FK_fqanxhf5g55g2mv6hrne1yaf3 
+        foreign key (subscripcion_id) 
+        references TipoSubscripcion (id)

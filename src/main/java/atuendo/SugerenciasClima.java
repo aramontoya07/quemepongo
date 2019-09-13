@@ -7,16 +7,13 @@ import usuario.PreferenciasDeAbrigo;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "Sugerencias")
 public class SugerenciasClima extends EntidadPersistente{
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.ALL})
     @JoinColumn(name = "id_sugerencia")
     private List<SugerenciasPosibles> atuendosSugeridos = new ArrayList<SugerenciasPosibles>();
     

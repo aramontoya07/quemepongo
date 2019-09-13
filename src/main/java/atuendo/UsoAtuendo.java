@@ -2,11 +2,7 @@ package atuendo;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import atuendo.Atuendo;
 import clima.ServicioClimatico;
@@ -15,7 +11,7 @@ import db.EntidadPersistente;
 @Entity
 @Table(name = "Usos")
 public class UsoAtuendo extends EntidadPersistente{
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     public Atuendo atuendo;
 
     @Enumerated(EnumType.STRING)
@@ -26,6 +22,7 @@ public class UsoAtuendo extends EntidadPersistente{
     public Double temperaturaDeUso;
 
     public UsoAtuendo(Atuendo atuendo2, EstadoAtuendo estado2) {
+        fechaDeUso = LocalDateTime.now();
         atuendo = atuendo2;
         estado = estado2;
         temperaturaDeUso = ServicioClimatico.obtenerClimaEnDefault().getTemperatura();

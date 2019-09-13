@@ -32,12 +32,12 @@ import subscripciones.TipoSubscripcion;
 public class Usuario extends EntidadPersistente {
 
 
-	@OneToMany
+	@OneToMany(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "Id_usuario")
 	private List<UsoAtuendo> atuendosUsados = new ArrayList<>();
 
-	@Transient
-	@ManyToMany
+
+	@ManyToMany(cascade = {CascadeType.ALL})
 	private Set<Guardarropa> guardarropas = new HashSet<>();
 
 
@@ -49,13 +49,13 @@ public class Usuario extends EntidadPersistente {
 	@Enumerated(EnumType.STRING)
 	private Decision ultimaDecision;
 
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	private TipoSubscripcion subscripcion;
 
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL}) //Pusimos @OnetoOne y en el der vemos que lo puso @OneToMany. En todos pasa lo mismo
 	private Calendario calendarioEventos = new Calendario();
 
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	private PreferenciasDeAbrigo preferenciasDeAbrigo;
 
 	private String mail;	
@@ -313,7 +313,7 @@ public class Usuario extends EntidadPersistente {
 	}
 	
 	/*----------------------------------------------PARA TEST--------------------------------------------*/
-
+	@Transient
 	private boolean notificado = false;
 	
 	public void marcarNotificado(){

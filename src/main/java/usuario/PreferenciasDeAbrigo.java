@@ -4,22 +4,23 @@ import atuendo.Atuendo;
 import db.EntidadPersistente;
 import prenda.ParteAbrigada;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 @Entity
 public class PreferenciasDeAbrigo extends EntidadPersistente {
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     private AdaptacionPuntuada abrigoCabeza;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     private AdaptacionPuntuada abrigoCuello;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     private AdaptacionPuntuada abrigoPecho;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     private AdaptacionPuntuada abrigoManos;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     private AdaptacionPuntuada abrigoPiernas;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     private AdaptacionPuntuada abrigoPies;
 
 

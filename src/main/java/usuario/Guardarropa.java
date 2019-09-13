@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -26,8 +27,10 @@ import prenda.*;
 public class Guardarropa extends EntidadPersistente{
 
 	@OneToMany
+	@JoinColumn(name = "id_Guardarropa")
 	public Set<Prenda> usadas = new HashSet<>();
 	@OneToMany
+	@JoinColumn(name = "id_Guardarropa")
 	public Set<Prenda> disponibles = new HashSet<>();
 
 	public Guardarropa(){}

@@ -4,10 +4,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import atuendo.SugerenciasClima;
 
@@ -18,10 +15,10 @@ import usuario.Usuario;
 @Entity
 public class AsistenciaEvento extends EntidadPersistente{
 	
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	private Evento evento;
 	
-	@OneToMany
+	@OneToMany(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "Id_AsistenciaEvento")
 	private Set<SugerenciasClima> sugerenciasEvento = new HashSet<>();
 
@@ -35,7 +32,7 @@ public class AsistenciaEvento extends EntidadPersistente{
         return sugerenciasEvento;
     }
 
-	void generarSugerenciasParaEvento(Usuario usuario) {
+	public void generarSugerenciasParaEvento(Usuario usuario) {
 		sugerenciasEvento = usuario.pedirSugerenciaSegunClima(evento.getUbicacion());
 		usuario.notificarSugerenciasListas(this);
 	}
