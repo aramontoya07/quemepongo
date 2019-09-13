@@ -13,7 +13,7 @@ import usuario.Usuario;
 public enum Informante {
     
     CasillaDeMails(){
-        public void notificarTormenta(Usuario usuario) {
+        public void notificar(Usuario usuario) {
             usuario.marcarNotificado();
         }
     
