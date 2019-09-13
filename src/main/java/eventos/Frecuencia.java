@@ -8,6 +8,9 @@ import org.quartz.TriggerBuilder;
 import java.time.ZoneId;
 import java.util.Date;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public enum Frecuencia {
 	UNICO(){
 		public Trigger getTrigger(LocalDateTime fecha, String tituloEvento) {

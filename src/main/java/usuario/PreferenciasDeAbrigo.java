@@ -40,6 +40,15 @@ public class PreferenciasDeAbrigo extends EntidadPersistente {
                 abrigoCabeza.getNivelDeAdaptacion() +
                 abrigoPies.getNivelDeAdaptacion();
     }
+    
+    public void setPreferenciasDeAbrigo(AdaptacionPuntuada ap) {
+        this.abrigoCabeza = ap;
+        this.abrigoCuello = ap;
+        this.abrigoPecho = ap;
+        this.abrigoManos =ap;
+        this.abrigoPiernas = ap;
+        this.abrigoPies = ap;
+    }
 
     public AdaptacionPuntuada getPuntaje(ParteAbrigada parte) {
         switch (parte) {
