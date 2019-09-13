@@ -74,9 +74,11 @@ public class EmTest extends SetUp {
 
 	TipoPrenda remera = new TipoPrenda(Categoria.PARTE_SUPERIOR,
 			new ArrayList<Material>(Arrays.asList(Material.ALGODON, Material.SEDA)), 12, TipoUso.PRIMARIA);
+
 	TipoPrenda pantalon = new TipoPrenda(Categoria.PARTE_INFERIOR,
             new ArrayList<Material>(Arrays.asList(Material.JEAN, Material.CUERO, Material.ALGODON)), 5,
             TipoUso.PRIMARIA);
+
 	TipoPrenda zapatillas = new TipoPrenda(Categoria.CALZADO,
             new ArrayList<Material>(Arrays.asList(Material.CUERO, Material.ALGODON)), 4, TipoUso.PRIMARIA);
 
@@ -157,7 +159,7 @@ public class EmTest extends SetUp {
 		 EntityManagerHelper.commit();
 	 }
 
-	 
+
 	 public void persistirTipoPrenda(TipoPrenda tipo) {
 		 EntityManagerHelper.getEntityManager().persist(tipo);
 		 EntityManagerHelper.commit();
@@ -175,6 +177,32 @@ public class EmTest extends SetUp {
 		EntityManagerHelper.getEntityManager().persist(remeraAzul);
 		EntityManagerHelper.commit();
 	}
+
+	@Test
+	public void persistirZapatillasConverse() {
+
+		zapatillasConverse.setTipo(zapatillas);
+		zapatillasConverse.setColorPrimario(unColor);
+		zapatillasConverse.setColorSecundario(otroColor);
+		zapatillasConverse.setTrama(Trama.RAYADA);
+		persistirTipoPrenda(zapatillas);
+		persistirColor();
+		EntityManagerHelper.getEntityManager().persist(zapatillasConverse);
+		EntityManagerHelper.commit();
+	}
+
+	/*@Test
+	public void persistirPantalonJean() {
+
+		pantalonJean.setTipo(zapatillas);
+		pantalonJean.setColorPrimario(unColor);
+		pantalonJean.setColorSecundario(otroColor);
+		pantalonJean.setTrama(Trama.RAYADA);
+		persistirTipoPrenda(pantalon);
+		persistirColor();
+		EntityManagerHelper.getEntityManager().persist(pantalonJean);
+		EntityManagerHelper.commit();
+	}*/
 	
 //	public void persistirPrenda(Prenda prenda,TipoPrenda tipo, ColorRGB unColor, ColorRGB otroColor,Trama trama) {
 //
@@ -188,18 +216,16 @@ public class EmTest extends SetUp {
 //		EntityManagerHelper.commit();
 //	}
 	
-	@Test 
+	/*@Test
 	public void persistirAtuendo(){
 		persistirRemeraAzul();
-		persistirTipoPrenda(pantalon);
-		persistirTipoPrenda(zapatilla);
-		EntityManagerHelper.getEntityManager().persist(zapatillasConverse);
-		EntityManagerHelper.getEntityManager().persist(pantalonJean);
+		persistirZapatillasConverse();
+		persistirPantalonJean();
 		persistirGuardarropa();
 		EntityManagerHelper.getEntityManager().persist(atuendo);
 		EntityManagerHelper.commit();
 		
-	}
+	}*/
     /*@Test
 	public void persistirUsuario() { //Falta
 		usuario1.setUltimaDecision(Decision.ACEPTAR);
