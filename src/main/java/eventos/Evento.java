@@ -6,6 +6,7 @@ import org.quartz.Trigger;
 import db.EntidadPersistente;
 
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 
 @Entity
@@ -13,7 +14,7 @@ public class Evento extends EntidadPersistente {
 	private String tituloEvento;
     private LocalDateTime fecha;
     private String ubicacion;
-    @Transient
+    @Enumerated
     private Frecuencia frecuencia;
 
 	public Evento(String titulo,LocalDateTime fecha, String ubicacion, Frecuencia frecuencia) {

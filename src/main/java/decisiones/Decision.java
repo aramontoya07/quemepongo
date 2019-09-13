@@ -1,7 +1,9 @@
 package decisiones;
 
-import usuario.Usuario;
+import javax.persistence.Embeddable;
 
+import usuario.Usuario;
+@Embeddable
 public enum Decision {
 
 	ACEPTAR(){
