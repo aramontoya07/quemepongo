@@ -23,7 +23,7 @@ public enum TipoDeAlerta {
     },
     NINGUNA {
         public void notificarA(Informante informante, Usuario usuario) {
-            //no hace nada, es como mi tp de operativos
+            //no hace nada, es como mi tp de operativos. //Es como mí grupo de operativos (by fede)
         }
     };
 

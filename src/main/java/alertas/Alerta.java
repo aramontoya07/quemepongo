@@ -15,6 +15,7 @@ public class Alerta extends EntidadPersistente{
         tipo = tipoAlerta;
     }
 
+
     public String getUbicacion() {
         return ubicacion;
     }
