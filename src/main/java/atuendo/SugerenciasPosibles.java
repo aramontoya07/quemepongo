@@ -13,7 +13,9 @@ public class SugerenciasPosibles extends EntidadPersistente {
     @Enumerated
     TipoSugerencia tipo;
 
-    public SugerenciasPosibles(Atuendo atuendo2, TipoSugerencia exacta) {
+    public SugerenciasPosibles(Atuendo atuendo2, TipoSugerencia tipo2) {
+        atuendo = atuendo2;
+        tipo = tipo2;
 	}
 
     public Atuendo getAtuendo() {

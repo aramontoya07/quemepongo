@@ -14,35 +14,37 @@ public enum Informante {
     
     CasillaDeMails(){
         public void notificarTormenta(Usuario usuario) {
-            this.enviarMail(usuario.getMail(), "No olvides llevar tu paraguas!");
+            usuario.marcarNotificado();
         }
     
         public void notificarGranizo(Usuario usuario) {
-            this.enviarMail(usuario.getMail(), "Ojo, va a caer granizo!");
+            usuario.marcarNotificado();
         }
     
         public void notificarNevada(Usuario usuario) {
-            this.enviarMail(usuario.getMail(), "Mira que va a nevar!");
+            usuario.marcarNotificado();
         }
-
-        public void enviarMail(String direccion, String mail) {
-            /*
-            MailSender mailSender;
-            SimpleMailMessage message;
-            
-            message.setTo(direccion);
-            message.setText(mail);
-            mailSender.send(message);
-            */
-        }
+    
         public void notificarA(Usuario usuario, AsistenciaEvento evento) {
-            enviarMail(usuario.getMail(),"Hola estan tus sugerencias listas para el evento "+ evento.toString());
+            usuario.marcarNotificado();
         }
     },
 
     MockSMS(){
+        public void notificarTormenta(Usuario usuario) {
+            usuario.marcarNotificado();
+        }
+    
+        public void notificarGranizo(Usuario usuario) {
+            usuario.marcarNotificado();
+        }
+    
+        public void notificarNevada(Usuario usuario) {
+            usuario.marcarNotificado();
+        }
+    
         public void notificarA(Usuario usuario, AsistenciaEvento evento) {
-            System.out.println("Motificacion enviada por medio el MOCK SMS");
+            usuario.marcarNotificado();
         }
     },
 

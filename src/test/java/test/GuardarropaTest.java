@@ -24,13 +24,53 @@ class GuardarropaTest extends SetUp {
         setear();
     }
 
+    @Test
+    @DisplayName("Se agrega correctamente una prenda y se guarda como DISPONIBLE")
+    void agregarPrendaTest(){
+        guardarropa.agregarPrenda(remeraAzul);
+        assertTrue(guardarropa.getPrendasDisponibles().contains(remeraAzul));
+    }
+
+    @Test
+    @DisplayName("Se agrega correctamente una prenda a la lista de USADAS cuando se usa")
+    void usarPrendaTest(){
+        guardarropa.agregarPrenda(remeraAzul);
+        guardarropa.usarPrenda(remeraAzul);
+        assertFalse(guardarropa.getPrendasDisponibles().contains(remeraAzul));
+        assertTrue(guardarropa.getPrendasUsadas().contains(remeraAzul));
+    }
+
+    @Test
+    @DisplayName("Falla al querer usar una prenda que no esta disponible")
+    void usarPrendaInexistente(){ 
+        assertThrows(GuardarropaException.class, () ->
+            guardarropa.usarPrenda(remeraAzul)
+        );
+    }
+    
+    @Test
+    @DisplayName("Falla al intentar liberar una prenda que no existe")
+    void usoNoExistente(){
+        assertThrows(GuardarropaException.class, () ->
+                guardarropa.usarPrenda(remeraAzul)
+        );
+    }
+
+    @Test
+    @DisplayName("Se libera una prenda que esta siendo usada correctamente")
+    void liberacion() {
+        guardarropa.agregarPrenda(remeraAzul);
+        guardarropa.usarPrenda(remeraAzul);
+        guardarropa.liberarPrenda(remeraAzul);
+        assertTrue(guardarropa.prendaDisponible(remeraAzul));
+    }
 
     @Test
     @DisplayName("Falla al querer agregar una prenda existente")
     void prendaExistente(){
-        guardarropa.agregarADisponibles(remeraAzul);
+        guardarropa.agregarPrenda(remeraAzul);
         assertThrows(GuardarropaException.class, () ->
-                guardarropa.agregarADisponibles(remeraAzul)
+                guardarropa.agregarPrenda(remeraAzul)
         );
     }
 
@@ -73,12 +113,7 @@ class GuardarropaTest extends SetUp {
         );
     }
 
-    @Test
-    @DisplayName("Agrega prenda en la lista correcta del guardarropa")
-    void agregarPrendaEnListaCorrecta(){
-        guardarropa.agregarADisponibles(remeraDeportiva);
-        assertTrue(guardarropa.getPrendasDeParte(Categoria.PARTE_SUPERIOR).contains(remeraDeportiva));
-    }
+  
 
     @Test
     @DisplayName("Se deben generar todas las combinaciones posibles de ropa")
@@ -97,9 +132,7 @@ class GuardarropaTest extends SetUp {
         pedro.agregarGuardarropa(guardarropa);
         pedro.actualizarSubscripcionAPremium();
         pedro.agregarPrendas(guardarropa, prendasGlobales);
-
         ServicioClimatico.definirProvedor(new MockFrio());
-
         Set<SugerenciasClima> listaSugerencias = pedro.pedirSugerenciaSegunClima( "London");
         assertTrue(listaSugerencias.stream()
                 .allMatch(sugerencia -> sugerencia.esAptaParaClima(new MockFrio().obtenerClima("London"))));

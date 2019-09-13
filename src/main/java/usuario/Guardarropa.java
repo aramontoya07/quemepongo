@@ -56,8 +56,15 @@ public class Guardarropa extends EntidadPersistente{
 		quitarDeUsadas(prenda);
 	}
 
+	public void agregarPrenda(Prenda prenda) throws PrendaException {
+		if (prendaDisponible(prenda) || prendaOcupada(prenda)){
+			throw new GuardarropaException("No se puede agregar la prenda porque ya existe en el guardarropa");
+		}
+		agregarADisponibles(prenda);
+	}
+
 	private void quitarDeDisponibles(Prenda prenda) {
-		disponibles.add(prenda);
+		disponibles.remove(prenda);
 	}
 
 	public void quitarDeUsadas(Prenda prenda) {

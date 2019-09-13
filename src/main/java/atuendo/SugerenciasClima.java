@@ -53,7 +53,10 @@ public class SugerenciasClima extends EntidadPersistente{
     }
 
     public SugerenciasClima ajustarAGustos(PreferenciasDeAbrigo preferencias, double temperatura){
-        atuendosSugeridos = atuendosSugeridos.stream().sorted(Comparator.comparing(atuendoSugerido -> preferencias.obtenerNivelDeAdaptacion(temperatura, atuendoSugerido.getAtuendo()))).collect(Collectors.toList());
+        atuendosSugeridos = atuendosSugeridos.stream()
+        .sorted(Comparator.comparing(atuendoSugerido -> 
+            preferencias.obtenerNivelDeAdaptacion(temperatura, atuendoSugerido.getAtuendo())))
+            .collect(Collectors.toList());
         return this;
     }
 }
