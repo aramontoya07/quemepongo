@@ -5,25 +5,49 @@ import spark.Request;
 import spark.Response;
 import usuario.Usuario;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ControllerUsuario {
+    
+        public Usuario obtenerUsuario(Integer idUsuario){
+            Usuario usuario = new Usuario(); //@TODO: obtener usuario segun id de session
+            return usuario;
+        }
 
-        public ModelAndView obtenerUsuarios(Request req, Response res) {
-            Usuario usuario1 = new Usuario();
-            Usuario usuario2 = new Usuario();
-            Usuario usuario3 = new Usuario();
+        public ModelAndView perfil(Request req, Response res) {
+    
+            Usuario usuario = new Usuario();
+            //@TODO: obtener usuario de DB
+            
+            return new ModelAndView(usuario, "perfil.hbs");
+        }
 
-            usuario1.setMail("usuario1@gmail.com");
-            usuario2.setMail("usuario2@gmail.com");
-            usuario3.setMail("usuario3@gmail.com");
+        public ModelAndView registrarUsuario(Request req, Response res) {
 
-            List<Usuario> usuarioLista = new ArrayList<Usuario>();
-            usuarioLista.add(usuario1);
-            usuarioLista.add(usuario2);
-            usuarioLista.add(usuario3);
+            Usuario usuario = new Usuario();
+            //@TODO: crear usuario y agregar usuario a la base de datos
 
-            return new ModelAndView(usuarioLista, "hola.hbs");
+            req.session().attribute("idUsuario", usuario.getId());
+
+            res.redirect("/perfil/" + usuario.getId());
+            return null;
+        }
+
+        public ModelAndView loguearUsuario(Request req, Response res) {
+
+            Boolean existeUsuario = true; //@TODO: controlar existencia en DB
+            
+            Usuario usuario = new Usuario(); //@TODO: obtener usuario de db
+
+            if(!existeUsuario){
+                res.redirect("/landing");
+            }else{
+                req.session().attribute("idUsuario", usuario.getId());
+                res.redirect("/perfil/" + usuario.getId());
+            }
+            return null;
+        }
+
+        public ModelAndView listarGuardarropas(Request req, Response res) {
+            Usuario usuario = obtenerUsuario(req.attribute("idUsuario"));
+            return new ModelAndView(usuario, "guardarropas.hbs");
         }
 }
