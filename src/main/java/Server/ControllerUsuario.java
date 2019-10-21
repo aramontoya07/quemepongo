@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ControllerUsuario {
 
-        public ModelAndView Usuarios(Request req, Response res) {
+        public ModelAndView obtenerUsuarios(Request req, Response res) {
             Usuario usuario1 = new Usuario();
             Usuario usuario2 = new Usuario();
             Usuario usuario3 = new Usuario();
