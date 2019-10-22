@@ -12,4 +12,16 @@ public class ControllerSistema {
     public ModelAndView registro(Request req, Response res) {
         return new ModelAndView(null, "registro.hbs");
     }
+
+    public ModelAndView creadorPrendas(Request req, Response res) {
+        return new ModelAndView(null, "creadorPrendas.hbs");
+    }
+
+    public ModelAndView creadorEventos(Request req, Response res) {
+        return new ModelAndView(null, "creadorEventos.hbs");
+    }
+
+    public ModelAndView puntuadorAtuendos(Request req, Response res) {
+        return new ModelAndView(null, "puntuadorAtuendos.hbs");
+    }
 }

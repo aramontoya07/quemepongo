@@ -1,5 +1,8 @@
 package Server;
 
+import java.util.Set;
+
+import atuendo.Atuendo;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -7,11 +10,6 @@ import usuario.Usuario;
 
 public class ControllerUsuario {
     
-        public Usuario obtenerUsuario(Integer idUsuario){
-            Usuario usuario = new Usuario(); //@TODO: obtener usuario segun id de session
-            return usuario;
-        }
-
         public ModelAndView perfil(Request req, Response res) {
     
             Usuario usuario = new Usuario();
@@ -46,8 +44,20 @@ public class ControllerUsuario {
             return null;
         }
 
-        public ModelAndView listarGuardarropas(Request req, Response res) {
-            Usuario usuario = obtenerUsuario(req.attribute("idUsuario"));
-            return new ModelAndView(usuario, "guardarropas.hbs");
+        public ModelAndView listarAceptados(Request req, Response res) {
+            String idUsuario = req.attribute("idUsuario");
+            Usuario usuario = null; //@TODO: obtener usuario logueado
+            Set<Atuendo> atuendos = usuario.getAceptados();
+            return new ModelAndView(atuendos, "misAtuendosAceptados.hbs");
+        }
+
+        public ModelAndView puntuarAtuendo(Request req, Response res) {
+            String idUsuario = req.attribute("idUsuario");
+            Usuario usuario = null; //@TODO: obtener usuario logueado
+            
+            //@TODO: agregar adapatacion puntuada recibida por params al usuario logueado
+
+            res.redirect("/puntuarAtuendos");
+            return null;
         }
 }

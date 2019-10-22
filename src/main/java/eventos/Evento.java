@@ -2,12 +2,12 @@ package eventos;
 
 import java.time.LocalDateTime;
 
-import org.quartz.Trigger;
-import db.EntidadPersistente;
-
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
-import javax.persistence.Transient;
+
+import org.quartz.Trigger;
+
+import db.EntidadPersistente;
 
 @Entity
 public class Evento extends EntidadPersistente {
@@ -24,20 +24,20 @@ public class Evento extends EntidadPersistente {
         this.ubicacion = ubicacion;
     }
     
-	boolean esEventoLejano() {
+	public boolean esEventoLejano() {
 		int horasEventoCercano = 12;
 		return fecha.isBefore(LocalDateTime.now().minusHours(horasEventoCercano));
 	}
 	
-	LocalDateTime getFecha() {
+	public LocalDateTime getFecha() {
 		return fecha;
 	}
 	
-	String getNombre() {
+	public String getNombre() {
 		return tituloEvento;
 	}
 
-	String getUbicacion() {
+	public String getUbicacion() {
 		return ubicacion;
 	}
 	
