@@ -1,66 +1,29 @@
 package test;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.transaction.Transactional;
-
-import atuendo.Atuendo;
-import atuendo.EstadoAtuendo;
-import atuendo.SugerenciasClima;
-import atuendo.UsoAtuendo;
-import decisiones.Decision;
-import eventos.AsistenciaEvento;
-import eventos.Calendario;
-import notificaciones.Informante;
-import org.checkerframework.common.aliasing.qual.LeakedToResult;
-import org.hibernate.mapping.Set;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-
-import prenda.*;
-import usuario.AdaptacionPuntuada;
-import usuario.Guardarropa;
-import usuario.PreferenciasDeAbrigo;
-import usuario.Usuario;
 import db.EntityManagerHelper;
-import eventos.Evento;
-import eventos.Frecuencia;
-import subscripciones.SubscripcionGratuita;
-import subscripciones.TipoSubscripcion;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EmTest extends SetUp {
-   /* @Test public void persistir1UsuarioTest() {
 
-        Usuario usuario1 = new Usuario();
-        usuario1.setMail("usuario1@gmail.com");
-        usuario1.setNotificado(false);
-
-        EntityManagerHelper.beginTransaction();
-	    EntityManagerHelper.getEntityManager().persist(usuario1);
-	    EntityManagerHelper.commit();
-    }*/
 	@BeforeEach
-
 	public void inicio () {
+		//hola
 		EntityManagerHelper.beginTransaction();
 	}
 	@BeforeEach
-	public void setUp() {
+	public void setUp(){
 		setear();
 	}
 
 	@Test
 	public void persistirUsuario(){
-		EntityManagerHelper.getEntityManager().persist(usuario1);
-		EntityManagerHelper.getEntityManager().persist(peter);
-		EntityManagerHelper.commit();
+		//EntityManagerHelper.getEntityManager().persist(usuario1);
+		//EntityManagerHelper.getEntityManager().persist(peter);
+
+		//assertTrue(EntityManagerHelper.getEntityManager().contains(usuario1));
+		//EntityManagerHelper.rollback();
 	}
 
 	/*@Disabled

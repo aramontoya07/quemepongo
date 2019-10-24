@@ -30,14 +30,14 @@ import subscripciones.TipoSubscripcion;
 @Entity
 @Table(name = "Usuarios")
 public class Usuario extends EntidadPersistente {
+	//TODO: ninguna clase tiene el atributo "Id". que onda??
 
-
-	@OneToMany(cascade = {CascadeType.ALL})
+	@OneToMany
 	@JoinColumn(name = "Id_usuario")
 	private List<UsoAtuendo> atuendosUsados = new ArrayList<>();
 
 
-	@ManyToMany(cascade = {CascadeType.ALL})
+	@ManyToMany
 	private Set<Guardarropa> guardarropas = new HashSet<>();
 
 
@@ -49,13 +49,13 @@ public class Usuario extends EntidadPersistente {
 	@Enumerated(EnumType.STRING)
 	private Decision ultimaDecision;
 
-	@ManyToOne(cascade = {CascadeType.ALL})
+	@ManyToOne
 	private TipoSubscripcion subscripcion;
 
-	@OneToOne(cascade = {CascadeType.ALL}) //Pusimos @OnetoOne y en el der vemos que lo puso @OneToMany. En todos pasa lo mismo
+	@OneToOne
 	private Calendario calendarioEventos = new Calendario();
 
-	@OneToOne(cascade = {CascadeType.ALL})
+	@OneToOne
 	private PreferenciasDeAbrigo preferenciasDeAbrigo;
 
 	private String mail;	

@@ -27,10 +27,10 @@ import prenda.*;
 public class Guardarropa extends EntidadPersistente{
 
 	@OneToMany
-	@JoinColumn(name = "id_Guardarropa")
+	@JoinColumn(name = "id_Guardarropa_usadas")
 	public Set<Prenda> usadas = new HashSet<>();
 	@OneToMany
-	@JoinColumn(name = "id_Guardarropa")
+	@JoinColumn(name = "id_Guardarropa_disponibles")
 	public Set<Prenda> disponibles = new HashSet<>();
 
 	public Guardarropa(){}

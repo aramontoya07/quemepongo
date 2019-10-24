@@ -10,17 +10,17 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class PreferenciasDeAbrigo extends EntidadPersistente {
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     private AdaptacionPuntuada abrigoCabeza;
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     private AdaptacionPuntuada abrigoCuello;
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     private AdaptacionPuntuada abrigoPecho;
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     private AdaptacionPuntuada abrigoManos;
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     private AdaptacionPuntuada abrigoPiernas;
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     private AdaptacionPuntuada abrigoPies;
 
 

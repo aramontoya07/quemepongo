@@ -34,7 +34,7 @@ public class Calendario extends EntidadPersistente{
 		this.eventos = eventos;
 	}
 
-	@OneToMany(cascade = {CascadeType.ALL})
+	@OneToMany
 	@JoinColumn(name = "Id_calendario")
 	private Set<AsistenciaEvento> eventos = new HashSet<>();
 	

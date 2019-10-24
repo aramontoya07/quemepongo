@@ -11,7 +11,8 @@ import db.EntidadPersistente;
 @Entity
 @Table(name = "Usos")
 public class UsoAtuendo extends EntidadPersistente{
-    @OneToOne(cascade = {CascadeType.ALL})
+    //el usoAtuendo sirve para cuando el usuario acepta la sugerencia hecha por el guardaropa, no existe la opcion de que haya varios usos para el mismo atuendo. es OneToOne
+    @OneToOne
     public Atuendo atuendo;
 
     @Enumerated(EnumType.STRING)

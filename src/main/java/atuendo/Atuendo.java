@@ -14,25 +14,23 @@ import usuario.Guardarropa;
 @Table(name = "Atuendos")
 public class Atuendo extends EntidadPersistente {
 
-	@OneToOne(cascade = {CascadeType.ALL})
+	@OneToOne   
 	private Guardarropa guardarropaOrigen;
 
-	@OneToOne(cascade = {CascadeType.ALL}) // No seria un many to one? El conjunto de prendas no puede repetirse en un atuendo, pero cada prenda por separado
-	// puede repetirse en los atuendos
+	@ManyToOne    // No seria un many to one? El conjunto de prendas no puede repetirse en un atuendo, pero cada prenda por separado
+	             // puede repetirse en los atuendos
 	private Prenda superior;
 
-	@OneToOne(cascade = {CascadeType.ALL})
+	@ManyToOne
 	private Prenda inferior;
 
-	@OneToOne(cascade = {CascadeType.ALL})
+	@ManyToOne
 	private Prenda calzado;
 
-	@OneToMany(cascade = {CascadeType.ALL})
-	@JoinColumn(name = "id_atuendo")
+	@ManyToMany
 	private List<Prenda> accesorios = new ArrayList<>();
 
-	@OneToMany(cascade = {CascadeType.ALL})
-	@JoinColumn(name = "id_atuendo")
+	@ManyToMany
 	private List<Prenda> capasAbrigos = new ArrayList<>();
 
 	public Guardarropa getGuardarropaOrigen() {

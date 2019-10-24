@@ -22,7 +22,7 @@ public class TipoPrenda extends EntidadPersistente{
 	@Enumerated(EnumType.STRING)
 	private List<Material> materialesPermitidos;
 
-	@ManyToMany(cascade = {CascadeType.ALL})
+	@ManyToMany
 	private List<TipoPrenda> tiposAceptados = new ArrayList<TipoPrenda>();
 
 	public TipoPrenda(Categoria categoria, List<Material> materialesPermitidos, int nivelAbrigo, TipoUso tipoBasico) {

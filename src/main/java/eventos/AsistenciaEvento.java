@@ -15,10 +15,10 @@ import usuario.Usuario;
 @Entity
 public class AsistenciaEvento extends EntidadPersistente{
 	
-	@OneToOne(cascade = {CascadeType.ALL})
+	@OneToOne
 	private Evento evento;
 	
-	@OneToMany(cascade = {CascadeType.ALL})
+	@OneToMany
 	@JoinColumn(name = "Id_AsistenciaEvento")
 	private Set<SugerenciasClima> sugerenciasEvento = new HashSet<>();
 

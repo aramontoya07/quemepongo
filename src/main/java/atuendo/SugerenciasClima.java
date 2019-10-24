@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Table(name = "Sugerencias")
 public class SugerenciasClima extends EntidadPersistente{
 
-    @OneToMany(cascade = {CascadeType.ALL})
+    @OneToMany
     @JoinColumn(name = "id_sugerencia")
     private List<SugerenciasPosibles> atuendosSugeridos = new ArrayList<SugerenciasPosibles>();
     

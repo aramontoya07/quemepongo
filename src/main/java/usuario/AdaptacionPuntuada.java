@@ -2,6 +2,7 @@ package usuario;
 
 import db.EntidadPersistente;
 
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 
 @Entity
