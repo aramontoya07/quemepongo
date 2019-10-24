@@ -17,7 +17,7 @@ local.properties
 .recommenders
 
 #algo raro de base de datos.
-persistence.xml
+*/persistence.xml
 
 # External tool builders
 .externalToolBuilders/
