@@ -4,23 +4,50 @@ import atuendo.Atuendo;
 import db.EntidadPersistente;
 import prenda.ParteAbrigada;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class PreferenciasDeAbrigo extends EntidadPersistente {
-    @OneToOne
+    @Embedded
+    @AttributeOverrides( {
+            @AttributeOverride(name="nivelDeAdaptacion", column=@Column(name="NIVEL_CABEZA")),
+            @AttributeOverride(name="puntaje", column=@Column(name="PUNTAJE_CABEZA"))
+    })
     private AdaptacionPuntuada abrigoCabeza;
-    @OneToOne
+
+    @Embedded
+    @AttributeOverrides( {
+            @AttributeOverride(name="nivelDeAdaptacion", column=@Column(name="NIVEL_CUELLO")),
+            @AttributeOverride(name="puntaje", column=@Column(name="PUNTAJE_CUELLO"))
+    })
     private AdaptacionPuntuada abrigoCuello;
-    @OneToOne
+
+    @Embedded
+    @AttributeOverrides( {
+            @AttributeOverride(name="nivelDeAdaptacion", column=@Column(name="NIVEL_PECHO")),
+            @AttributeOverride(name="puntaje", column=@Column(name="PUNTAJE_PECHO"))
+    })
     private AdaptacionPuntuada abrigoPecho;
-    @OneToOne
+
+    @Embedded
+    @AttributeOverrides( {
+            @AttributeOverride(name="nivelDeAdaptacion", column=@Column(name="NIVEL_MANOS")),
+            @AttributeOverride(name="puntaje", column=@Column(name="PUNTAJE_MANOS"))
+    })
     private AdaptacionPuntuada abrigoManos;
-    @OneToOne
+
+    @Embedded
+    @AttributeOverrides( {
+            @AttributeOverride(name="nivelDeAdaptacion", column=@Column(name="NIVEL_PIERNAS")),
+            @AttributeOverride(name="puntaje", column=@Column(name="PUNTAJE_PIERNAS"))
+    })
     private AdaptacionPuntuada abrigoPiernas;
-    @OneToOne
+
+    @Embedded
+    @AttributeOverrides( {
+            @AttributeOverride(name="nivelDeAdaptacion", column=@Column(name="NIVEL_PIES")),
+            @AttributeOverride(name="puntaje", column=@Column(name="PUNTAJE_PIES"))
+    })
     private AdaptacionPuntuada abrigoPies;
 
 
@@ -41,7 +68,7 @@ public class PreferenciasDeAbrigo extends EntidadPersistente {
                 abrigoCabeza.getNivelDeAdaptacion() +
                 abrigoPies.getNivelDeAdaptacion();
     }
-    
+
     public void setPreferenciasDeAbrigo(AdaptacionPuntuada ap) {
         this.abrigoCabeza = ap;
         this.abrigoCuello = ap;
