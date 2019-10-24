@@ -25,7 +25,12 @@ public class ControllerGuardarropas {
         Guardarropa guardarropa = obtenerGuardarropaSegunId(req.attribute("idUsuario"), req.params("idGuardarropas"));
         return new ModelAndView(guardarropa, "detalleGuardarropas.hbs");
     }
-
+    
+    public ModelAndView wizardTipoPrenda(Request req, Response res) {
+    	Guardarropa guardarropa = new Guardarropa();
+        return new ModelAndView(guardarropa, "wizardTipoPrenda.hbs");
+    }
+    
     public ModelAndView agregarPrenda(Request req, Response res) {
         String tipoPrenda = req.params("tipoPrenda");
         String material = req.params("material");

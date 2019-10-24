@@ -23,6 +23,7 @@ public class Server {
         Spark.get("/misGuardarropas", guardarropasC::listarGuardarropas, new HandlebarsTemplateEngine());
         Spark.get("/misGuardarropas/:idGuardarropas", guardarropasC::detalleGuardarropa, new HandlebarsTemplateEngine());
         Spark.get("/misGuardarropas/:idGuardarropas/creadorPrendas", sistemaC::creadorPrendas, new HandlebarsTemplateEngine());
+        Spark.get("/tipo", guardarropasC::wizardTipoPrenda, new HandlebarsTemplateEngine()); // :idGuardarropas/creadorPrendas/
 
         Spark.get("/misEventos", eventosC::listarEventos, new HandlebarsTemplateEngine());
         Spark.get("/misEventos/:fecha", eventosC::listarEventosPorFecha, new HandlebarsTemplateEngine());
