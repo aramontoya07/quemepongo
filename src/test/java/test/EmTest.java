@@ -19,11 +19,11 @@ public class EmTest extends SetUp {
 
 	@Test
 	public void persistirUsuario(){
-		//EntityManagerHelper.getEntityManager().persist(usuario1);
-		//EntityManagerHelper.getEntityManager().persist(peter);
+		EntityManagerHelper.getEntityManager().persist(usuario1);
+		EntityManagerHelper.getEntityManager().persist(peter);
 
-		//assertTrue(EntityManagerHelper.getEntityManager().contains(usuario1));
-		//EntityManagerHelper.rollback();
+		assertTrue(EntityManagerHelper.getEntityManager().contains(usuario1));
+		EntityManagerHelper.rollback();
 	}
 
 	/*@Disabled
