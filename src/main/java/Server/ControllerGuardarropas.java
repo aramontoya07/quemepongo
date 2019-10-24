@@ -2,28 +2,47 @@ package Server;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.EntityManager;
+
+import db.EntityManagerHelper;
+import prenda.Categoria;
+import prenda.Prenda;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import usuario.Guardarropa;
+import usuario.Usuario;
 
 public class ControllerGuardarropas {
 
-    public ModelAndView listarGuardarropas(Request req, Response res) {
-        String idUsuario = req.attribute("idUsuario");
-        List<Guardarropa> guardarropas = new ArrayList<Guardarropa>(); //@TODO: obtener guardarropas del usuario logueado
-        return new ModelAndView(guardarropas, "misGuardarropas.hbs");
-    }
-
     private Guardarropa obtenerGuardarropaSegunId(String idUsuario, String idGuardarropa){
-        Guardarropa guardarropaActual = new Guardarropa(); //@TODO: obtener guardarropa idGuardarropa del usuario correspondiente
+        Guardarropa guardarropaActual = EntityManagerHelper.getEntityManager().find(Guardarropa.class, Integer.parseInt(idGuardarropa)); //@TODO: obtener guardarropa idGuardarropa del usuario correspondiente
         return guardarropaActual; 
     }
 
     public ModelAndView detalleGuardarropa(Request req, Response res) {
         Guardarropa guardarropa = obtenerGuardarropaSegunId(req.attribute("idUsuario"), req.params("idGuardarropas"));
-        return new ModelAndView(guardarropa, "detalleGuardarropas.hbs");
+        class GuardarropaVista{
+            int id;
+            Set<Prenda> superiores;
+            Set<Prenda> inferiores;
+            Set<Prenda> calzado;
+            Set<Prenda> accesorios;
+    
+            public GuardarropaVista(Guardarropa guardarropa){
+                id = guardarropa.getId();
+                System.out.println(guardarropa.cantidadDePrendas());
+                superiores = guardarropa.getPrendasDeParte(Categoria.PARTE_SUPERIOR);
+                System.out.println(superiores.toString());
+                inferiores = guardarropa.getPrendasDeParte(Categoria.PARTE_INFERIOR);
+                calzado = guardarropa.getPrendasDeParte(Categoria.CALZADO);
+                accesorios = guardarropa.getPrendasDeParte(Categoria.ACCESORIO);
+            }
+        }
+        GuardarropaVista gv = new GuardarropaVista(guardarropa);
+        return new ModelAndView(gv, "detalleGuardarropas.hbs");
     }
     
     public ModelAndView wizardTipoPrenda(Request req, Response res) {

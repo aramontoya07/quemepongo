@@ -70,6 +70,13 @@ public class Guardarropa extends EntidadPersistente{
 		disponibles.remove(prenda);
 	}
 
+	public Set<Prenda> getPrendasTotales() {
+		Set<Prenda> f = new HashSet<Prenda>();
+		f.addAll(disponibles);
+		f.addAll(usadas);
+		return f;
+	}
+
 	public void quitarDeUsadas(Prenda prenda) {
 		usadas.remove(prenda);
 	}
@@ -102,8 +109,7 @@ public class Guardarropa extends EntidadPersistente{
 	}
 
 	public Set<Prenda> getPrendasDeParte(Categoria categoria) {
-		return disponibles.stream().filter(prenda->prenda.esDeCategoria(categoria))
-		.collect(Collectors.toSet());
+		return getPrendasTotales().stream().filter(prenda->prenda.esDeCategoria(categoria)).collect(Collectors.toSet());
 	}
 
 	public Set<Prenda> prendasPrimarias(Set<Prenda> prendas){

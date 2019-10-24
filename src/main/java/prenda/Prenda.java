@@ -10,9 +10,9 @@ import java.awt.image.BufferedImage;
 
 @Entity
 @Table(name = "Prendas")
-public class Prenda extends EntidadPersistente{
+public class Prenda extends EntidadPersistente {
 
-	@ManyToOne  
+	@ManyToOne
 	private TipoPrenda tipo;
 
 	@Enumerated(EnumType.STRING)
@@ -21,10 +21,10 @@ public class Prenda extends EntidadPersistente{
 	@Enumerated(EnumType.STRING)
 	private Trama trama;
 
-	@ManyToOne  
+	@ManyToOne
 	private ColorRGB colorPrimario;
 
-	@ManyToOne  
+	@ManyToOne
 	private ColorRGB colorSecundario;
 
 	@Transient
@@ -33,6 +33,7 @@ public class Prenda extends EntidadPersistente{
 	@Enumerated(EnumType.STRING)
 	private ParteAbrigada pateAbrigada;
 
+	private String rutaImagen;
 
 	public Prenda(TipoPrenda tipo, Material material, Trama trama, ColorRGB colorPrimario, ColorRGB colorSecundario) {
 		this.tipo = tipo;
@@ -40,6 +41,14 @@ public class Prenda extends EntidadPersistente{
 		this.trama = trama;
 		this.colorPrimario = colorPrimario;
 		this.colorSecundario = colorSecundario;
+	}
+
+	public String getRutaImagen() {
+		return rutaImagen;
+	}
+
+	public void setRutaImagen(String rutaImagen) {
+		this.rutaImagen = rutaImagen;
 	}
 
 	public boolean aceptaSuperponerPrenda(Prenda prenda) {

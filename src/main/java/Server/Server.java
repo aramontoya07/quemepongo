@@ -4,9 +4,8 @@ import spark.Spark;
 import spark.debug.DebugScreen;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class Server {
+public class Server{
     public static void main(String[] args) {
-        //RepositorioGuardarropas.instance().findByUsuario(new Usuario());
 
         Spark.port(9000);
         Spark.init();
@@ -20,13 +19,13 @@ public class Server {
         Spark.get("/registro", sistemaC::registro, new HandlebarsTemplateEngine());
         Spark.get("/perfil/:id", usuarioC::perfil, new HandlebarsTemplateEngine());
 
-        Spark.get("/misGuardarropas", guardarropasC::listarGuardarropas, new HandlebarsTemplateEngine());
+        Spark.get("/misGuardarropas", usuarioC::listarGuardarropas, new HandlebarsTemplateEngine());
         Spark.get("/misGuardarropas/:idGuardarropas", guardarropasC::detalleGuardarropa, new HandlebarsTemplateEngine());
         Spark.get("/misGuardarropas/:idGuardarropas/creadorPrendas", sistemaC::creadorPrendas, new HandlebarsTemplateEngine());
         Spark.get("/tipo", guardarropasC::wizardTipoPrenda, new HandlebarsTemplateEngine()); // :idGuardarropas/creadorPrendas/
 
-        Spark.get("/misEventos", eventosC::listarEventos, new HandlebarsTemplateEngine());
-        Spark.get("/misEventos/:fecha", eventosC::listarEventosPorFecha, new HandlebarsTemplateEngine());
+        Spark.get("/misEventos", usuarioC::listarEventos, new HandlebarsTemplateEngine());
+        Spark.get("/misEventos/:fecha", usuarioC::listarEventosPorFecha, new HandlebarsTemplateEngine());
         Spark.get("/misEventos/:idEvento", eventosC::detalleEvento, new HandlebarsTemplateEngine());
         Spark.get("/misEventos/:idEvento/creadorEventos", sistemaC::creadorEventos, new HandlebarsTemplateEngine());
 
@@ -42,8 +41,7 @@ public class Server {
         Spark.post("/puntuarAtuendos/:idAtuendo", usuarioC::puntuarAtuendo, new HandlebarsTemplateEngine());
         
         Spark.get("/favicon.ico", null, new HandlebarsTemplateEngine()); //??
-        
+
         DebugScreen.enableDebugScreen();
     }
-
 }

@@ -30,7 +30,6 @@ import subscripciones.TipoSubscripcion;
 @Entity
 @Table(name = "Usuarios")
 public class Usuario extends EntidadPersistente {
-	//TODO: ninguna clase tiene el atributo "Id". que onda??
 
 	@OneToMany
 	@JoinColumn(name = "Id_usuario")
