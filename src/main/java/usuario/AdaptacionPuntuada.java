@@ -5,8 +5,8 @@ import db.EntidadPersistente;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 
-@Entity
-public class AdaptacionPuntuada extends EntidadPersistente {
+@Embeddable
+public class AdaptacionPuntuada{
     private Double nivelDeAdaptacion;
     private Integer puntaje;
 
