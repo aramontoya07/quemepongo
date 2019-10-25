@@ -86,7 +86,7 @@ public class SetUpUsuario {
 
     Calendario calendario = new Calendario();
     Evento superclasico = new Evento("Superclasico", LocalDateTime.now(),"Cancha de Boca", Frecuencia.UNICO);
-    Evento fiesta = new Evento("Fiesta",LocalDateTime.now(),"Capital",Frecuencia.UNICO);
+    Evento fiesta = new Evento("Fiesta",LocalDateTime.now().minusDays(5),"Capital",Frecuencia.UNICO);
     Evento finalDelMundial = new Evento("Final del mundial",LocalDateTime.now(),"China",Frecuencia.UNICO);
     Evento evento = new Evento("Prueba",LocalDateTime.now(),"UTN",Frecuencia.UNICO);
     AsistenciaEvento asistenciaMundial = new AsistenciaEvento(finalDelMundial);
@@ -202,7 +202,6 @@ public class SetUpUsuario {
         asistenciaFiesta.generarSugerenciasParaEvento(usuario1);
         usuario1.agregarInformante(Informante.MockSMS);
         usuario1.agregarInformante(Informante.CasillaDeMails);
-
 
         usuario1.aceptarAtuendo(atuendo2);
         usuario1.aceptarAtuendo(atuendo1);

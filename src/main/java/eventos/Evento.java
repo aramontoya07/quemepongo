@@ -61,4 +61,12 @@ public class Evento extends EntidadPersistente {
     public void persistir() {
 		EntityManagerHelper.getEntityManager().persist(this);
     }
+
+	public String getTituloEvento() {
+		return tituloEvento;
+	}
+
+	public void setTituloEvento(String tituloEvento) {
+		this.tituloEvento = tituloEvento;
+	}
 }
