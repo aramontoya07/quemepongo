@@ -1,5 +1,6 @@
 package Server;
 
+import java.util.HashMap;
 import java.util.Set;
 
 import atuendo.Atuendo;
@@ -16,7 +17,7 @@ public class ControllerUsuario{
 
         public ControllerUsuario(){
             usuarioPrueba = (new SetUpUsuario()).setear();
-            RepoUsuarios.persistirUsuario(usuarioPrueba);
+            //RepoUsuarios.persistirUsuario(usuarioPrueba);
         }
 
         public Usuario obtenerUsuario(String idUsuario){
@@ -47,6 +48,9 @@ public class ControllerUsuario{
             String idUsuario = req.attribute("idUsuario");
             Usuario usuario = obtenerUsuario(idUsuario);
             Set<Atuendo> atuendos = usuario.getAceptados();
+            Map<String, Object> model = new HashMap<String, Object>();
+            model.put();
+
             return new ModelAndView(atuendos, "misAtuendosAceptados.hbs");
         }
 

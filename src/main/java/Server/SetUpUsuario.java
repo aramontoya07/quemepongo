@@ -95,6 +95,8 @@ public class SetUpUsuario {
     Atuendo atuendo1 = new Atuendo(remeraDe30Azul, pantalonDesabrigadoAzul, zapatillasVerde, guardarropa);
     Atuendo atuendo2 = new Atuendo(remeraDesabrigadaAzul, jeanRojo, zapatillasDesabrigadasAzules, guardarropa);
 
+
+
     public Usuario setear(){
         ServicioClimatico.definirProvedor(new MockAgradable());
         remera.setTiposAceptados(new ArrayList<TipoPrenda>(Arrays.asList(campera)));

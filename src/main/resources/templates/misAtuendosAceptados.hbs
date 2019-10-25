@@ -6,11 +6,16 @@
 
 <hr class="mt-2 mb-5" />
 
-<div class="container-fluid mt-5 col-lg-4">
-    <div class="row no-gutter ml-4 mr-4 pr-2">
-        
+    <div class="row text-center text-lg-left">
+    {{#each }}
+    <div class="card" style="width: 10rem;">
+      <img src="..." class="card-img-top" alt="...">
+      <div class="card-body">
+        <p class="card-text">Prenda {{id}}</p>
+      </div>
     </div>
-</div>
+    {{/each}}
+    </div>
 {{/partial}}
 
 {{> layout.hbs}}
