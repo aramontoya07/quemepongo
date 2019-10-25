@@ -2,6 +2,7 @@ package usuario;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import javax.persistence.*;
 import alertas.Alerta;
@@ -11,9 +12,7 @@ import notificaciones.Informante;
 import alertas.RepoUsuarios;
 import alertas.TipoDeAlerta;
 import atuendo.Atuendo;
-import atuendo.EstadoAtuendo;
 import atuendo.SugerenciasClima;
-import atuendo.UsoAtuendo;
 import clima.ServicioClimatico;
 import decisiones.Decision;
 import eventos.AsistenciaEvento;
@@ -140,7 +139,7 @@ public class Usuario extends EntidadPersistente {
 		UsoAtuendo uso = new UsoAtuendo(atuendo,EstadoAtuendo.ACEPTADO);
 		atuendosUsados.add(uso);
 		atuendo.marcarPrendasComoUsadas();
-		ultimaDecision  = Decision.ACEPTAR;
+		ultimaDecision = Decision.ACEPTAR;
 	}
 
 	public void rechazarAtuendo(Atuendo atuendo) {
@@ -161,10 +160,8 @@ public class Usuario extends EntidadPersistente {
 				collect(Collectors.toSet());
 	}
 
-	public Set <Atuendo> getAceptados() {
-		return atuendosUsados.stream().filter( usoAtuendo -> usoAtuendo.getEstado().equals(EstadoAtuendo.ACEPTADO)).
-		map( usoAtuendo -> usoAtuendo.getAtuendo()).
-			collect(Collectors.toSet());
+	public Set<UsoAtuendo> getAceptados() {
+		return atuendosUsados.stream().filter( usoAtuendo -> usoAtuendo.getEstado().equals(EstadoAtuendo.ACEPTADO)).collect(Collectors.toSet());
 	}
 
 	public UsoAtuendo obtenerUso(Atuendo atuendo){

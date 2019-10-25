@@ -1,4 +1,4 @@
-package atuendo;
+package usuario;
 
 public enum EstadoAtuendo {
     ACEPTADO,RECHAZADO;

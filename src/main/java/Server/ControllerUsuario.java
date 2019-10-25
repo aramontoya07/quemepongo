@@ -1,13 +1,15 @@
 package Server;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import atuendo.Atuendo;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import usuario.Guardarropa;
 import usuario.RepoUsuarios;
+import usuario.UsoAtuendo;
 import usuario.Usuario;
 
 public class ControllerUsuario{
@@ -16,11 +18,24 @@ public class ControllerUsuario{
 
         public ControllerUsuario(){
             usuarioPrueba = (new SetUpUsuario()).setear();
-            RepoUsuarios.persistirUsuario(usuarioPrueba);
+            //RepoUsuarios.persistirUsuario(usuarioPrueba);
         }
 
         public Usuario obtenerUsuario(String idUsuario){
             return usuarioPrueba;
+        }
+
+        public UsoAtuendo obtenerAtuendo(Usuario usuario, String idAtuendo){
+            Set<UsoAtuendo> usos = usuario.getAceptados();
+            return usos.stream().filter(uso -> (Integer.parseInt(idAtuendo)) == (new Integer(uso.getAtuendo().getId()))).findFirst().orElse(null);
+        }
+
+        public ModelAndView puntuadorAtuendos(Request req, Response res) {
+            String idUsuario = req.attribute("idUsuario");
+            String idAtuendo = req.attribute("idAtuendo");
+            Usuario usuario = obtenerUsuario(idUsuario);
+            UsoAtuendo uso = obtenerAtuendo(usuario, idAtuendo);
+            return new ModelAndView(uso, "misGuardarropas.hbs");
         }
 
         public ModelAndView listarGuardarropas(Request req, Response res) {
@@ -46,8 +61,9 @@ public class ControllerUsuario{
         public ModelAndView listarAceptados(Request req, Response res) {
             String idUsuario = req.attribute("idUsuario");
             Usuario usuario = obtenerUsuario(idUsuario);
-            Set<Atuendo> atuendos = usuario.getAceptados();
-            return new ModelAndView(atuendos, "misAtuendosAceptados.hbs");
+            Map<String, Object> model = new HashMap<String, Object>();
+            model.put("aceptados",usuario.getAceptados());
+            return new ModelAndView(model, "misAtuendosAceptados.hbs");
         }
 
         public ModelAndView perfil(Request req, Response res) {

@@ -1,5 +1,26 @@
 {{#partial "wizardPrenda" }}
-    <h1>Wizard Tipo Prenda</h1>
+<div class="row spacer col-lg-12 col-md-12 col-sm-12 col-xs-12 flex-wrap">
+    <div class=" mt-4 d-none d-md-flex col-md-4 col-lg-6 d-flex justify-content-center">
+	<label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-12" for="">Categoria</label>
+	<select name="" id="" class="form-control floating-label col-lg-4" required>
+      <option value="">Seleccione</option>
+      <option value="">Superior</option>
+      <option value="">Inferior</option>
+   </select>
+
+  </div>
+  
+ <div class=" mt-4 d-none d-md-flex col-md-4 col-lg-6 d-flex">
+	<label class="control-label col-lg-4 col-md-4 col-sm-4 col-xs-12" for="">Tipo</label>
+	
+	<select name="" id="" class="form-control floating-label col-lg-4" required>
+      <option value="">Seleccione</option>
+      <option value="">Short</option>
+      <option value="">Pantalon</option>
+   </select>
+	<button type="button" class="btn btn-success  btn-sm ml-2">+</button>
+  </div>
+  </div>
 {{/partial}}
 
 {{> creadorPrendas.hbs}}

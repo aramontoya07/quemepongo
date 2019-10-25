@@ -92,8 +92,8 @@ public class SetUpUsuario {
     AsistenciaEvento asistenciaMundial = new AsistenciaEvento(finalDelMundial);
     AsistenciaEvento asistenciaSuperclasico = new AsistenciaEvento(superclasico);
     AsistenciaEvento asistenciaFiesta = new AsistenciaEvento(fiesta);
-    Atuendo atuendo1 = new Atuendo(remeraDe30Azul, pantalonDesabrigadoAzul, zapatillasVerde, guardarropa);
-    Atuendo atuendo2 = new Atuendo(remeraDesabrigadaAzul, jeanRojo, zapatillasDesabrigadasAzules, guardarropa);
+
+
 
     public Usuario setear(){
         ServicioClimatico.definirProvedor(new MockAgradable());
@@ -136,6 +136,8 @@ public class SetUpUsuario {
         pantalonDesabrigadoAzul = borrador_pantalonDesabrigado.crearPrenda();
         zapatillasDesabrigadasAzules = borrador_zapatillasDesabrigadas.crearPrenda();
 
+
+
         remeraAzul.setRutaImagen(
                 "https://http2.mlstatic.com/remera-de-boca-juniors-entrenamiento-2019-nike-D_NQ_NP_905277-MLA31991764874_082019-Q.jpg");
         remeraDeportiva.setRutaImagen(
@@ -175,15 +177,18 @@ public class SetUpUsuario {
         prendasGlobales.add(anteojosDeSol);
         prendasGlobales.add(camperaGris);
 
+        Atuendo atuendo1 = new Atuendo(remeraDe30Azul, pantalonDesabrigadoAzul, zapatillasVerde, guardarropa);
+        Atuendo atuendo2 = new Atuendo(remeraDesabrigadaAzul, jeanRojo, zapatillasDesabrigadasAzules, guardarropa);
+
         prendasOrdenables.add(remeraAzul);
         prendasOrdenables.add(remeraDe30Azul);
         prendasOrdenables.add(remeraDesabrigadaAzul);
         prendasOrdenables.add(pantalonDesabrigadoAzul);
         prendasOrdenables.add(zapatillasDesabrigadasAzules);
+        prendasOrdenables.add(remeraAzul);
+        prendasOrdenables.add(jeanRojo);
+        prendasOrdenables.add(zapatillasVerde);
 
-        prendasJustito.add(remeraAzul);
-        prendasJustito.add(jeanRojo);
-        prendasJustito.add(zapatillasVerde);
         usuario1.actualizarSubscripcionAPremium();
         usuario1.agregarGuardarropa(guardarropa);
         usuario1.agregarPrendas(guardarropa, prendasOrdenables);
@@ -197,8 +202,10 @@ public class SetUpUsuario {
         asistenciaFiesta.generarSugerenciasParaEvento(usuario1);
         usuario1.agregarInformante(Informante.MockSMS);
         usuario1.agregarInformante(Informante.CasillaDeMails);
-        //usuario1.aceptarAtuendo(atuendo2);
-        usuario1.rechazarAtuendo(atuendo1);
+
+
+        usuario1.aceptarAtuendo(atuendo2);
+        usuario1.aceptarAtuendo(atuendo1);
 
         prendasJustito.add(remeraAzul);
         prendasJustito.add(jeanRojo);
