@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import db.EntidadPersistente;
+import db.EntityManagerHelper;
 
 @Entity
 public class TipoPrenda extends EntidadPersistente{
@@ -55,5 +56,10 @@ public class TipoPrenda extends EntidadPersistente{
 
 	public void setTiposAceptados(List<TipoPrenda> tiposAceptados) {
 		this.tiposAceptados = tiposAceptados;
+	}
+
+	public void persistir() {
+
+		EntityManagerHelper.getEntityManager().persist(this);
 	}
 }

@@ -44,6 +44,7 @@ public class Usuario extends EntidadPersistente {
 	@Enumerated(EnumType.STRING)
 	private List<Informante> informantes = new ArrayList<>();
 
+	String contrasenia;
 
 	@Enumerated(EnumType.STRING)
 	private Decision ultimaDecision;
@@ -63,6 +64,10 @@ public class Usuario extends EntidadPersistente {
 		this.subscripcion = new SubscripcionGratuita();
 		RepoUsuarios.getInstance().agregarUsuario(this);
 		preferenciasDeAbrigo = new PreferenciasDeAbrigo();
+	}
+
+	public AsistenciaEvento obtenerAsistencia(Evento evento){
+		return calendarioEventos.obtenerAsistencia(evento);
 	}
 
 	//GUARDARROPAS

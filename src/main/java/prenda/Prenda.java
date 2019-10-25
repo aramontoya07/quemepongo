@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import db.EntidadPersistente;
+import db.EntityManagerHelper;
 
 import java.awt.image.BufferedImage;
 
@@ -134,5 +135,10 @@ public class Prenda extends EntidadPersistente {
 
 	public void setPateAbrigada(ParteAbrigada pateAbrigada) {
 		this.pateAbrigada = pateAbrigada;
+	}
+
+	public void persistir() {
+		tipo.persistir();
+		EntityManagerHelper.getEntityManager().persist(this);
 	}
 }
