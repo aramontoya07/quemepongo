@@ -1,4 +1,4 @@
-package usuario;
+package atuendo;
 
 import java.time.LocalDateTime;
 
@@ -7,6 +7,7 @@ import javax.persistence.*;
 import atuendo.Atuendo;
 import clima.ServicioClimatico;
 import db.EntidadPersistente;
+import usuario.EstadoAtuendo;
 
 @Entity
 @Table(name = "Usos")

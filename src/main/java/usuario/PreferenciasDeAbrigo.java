@@ -52,12 +52,24 @@ public class PreferenciasDeAbrigo extends EntidadPersistente {
 
 
     public PreferenciasDeAbrigo() {
-        this.abrigoCabeza = new AdaptacionPuntuada(25, 0.0, 0);
-        this.abrigoCuello = new AdaptacionPuntuada(25, 0.0, 0);
-        this.abrigoPecho = new AdaptacionPuntuada(25, 0.0, 0);
-        this.abrigoManos = new AdaptacionPuntuada(25, 0.0, 0);
-        this.abrigoPiernas = new AdaptacionPuntuada(25, 0.0, 0);
-        this.abrigoPies = new AdaptacionPuntuada(25, 0.0, 0);
+        this.abrigoCabeza = new AdaptacionPuntuada();
+        abrigoCabeza.setnivelDeAdaptacion(0,25.0);
+        abrigoCabeza.setPuntaje(0);
+        this.abrigoCuello = new AdaptacionPuntuada();
+        abrigoCuello.setnivelDeAdaptacion(0,25.0);
+        abrigoCuello.setPuntaje(0);
+        this.abrigoPecho = new AdaptacionPuntuada();
+        abrigoPecho.setnivelDeAdaptacion(0,25.0);
+        abrigoPecho.setPuntaje(0);
+        this.abrigoManos = new AdaptacionPuntuada();
+        abrigoManos.setnivelDeAdaptacion(0,25.0);
+        abrigoManos.setPuntaje(0);
+        this.abrigoPiernas = new AdaptacionPuntuada();
+        abrigoPiernas.setnivelDeAdaptacion(0,25.0);
+        abrigoPiernas.setPuntaje(0);
+        this.abrigoPies = new AdaptacionPuntuada();
+        abrigoPies.setnivelDeAdaptacion(0,25.0);
+        abrigoPies.setPuntaje(0);
     }
 
     private double adaptacionTotal(){

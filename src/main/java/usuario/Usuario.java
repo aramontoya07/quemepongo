@@ -2,11 +2,12 @@ package usuario;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import javax.persistence.*;
 import alertas.Alerta;
+import atuendo.UsoAtuendo;
 import db.EntidadPersistente;
+import db.EntityManagerHelper;
 import notificaciones.Informante;
 import alertas.RepoUsuarios;
 import alertas.TipoDeAlerta;
@@ -30,7 +31,7 @@ import subscripciones.TipoSubscripcion;
 @Table(name = "Usuarios")
 public class Usuario extends EntidadPersistente {
 
-	@OneToMany
+	@OneToMany(cascade = {CascadeType.PERSIST})
 	@JoinColumn(name = "Id_usuario")
 	private List<UsoAtuendo> atuendosUsados = new ArrayList<>();
 
@@ -53,7 +54,7 @@ public class Usuario extends EntidadPersistente {
 	@OneToOne
 	private Calendario calendarioEventos = new Calendario();
 
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.PERSIST})
 	private PreferenciasDeAbrigo preferenciasDeAbrigo;
 
 	private String mail;	
@@ -86,10 +87,16 @@ public class Usuario extends EntidadPersistente {
 
 	public void actualizarSubscripcionAPremium() {
 		subscripcion = new SubscripcionPremium();
+		EntityManagerHelper.beginTransaction();
+		EntityManagerHelper.getEntityManager().persist(subscripcion);
+		EntityManagerHelper.commit();
 	}
 
 	public void cancelarPremium() {
 		subscripcion = new SubscripcionGratuita();
+		EntityManagerHelper.beginTransaction();
+		EntityManagerHelper.getEntityManager().persist(subscripcion);
+		EntityManagerHelper.commit();
 	}
 
 	//SUGERENCIAS
@@ -215,7 +222,9 @@ public class Usuario extends EntidadPersistente {
 
 	public void puntuarParteDeAtuendoEn(UsoAtuendo uso, Integer puntaje, ParteAbrigada parte) throws AtuendoException{
 		if(!getAceptados().contains(uso.getAtuendo())) throw new AtuendoException("No se puede puntuar un atuendo sin antes haberlo aceptado");
-		AdaptacionPuntuada nuevoPuntaje = new AdaptacionPuntuada(uso.getAtuendo().abrigoEn(parte), uso.getTemperaturaDeUso(), puntaje);
+		AdaptacionPuntuada nuevoPuntaje =  new AdaptacionPuntuada();
+		nuevoPuntaje.setPuntaje(puntaje);
+		nuevoPuntaje.setnivelDeAdaptacion(uso.getAtuendo().abrigoEn(parte), uso.getTemperaturaDeUso());
 		AdaptacionPuntuada puntajeAbrigo = preferenciasDeAbrigo.getPuntaje(parte);
 		puntajeAbrigo.setearElMejor(nuevoPuntaje);
 	}

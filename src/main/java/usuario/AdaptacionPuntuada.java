@@ -10,19 +10,23 @@ public class AdaptacionPuntuada{
     private Double nivelDeAdaptacion;
     private Integer puntaje;
 
-    public AdaptacionPuntuada(Integer nivelDeAbrigo, Double Temperatura, Integer unPuntaje) {
-        nivelDeAdaptacion = Temperatura + nivelDeAbrigo;
-        puntaje = unPuntaje;
+    public AdaptacionPuntuada() {
+        super();
     }
 
     public Integer getPuntaje() {
         return puntaje;
     }
 
-    public void setPuntaje(Integer puntaje) {
-
+    public void setPuntaje(Integer puntaje){
         this.puntaje = puntaje;
     }
+
+    public void setnivelDeAdaptacion(int temperatura, Double nivelDeAbrigo) {
+        this.nivelDeAdaptacion = temperatura + nivelDeAbrigo;
+    }
+
+
 
     public Double getNivelDeAdaptacion() {
         return nivelDeAdaptacion;
