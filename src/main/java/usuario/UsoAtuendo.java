@@ -1,4 +1,4 @@
-package atuendo;
+package usuario;
 
 import java.time.LocalDateTime;
 

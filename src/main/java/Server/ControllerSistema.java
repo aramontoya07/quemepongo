@@ -20,8 +20,4 @@ public class ControllerSistema {
     public ModelAndView creadorEventos(Request req, Response res) {
         return new ModelAndView(null, "creadorEventos.hbs");
     }
-
-    public ModelAndView puntuadorAtuendos(Request req, Response res) {
-        return new ModelAndView(null, "puntuadorAtuendos.hbs");
-    }
 }

@@ -30,7 +30,7 @@ public class Server{
         Spark.get("/misEventos/:idEvento/creadorEventos", sistemaC::creadorEventos, new HandlebarsTemplateEngine());
 
         Spark.get("/puntuarAtuendos", usuarioC::listarAceptados, new HandlebarsTemplateEngine());
-        Spark.get("/puntuarAtuendos/:idAtuendo", sistemaC::puntuadorAtuendos, new HandlebarsTemplateEngine());
+        Spark.get("/puntuarAtuendos/:idAtuendo", usuarioC::puntuadorAtuendos, new HandlebarsTemplateEngine());
 
         Spark.post("/registro", usuarioC::registrarUsuario, new HandlebarsTemplateEngine());
         Spark.post("/login", usuarioC::loguearUsuario, new HandlebarsTemplateEngine());

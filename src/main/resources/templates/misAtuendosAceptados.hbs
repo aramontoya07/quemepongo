@@ -6,16 +6,30 @@
 
 <hr class="mt-2 mb-5" />
 
-    <div class="row text-center text-lg-left">
-    {{#each }}
-    <div class="card" style="width: 10rem;">
-      <img src="..." class="card-img-top" alt="...">
-      <div class="card-body">
-        <p class="card-text">Prenda {{id}}</p>
+<div class="container">
+  <div class="text-center text-lg-left">
+    {{#each aceptados}}
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-text ">Atuendo {{atuendo.id}}</h3>
+          <div class="row justify-content-start justify-content-center">
+          <div class="col col-md-2"><img src="{{atuendo.superior.rutaImagen}}" class="card-img-top" alt="..."></div>
+          <div class="col col-md-2"><img src="{{atuendo.inferior.rutaImagen}}" class="card-img-top" alt="..."></div>
+          <div class="col col-md-2"><img src="{{atuendo.calzado.rutaImagen}}" class="card-img-top" alt="..."></div>
+          {{#each atuendo.accesorios}}
+          <div class="col col-md-2"><img src="{{rutaImagen}}" class="card-img-top" alt="..."></div>
+          {{/each}}
+          {{#each atuendo.capasAbrigos}}
+          <div class="col col-md-2"><img src="{{rutaImagen}}" class="card-img-top" alt="..."></div>
+          {{/each}}
+          </div>
+          <a href="/puntuarAtuendos/{{atuendo.id}}" type="button" class="btn btn-primary btn-sm btn-block">Puntuar</a>
+        </div>
       </div>
-    </div>
+      <br>
     {{/each}}
     </div>
+</div>
 {{/partial}}
 
 {{> layout.hbs}}
