@@ -96,6 +96,12 @@ public class SetUpUsuario {
 
 
     public Usuario setear(){
+
+        superclasico.setId(0);
+        fiesta.setId(1);
+        finalDelMundial.setId(2);
+        evento.setId(3);
+
         ServicioClimatico.definirProvedor(new MockAgradable());
         remera.setTiposAceptados(new ArrayList<TipoPrenda>(Arrays.asList(campera)));
         remeraDesabrigada.setTiposAceptados(new ArrayList<TipoPrenda>(Arrays.asList(campera)));

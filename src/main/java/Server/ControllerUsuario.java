@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import atuendo.Atuendo;
 import atuendo.UsoAtuendo;
 import eventos.AsistenciaEvento;
+import eventos.Evento;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -130,10 +131,11 @@ public class ControllerUsuario{
 
         public ModelAndView aceptarSugerencia(Request req, Response res) {
             String idUsuario = req.attribute("idUsuario");
-            Usuario usuario = null; // @TODO: obtener usuario logueado
-            String idAtuendo = req.params("idAtuendo");
-            Atuendo atuendo = null; // @TODO: obtener atuendo indicado
-            usuario.aceptarAtuendo(atuendo);
+            Usuario usuario = obtenerUsuario(idUsuario);
+            //String idEvento = req.params("idEvento");
+            //String idAtuendo = req.params("idAtuendo");
+            //Atuendo = obtenerAtuendo(idAtuendo)
+            //usuario.aceptarAtuendo(atuendo);
             res.redirect("/misEventos/:idEvento");
             return null;
         }  
