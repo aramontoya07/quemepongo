@@ -1,6 +1,7 @@
 package atuendo;
 
 import db.EntidadPersistente;
+import db.EntityManagerHelper;
 
 import javax.persistence.*;
 
@@ -32,5 +33,10 @@ public class SugerenciasPosibles extends EntidadPersistente {
 
     public void setTipo(TipoSugerencia tipo) {
         this.tipo = tipo;
+    }
+
+    public void persistir() {
+        atuendo.persistir();
+        EntityManagerHelper.getEntityManager().persist(this);
     }
 }

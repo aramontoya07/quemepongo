@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 import atuendo.SugerenciasClima;
 
+import db.EntityManagerHelper;
 import excepciones.EventoException;
 import db.EntidadPersistente;
 import usuario.Usuario;
@@ -36,7 +37,12 @@ public class AsistenciaEvento extends EntidadPersistente{
 		sugerenciasEvento = usuario.pedirSugerenciaSegunClima(evento.getUbicacion());
 		usuario.notificarSugerenciasListas(this);
 	}
-	
+
+	public void persistir(){
+		evento.persistir();
+		sugerenciasEvento.forEach(sugerenciasClima -> sugerenciasClima.persistir());
+		EntityManagerHelper.getEntityManager().persist(this);
+	}
 	
 	boolean ocurreEntre(LocalDateTime fechaMinima, LocalDateTime fechaMaxima){
 		return evento.getFecha().isAfter(fechaMinima) && evento.getFecha().isBefore(fechaMaxima);

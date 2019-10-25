@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import clima.Clima;
+import db.EntityManagerHelper;
 import excepciones.PrendaException;
 import prenda.ParteAbrigada;
 import prenda.Prenda;
@@ -164,4 +165,11 @@ public class Atuendo extends EntidadPersistente {
 	public boolean estaDisponible() {
 		return obtenerPrendasTotales().stream().allMatch(prenda -> guardarropaOrigen.prendaDisponible(prenda));
 	}
+
+    public void persistir() {
+		//guardarropaOrigen.persisitir();
+		superior.persistir();
+		inferior.persistir();
+		EntityManagerHelper.getEntityManager().persist(this);
+    }
 }

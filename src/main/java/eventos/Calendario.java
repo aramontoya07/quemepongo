@@ -47,6 +47,10 @@ public class Calendario extends EntidadPersistente{
 		}
 	}
 
+	public AsistenciaEvento obtenerAsistencia(Evento evento){
+		return eventos.stream().filter(asistenciaEvento -> asistenciaEvento.esDeEvento(evento)).findFirst().get();
+	}
+
 	public void quitarEvento(Evento evento){
 		eventos = eventos.stream()
 				.filter(asistenciaEvento -> !asistenciaEvento.esDeEvento(evento))

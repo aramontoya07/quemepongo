@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 
+import db.EntityManagerHelper;
 import org.quartz.Trigger;
 
 import db.EntidadPersistente;
@@ -56,4 +57,8 @@ public class Evento extends EntidadPersistente {
 	private boolean esEventoCercano() {
 		return !esEventoLejano();
 	}
+
+    public void persistir() {
+		EntityManagerHelper.getEntityManager().persist(this);
+    }
 }

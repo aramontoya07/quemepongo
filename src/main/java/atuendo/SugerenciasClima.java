@@ -2,6 +2,7 @@ package atuendo;
 
 import clima.Clima;
 import db.EntidadPersistente;
+import db.EntityManagerHelper;
 import usuario.PreferenciasDeAbrigo;
 
 import java.util.*;
@@ -36,6 +37,11 @@ public class SugerenciasClima extends EntidadPersistente{
 
     public List<Atuendo> getAproximadas(){
         return atuendosSugeridos.stream().filter(sugerencia -> sugerencia.getTipo().equals(TipoSugerencia.APROXIMADA)).map(sugerencia -> sugerencia.getAtuendo()).collect(Collectors.toList());
+    }
+
+    public void persistir(){
+        atuendosSugeridos.forEach(atuendo -> atuendo.persistir());
+        EntityManagerHelper.getEntityManager().persist(this);
     }
 
     public void agregarAtuendoSegunClima(Atuendo atuendo, Clima climaActual){
