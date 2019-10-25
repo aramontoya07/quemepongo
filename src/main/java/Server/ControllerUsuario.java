@@ -5,19 +5,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-<<<<<<< HEAD
 import atuendo.Atuendo;
+import atuendo.UsoAtuendo;
 import eventos.AsistenciaEvento;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import usuario.UsoAtuendo;
-=======
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import atuendo.UsoAtuendo;
->>>>>>> 8c0a208999c9ce9d3dc9c7f046b91a0bcfe18055
 import usuario.Usuario;
 
 public class ControllerUsuario{

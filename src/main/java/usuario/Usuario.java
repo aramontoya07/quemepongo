@@ -87,16 +87,10 @@ public class Usuario extends EntidadPersistente {
 
 	public void actualizarSubscripcionAPremium() {
 		subscripcion = new SubscripcionPremium();
-		EntityManagerHelper.beginTransaction();
-		EntityManagerHelper.getEntityManager().persist(subscripcion);
-		EntityManagerHelper.commit();
 	}
 
 	public void cancelarPremium() {
 		subscripcion = new SubscripcionGratuita();
-		EntityManagerHelper.beginTransaction();
-		EntityManagerHelper.getEntityManager().persist(subscripcion);
-		EntityManagerHelper.commit();
 	}
 
 	//SUGERENCIAS
