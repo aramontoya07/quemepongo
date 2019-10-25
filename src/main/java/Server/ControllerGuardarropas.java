@@ -41,6 +41,16 @@ public class ControllerGuardarropas {
     	Guardarropa guardarropa = new Guardarropa();
         return new ModelAndView(guardarropa, "wizardTipoPrenda.hbs");
     }
+
+    public ModelAndView wizardCaracteristicas(Request req, Response res) {
+        Guardarropa guardarropa = new Guardarropa();
+        return new ModelAndView(guardarropa, "wizardCaracteristicas.hbs");
+    }
+
+    public ModelAndView wizardAdjuntarImagen(Request req, Response res) {
+        Guardarropa guardarropa = new Guardarropa();
+        return new ModelAndView(guardarropa, "wizardAdjuntarImagen.hbs");
+    }
     
     public ModelAndView agregarPrenda(Request req, Response res) {
         String tipoPrenda = req.params("tipoPrenda");
