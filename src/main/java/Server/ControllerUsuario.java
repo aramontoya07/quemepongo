@@ -62,8 +62,14 @@ public class ControllerUsuario{
             String idUsuario = req.attribute("idUsuario");
             Usuario usuario = obtenerUsuario(idUsuario);
             Map<String, Object> model = new HashMap<String, Object>();
+<<<<<<< HEAD
             model.put("aceptados",usuario.getAceptados());
             return new ModelAndView(model, "misAtuendosAceptados.hbs");
+=======
+           // model.put();
+
+            return new ModelAndView(atuendos, "misAtuendosAceptados.hbs");
+>>>>>>> d9cc92ca6e3370de80a89827cf78350cb2a3f4e7
         }
 
         public ModelAndView perfil(Request req, Response res) {
