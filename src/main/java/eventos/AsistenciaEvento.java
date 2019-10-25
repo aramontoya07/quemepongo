@@ -18,7 +18,7 @@ public class AsistenciaEvento extends EntidadPersistente{
 	@OneToOne
 	private Evento evento;
 	
-	@OneToMany
+	@OneToMany(cascade = {CascadeType.PERSIST})
 	@JoinColumn(name = "Id_AsistenciaEvento")
 	private Set<SugerenciasClima> sugerenciasEvento = new HashSet<>();
 

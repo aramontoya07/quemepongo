@@ -3,13 +3,15 @@ package test;
 import db.EntityManagerHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import usuario.Usuario;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EmTest extends SetUp {
 
 	@BeforeEach
 	public void inicio () {
-		//hola
 		EntityManagerHelper.beginTransaction();
 	}
 	@BeforeEach
@@ -18,168 +20,65 @@ public class EmTest extends SetUp {
 	}
 
 	@Test
-	public void persistirUsuario(){
+	public void persistirCosas(){
+		EntityManagerHelper.getEntityManager().persist(remera);
+		EntityManagerHelper.getEntityManager().persist(remeraDesabrigada);
+		EntityManagerHelper.getEntityManager().persist(remeraDe30);
+		EntityManagerHelper.getEntityManager().persist(gorro);
+		EntityManagerHelper.getEntityManager().persist(pantalon);
+		EntityManagerHelper.getEntityManager().persist(pantalonDesabrigado);
+		EntityManagerHelper.getEntityManager().persist(zapatilla);
+		EntityManagerHelper.getEntityManager().persist(zapatillaDesabrigada);
+		EntityManagerHelper.getEntityManager().persist(ojota);
+		EntityManagerHelper.getEntityManager().persist(anteojo);
+		EntityManagerHelper.getEntityManager().persist(campera);
+		EntityManagerHelper.getEntityManager().persist(remeraAzul);
+
+		EntityManagerHelper.getEntityManager().persist(colorGenerico);
+
+		EntityManagerHelper.getEntityManager().persist(remeraAzul);
+		EntityManagerHelper.getEntityManager().persist(remeraDeportiva);
+		EntityManagerHelper.getEntityManager().persist(camperaGris);
+		EntityManagerHelper.getEntityManager().persist(jeanRojo);
+		EntityManagerHelper.getEntityManager().persist(jeanNegro);
+		EntityManagerHelper.getEntityManager().persist(ojotas);
+		EntityManagerHelper.getEntityManager().persist(zapatillasVerde);
+		EntityManagerHelper.getEntityManager().persist(anteojos);
+		EntityManagerHelper.getEntityManager().persist(anteojosDeSol);
+		EntityManagerHelper.getEntityManager().persist(gorroLana);
+		EntityManagerHelper.getEntityManager().persist(remeraDesabrigadaAzul);
+		EntityManagerHelper.getEntityManager().persist(remeraDe30Azul);
+		EntityManagerHelper.getEntityManager().persist(pantalonDesabrigadoAzul);
+		EntityManagerHelper.getEntityManager().persist(zapatillasDesabrigadasAzules);
+
+		EntityManagerHelper.getEntityManager().persist(guardarropa);
+		EntityManagerHelper.getEntityManager().persist(otroGuardarropa);
+
+		EntityManagerHelper.getEntityManager().persist(superclasico);
+		EntityManagerHelper.getEntityManager().persist(fiesta);
+		EntityManagerHelper.getEntityManager().persist(finalDelMundial);
+		EntityManagerHelper.getEntityManager().persist(evento);
+
+		EntityManagerHelper.getEntityManager().persist(atuendo1);
+
+		EntityManagerHelper.getEntityManager().persist(asistenciaMundial);
+		EntityManagerHelper.getEntityManager().persist(asistenciaSuperclasico);
+		EntityManagerHelper.getEntityManager().persist(asistenciaFiesta);
+
+		EntityManagerHelper.getEntityManager().persist(calendario);
+
 		EntityManagerHelper.getEntityManager().persist(usuario1);
-		EntityManagerHelper.getEntityManager().persist(peter);
+
+		EntityManagerHelper.commit();
 
 		assertTrue(EntityManagerHelper.getEntityManager().contains(usuario1));
-		EntityManagerHelper.rollback();
+
+		assertEquals(usuario1,EntityManagerHelper.getEntityManager().find(Usuario.class, 0));
 	}
 
-	/*@Disabled
-	@Test
-	public void persistirSuscripcion() {
-
-        EntityManagerHelper.getEntityManager().persist(suscripcion);
-        EntityManagerHelper.commit();
-	}
-	
-	@Test
-	public void persistirPreferenciasDeAbrigo() {
-
-		abrigo.setPreferenciasDeAbrigo(ap);
-		EntityManagerHelper.getEntityManager().persist(ap);
-		EntityManagerHelper.getEntityManager().persist(abrigo);
-		  EntityManagerHelper.commit();
-	}
-	
-	@Test 
-	public void persitirEvento() {
-
-
-		EntityManagerHelper.getEntityManager().persist(evento);
-		EntityManagerHelper.getEntityManager().persist(fiesta);
-		EntityManagerHelper.getEntityManager().persist(superclasico);
-		EntityManagerHelper.getEntityManager().persist(finalDelMundial);
-		  EntityManagerHelper.commit();
-	}
-
-	@Test
-    public void persistirAsistenciaEvento() {
-
-
-        EntityManagerHelper.getEntityManager().persist(finalDelMundial);
-        EntityManagerHelper.getEntityManager().persist(asistenciaMundial);
-        EntityManagerHelper.commit();
-    }
-
-    @Test
-    public void persistirCalendario() {
-
-       	EntityManagerHelper.getEntityManager().persist(fiesta);
-        EntityManagerHelper.getEntityManager().persist(superclasico);
-        EntityManagerHelper.getEntityManager().persist(asistenciaSuperclasico);
-        EntityManagerHelper.getEntityManager().persist(asistenciaFiesta);
-        EntityManagerHelper.getEntityManager().persist(calendario);
-        EntityManagerHelper.commit();
-    }
-
-    @Test
-	public void persistirSugerenciasClima() {
-		SugerenciasClima unaSugerencia = new SugerenciasClima();
-		EntityManagerHelper.getEntityManager().persist(unaSugerencia);
-		EntityManagerHelper.commit();
-	}
-
-    @Test
-	public void persistirGuardarropa() {
-		EntityManagerHelper.getEntityManager().persist(guardarropa);
-		EntityManagerHelper.commit();
-	}
-
-	 /*@Test public void recuperandoUnGuardaropas(){
-		Guardarropa guardarropa = new Guardarropa();
-			EntityManagerHelper.createQuery("from Guardarropas where id = 3").
-			getSingleResult();
-	 		assertEquals(3, guardarropa.getId());
-	}
-
-	 @Test
-	 public void persistirColor() {
-		 EntityManagerHelper.getEntityManager().persist(unColor);
-		 EntityManagerHelper.getEntityManager().persist(otroColor);
-		 EntityManagerHelper.commit();
-	 }
-
-
-	 public void persistirTipoPrenda(TipoPrenda tipo) {
-		 EntityManagerHelper.getEntityManager().persist(tipo);
-		 EntityManagerHelper.commit();
-	 }*/
-
-	/*@Test
-	public void persistirRemeraAzul() {
-
-		remeraAzul.setTipo(remera);
-		remeraAzul.setColorPrimario(unColor);
-		remeraAzul.setColorSecundario(otroColor);
-		remeraAzul.setTrama(Trama.RAYADA);
-		persistirTipoPrenda(remera);
-		persistirColor();
-		EntityManagerHelper.getEntityManager().persist(remeraAzul);
-		EntityManagerHelper.commit();
-	}
-
-	@Test
-	public void persistirZapatillasConverse() {
-
-		zapatillasConverse.setTipo(zapatillas);
-		zapatillasConverse.setColorPrimario(unColor);
-		zapatillasConverse.setColorSecundario(otroColor);
-		zapatillasConverse.setTrama(Trama.RAYADA);
-		persistirTipoPrenda(zapatillas);
-		persistirColor();
-		EntityManagerHelper.getEntityManager().persist(zapatillasConverse);
-		EntityManagerHelper.commit();
-	}
-
-	/*@Test
-	public void persistirPantalonJean() {
-
-		pantalonJean.setTipo(zapatillas);
-		pantalonJean.setColorPrimario(unColor);
-		pantalonJean.setColorSecundario(otroColor);
-		pantalonJean.setTrama(Trama.RAYADA);
-		persistirTipoPrenda(pantalon);
-		persistirColor();
-		EntityManagerHelper.getEntityManager().persist(pantalonJean);
-		EntityManagerHelper.commit();
-	}*/
-	
-//	public void persistirPrenda(Prenda prenda,TipoPrenda tipo, ColorRGB unColor, ColorRGB otroColor,Trama trama) {
-//
-//		prenda.setTipo( tipo);
-//		prenda.setColorPrimario(unColor);
-//		prenda.setColorSecundario(otroColor);
-//		prenda.setTrama(trama);
-//		persistirTipoPrenda( tipo);
-//		persistirColor();
-//		EntityManagerHelper.getEntityManager().persist(tipo);
-//		EntityManagerHelper.commit();
-//	}
-	
-	/*@Test
-	public void persistirAtuendo(){
-		persistirRemeraAzul();
-		persistirZapatillasConverse();
-		persistirPantalonJean();
-		persistirGuardarropa();
-		EntityManagerHelper.getEntityManager().persist(atuendo);
-		EntityManagerHelper.commit();
-		
-	}
-    @Test
-	public void persistirUsuario() { //Falta
-		EntityManagerHelper.getEntityManager().persist(usuario1);
-		EntityManagerHelper.commit();
-
-	}*/
-
-
-
-
-
-
-
-
+	//@Disabled
+	//@Test
+	//public void estefallanda() {
+	//	assertEquals(usuario1,EntityManagerHelper.getEntityManager().find(Usuario.class, 0));
+	//}
 }

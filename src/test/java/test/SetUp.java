@@ -99,6 +99,8 @@ public abstract class SetUp {
     Atuendo atuendo1 = new Atuendo(remeraDe30Azul, pantalonDesabrigadoAzul, zapatillasVerde, guardarropa);
     //Atuendo atuendo2 = new Atuendo(remeraDesabrigadaAzul, pantalonDesabrigado, zapatillasDesabrigadasAzules, guardarropa);
 
+    ColorRGB colorGenerico;
+
     public void setear(){
         ServicioClimatico.definirProvedor(new MockAgradable());
         remera.setTiposAceptados(new ArrayList<TipoPrenda>(Arrays.asList(campera)));
@@ -106,20 +108,22 @@ public abstract class SetUp {
         remeraDe30.setTiposAceptados(new ArrayList<TipoPrenda>(Arrays.asList(campera)));
         campera.setTiposAceptados(new ArrayList<TipoPrenda>(Arrays.asList(campera)));
 
-        borrador_remeraAzul.crearBorrador(new ColorRGB(255, 255, 0), remera, Material.ALGODON);
-        borrador_jeanRojo.crearBorrador(new ColorRGB(255, 0, 0), pantalon, Material.JEAN);
-        borrador_zapatilla.crearBorrador(new ColorRGB(55, 123, 60), zapatilla, Material.CUERO);
-        borrador_remeraDeportiva.crearBorrador(new ColorRGB(77, 4, 10), remera, Material.ALGODON);
-        borrador_jeanNegro.crearBorrador(new ColorRGB(255, 0, 255), pantalon, Material.JEAN);
-        borrador_ojotas.crearBorrador(new ColorRGB(0, 0, 0), ojota, Material.CUERO);
-        borrador_anteojos.crearBorrador(new ColorRGB(0, 0, 0), anteojo, Material.VIDRIO);
-        borrador_anteojosDeSol.crearBorrador(new ColorRGB(0, 0, 0), anteojo, Material.PLASTICO);
-        borrador_camperaGris.crearBorrador(new ColorRGB(245, 5, 128), campera, Material.LANA);
-        borrador_gorroLana.crearBorrador(new ColorRGB(255, 0, 0), gorro, Material.LANA);
-        borrador_remeraDesabrigada.crearBorrador(new ColorRGB(255, 0, 0), remeraDesabrigada, Material.SEDA);
-        borrador_remeraDe30.crearBorrador(new ColorRGB(255, 0, 0), remeraDe30, Material.ALGODON);
-        borrador_pantalonDesabrigado.crearBorrador(new ColorRGB(255, 0, 0), pantalonDesabrigado, Material.JEAN);
-        borrador_zapatillasDesabrigadas.crearBorrador(new ColorRGB(255, 0, 0), zapatillaDesabrigada, Material.CUERO);
+        colorGenerico = new ColorRGB(255, 255, 0);
+
+        borrador_remeraAzul.crearBorrador(colorGenerico, remera, Material.ALGODON);
+        borrador_jeanRojo.crearBorrador(colorGenerico, pantalon, Material.JEAN);
+        borrador_zapatilla.crearBorrador(colorGenerico, zapatilla, Material.CUERO);
+        borrador_remeraDeportiva.crearBorrador(colorGenerico, remera, Material.ALGODON);
+        borrador_jeanNegro.crearBorrador(colorGenerico, pantalon, Material.JEAN);
+        borrador_ojotas.crearBorrador(colorGenerico, ojota, Material.CUERO);
+        borrador_anteojos.crearBorrador(colorGenerico, anteojo, Material.VIDRIO);
+        borrador_anteojosDeSol.crearBorrador(colorGenerico, anteojo, Material.PLASTICO);
+        borrador_camperaGris.crearBorrador(colorGenerico, campera, Material.LANA);
+        borrador_gorroLana.crearBorrador(colorGenerico, gorro, Material.LANA);
+        borrador_remeraDesabrigada.crearBorrador(colorGenerico, remeraDesabrigada, Material.SEDA);
+        borrador_remeraDe30.crearBorrador(colorGenerico, remeraDe30, Material.ALGODON);
+        borrador_pantalonDesabrigado.crearBorrador(colorGenerico, pantalonDesabrigado, Material.JEAN);
+        borrador_zapatillasDesabrigadas.crearBorrador(colorGenerico, zapatillaDesabrigada, Material.CUERO);
 
 
 
