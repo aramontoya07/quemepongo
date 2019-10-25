@@ -11,16 +11,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class EmTest extends SetUp {
 
 	@BeforeEach
-	public void inicio () {
-		EntityManagerHelper.beginTransaction();
-	}
-	@BeforeEach
 	public void setUp(){
 		setear();
 	}
 
 	@Test
 	public void persistirCosas(){
+		EntityManagerHelper.beginTransaction();
 		EntityManagerHelper.getEntityManager().persist(remera);
 		EntityManagerHelper.getEntityManager().persist(remeraDesabrigada);
 		EntityManagerHelper.getEntityManager().persist(remeraDe30);
@@ -66,14 +63,13 @@ public class EmTest extends SetUp {
 		EntityManagerHelper.getEntityManager().persist(asistenciaFiesta);
 
 		EntityManagerHelper.getEntityManager().persist(calendario);
+		usuario1.setMail("nuevomail");
 
 		EntityManagerHelper.getEntityManager().persist(usuario1);
 
 		EntityManagerHelper.commit();
 
 		assertTrue(EntityManagerHelper.getEntityManager().contains(usuario1));
-
-		assertEquals(usuario1,EntityManagerHelper.getEntityManager().find(Usuario.class, 0));
 	}
 
 	//@Disabled

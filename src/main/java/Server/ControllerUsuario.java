@@ -4,12 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import atuendo.Atuendo;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import usuario.RepoUsuarios;
-import usuario.UsoAtuendo;
+import atuendo.UsoAtuendo;
 import usuario.Usuario;
 
 public class ControllerUsuario{

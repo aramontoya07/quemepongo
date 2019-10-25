@@ -2,10 +2,10 @@ package usuario;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import javax.persistence.*;
 import alertas.Alerta;
+import atuendo.UsoAtuendo;
 import db.EntidadPersistente;
 import db.EntityManagerHelper;
 import notificaciones.Informante;
