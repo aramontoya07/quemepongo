@@ -20,7 +20,7 @@ public class AsistenciaEvento extends EntidadPersistente{
 	
 	@OneToMany
 	@JoinColumn(name = "Id_AsistenciaEvento")
-	private Set<SugerenciasClima> sugerenciasEvento = new HashSet<>();
+	public Set<SugerenciasClima> sugerenciasEvento = new HashSet<>();
 
 	public AsistenciaEvento(Evento eventoAsignado) {
 		evento = eventoAsignado;
@@ -37,7 +37,10 @@ public class AsistenciaEvento extends EntidadPersistente{
 		usuario.notificarSugerenciasListas(this);
 	}
 	
-	
+	public boolean esDeFecha(Integer dia, Integer mes, Integer anio){
+		return evento.getFecha().getDayOfMonth() == dia && evento.getFecha().getMonthValue() == mes && evento.getFecha().getYear() == anio;
+	}
+
 	boolean ocurreEntre(LocalDateTime fechaMinima, LocalDateTime fechaMaxima){
 		return evento.getFecha().isAfter(fechaMinima) && evento.getFecha().isBefore(fechaMaxima);
 	}
@@ -57,4 +60,12 @@ public class AsistenciaEvento extends EntidadPersistente{
     public boolean esDeEvento(Evento eventoRecibido) {
 		return eventoRecibido.equals(evento);
     }
+
+	public Set<SugerenciasClima> getSugerenciasEvento() {
+		return sugerenciasEvento;
+	}
+
+	public void setSugerenciasEvento(Set<SugerenciasClima> sugerenciasEvento) {
+		this.sugerenciasEvento = sugerenciasEvento;
+	}
 }

@@ -1,10 +1,18 @@
 package Server;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import atuendo.Atuendo;
 import eventos.AsistenciaEvento;
+import eventos.Evento;
+import eventos.Frecuencia;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -15,8 +23,26 @@ public class ControllerEventos {
     public ModelAndView detalleEvento(Request req, Response res) {
         String idUsuario = req.attribute("idUsuario");
         String idEvento = req.params("idEvento");
-        AsistenciaEvento asistenciaEvento = new AsistenciaEvento(null); //@TODO: obtener asistencia a evento inidicado del usuario logueado
-        return new ModelAndView(asistenciaEvento, "eventosPorFecha.hbs");
+
+        AsistenciaEvento asistencia = (new SetUpUsuario()).setear().getCalendarioEventos().getEventos().stream().filter(a -> a.getEvento().getId() == new Integer(idEvento)).findFirst().orElse(null);
+
+        List<Atuendo> atuendos = new ArrayList<Atuendo>();
+
+        asistencia.getSugerenciasEvento().forEach( sc -> 
+            atuendos.addAll(sc.getExactas())
+        );
+
+        asistencia.getSugerenciasEvento().forEach(sc -> 
+            atuendos.addAll(sc.getAproximadas())
+        );
+
+        Map<String, Object> model = new HashMap<String, Object>();
+        
+        model.put("asistencia", asistencia);
+        model.put("atuendos", atuendos);
+        model.put("idUsuario", idUsuario);
+
+        return new ModelAndView(model, "detalleEvento.hbs");
     }
 
     public ModelAndView agregarEvento(Request req, Response res) {
@@ -32,25 +58,4 @@ public class ControllerEventos {
         res.redirect("/misEventos/:" + req.params("idEvento"));
         return null;
     }
-
-    public ModelAndView aceptarSugerencia(Request req, Response res) {
-        String idUsuario = req.attribute("idUsuario");
-        Usuario usuario = null; //@TODO: obtener usuario logueado
-        String idAtuendo = req.params("idAtuendo");
-        Atuendo atuendo = null; //@TODO: obtener atuendo indicado
-        usuario.aceptarAtuendo(atuendo);
-        res.redirect("/misEventos/:idEvento");
-        return null;
-    }
-
-    public ModelAndView rechazarSugerencia(Request req, Response res) {
-        String idUsuario = req.attribute("idUsuario");
-        Usuario usuario = null; //@TODO: obtener usuario logueado
-        String idAtuendo = req.params("idAtuendo");
-        Atuendo atuendo = null; //@TODO: obtener atuendo indicado
-        usuario.rechazarAtuendo(atuendo);
-        res.redirect("/misEventos/:idEvento");
-        return null;
-    }
-
 }

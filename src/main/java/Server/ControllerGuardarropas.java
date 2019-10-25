@@ -33,7 +33,6 @@ public class ControllerGuardarropas {
         Guardarropa guardarropa = obtenerGuardarropaSegunId(req.attribute("idUsuario"), req.params("idGuardarropas"));
 
         GuardarropaVista gv = new GuardarropaVista(guardarropa);
-        System.out.println("el id " + gv.id);
         return new ModelAndView(gv, "detalleGuardarropas.hbs");
     }
     

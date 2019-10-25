@@ -27,7 +27,7 @@ public class Server{
         Spark.get("/imagen", guardarropasC::wizardAdjuntarImagen, new HandlebarsTemplateEngine());
 
         Spark.get("/misEventos", usuarioC::listarEventos, new HandlebarsTemplateEngine());
-        Spark.get("/misEventos/:fecha", usuarioC::listarEventosPorFecha, new HandlebarsTemplateEngine());
+        Spark.get("/misEventos/:mes/:dia/:anio", usuarioC::listarEventosPorFecha, new HandlebarsTemplateEngine());
         Spark.get("/misEventos/:idEvento", eventosC::detalleEvento, new HandlebarsTemplateEngine());
         Spark.get("/misEventos/:idEvento/creadorEventos", sistemaC::creadorEventos, new HandlebarsTemplateEngine());
 
@@ -38,8 +38,8 @@ public class Server{
         Spark.post("/login", usuarioC::loguearUsuario, new HandlebarsTemplateEngine());
         Spark.post("/misGuardarropas/:idGuardarropas/creadorPrendas", guardarropasC::agregarPrenda, new HandlebarsTemplateEngine());
         Spark.post("/misEventos/:idEvento/creadorEventos", eventosC::agregarEvento, new HandlebarsTemplateEngine());
-        Spark.post("/misEventos/:idEvento/aceptarSugerencia", eventosC::aceptarSugerencia, new HandlebarsTemplateEngine());
-        Spark.post("/misEventos/:idEvento/rechazarSugerencia", eventosC::rechazarSugerencia, new HandlebarsTemplateEngine());
+        Spark.post("/misEventos/:idEvento/aceptarSugerencia", usuarioC::aceptarSugerencia, new HandlebarsTemplateEngine());
+        Spark.post("/misEventos/:idEvento/rechazarSugerencia", usuarioC::rechazarSugerencia, new HandlebarsTemplateEngine());
         Spark.post("/puntuarAtuendos/:idAtuendo", usuarioC::puntuarAtuendo, new HandlebarsTemplateEngine());
         
         Spark.get("/favicon.ico", null, new HandlebarsTemplateEngine()); //??

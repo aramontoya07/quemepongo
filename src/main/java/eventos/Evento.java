@@ -56,4 +56,12 @@ public class Evento extends EntidadPersistente {
 	private boolean esEventoCercano() {
 		return !esEventoLejano();
 	}
+
+	public String getTituloEvento() {
+		return tituloEvento;
+	}
+
+	public void setTituloEvento(String tituloEvento) {
+		this.tituloEvento = tituloEvento;
+	}
 }
