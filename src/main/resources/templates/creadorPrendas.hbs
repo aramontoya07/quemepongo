@@ -1,39 +1,35 @@
 {{#partial "contenido" }}
-<div class="class="page-container">
-    <div class="container col-lg-12">
-	<div class="mt-5 mb-5 text-center">
-		<h2>Crear Prenda</h2>
-	</div>
-	<ul class="step d-flex flex-nowrap">
-  <li class="step-item">
-    <a href="/tipo" class="">Tipo</a>
-  </li>
-  <li class="step-item">
-    <a href="/caracteristicas" class="">Caracter&iacutesticas</a>
-  </li>
-  <li class="step-item">
-    <a href="/imagen" class="">Adjuntar imagen</a>
-  </li>
     
-    
-    </ul>
+    <div class="page-container">
+        <div class="container col-lg-12">
+            <div class="mt-5 mb-5 text-center">
+                <h2>Crear Prenda</h2>
+            </div>
+            <ul class="step d-flex flex-nowrap">
+                <li class="step-item">
+                  <a href="/tipo" class="">Tipo</a>
+                </li>
+                <li class="step-item">
+                    <a href="/caracteristicas" class="">Caracter&iacutesticas</a>
+                </li>
+                <li class="step-item">
+                    <a href="/imagen" class="">Adjuntar imagen</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
-</div>
-</ul> 
+    <form action="">
+        <div class="content-wrap col-lg-12 ml-4 mr-4  text-center">
+            {{#block "wizardPrenda"}}
+            {{/block}}
+        </div>
+    </form>
 
+    <div class="row spacer col-lg-12 col-md-12 col-sm-12 col-xs-12 flex-wrap d-flex justify-content-center mt-4">
+        <a href="/misGuardarropas/:idGuardarropas/creadorPrendas"><button type="button" class="btn btn-primary btn-lg">Crear</button></a>
+    </div>
 
-</div>
-
-<form action="">
- <div class="content-wrap col-lg-12 ml-4 mr-4  text-center">
-  {{#block "wizardPrenda"}}
-	{{/block}}
-</div>
-</form>
-<div class="row spacer col-lg-12 col-md-12 col-sm-12 col-xs-12 flex-wrap d-flex justify-content-center mt-4">
-<a href="/misGuardarropas/:idGuardarropas/creadorPrendas"><button type="button" class="btn btn-primary btn-lg">Crear</button></a>
-</div>	
-</div>
 {{/partial}}
 
 {{> layout.hbs}}
