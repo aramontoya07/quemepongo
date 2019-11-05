@@ -16,7 +16,7 @@ import usuario.Usuario;
 @Entity
 public class AsistenciaEvento extends EntidadPersistente{
 	
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.PERSIST})
 	private Evento evento;
 	
 	@OneToMany(cascade = {CascadeType.PERSIST})

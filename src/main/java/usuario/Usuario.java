@@ -36,7 +36,7 @@ public class Usuario extends EntidadPersistente {
 	private List<UsoAtuendo> atuendosUsados = new ArrayList<>();
 
 
-	@ManyToMany
+	@ManyToMany(cascade = {CascadeType.PERSIST})
 	private Set<Guardarropa> guardarropas = new HashSet<>();
 
 
@@ -49,10 +49,10 @@ public class Usuario extends EntidadPersistente {
 	@Enumerated(EnumType.STRING)
 	private Decision ultimaDecision;
 
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST})
 	private TipoSubscripcion subscripcion;
 
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.PERSIST})
 	private Calendario calendarioEventos = new Calendario();
 
 	@OneToOne(cascade = {CascadeType.PERSIST})

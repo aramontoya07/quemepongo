@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 @Table(name = "Prendas")
 public class Prenda extends EntidadPersistente {
 
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST})
 	private TipoPrenda tipo;
 
 	@Enumerated(EnumType.STRING)
@@ -22,10 +22,10 @@ public class Prenda extends EntidadPersistente {
 	@Enumerated(EnumType.STRING)
 	private Trama trama;
 
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST})
 	private ColorRGB colorPrimario;
 
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST})
 	private ColorRGB colorSecundario;
 
 	@Transient

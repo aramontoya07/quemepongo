@@ -13,7 +13,7 @@ import usuario.EstadoAtuendo;
 @Table(name = "Usos")
 public class UsoAtuendo extends EntidadPersistente{
     //el usoAtuendo sirve para cuando el usuario acepta la sugerencia hecha por el guardaropa, no existe la opcion de que haya varios usos para el mismo atuendo. es OneToOne
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST})
     public Atuendo atuendo;
 
     @Enumerated(EnumType.STRING)

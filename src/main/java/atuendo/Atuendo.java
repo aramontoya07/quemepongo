@@ -15,22 +15,22 @@ import usuario.Guardarropa;
 @Table(name = "Atuendos")
 public class Atuendo extends EntidadPersistente {
 
-	@OneToOne   
+	@OneToOne(cascade = {CascadeType.PERSIST})
 	private Guardarropa guardarropaOrigen;
 
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST})
 	private Prenda superior;
 
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST})
 	private Prenda inferior;
 
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST})
 	private Prenda calzado;
 
-	@ManyToMany
+	@ManyToMany(cascade = {CascadeType.PERSIST})
 	private List<Prenda> accesorios = new ArrayList<>();
 
-	@ManyToMany
+	@ManyToMany(cascade = {CascadeType.PERSIST})
 	private List<Prenda> capasAbrigos = new ArrayList<>();
 
 	public Guardarropa getGuardarropaOrigen() {
