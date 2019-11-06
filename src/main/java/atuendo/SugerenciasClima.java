@@ -39,11 +39,6 @@ public class SugerenciasClima extends EntidadPersistente{
         return atuendosSugeridos.stream().filter(sugerencia -> sugerencia.getTipo().equals(TipoSugerencia.APROXIMADA)).map(sugerencia -> sugerencia.getAtuendo()).collect(Collectors.toList());
     }
 
-    public void persistir(){
-        atuendosSugeridos.forEach(atuendo -> atuendo.persistir());
-        EntityManagerHelper.getEntityManager().persist(this);
-    }
-
     public void agregarAtuendoSegunClima(Atuendo atuendo, Clima climaActual){
         if(atuendo.nivelDeAdaptacionAlClima(climaActual) == 0) {
             atuendosSugeridos.add(new SugerenciasPosibles(atuendo,TipoSugerencia.EXACTA));

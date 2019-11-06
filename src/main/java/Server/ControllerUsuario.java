@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import atuendo.Atuendo;
 import atuendo.UsoAtuendo;
 import eventos.AsistenciaEvento;
-import eventos.Evento;
+import repositorios.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -17,31 +17,32 @@ import usuario.Usuario;
 public class ControllerUsuario{
 
     Usuario usuarioPrueba;
+    private static final String ID_USUARIO = "idUsuario";
 
         public ControllerUsuario(){
             usuarioPrueba = (new SetUpUsuario()).setear();
-            //RepoUsuarios.persistirUsuario(usuarioPrueba);
         }
 
         public Usuario obtenerUsuario(String idUsuario){
-            return usuarioPrueba;
+            return RepositorioUsuarios.obtenerUsuario(idUsuario);
         }
 
-        public UsoAtuendo obtenerAtuendo(Usuario usuario, String idAtuendo){
+        public UsoAtuendo obtenerUsoAtuendo(Usuario usuario, String idAtuendo){
+            int id = Integer.parseInt(idAtuendo);
             Set<UsoAtuendo> usos = usuario.getAceptados();
-            return usos.stream().filter( uso -> uso.getAtuendo().getId() == new Integer(idAtuendo) ).findFirst().orElse(null);
+            return usos.stream().filter(uso -> uso.getAtuendo().mismaId(id)).findFirst().get(); //TODO: que pasa si no lo encuentro?
         }
 
-        public ModelAndView puntuadorAtuendos(Request req, Response res) {
-            String idUsuario = req.attribute("idUsuario");
+        public ModelAndView puntuadorAtuendos(Request req, Response res){
+            String idUsuario = req.attribute(ID_USUARIO);
             String idAtuendo = req.params("idAtuendo");
             Usuario usuario = obtenerUsuario(idUsuario);
-            UsoAtuendo uso = obtenerAtuendo(usuario, idAtuendo);
+            UsoAtuendo uso = obtenerUsoAtuendo(usuario, idAtuendo);
             return new ModelAndView(uso, "puntuadorAtuendos.hbs");
         }
 
         public ModelAndView listarGuardarropas(Request req, Response res) {
-            String idUsuario = req.attribute("idUsuario");
+            String idUsuario = req.attribute(ID_USUARIO);
             Usuario usuario = obtenerUsuario(idUsuario);
             // List<Guardarropa> guardarropas = new ArrayList<Guardarropa>(); //@TODO:
             // obtener guardarropas del usuario logueado
@@ -49,19 +50,19 @@ public class ControllerUsuario{
         }
 
         public ModelAndView listarEventos(Request req, Response res) {
-            String idUsuario = req.attribute("idUsuario");
+            String idUsuario = req.attribute(ID_USUARIO);
             Usuario usuario = obtenerUsuario(idUsuario);
             Map<String, Object> model = new HashMap<String, Object>();
             
             Set<AsistenciaEvento> asistencias = usuario.getCalendarioEventos().getEventos();
-            model.put("idUsuario",idUsuario);
+            model.put(ID_USUARIO,idUsuario);
             model.put("asistencias", asistencias);
 
             return new ModelAndView(model, "misEventos.hbs");
         }
 
         public ModelAndView listarEventosPorFecha(Request req, Response res) {
-            String idUsuario = req.attribute("idUsuario");
+            String idUsuario = req.attribute(ID_USUARIO);
             Usuario usuario = obtenerUsuario(idUsuario);
             Integer dia = new Integer(req.params("dia"));
             Integer mes = new Integer(req.params("mes"));
@@ -72,7 +73,7 @@ public class ControllerUsuario{
             Set<AsistenciaEvento> asistenciasFiltradas = asistencias.stream().filter(asistencia -> asistencia.esDeFecha(dia,mes,anio)).collect(Collectors.toSet());
 
             Map<String, Object> model = new HashMap<String, Object>();
-            model.put("idUsuario", idUsuario);
+            model.put(ID_USUARIO, idUsuario);
             model.put("asistencias", asistenciasFiltradas);
             model.put("fecha", dia + "-" + mes + "-" + anio);
 
@@ -80,7 +81,7 @@ public class ControllerUsuario{
         }
 
         public ModelAndView listarAceptados(Request req, Response res) {
-            String idUsuario = req.attribute("idUsuario");
+            String idUsuario = req.attribute(ID_USUARIO);
             Usuario usuario = obtenerUsuario(idUsuario);
             Map<String, Object> model = new HashMap<String, Object>();
             model.put("aceptados",usuario.getAceptados());
@@ -88,7 +89,7 @@ public class ControllerUsuario{
         }
 
         public ModelAndView perfil(Request req, Response res) {
-            String idUsuario = req.attribute("idUsuario");
+            String idUsuario = req.session().attribute(ID_USUARIO);
             Usuario usuario = obtenerUsuario(idUsuario); 
             return new ModelAndView(usuario, "perfil.hbs");
         }
@@ -98,29 +99,29 @@ public class ControllerUsuario{
             Usuario usuario = new Usuario();
             //@TODO: crear usuario y agregar usuario a la base de datos
 
-            req.session().attribute("idUsuario", usuario.getId());
+            req.session().attribute(ID_USUARIO, Integer.toString(usuario.getId()));
 
             res.redirect("/perfil/" + usuario.getId());
             return null;
         }
 
         public ModelAndView loguearUsuario(Request req, Response res) {
-
-            Boolean existeUsuario = true; //@TODO: controlar existencia en DB
-            
-            Usuario usuario = obtenerUsuario("0");
+            String contrasenia = req.queryParams("inputPassword");
+            String mail = req.queryParams("inputEmail");
+            Usuario usuario = RepositorioUsuarios.obtenerUsuarioPorMailYContra(mail,contrasenia);
+            Boolean existeUsuario = usuario != null;
 
             if(!existeUsuario){
-                res.redirect("/landing");
+                res.redirect("/");
             }else{
-                req.session().attribute("idUsuario", usuario.getId());
+                req.session().attribute(ID_USUARIO, Integer.toString(usuario.getId()));
                 res.redirect("/perfil/" + usuario.getId());
             }
             return null;
         }
 
         public ModelAndView puntuarAtuendo(Request req, Response res) {
-            String idUsuario = req.attribute("idUsuario");
+            String idUsuario = req.attribute(ID_USUARIO);
             Usuario usuario = null; //@TODO: obtener usuario logueado
             
             //@TODO: agregar adapatacion puntuada recibida por params al usuario logueado
@@ -130,7 +131,7 @@ public class ControllerUsuario{
         }
 
         public ModelAndView aceptarSugerencia(Request req, Response res) {
-            String idUsuario = req.attribute("idUsuario");
+            String idUsuario = req.attribute(ID_USUARIO);
             Usuario usuario = obtenerUsuario(idUsuario);
             //String idEvento = req.params("idEvento");
             //String idAtuendo = req.params("idAtuendo");
@@ -141,7 +142,7 @@ public class ControllerUsuario{
         }  
 
         public ModelAndView rechazarSugerencia(Request req, Response res) {
-            String idUsuario = req.attribute("idUsuario");
+            String idUsuario = req.attribute(ID_USUARIO);
             Usuario usuario = obtenerUsuario(idUsuario); // @TODO: obtener usuario logueado
             String idAtuendo = req.params("idAtuendo");
             Atuendo atuendo = null; // @TODO: obtener atuendo indicado

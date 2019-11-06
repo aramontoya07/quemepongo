@@ -1,7 +1,8 @@
-package usuario;
+package repositorios;
 import db.EntityManagerHelper;
+import usuario.Guardarropa;
 
-public class RepoGuardarropa{
+public class RepositorioGuardarropa {
 
     public static Guardarropa obtenerGuardarropa(String id){
         int idUsuario = Integer.parseInt(id);

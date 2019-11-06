@@ -1,7 +1,8 @@
-package usuario;
+package repositorios;
 import db.EntityManagerHelper;
+import usuario.Usuario;
 
-public class RepoUsuarios{
+public class RepositorioUsuarios {
 
     public static Usuario obtenerUsuario(String id){
         int idUsuario = Integer.parseInt(id);
@@ -12,5 +13,10 @@ public class RepoUsuarios{
         EntityManagerHelper.beginTransaction();
         EntityManagerHelper.getEntityManager().persist(usuario);
         EntityManagerHelper.commit();
+    }
+
+    public static Usuario obtenerUsuarioPorMailYContra(String mail, String contrasenia) {
+        //TODO
+        return obtenerUsuario("1");
     }
 }

@@ -42,13 +42,6 @@ public class AsistenciaEvento extends EntidadPersistente{
 		return evento.getFecha().getDayOfMonth() == dia && evento.getFecha().getMonthValue() == mes && evento.getFecha().getYear() == anio;
 	}
 
-
-	public void persistir(){
-		evento.persistir();
-		sugerenciasEvento.forEach(sugerenciasClima -> sugerenciasClima.persistir());
-		EntityManagerHelper.getEntityManager().persist(this);
-	}
-
 	boolean ocurreEntre(LocalDateTime fechaMinima, LocalDateTime fechaMaxima){
 		return evento.getFecha().isAfter(fechaMinima) && evento.getFecha().isBefore(fechaMaxima);
 	}

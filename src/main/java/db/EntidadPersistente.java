@@ -17,4 +17,8 @@ public class EntidadPersistente {
 	public void setId(int i) {
 		id = i;
 	}
+
+    public boolean mismaId(int idRecibida) {
+		return id == idRecibida;
+    }
 }

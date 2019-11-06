@@ -57,9 +57,4 @@ public class TipoPrenda extends EntidadPersistente{
 	public void setTiposAceptados(List<TipoPrenda> tiposAceptados) {
 		this.tiposAceptados = tiposAceptados;
 	}
-
-	public void persistir() {
-
-		EntityManagerHelper.getEntityManager().persist(this);
-	}
 }

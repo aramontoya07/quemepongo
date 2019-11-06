@@ -165,11 +165,4 @@ public class Atuendo extends EntidadPersistente {
 	public boolean estaDisponible() {
 		return obtenerPrendasTotales().stream().allMatch(prenda -> guardarropaOrigen.prendaDisponible(prenda));
 	}
-
-    public void persistir() {
-		//guardarropaOrigen.persisitir();
-		superior.persistir();
-		inferior.persistir();
-		EntityManagerHelper.getEntityManager().persist(this);
-    }
 }

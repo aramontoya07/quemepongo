@@ -58,10 +58,6 @@ public class Evento extends EntidadPersistente {
 		return !esEventoLejano();
 	}
 
-    public void persistir() {
-		EntityManagerHelper.getEntityManager().persist(this);
-    }
-
 	public String getTituloEvento() {
 		return tituloEvento;
 	}
