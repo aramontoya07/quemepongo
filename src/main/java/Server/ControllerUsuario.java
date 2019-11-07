@@ -51,7 +51,7 @@ public class ControllerUsuario{
         }
 
         public ModelAndView listarEventos(Request req, Response res) {
-            String idUsuario = req.attribute(ID_USUARIO);
+            String idUsuario = req.session().attribute(ID_USUARIO);
             Usuario usuario = obtenerUsuario(idUsuario);
             Map<String, Object> model = new HashMap<String, Object>();
             
@@ -119,13 +119,13 @@ public class ControllerUsuario{
             return null;
         }
 
-        public ModelAndView loguearUsuario(Request req, Response res) {
+        public ModelAndView loguearUsuario(Request req, Response res){
             String contrasenia = req.queryParams("inputPassword");
             String mail = req.queryParams("inputEmail");
             try{
                 Usuario usuario = RepositorioUsuarios.obtenerUsuarioPorMailYContra(mail,contrasenia);
                 req.session().attribute(ID_USUARIO, Integer.toString(usuario.getId()));
-                res.redirect("/perfil/" + usuario.getId());
+                res.redirect("/perfil");
                 return null;
             }catch(RepositorioException e){
                 res.redirect("/");

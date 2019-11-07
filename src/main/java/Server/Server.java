@@ -17,7 +17,7 @@ public class Server{
 
         Spark.get("/", sistemaC::landing, new HandlebarsTemplateEngine());
         Spark.get("/registro", sistemaC::registro, new HandlebarsTemplateEngine());
-        Spark.get("/perfil/:id", usuarioC::perfil, new HandlebarsTemplateEngine());
+        Spark.get("/perfil", usuarioC::perfil, new HandlebarsTemplateEngine());
 
         Spark.get("/misGuardarropas", usuarioC::listarGuardarropas, new HandlebarsTemplateEngine());
         Spark.get("/misGuardarropas/:idGuardarropas", guardarropasC::detalleGuardarropa, new HandlebarsTemplateEngine());
