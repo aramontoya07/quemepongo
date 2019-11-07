@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import atuendo.Atuendo;
 import atuendo.UsoAtuendo;
 import eventos.AsistenciaEvento;
+import excepciones.RepositorioException;
 import repositorios.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
@@ -95,9 +96,22 @@ public class ControllerUsuario{
         }
 
         public ModelAndView registrarUsuario(Request req, Response res) {
+            String contrasenia = req.queryParams("inputContrasenia");
+            String mail = req.queryParams("inputEmail");
+            String nombre = req.queryParams("inputNombre");
+            String contraseniaRepetida = req.queryParams("inputRepeticionContrasenia");
+
+            if(!contrasenia.equals(contraseniaRepetida)) {
+                res.redirect("/registro");
+                return null;
+            }
 
             Usuario usuario = new Usuario();
-            //@TODO: crear usuario y agregar usuario a la base de datos
+            usuario.setNombre(nombre);
+            usuario.setMail(mail);
+            usuario.setContrasenia(contrasenia);
+
+            RepositorioUsuarios.persistirUsuario(usuario);
 
             req.session().attribute(ID_USUARIO, Integer.toString(usuario.getId()));
 
@@ -108,16 +122,15 @@ public class ControllerUsuario{
         public ModelAndView loguearUsuario(Request req, Response res) {
             String contrasenia = req.queryParams("inputPassword");
             String mail = req.queryParams("inputEmail");
-            Usuario usuario = RepositorioUsuarios.obtenerUsuarioPorMailYContra(mail,contrasenia);
-            Boolean existeUsuario = usuario != null;
-
-            if(!existeUsuario){
-                res.redirect("/");
-            }else{
+            try{
+                Usuario usuario = RepositorioUsuarios.obtenerUsuarioPorMailYContra(mail,contrasenia);
                 req.session().attribute(ID_USUARIO, Integer.toString(usuario.getId()));
                 res.redirect("/perfil/" + usuario.getId());
+                return null;
+            }catch(RepositorioException e){
+                res.redirect("/");
+                return null;
             }
-            return null;
         }
 
         public ModelAndView puntuarAtuendo(Request req, Response res) {

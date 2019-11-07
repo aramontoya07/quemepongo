@@ -58,12 +58,17 @@ public class Usuario extends EntidadPersistente {
 	@OneToOne(cascade = {CascadeType.PERSIST})
 	private PreferenciasDeAbrigo preferenciasDeAbrigo;
 
-	private String mail;	
+	private String mail;
+	private String nombre;
 
 	public Usuario() {
 		this.subscripcion = new SubscripcionGratuita();
 		RepoUsuarios.getInstance().agregarUsuario(this);
 		preferenciasDeAbrigo = new PreferenciasDeAbrigo();
+	}
+
+	public void setContrasenia(String contrasenia) {
+		this.contrasenia = contrasenia;
 	}
 
 	public AsistenciaEvento obtenerAsistencia(Evento evento){
@@ -315,6 +320,10 @@ public class Usuario extends EntidadPersistente {
 	public void setAtuendosUsados(List<UsoAtuendo> atuendosUsados) {
 		this.atuendosUsados = atuendosUsados;
 	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 	
 	/*----------------------------------------------PARA TEST--------------------------------------------*/
 	@Transient
@@ -323,6 +332,7 @@ public class Usuario extends EntidadPersistente {
 	public void marcarNotificado(){
 		notificado = true;
 	}
+
 
 
 }

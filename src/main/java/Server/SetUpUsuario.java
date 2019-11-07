@@ -3,12 +3,14 @@ package Server;
 import atuendo.Atuendo;
 import clima.MockAgradable;
 import clima.ServicioClimatico;
+import db.EntityManagerHelper;
 import eventos.AsistenciaEvento;
 import eventos.Calendario;
 import eventos.Evento;
 import eventos.Frecuencia;
 import notificaciones.Informante;
 import prenda.*;
+import repositorios.RepositorioUsuarios;
 import usuario.Guardarropa;
 import usuario.Usuario;
 
@@ -19,7 +21,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class SetUpUsuario {
-
     TipoPrenda remera = new TipoPrenda(Categoria.PARTE_SUPERIOR,
             new ArrayList<Material>(Arrays.asList(Material.ALGODON, Material.SEDA)), 12, TipoUso.PRIMARIA);
     TipoPrenda remeraDesabrigada = new TipoPrenda(Categoria.PARTE_SUPERIOR,
@@ -84,6 +85,7 @@ public class SetUpUsuario {
 
     Usuario usuario1 = new Usuario();
 
+
     Calendario calendario = new Calendario();
     Evento superclasico = new Evento("Superclasico", LocalDateTime.now(),"Cancha de Boca", Frecuencia.UNICO);
     Evento fiesta = new Evento("Fiesta",LocalDateTime.now().minusDays(5),"Capital",Frecuencia.UNICO);
@@ -94,14 +96,13 @@ public class SetUpUsuario {
     AsistenciaEvento asistenciaFiesta = new AsistenciaEvento(fiesta);
 
 
+    public static void main(String args[]){
+        SetUpUsuario setUp = new SetUpUsuario();
+        setUp.cargarUsuario();
+        return;
+    }
 
-    public Usuario setear(){
-
-        superclasico.setId(0);
-        fiesta.setId(1);
-        finalDelMundial.setId(2);
-        evento.setId(3);
-
+    private void cargarUsuario() {
         ServicioClimatico.definirProvedor(new MockAgradable());
         remera.setTiposAceptados(new ArrayList<TipoPrenda>(Arrays.asList(campera)));
         remeraDesabrigada.setTiposAceptados(new ArrayList<TipoPrenda>(Arrays.asList(campera)));
@@ -145,33 +146,33 @@ public class SetUpUsuario {
 
 
         remeraAzul.setRutaImagen(
-                "https://http2.mlstatic.com/remera-de-boca-juniors-entrenamiento-2019-nike-D_NQ_NP_905277-MLA31991764874_082019-Q.jpg");
+                "https://http2.mlstatic.com/camiseta-remera-de-boca-juniors-con-pub-quilmes-D_NQ_NP_192615-MLA25293181174_012017-F.jpg");
         remeraDeportiva.setRutaImagen(
-                "https://http2.mlstatic.com/remera-de-boca-juniors-entrenamiento-2019-nike-D_NQ_NP_905277-MLA31991764874_082019-Q.jpg");
+                "https://dexter.vteximg.com.br/arquivos/ids/491598-540-540/AJ5292739_1.jpg?v=637024472802500000");
         camperaGris.setRutaImagen(
-                "https://http2.mlstatic.com/remera-de-boca-juniors-entrenamiento-2019-nike-D_NQ_NP_905277-MLA31991764874_082019-Q.jpg");
+                "https://d26lpennugtm8s.cloudfront.net/stores/062/559/products/jn_41-47e07d6db6b78bdcf715508634664412-1024-1024.jpg");
         jeanRojo.setRutaImagen(
-                "https://http2.mlstatic.com/remera-de-boca-juniors-entrenamiento-2019-nike-D_NQ_NP_905277-MLA31991764874_082019-Q.jpg");
+                "https://electromenaje.net/6395-large_default/carro-de-la-compra-rolser-22-jean-rojo.jpg");
         jeanNegro.setRutaImagen(
-                "https://http2.mlstatic.com/remera-de-boca-juniors-entrenamiento-2019-nike-D_NQ_NP_905277-MLA31991764874_082019-Q.jpg");
+                "https://i.ebayimg.com/images/g/KdkAAOSw2HxcmAo0/s-l300.jpg");
         ojotas.setRutaImagen(
-                "https://http2.mlstatic.com/remera-de-boca-juniors-entrenamiento-2019-nike-D_NQ_NP_905277-MLA31991764874_082019-Q.jpg");
+                "https://http2.mlstatic.com/ojotas-de-ben-10-D_NQ_NP_424811-MLA20645149589_032016-F.jpg");
         zapatillasVerde.setRutaImagen(
-                "https://http2.mlstatic.com/remera-de-boca-juniors-entrenamiento-2019-nike-D_NQ_NP_905277-MLA31991764874_082019-Q.jpg");
+                "https://http2.mlstatic.com/D_NQ_NP_709424-MLA31255200571_062019-V.jpg");
         anteojos.setRutaImagen(
-                "https://http2.mlstatic.com/remera-de-boca-juniors-entrenamiento-2019-nike-D_NQ_NP_905277-MLA31991764874_082019-Q.jpg");
+                "https://loveartnotpeople.org/_dev/wp-content/uploads/2014/05/bnzhkoqieaau-po.jpg");
         anteojosDeSol.setRutaImagen(
-                "https://http2.mlstatic.com/remera-de-boca-juniors-entrenamiento-2019-nike-D_NQ_NP_905277-MLA31991764874_082019-Q.jpg");
+                "https://http2.mlstatic.com/lentes-gafas-de-sol-thug-life-deal-with-it-pixeladas-disfraz-D_NQ_NP_835510-MLA31165124646_062019-F.jpg");
         gorroLana.setRutaImagen(
-                "https://http2.mlstatic.com/remera-de-boca-juniors-entrenamiento-2019-nike-D_NQ_NP_905277-MLA31991764874_082019-Q.jpg");
+                "https://images-na.ssl-images-amazon.com/images/I/81TFS0vN2vL._UX569_.jpg");
         remeraDesabrigadaAzul.setRutaImagen(
-                "https://http2.mlstatic.com/remera-de-boca-juniors-entrenamiento-2019-nike-D_NQ_NP_905277-MLA31991764874_082019-Q.jpg");
+                "https://dafitistaticar-a.akamaihd.net/p/andressa-2211-52088-1-product.jpg");
         remeraDe30Azul.setRutaImagen(
-                "https://http2.mlstatic.com/remera-de-boca-juniors-entrenamiento-2019-nike-D_NQ_NP_905277-MLA31991764874_082019-Q.jpg");
+                "https://www.escamisetasbaloncestonba.com/images/Camisetas%20NBA%20Adidas/Golden%20State%20Warriors/Camiseta_Golden_State_Warriors_Stephen_Curry_NO_30_Azul2.jpg");
         pantalonDesabrigadoAzul.setRutaImagen(
-                "https://http2.mlstatic.com/remera-de-boca-juniors-entrenamiento-2019-nike-D_NQ_NP_905277-MLA31991764874_082019-Q.jpg");
+                "https://mlstaticquic-a.akamaihd.net/penekini-azul-petroleo-lenceria-chiquita-hombre-ms035-D_NQ_NP_837240-MLU31429246785_072019-F.jpg");
         zapatillasDesabrigadasAzules.setRutaImagen(
-                "https://http2.mlstatic.com/remera-de-boca-juniors-entrenamiento-2019-nike-D_NQ_NP_905277-MLA31991764874_082019-Q.jpg");
+                "https://www.podoactiva.com/sites/default/files/blogs.jpg");
 
         prendasGlobales.add(remeraAzul);
         prendasGlobales.add(remeraDeportiva);
@@ -198,11 +199,13 @@ public class SetUpUsuario {
         usuario1.actualizarSubscripcionAPremium();
         usuario1.agregarGuardarropa(guardarropa);
         usuario1.agregarPrendas(guardarropa, prendasOrdenables);
-        usuario1.setMail("usuario1@gmail.com");
         usuario1.setCalendarioEventos(calendario);
         usuario1.asistirAEvento(finalDelMundial);
         usuario1.asistirAEvento(superclasico);
         usuario1.asistirAEvento(fiesta);
+        usuario1.setMail("nico.gomez.mbc@gmail.com");
+        usuario1.setContrasenia("469925199");
+        usuario1.setNombre("NicoxxxKpo");
         asistenciaMundial.generarSugerenciasParaEvento(usuario1);
         asistenciaSuperclasico.generarSugerenciasParaEvento(usuario1);
         asistenciaFiesta.generarSugerenciasParaEvento(usuario1);
@@ -216,6 +219,11 @@ public class SetUpUsuario {
         prendasJustito.add(jeanRojo);
         prendasJustito.add(zapatillasVerde);
 
-        return usuario1;
+        RepositorioUsuarios.persistirUsuario(usuario1);
+        return;
+    }
+
+    public Usuario setear(){ //TODO: DEPRECATE. ya tenemos base de datos y el metodo cargarUsuario(), asi que hay que borrar este metodo que devuelve un usuario
+        return new Usuario();
     }
 }

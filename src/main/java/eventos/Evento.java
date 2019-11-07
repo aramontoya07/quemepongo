@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.Transient;
 
 import db.EntityManagerHelper;
 import org.quartz.Trigger;

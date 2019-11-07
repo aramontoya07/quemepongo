@@ -3,36 +3,40 @@
     <div class="mt-5 pt-2">
         <article class="col-lg-4 mx-auto" style="max-width: 400px;">
             <h4 class="card-title mt-3 text-center">Crear cuenta</h4>
+
             <form action="/registro" method="POST">
+                <fieldset>
 	            <div class="form-group input-group">
 		            <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                     </div>
-                    <input name="" class="form-control" placeholder="Nombre completo" type="text">
+                    <input name="inputNombre" class="form-control" placeholder="Nombre completo" type="text">
                 </div> <!-- form-group// -->
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                     </div>
-                        <input name="" class="form-control" placeholder="Correo electr&oacutenico" type="email">
+                        <input name="inputEmail" class="form-control" placeholder="Correo electronico" type="email">
                 </div> <!-- form-group// -->
                 <div class="form-group input-group">
     	            <div class="input-group-prepend">
 		                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
 		            </div>
-                    <input class="form-control" placeholder="Crear contrase&ntildea" type="password">
+                    <input name="inputContrasenia" class="form-control" placeholder="Crear contrasenia" type="password">
                 </div> <!-- form-group// -->
                 <div class="form-group input-group">
     	            <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
 		            </div>
-                    <input class="form-control" placeholder="Repetir contrase&ntildea" type="password">
+                    <input name="inputRepeticionContrasenia" class="form-control" placeholder="Repetir contrasenia" type="password">
                 </div> <!-- form-group// -->
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block"> Crear  </button>
                 </div> <!-- form-group// -->
                 <p class="text-center">Ya estas registrade? <a href="/">Iniciar Sesi&oacuten</a> </p>
+                </fieldset>
             </form>
+
         </article>
     </div>
 
