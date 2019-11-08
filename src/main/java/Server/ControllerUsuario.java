@@ -19,6 +19,7 @@ import repositorios.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import usuario.Guardarropa;
 import usuario.Usuario;
 
 public class ControllerUsuario {
@@ -35,8 +36,7 @@ public class ControllerUsuario {
     public UsoAtuendo obtenerUsoAtuendo(Usuario usuario, String idAtuendo) {
         int id = Integer.parseInt(idAtuendo);
         Set<UsoAtuendo> usos = usuario.getAceptados();
-        return usos.stream().filter(uso -> uso.getAtuendo().mismaId(id)).findFirst().get(); // TODO: que pasa si no lo
-                                                                                            // encuentro?
+        return usos.stream().filter(uso -> uso.getAtuendo().mismaId(id)).findFirst().get();
     }
 
     public ModelAndView puntuadorAtuendos(Request req, Response res) {
@@ -50,8 +50,6 @@ public class ControllerUsuario {
     public ModelAndView listarGuardarropas(Request req, Response res){
         String idUsuario = req.session().attribute(ID_USUARIO);
         Usuario usuario = obtenerUsuario(idUsuario);
-        // List<Guardarropa> guardarropas = new ArrayList<Guardarropa>(); //@TODO:
-        // obtener guardarropas del usuario logueado
         return new ModelAndView(usuario, "misGuardarropas.hbs");
     }
 
@@ -168,13 +166,10 @@ public class ControllerUsuario {
             Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
             String idEvento = req.params("idEvento");
             String idAtuendo = req.queryParams("idAtuendo");
-            System.out.println(idEvento);
-            System.out.println(idAtuendo);
-            
             Atuendo atuendomaxi = RepositorioAtuendos.obtenerAtuendo(idAtuendo);
 
             EntityManagerHelper.beginTransaction();
-            usuario.aceptarAtuendo(atuendomaxi);
+            usuario.aceptarAtuendo(atuendomaxi); //deberia persistirse el cambio
             EntityManagerHelper.commit();
             
             res.redirect("/misEventos/" + idEvento);

@@ -153,15 +153,17 @@ public class Usuario extends EntidadPersistente {
 	}
 
 	private void chequearAtuendoDisponible(Atuendo atuendo)throws PrendaException {
-		if(!atuendo.estaDisponible()){
-			throw new PrendaException("Algunas prendas del atuendo elegido ya no se hallan disponibles");
-		}
+		if(!atuendo.estaDisponible()){}
 	}
 
 	public Set<Atuendo> getRechazados(){
 		return atuendosUsados.stream().filter( usoAtuendo -> usoAtuendo.getEstado().equals(EstadoAtuendo.RECHAZADO)).
 			map( usoAtuendo -> usoAtuendo.getAtuendo()).
 				collect(Collectors.toSet());
+	}
+
+	public Set<UsoAtuendo> getUsosRechazados() {
+		return atuendosUsados.stream().filter(usoAtuendo -> usoAtuendo.getEstado().equals(EstadoAtuendo.RECHAZADO)).collect(Collectors.toSet());
 	}
 
 	public Set<UsoAtuendo> getAceptados() {

@@ -74,7 +74,7 @@ class UsuarioTest extends SetUp {
 		Set<Atuendo> sugerenciasPedro = pedro.pedirSugerencia();
 		Atuendo atuendo = sugerenciasPedro.stream().collect(Collectors.toList()).get(0);
 		pedro.aceptarAtuendo(atuendo);
-		assertTrue(pedro.getAceptados().contains(atuendo));
+		assertTrue(pedro.getAceptados().stream().map(uso -> uso.getAtuendo()).collect(Collectors.toSet()).contains(atuendo));
 		assertTrue(guardarropa.getPrendasUsadas().containsAll(atuendo.obtenerPrendasTotales()));
 	}
 

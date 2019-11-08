@@ -23,10 +23,10 @@ import prenda.*;
 @Table(name = "Guardarropas")
 public class Guardarropa extends EntidadPersistente{
 
-	@OneToMany(cascade = {CascadeType.PERSIST})
+	@OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_Guardarropa_usadas")
 	public Set<Prenda> usadas = new HashSet<>();
-	@OneToMany(cascade = {CascadeType.PERSIST})
+	@OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_Guardarropa_disponibles")
 	public Set<Prenda> disponibles = new HashSet<>();
 
@@ -41,8 +41,9 @@ public class Guardarropa extends EntidadPersistente{
 	}
 
 	public void usarPrenda(Prenda prenda) {
-		if(!prendaDisponible(prenda) || prendaOcupada(prenda)){
-			throw new GuardarropaException("No se puede usar la prenda porque no esta disponible en el guardarropa");
+		if(!prendaDisponible(prenda)){
+			agregarAUsadas(prenda);
+			return;
 		}
 		quitarDeDisponibles(prenda);
 		agregarAUsadas(prenda);

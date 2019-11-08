@@ -140,4 +140,9 @@ public class Prenda extends EntidadPersistente {
 	public void setPateAbrigada(ParteAbrigada pateAbrigada) {
 		this.pateAbrigada = pateAbrigada;
 	}
+
+	public void imprimirRuta() {
+		System.out.println("hola");
+		System.out.println(rutaImagen);
+	}
 }

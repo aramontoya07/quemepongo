@@ -143,36 +143,34 @@ public class SetUpUsuario {
         pantalonDesabrigadoAzul = borrador_pantalonDesabrigado.crearPrenda();
         zapatillasDesabrigadasAzules = borrador_zapatillasDesabrigadas.crearPrenda();
 
-
-
         remeraAzul.setRutaImagen(
-                "https://http2.mlstatic.com/camiseta-remera-de-boca-juniors-con-pub-quilmes-D_NQ_NP_192615-MLA25293181174_012017-F.jpg");
+                "https://http2.mlstatic.com/remera-de-nino-algodon-azul-francia-D_NQ_NP_721716-MLA31030549905_062019-Q.jpg");
         remeraDeportiva.setRutaImagen(
-                "https://dexter.vteximg.com.br/arquivos/ids/491598-540-540/AJ5292739_1.jpg?v=637024472802500000");
+                "https://media.fotter.com.ar/media/catalog/product/cache/1/thumbnail/9df78eab33525d08d6e5fb8d27136e95/3/8/381i0011-bl0-1_1.jpg");
         camperaGris.setRutaImagen(
-                "https://d26lpennugtm8s.cloudfront.net/stores/062/559/products/jn_41-47e07d6db6b78bdcf715508634664412-1024-1024.jpg");
+                "https://dafitistaticar-a.akamaihd.net/p/valkymia-2822-129633-1-product.jpg");
         jeanRojo.setRutaImagen(
-                "https://electromenaje.net/6395-large_default/carro-de-la-compra-rolser-22-jean-rojo.jpg");
+                "https://static.modymarket.com/uploads/2016/09/109554-1.jpg");
         jeanNegro.setRutaImagen(
-                "https://i.ebayimg.com/images/g/KdkAAOSw2HxcmAo0/s-l300.jpg");
+                "https://mlstaticquic-a.akamaihd.net/pantalon-de-jean-negro-para-hombre-identity-gas-oil-muy-cool-D_NQ_NP_768061-MLU26942693685_032018-F.webp");
         ojotas.setRutaImagen(
-                "https://http2.mlstatic.com/ojotas-de-ben-10-D_NQ_NP_424811-MLA20645149589_032016-F.jpg");
+                "https://http2.mlstatic.com/zonazero-havaianas-ojotas-slim-acero-mujer-originales-D_NQ_NP_641590-MLA31100638725_062019-Q.jpg");
         zapatillasVerde.setRutaImagen(
                 "https://http2.mlstatic.com/D_NQ_NP_709424-MLA31255200571_062019-V.jpg");
         anteojos.setRutaImagen(
-                "https://loveartnotpeople.org/_dev/wp-content/uploads/2014/05/bnzhkoqieaau-po.jpg");
+                "https://www.dhresource.com/0x0/f2/albu/g7/M01/2C/33/rBVaSlvELDGADeK8AABj623bG1c255.jpg");
         anteojosDeSol.setRutaImagen(
-                "https://http2.mlstatic.com/lentes-gafas-de-sol-thug-life-deal-with-it-pixeladas-disfraz-D_NQ_NP_835510-MLA31165124646_062019-F.jpg");
+                "https://http2.mlstatic.com/anteojos-lentes-de-sol-vulk-ezy-polarizados-redondos-gafas-D_NQ_NP_794294-MLA31043118113_062019-Q.jpg");
         gorroLana.setRutaImagen(
                 "https://images-na.ssl-images-amazon.com/images/I/81TFS0vN2vL._UX569_.jpg");
         remeraDesabrigadaAzul.setRutaImagen(
-                "https://dafitistaticar-a.akamaihd.net/p/andressa-2211-52088-1-product.jpg");
+                "https://http2.mlstatic.com/top-azul-para-salir-con-encaje-talle-s-D_NQ_NP_620521-MLA29905488094_042019-F.jpg");
         remeraDe30Azul.setRutaImagen(
-                "https://www.escamisetasbaloncestonba.com/images/Camisetas%20NBA%20Adidas/Golden%20State%20Warriors/Camiseta_Golden_State_Warriors_Stephen_Curry_NO_30_Azul2.jpg");
+                "https://http2.mlstatic.com/remera-de-nino-algodon-azul-marino-D_NQ_NP_868952-MLA28080545043_092018-F.jpg");
         pantalonDesabrigadoAzul.setRutaImagen(
-                "https://mlstaticquic-a.akamaihd.net/penekini-azul-petroleo-lenceria-chiquita-hombre-ms035-D_NQ_NP_837240-MLU31429246785_072019-F.jpg");
+                "https://s.fenicio.app/f/tht/catalogo/articulos/I19BB054-AZL-1_2000-2000_1554725444_5b5.jpg");
         zapatillasDesabrigadasAzules.setRutaImagen(
-                "https://www.podoactiva.com/sites/default/files/blogs.jpg");
+                "https://cdn.lookastic.es/zapatillas-azules/nike-original-886391.jpg");
 
         prendasGlobales.add(remeraAzul);
         prendasGlobales.add(remeraDeportiva);
@@ -192,7 +190,6 @@ public class SetUpUsuario {
         prendasOrdenables.add(remeraDesabrigadaAzul);
         prendasOrdenables.add(pantalonDesabrigadoAzul);
         prendasOrdenables.add(zapatillasDesabrigadasAzules);
-        prendasOrdenables.add(remeraAzul);
         prendasOrdenables.add(jeanRojo);
         prendasOrdenables.add(zapatillasVerde);
 

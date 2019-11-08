@@ -107,6 +107,12 @@ public class Atuendo extends EntidadPersistente {
 		return false;
 	}
 
+	public Boolean noEsDeId(List<Integer> ids){
+		System.out.println("el id " + this.getId() + " da: ");
+		System.out.println(ids.stream().allMatch(id -> (!this.mismaId(id))));
+		return ids.stream().allMatch(id -> (!this.mismaId(id)));
+	}
+
 	public void agregarAbrigo(Prenda prenda){
 		switch (prenda.getCategoria()){
 			case PARTE_SUPERIOR:
@@ -168,5 +174,9 @@ public class Atuendo extends EntidadPersistente {
 
 	public boolean estaDisponible() {
 		return obtenerPrendasTotales().stream().allMatch(prenda -> guardarropaOrigen.prendaDisponible(prenda));
+	}
+
+	public String getRutaImagen() {
+		return superior.getRutaImagen() + " " + inferior.getRutaImagen() + " " + calzado.getRutaImagen();
 	}
 }

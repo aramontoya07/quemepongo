@@ -1,7 +1,10 @@
 package repositorios;
+
 import db.EntityManagerHelper;
 import excepciones.RepositorioException;
 import usuario.Usuario;
+
+import java.util.List;
 
 import javax.persistence.TypedQuery;
 
@@ -27,7 +30,8 @@ public class RepositorioUsuarios {
             TypedQuery <Usuario> query = EntityManagerHelper.getEntityManager()
                     .createQuery("SELECT u FROM Usuario u WHERE mail = '" + mail +"' AND contrasenia = '" + contrasenia + "'"
                             , Usuario.class);
-            return query.getSingleResult();
+             List<Usuario> usuariosPosibles = query.getResultList();
+             return usuariosPosibles.get(0);
         }catch(Exception e){
             throw new RepositorioException("No se pudo encontrar al usuario con mail " + mail + " y contrasenia " + contrasenia);
         }

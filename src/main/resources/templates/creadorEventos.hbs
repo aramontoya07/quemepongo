@@ -1,5 +1,46 @@
 {{#partial "contenido" }}
-    <h1>CREADOR EVENTOS</h1>
+<div class="container">
+    <form class="card" action="/creadorEventos" method="POST">
+        <div class=" d-none d-md-flex col-md-4 col-lg-12 d-flex justify-content-start justify-content-center">
+            <h1 class="login-heading font-weight-light text-lg-left mt-4 mb-0">Mis Eventos</h1>
+        </div>
+        <div class="row m-4">
+            <div class="col-md-4">
+                <label class="input-group-text" for="inputGroupSelect01">Titulo evento</label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="titulo" id="inputGroupSelect01" required>
+            </div>
+        </div>
+        <div class="row m-4">
+            <div class="col-md-4">
+                <label class="input-group-text" for="inputGroupSelect02">Fecha</label>
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="fecha" id="inputGroupSelect02" required>
+            </div>
+        </div>
+        <div class="row m-4">
+            <div class="col-md-4">
+                <label class="input-group-text" for="inputGroupSelect03">Ubicacion</label>
+            </div>
+            <div class="col-md-4">
+            <input type="text" name="ubicacion" id="inputGroupSelect03" required>
+            </div>
+        </div>
+        <button class="button-primary m-4" type="submit">Crear Evento</button>
+    </form>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        $('#inputGroupSelect02').datepicker({
+            uiLibrary: 'bootstrap4',
+            dateFormat: 'dd-mm-yyyy'
+        });
+    });
+</script>
 {{/partial}}
 
 {{> layout.hbs}}
