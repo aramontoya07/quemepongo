@@ -34,6 +34,10 @@ public class Prenda extends EntidadPersistente {
 	@Enumerated(EnumType.STRING)
 	private ParteAbrigada pateAbrigada;
 
+	public Prenda(){
+		
+	}
+
 	private String rutaImagen;
 
 	public Prenda(TipoPrenda tipo, Material material, Trama trama, ColorRGB colorPrimario, ColorRGB colorSecundario) {

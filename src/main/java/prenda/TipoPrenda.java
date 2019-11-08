@@ -26,6 +26,10 @@ public class TipoPrenda extends EntidadPersistente{
 	@ManyToMany(cascade = {CascadeType.PERSIST})
 	private List<TipoPrenda> tiposAceptados = new ArrayList<TipoPrenda>();
 
+	public TipoPrenda(){
+		
+	}
+
 	public TipoPrenda(Categoria categoria, List<Material> materialesPermitidos, int nivelAbrigo, TipoUso tipoBasico){
 		super();
 		TipoBasico = tipoBasico;

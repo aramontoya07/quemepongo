@@ -26,14 +26,6 @@ public class Calendario extends EntidadPersistente{
 	@Transient
 	private Scheduler scheduler;
 
-	public Set<AsistenciaEvento> getEventos() {
-		return eventos;
-	}
-
-	public void setEventos(Set<AsistenciaEvento> eventos) {
-		this.eventos = eventos;
-	}
-
 	@OneToMany(cascade = {CascadeType.PERSIST})
 	@JoinColumn(name = "Id_calendario")
 	private Set<AsistenciaEvento> eventos = new HashSet<>();
@@ -49,6 +41,14 @@ public class Calendario extends EntidadPersistente{
 
 	public AsistenciaEvento obtenerAsistencia(Evento evento){
 		return eventos.stream().filter(asistenciaEvento -> asistenciaEvento.esDeEvento(evento)).findFirst().get();
+	}
+
+	public Set<AsistenciaEvento> getEventos() {
+		return eventos;
+	}
+
+	public void setEventos(Set<AsistenciaEvento> eventos) {
+		this.eventos = eventos;
 	}
 
 	public void quitarEvento(Evento evento){

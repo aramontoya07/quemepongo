@@ -1,4 +1,4 @@
-package Server;
+package server;
 
 import spark.Spark;
 import spark.debug.DebugScreen;
@@ -6,7 +6,6 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class Server{
     public static void main(String[] args) {
-
         Spark.port(9000);
         Spark.init();
 
@@ -42,7 +41,7 @@ public class Server{
         Spark.post("/misEventos/:idEvento/rechazarSugerencia", usuarioC::rechazarSugerencia, new HandlebarsTemplateEngine());
         Spark.post("/puntuarAtuendos/:idAtuendo", usuarioC::puntuarAtuendo, new HandlebarsTemplateEngine());
         
-        Spark.get("/favicon.ico", null, new HandlebarsTemplateEngine()); //??
+        Spark.get("/favicon.ico", null, new HandlebarsTemplateEngine()); 
 
         DebugScreen.enableDebugScreen();
     }

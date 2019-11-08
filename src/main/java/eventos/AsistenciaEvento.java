@@ -3,12 +3,8 @@ package eventos;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.*;
-
 import atuendo.SugerenciasClima;
-
-import db.EntityManagerHelper;
 import excepciones.EventoException;
 import db.EntidadPersistente;
 import usuario.Usuario;
@@ -25,6 +21,9 @@ public class AsistenciaEvento extends EntidadPersistente{
 
 	public AsistenciaEvento(Evento eventoAsignado) {
 		evento = eventoAsignado;
+	}
+
+	public AsistenciaEvento() {
 	}
 
     Set<SugerenciasClima> pedirSugerencias(){
@@ -68,5 +67,9 @@ public class AsistenciaEvento extends EntidadPersistente{
 
 	public void setSugerenciasEvento(Set<SugerenciasClima> sugerenciasEvento) {
 		this.sugerenciasEvento = sugerenciasEvento;
+	}
+
+	public LocalDateTime getFecha() {
+		return getEvento().getFecha();
 	}
 }

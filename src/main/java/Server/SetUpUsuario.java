@@ -1,4 +1,4 @@
-package Server;
+package server;
 
 import atuendo.Atuendo;
 import clima.MockAgradable;

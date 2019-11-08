@@ -33,6 +33,10 @@ public class Atuendo extends EntidadPersistente {
 	@ManyToMany(cascade = {CascadeType.PERSIST})
 	private List<Prenda> capasAbrigos = new ArrayList<>();
 
+	public Atuendo(){
+	
+	}
+
 	public Guardarropa getGuardarropaOrigen() {
 		return guardarropaOrigen;
 	}

@@ -9,8 +9,6 @@ import usuario.Usuario;
 
 import javax.persistence.TypedQuery;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -24,7 +22,6 @@ public class EmTest extends SetUp {
 	@Test
 	public void persistirCosas(){
 		EntityManagerHelper.beginTransaction();
-
 
 		EntityManagerHelper.getEntityManager().persist(usuario1);
 		usuario1.setNombre("Jorge");

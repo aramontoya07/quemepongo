@@ -1,4 +1,4 @@
-package Server;
+package server;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -9,22 +9,26 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import alertas.RepoUsuarios;
 import atuendo.Atuendo;
 import eventos.AsistenciaEvento;
 import eventos.Evento;
 import eventos.Frecuencia;
+import repositorios.RepositorioAsistenciaEventos;
+import repositorios.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import usuario.Usuario;
 
 public class ControllerEventos {
-    
-    public ModelAndView detalleEvento(Request req, Response res) {
-        String idUsuario = req.attribute("idUsuario");
-        String idEvento = req.params("idEvento");
+    private static final String ID_USUARIO = "idUsuario";
+    private static final String ID_ASISTENCIA = "idEvento";
 
-        AsistenciaEvento asistencia = (new SetUpUsuario()).setear().getCalendarioEventos().getEventos().stream().filter(a -> a.getEvento().getId() == new Integer(idEvento)).findFirst().orElse(null);
+    public ModelAndView detalleEvento(Request req, Response res) {
+        String idAsistencia = req.params(ID_ASISTENCIA);
+        
+        AsistenciaEvento asistencia = RepositorioAsistenciaEventos.obtenerAsistencia(idAsistencia);
 
         List<Atuendo> atuendos = new ArrayList<Atuendo>();
 
@@ -40,20 +44,18 @@ public class ControllerEventos {
         
         model.put("asistencia", asistencia);
         model.put("atuendos", atuendos);
-        model.put("idUsuario", idUsuario);
-
         return new ModelAndView(model, "detalleEvento.hbs");
     }
 
     public ModelAndView agregarEvento(Request req, Response res) {
-        String idUsuario = req.attribute("idUsuario");
-        
-        String titulo = req.params("titulo");
-        String fecha = req.params("fecha");
-        String ubicacion = req.params("ubicacion");
-        String frecuencia = req.params("frecuencia");
+        String idUsuario = req.session().attribute(ID_USUARIO);
+        Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
+        String titulo = req.queryParams("titulo");
+        //LocalDateTime fecha = req.queryParams("fecha"); // formato: 30/12/2019
+        String ubicacion = req.queryParams("ubicacion");
+        String frecuencia = req.queryParams("frecuencia");
 
-        //@TODO: agregar el evento al usuario logueado
+        Evento evento = new Evento(titulo, null, ubicacion, Frecuencia.UNICO);
 
         res.redirect("/misEventos/:" + req.params("idEvento"));
         return null;

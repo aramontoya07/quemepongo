@@ -1,7 +1,8 @@
-package Server;
+package server;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
@@ -9,12 +10,15 @@ import javax.persistence.EntityManager;
 import db.EntityManagerHelper;
 import prenda.Categoria;
 import prenda.Prenda;
+import repositorios.RepositorioGuardarropa;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import usuario.Guardarropa;
 import usuario.GuardarropaVista;
 import usuario.Usuario;
+
+import java.util.HashMap;
 
 
 
@@ -30,10 +34,15 @@ public class ControllerGuardarropas {
     }
 
     public ModelAndView detalleGuardarropa(Request req, Response res) {
-        Guardarropa guardarropa = obtenerGuardarropaSegunId(req.attribute("idUsuario"), req.params("idGuardarropas"));
+        String id = req.params("idGuardarropas");
+        Guardarropa guardarropa = RepositorioGuardarropa.obtenerGuardarropa(id);
 
-        GuardarropaVista gv = new GuardarropaVista(guardarropa);
-        return new ModelAndView(gv, "detalleGuardarropas.hbs");
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("inferiores", guardarropa.getPrendasDeParte(Categoria.PARTE_INFERIOR));
+        model.put("superiores", guardarropa.getPrendasDeParte(Categoria.PARTE_SUPERIOR));
+        model.put("accesorios", guardarropa.getPrendasDeParte(Categoria.ACCESORIO));
+        model.put("calazados", guardarropa.getPrendasDeParte(Categoria.CALZADO));
+        return new ModelAndView(model, "detalleGuardarropas.hbs");
     }
     
     public ModelAndView wizardTipoPrenda(Request req, Response res) {
@@ -52,17 +61,18 @@ public class ControllerGuardarropas {
     }
     
     public ModelAndView agregarPrenda(Request req, Response res) {
-        String tipoPrenda = req.params("tipoPrenda");
-        String material = req.params("material");
-        String trama = req.params("trama");
-        String colorPrimario = req.params("colorPrimario");
-        String colorSecundario = req.params("colorSecundario");
-        String imagen = req.params("imagen");
-        String parteAbrigada = req.params("parteAbrigada");
+        String tipoPrenda = req.queryParams("tipoPrenda");
+        String material = req.queryParams("material");
+        String trama = req.queryParams("trama");
+        String colorPrimario = req.queryParams("colorPrimario");
+        String colorSecundario = req.queryParams("colorSecundario");
+        String rutaImagen = req.queryParams("imagen");
+        String parteAbrigada = req.queryParams("parteAbrigada");
+        String idGuardarropas = req.params("idGuardarropas");
         
-        //@TODO generar request que guarde la nueva prenda
+        Prenda prenda = null;
 
-        res.redirect("/guardarropas/:" + req.params("idGuardarropas"));
+        res.redirect("/guardarropas/" + idGuardarropas);
         return null;
     }
 }

@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - SetUpUsuario",
+            "request": "launch",
+            "mainClass": "server.SetUpUsuario",
+            "projectName": "QueMePongo"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Server",
+            "request": "launch",
+            "mainClass": "server.Server",
+            "projectName": "QueMePongo"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - Server",
             "request": "launch",
             "mainClass": "Server.Server",

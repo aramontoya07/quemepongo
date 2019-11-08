@@ -225,7 +225,6 @@ public class Usuario extends EntidadPersistente {
 	//PUNTUAR ATUENDOS
 
 	public void puntuarParteDeAtuendoEn(UsoAtuendo uso, Integer puntaje, ParteAbrigada parte) throws AtuendoException{
-		if(!getAceptados().contains(uso.getAtuendo())) throw new AtuendoException("No se puede puntuar un atuendo sin antes haberlo aceptado");
 		AdaptacionPuntuada nuevoPuntaje =  new AdaptacionPuntuada();
 		nuevoPuntaje.setPuntaje(puntaje);
 		nuevoPuntaje.setnivelDeAdaptacion(uso.getAtuendo().abrigoEn(parte), uso.getTemperaturaDeUso());

@@ -4,26 +4,16 @@
     <h1 class="login-heading font-weight-light text-lg-left mt-4 mb-0">Mis Eventos</h1>
 </div>
 
-<hr class="mt-2 mb-5" />
 
+{{#each fechas}}
+<div class="fechas">{{this}}</div>
+{{/each}} 
+
+<hr class="mt-2 mb-5" />
 <div class="container">
     <div class="row no-gutter ml-4 mr-4 pr-2">
         <div class=" d-none d-md-flex col-md-4 col-lg-12 d-flex justify-content-start justify-content-center">
             <input id="datepicker" width="276" />
-            <script>
-
-                $('#datepicker').datepicker({
-                    uiLibrary: 'bootstrap4'
-                });
-
-                $(function () {
-                    $("#datepicker").datepicker();
-                    $("#datepicker").on("change", function () {
-                        var selected = $(this).val();
-                        window.location.href = "/misEventos/" + selected;
-                    });
-                });
-            </script>
         </div>
     </div>
 
@@ -35,7 +25,7 @@
         {{#each asistencias}}
             <div class="col md-4 mt-5">
                 <div class="card">
-                    <h5 class="card-header">{{evento.fecha}}</h5>
+                    <h5 class="card-header">{{evento.fechaFormateada}}</h5>
                     <div class="card-body ">
                         <h6 class="card-subtitle mb-2">{{evento.tituloEvento}}</h6>
                         <p class="card-text">Este evento se desarrollara en {{evento.ubicacion}}</p>
@@ -46,6 +36,32 @@
         {{/each}}
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+
+        var list = document.getElementsByClassName("fechas");
+        var fechas_eventos = new Array();
+        for (var i = 0; i < list.length; i++) {
+            list[i].setAttribute("id", "fecha" + i);
+            list[i].style.display = "none";
+            fechas_eventos[i] = new Date(document.getElementById("fecha" + i).innerHTML);
+        }
+
+        $('#datepicker').datepicker({
+            uiLibrary: 'bootstrap4'
+        });
+
+        $(function () {
+            $("#datepicker").datepicker();
+            $("#datepicker").on("change", function () {
+                var selected = $(this).val();
+                window.location.href = "/misEventos/" + selected;
+            });
+        });
+    });
+
+</script>
 
 {{/partial}}
 

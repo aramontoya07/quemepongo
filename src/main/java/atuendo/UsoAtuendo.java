@@ -21,6 +21,10 @@ public class UsoAtuendo extends EntidadPersistente{
 
     public LocalDateTime fechaDeUso;
 
+    public UsoAtuendo(){
+        
+    }
+
     public Double temperaturaDeUso;
 
     public UsoAtuendo(Atuendo atuendo2, EstadoAtuendo estado2) {

@@ -9,6 +9,9 @@ import javax.persistence.*;
 @Table(name = "SugerenciasPosibles")
 public class SugerenciasPosibles extends EntidadPersistente {
 
+    public SugerenciasPosibles(){
+    }
+
     @OneToOne(cascade = {CascadeType.PERSIST})
 	Atuendo atuendo;
     @Enumerated

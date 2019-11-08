@@ -1,4 +1,4 @@
-package Server;
+package server;
 
 import spark.ModelAndView;
 import spark.Request;

@@ -10,6 +10,10 @@ public class ColorRGB extends EntidadPersistente {
 	public int verde;
 	public int azul;
 
+	public ColorRGB(){
+		
+	}
+
 	public ColorRGB(int rojo, int verde, int azul) {
 		this.rojo = rojo;
 		this.verde = verde;
