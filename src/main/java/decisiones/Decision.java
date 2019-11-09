@@ -1,7 +1,22 @@
 package decisiones;
 
-import usuario.Usuario;
+import javax.persistence.Embeddable;
 
-public interface Decision {
-	public void deshacerEn(Usuario usuario);
+import usuario.Usuario;
+@Embeddable
+public enum Decision {
+
+	ACEPTAR(){
+		public void deshacerEn(Usuario usuario) {
+			usuario.removerAceptado();
+		}
+	},
+	RECHAZAR(){
+		public void deshacerEn(Usuario usuario) {
+			usuario.removerRechazado();
+		}
+	};
+
+	public void deshacerEn(Usuario usuario) {
+	}
 }

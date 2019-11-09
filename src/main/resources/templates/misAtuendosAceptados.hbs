@@ -1,0 +1,35 @@
+{{#partial "contenido" }}
+<div class="mt-4 pt-4 d-none d-md-flex col-md-4 col-lg-12 d-flex justify-content-start justify-content-center">
+    <h1 class="login-heading font-weight-light text-lg-left mt-4 mb-0">Mis atuendos aceptados</h1>
+</div>
+
+
+<hr class="mt-2 mb-5" />
+
+<div class="container">
+  <div class="text-center text-lg-left">
+    {{#each aceptados}}
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-text ">Atuendo {{atuendo.id}}</h3>
+          <div class="row justify-content-start justify-content-center">
+          <div class="col col-md-2"><img src="{{atuendo.superior.rutaImagen}}" class="card-img-top" alt="..."></div>
+          <div class="col col-md-2"><img src="{{atuendo.inferior.rutaImagen}}" class="card-img-top" alt="..."></div>
+          <div class="col col-md-2"><img src="{{atuendo.calzado.rutaImagen}}" class="card-img-top" alt="..."></div>
+          {{#each atuendo.accesorios}}
+          <div class="col col-md-2"><img src="{{rutaImagen}}" class="card-img-top" alt="..."></div>
+          {{/each}}
+          {{#each atuendo.capasAbrigos}}
+          <div class="col col-md-2"><img src="{{rutaImagen}}" class="card-img-top" alt="..."></div>
+          {{/each}}
+          </div>
+          <a href="/puntuarAtuendos/{{atuendo.id}}" type="button" class="btn btn-primary btn-sm btn-block">Puntuar</a>
+        </div>
+      </div>
+      <br>
+    {{/each}}
+    </div>
+</div>
+{{/partial}}
+
+{{> layout.hbs}}

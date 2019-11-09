@@ -1,0 +1,146 @@
+{{#partial "contenido" }}
+<div class="container">
+    <h1>Creador de prendas</h1>
+
+    <form action="/misGuardarropas/{{id}}/creadorPrendas" method="POST">
+        <div id="form_parte_1" class="parteForm card mt-4 p-2">
+            <label class="input-group-text" for="inputGroupSelect01">Tipo de prenda</label>
+            <select class="custom-select" name="categoria" id="inputGroupSelect01" required>
+                <option selected value="superior">Superior</option>
+                <option value="inferior">Inferior</option>
+                <option value="calzado">Calzado</option>
+                <option value="accesorio">Accesorio</option>
+            </select>
+            <br/>
+
+            <label class="input-group-text mt-4" for="inputGroupSelect02">Material</label>
+            <select class="custom-select" name="material" id="inputGroupSelect02" required>
+                <option selected value="algodon">Algodon</option>
+                <option value="cuero">Cuero</option>
+                <option value="lana">Lana</option>
+                <option value="plastico">Plastico</option>
+                <option value="vidrio">Vidrio</option>
+                <option value="seda">Seda</option>
+            </select>
+
+            <label class="input-group-text mt-4" for="inputGroupSelect03">Trama</label>
+            <select class="custom-select" name="trama" id="inputGroupSelect03" required>
+                <option selected value="lisa">Lisa</option>
+                <option value="rayada">Rayada</option>
+                <option value="lunares">Lunares</option>
+                <option value="cuadros">Cuadros</option>
+                <option value="estampado">Estampado</option>
+            </select>
+
+            <label class="input-group-text mt-4" for="inputGroupSelect08">Trama</label>
+            <select class="custom-select" name="tipoUso" id="inputGroupSelect08" required>
+                <option selected value="primaria">Primaria</option>
+                <option value="secundaria">Secundaria</option>
+            </select>
+
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <a class="btn btn-secondary mt-4" href="javascript:next()">Siguiente</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="form_parte_2" class="parteForm card mt-4 p-2">
+            <label class="input-group-text mt-4" for="inputGroupSelect03">Parte abrigada</label>
+            <select class="custom-select" name="parteAbrigada" id="inputGroupSelect03" required>
+                <option selected value="cabeza">Cabeza</option>
+                <option value="cuello">Cuello</option>
+                <option value="pecho">Pecho</option>
+                <option value="manos">Manos</option>
+                <option value="piernas">Piernas</option>
+                <option value="pies">Pies</option>
+            </select>
+
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <label class="input-group-text" for="inputGroupSelect10">nivelDeAbrigo</label>
+                    <input name="nivelDeAbrigo" id="inputGroupSelect10" type="number" required />
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <label class="input-group-text" for="inputGroupSelect04">Color primario</label>
+                </div>
+
+                <div class="col-md-2">
+                    <input name="colorPrimario" id="inputGroupSelect04" type="color" required/>
+                </div> 
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <label class="input-group-text" for="inputGroupSelect05">Color secundario</label>
+                </div>
+
+                <div class="col-md-2">
+                    <input name="colorSecundario" id= "inputGroupSelect05" type="color" />
+                </div> 
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <a class="btn btn-secondary" href="javascript:prev()">Anterior</a>
+                </div>
+                <div class="col-md-4">
+                    <a class="btn btn-secondary" href="javascript:next()">Siguiente</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="form_parte_3" class="parteForm card mt-4 p-2">
+            
+            <div class="custom-file col-lg-6 d-flex justify-content-center mt-4 d-none d-md-flex col-md-4">
+                <label class="input-group-text" for="inputGroupSelect06">Link imagen</label>
+                <input type="text" name="rutaImagen" id="inputGroupSelect06" required>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <a class="btn btn-secondary" href="javascript:prev()">Anterior</a>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-success" type="submit">Crear Prenda</button>
+                </div>
+            </div>
+
+            
+            
+        </div>
+    </form>
+</div>
+
+
+<script>
+    var parte_actual = 1;
+    var lista_partes_form = document.getElementsByClassName("parteForm");
+
+    function next() {
+        ocultarForm();
+        parte_actual++;
+        document.getElementById("form_parte_" + parte_actual).style.display = "block";
+    }
+
+    function prev() {
+        ocultarForm();
+        parte_actual--;
+        document.getElementById("form_parte_" + parte_actual).style.display = "block";
+    }
+
+    function ocultarForm() {
+        for (var i = 0; i < lista_partes_form.length; i++) {
+            lista_partes_form[i].style.display = "none";
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        ocultarForm();
+        document.getElementById("form_parte_" + parte_actual).style.display = "block";
+    });
+</script>
+{{/partial}}
+
+{{> layout.hbs}}

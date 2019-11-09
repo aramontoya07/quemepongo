@@ -1,0 +1,86 @@
+{{#partial "contenido" }}
+
+  <div class="mt-4 pt-4 d-none d-md-flex col-md-3 col-lg-10 d-flex justify-content-start justify-content-center">
+    <h1 class="login-heading font-weight-light text-lg-left mt-4 mb-0">Detalle Guardarropas {{id}}</h1>
+  </div>
+
+      <div class="col-lg-2">
+        <a href="/misGuardarropas/{{guardarropa.id}}/creadorPrendas" type="button" class="btn btn-primary btn-lg btn-block">Crear prenda</a>
+      </div>
+
+
+
+  <hr class="mt-2 mb-5" />
+
+  <div class="container">
+    <div class="row text-center text-lg-left">
+
+    <h3>Superiores</h3>
+    </div>
+    <div class="row text-center text-lg-left">
+    {{#each superiores}}
+    <div class="card col-md-2" style="width: 10rem;">
+      <img src="{{rutaImagen}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <p class="card-text">Prenda {{id}}</p>
+      </div>
+    </div>
+    {{/each}}
+    </div>
+
+    <hr/>
+
+    <div class="row text-center text-lg-left">
+    <h3>Inferiores</h3>
+    </div>
+    <div class="row text-center text-lg-left">
+    {{#each inferiores}}
+    <div class="card" style="width: 10rem;">
+      <img src="{{rutaImagen}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <p class="card-text">Prenda {{id}}</p>
+      </div>
+    </div>
+    {{/each}}
+    </div>
+
+    <hr/>
+
+    <div class="row text-center text-lg-left">
+    <h3>Calzados</h3>
+    </div>
+    <div class="row text-center text-lg-left">
+    {{#each calzados}}
+    <div class="card" style="width: 10rem;">
+      <img src="{{rutaImagen}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <p class="card-text">Prenda {{id}}</p>
+      </div>
+    </div>
+    {{/each}}
+
+    </div>
+
+    <hr/>
+
+    <div class="row text-center text-lg-left">
+    <h3>Accesorios</h3>
+    </div>
+    <div class="row text-center text-lg-left">
+    {{#each accesorios}}
+    <div class="card" style="width: 10rem;">
+      <img src="{{rutaImagen}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <p class="card-text">Prenda {{id}}</p>
+      </div>
+    </div>
+    {{/each}}
+    </div>
+
+
+  <hr/>
+
+</div>
+{{/partial}}
+
+{{> layout.hbs}}

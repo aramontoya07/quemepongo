@@ -2,10 +2,9 @@ package atuendo;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.*;
-
 import clima.Clima;
+import db.EntityManagerHelper;
 import excepciones.PrendaException;
 import prenda.ParteAbrigada;
 import prenda.Prenda;
@@ -13,53 +12,31 @@ import db.EntidadPersistente;
 import usuario.Guardarropa;
 
 @Entity
-
 @Table(name = "Atuendos")
 public class Atuendo extends EntidadPersistente {
-	@Transient
-	@Id
-	@GeneratedValue
-	private Integer idAtuendo;
-	//@OneToOne
-	@Transient
+
+	@OneToOne(cascade = {CascadeType.PERSIST})
 	private Guardarropa guardarropaOrigen;
-	//@OneToOne
-	@Transient
+
+	@ManyToOne(cascade = {CascadeType.PERSIST})
 	private Prenda superior;
-	//@OneToOne
-	@Transient
+
+	@ManyToOne(cascade = {CascadeType.PERSIST})
 	private Prenda inferior;
-	//@OneToOne
-	@Transient
+
+	@ManyToOne(cascade = {CascadeType.PERSIST})
 	private Prenda calzado;
-	//@OneToMany
-	@Transient
+
+	@ManyToMany(cascade = {CascadeType.PERSIST})
 	private List<Prenda> accesorios = new ArrayList<>();
-	//@OneToMany
-	@Transient
+
+	@ManyToMany(cascade = {CascadeType.PERSIST})
 	private List<Prenda> capasAbrigos = new ArrayList<>();
 
-	private Integer rangoDeAceptacion = 10;
-	private Double temperaturaDeUso;
+	public Atuendo(){
 	
-	private boolean aceptado;
-	private boolean aproximado;
-	
-	public boolean isAceptado() {
-		return aceptado;
 	}
 
-	public void setAceptado(boolean aceptado) {
-		this.aceptado = aceptado;
-	}
-
-	public boolean isAproximado() {
-		return aproximado;
-	}
-
-	public void setAproximado(boolean aproximado) {
-		this.aproximado = aproximado;
-	}
 	public Guardarropa getGuardarropaOrigen() {
 		return guardarropaOrigen;
 	}
@@ -103,7 +80,6 @@ public class Atuendo extends EntidadPersistente {
 		Atuendo clon = new Atuendo(superior,inferior,calzado,guardarropaOrigen);
 		clon.setAccesorios(new ArrayList<>(accesorios));
 		clon.setAcapasAbrigos(new ArrayList<>(capasAbrigos));
-		clon.setRangoDeAceptacion(rangoDeAceptacion);
 		return clon;
 	}
 
@@ -125,8 +101,16 @@ public class Atuendo extends EntidadPersistente {
 				}catch(PrendaException e){
 					return true;
 				}
+			case CALZADO: break;
+			case PARTE_INFERIOR: break;
 		}
 		return false;
+	}
+
+	public Boolean noEsDeId(List<Integer> ids){
+		System.out.println("el id " + this.getId() + " da: ");
+		System.out.println(ids.stream().allMatch(id -> (!this.mismaId(id))));
+		return ids.stream().allMatch(id -> (!this.mismaId(id)));
 	}
 
 	public void agregarAbrigo(Prenda prenda){
@@ -137,6 +121,8 @@ public class Atuendo extends EntidadPersistente {
 			case ACCESORIO:
 				accesorios.add(prenda);
 				break;
+			case CALZADO: break;
+			case PARTE_INFERIOR: break;
 		}
 	}
 
@@ -186,19 +172,11 @@ public class Atuendo extends EntidadPersistente {
 		return obtenerPrendasTotales().stream().mapToInt(prenda-> (int) prenda.abrigoEnParte(parte)).sum();
 	}
 
-	public void setRangoDeAceptacion(Integer rangoDeAceptacion) {
-		this.rangoDeAceptacion = rangoDeAceptacion;
-	}
-
-	public void setTemperaturaDeUso(Double temperaturaDeUso) {
-		this.temperaturaDeUso = temperaturaDeUso;
-	}
-
-	public Double getTemperaturaDeUso() {
-		return temperaturaDeUso;
-	}
-
 	public boolean estaDisponible() {
-		return obtenerPrendasTotales().stream().allMatch(prenda -> guardarropaOrigen.existePrenda(prenda));
+		return obtenerPrendasTotales().stream().allMatch(prenda -> guardarropaOrigen.prendaDisponible(prenda));
+	}
+
+	public String getRutaImagen() {
+		return superior.getRutaImagen() + " " + inferior.getRutaImagen() + " " + calzado.getRutaImagen();
 	}
 }

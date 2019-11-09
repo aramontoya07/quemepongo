@@ -4,32 +4,72 @@ import atuendo.Atuendo;
 import db.EntidadPersistente;
 import prenda.ParteAbrigada;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class PreferenciasDeAbrigo extends EntidadPersistente {
-    @OneToOne
+    @Embedded
+    @AttributeOverrides( {
+            @AttributeOverride(name="nivelDeAdaptacion", column=@Column(name="NIVEL_CABEZA")),
+            @AttributeOverride(name="puntaje", column=@Column(name="PUNTAJE_CABEZA"))
+    })
     private AdaptacionPuntuada abrigoCabeza;
-    @OneToOne
+
+    @Embedded
+    @AttributeOverrides( {
+            @AttributeOverride(name="nivelDeAdaptacion", column=@Column(name="NIVEL_CUELLO")),
+            @AttributeOverride(name="puntaje", column=@Column(name="PUNTAJE_CUELLO"))
+    })
     private AdaptacionPuntuada abrigoCuello;
-    @OneToOne
+
+    @Embedded
+    @AttributeOverrides( {
+            @AttributeOverride(name="nivelDeAdaptacion", column=@Column(name="NIVEL_PECHO")),
+            @AttributeOverride(name="puntaje", column=@Column(name="PUNTAJE_PECHO"))
+    })
     private AdaptacionPuntuada abrigoPecho;
-    @OneToOne
+
+    @Embedded
+    @AttributeOverrides( {
+            @AttributeOverride(name="nivelDeAdaptacion", column=@Column(name="NIVEL_MANOS")),
+            @AttributeOverride(name="puntaje", column=@Column(name="PUNTAJE_MANOS"))
+    })
     private AdaptacionPuntuada abrigoManos;
-    @OneToOne
+
+    @Embedded
+    @AttributeOverrides( {
+            @AttributeOverride(name="nivelDeAdaptacion", column=@Column(name="NIVEL_PIERNAS")),
+            @AttributeOverride(name="puntaje", column=@Column(name="PUNTAJE_PIERNAS"))
+    })
     private AdaptacionPuntuada abrigoPiernas;
-    @OneToOne
+
+    @Embedded
+    @AttributeOverrides( {
+            @AttributeOverride(name="nivelDeAdaptacion", column=@Column(name="NIVEL_PIES")),
+            @AttributeOverride(name="puntaje", column=@Column(name="PUNTAJE_PIES"))
+    })
     private AdaptacionPuntuada abrigoPies;
 
 
     public PreferenciasDeAbrigo() {
-        this.abrigoCabeza = new AdaptacionPuntuada(25, 0.0, 0);
-        this.abrigoCuello = new AdaptacionPuntuada(25, 0.0, 0);
-        this.abrigoPecho = new AdaptacionPuntuada(25, 0.0, 0);
-        this.abrigoManos = new AdaptacionPuntuada(25, 0.0, 0);
-        this.abrigoPiernas = new AdaptacionPuntuada(25, 0.0, 0);
-        this.abrigoPies = new AdaptacionPuntuada(25, 0.0, 0);
+        this.abrigoCabeza = new AdaptacionPuntuada();
+        abrigoCabeza.setnivelDeAdaptacion(0,25.0);
+        abrigoCabeza.setPuntaje(0);
+        this.abrigoCuello = new AdaptacionPuntuada();
+        abrigoCuello.setnivelDeAdaptacion(0,25.0);
+        abrigoCuello.setPuntaje(0);
+        this.abrigoPecho = new AdaptacionPuntuada();
+        abrigoPecho.setnivelDeAdaptacion(0,25.0);
+        abrigoPecho.setPuntaje(0);
+        this.abrigoManos = new AdaptacionPuntuada();
+        abrigoManos.setnivelDeAdaptacion(0,25.0);
+        abrigoManos.setPuntaje(0);
+        this.abrigoPiernas = new AdaptacionPuntuada();
+        abrigoPiernas.setnivelDeAdaptacion(0,25.0);
+        abrigoPiernas.setPuntaje(0);
+        this.abrigoPies = new AdaptacionPuntuada();
+        abrigoPies.setnivelDeAdaptacion(0,25.0);
+        abrigoPies.setPuntaje(0);
     }
 
     private double adaptacionTotal(){
@@ -39,6 +79,15 @@ public class PreferenciasDeAbrigo extends EntidadPersistente {
                 abrigoManos.getNivelDeAdaptacion() +
                 abrigoCabeza.getNivelDeAdaptacion() +
                 abrigoPies.getNivelDeAdaptacion();
+    }
+
+    public void setPreferenciasDeAbrigo(AdaptacionPuntuada ap) {
+        this.abrigoCabeza = ap;
+        this.abrigoCuello = ap;
+        this.abrigoPecho = ap;
+        this.abrigoManos =ap;
+        this.abrigoPiernas = ap;
+        this.abrigoPies = ap;
     }
 
     public AdaptacionPuntuada getPuntaje(ParteAbrigada parte) {

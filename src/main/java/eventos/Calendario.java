@@ -1,14 +1,11 @@
 package eventos;
 
-
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 import atuendo.SugerenciasClima;
 import excepciones.EventoException;
@@ -22,11 +19,15 @@ import org.quartz.impl.StdSchedulerFactory;
 
 import db.EntidadPersistente;
 import usuario.Usuario;
+
 @Entity
+@Table(name = "Calendarios")
 public class Calendario extends EntidadPersistente{
 	@Transient
 	private Scheduler scheduler;
-	@OneToMany
+
+	@OneToMany(cascade = {CascadeType.PERSIST})
+	@JoinColumn(name = "Id_calendario")
 	private Set<AsistenciaEvento> eventos = new HashSet<>();
 	
 	public Calendario(){
@@ -36,6 +37,18 @@ public class Calendario extends EntidadPersistente{
 		} catch (SchedulerException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public AsistenciaEvento obtenerAsistencia(Evento evento){
+		return eventos.stream().filter(asistenciaEvento -> asistenciaEvento.esDeEvento(evento)).findFirst().get();
+	}
+
+	public Set<AsistenciaEvento> getEventos() {
+		return eventos;
+	}
+
+	public void setEventos(Set<AsistenciaEvento> eventos) {
+		this.eventos = eventos;
 	}
 
 	public void quitarEvento(Evento evento){

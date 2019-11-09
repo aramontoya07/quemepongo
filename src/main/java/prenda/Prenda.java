@@ -1,18 +1,44 @@
 package prenda;
 
 import java.util.List;
+
+import javax.persistence.*;
+
+import db.EntidadPersistente;
+import db.EntityManagerHelper;
+
 import java.awt.image.BufferedImage;
 
-public class Prenda {
+@Entity
+@Table(name = "Prendas")
+public class Prenda extends EntidadPersistente {
 
+	@ManyToOne(cascade = {CascadeType.PERSIST})
 	private TipoPrenda tipo;
+
+	@Enumerated(EnumType.STRING)
 	private Material material;
+
+	@Enumerated(EnumType.STRING)
 	private Trama trama;
+
+	@ManyToOne(cascade = {CascadeType.PERSIST})
 	private ColorRGB colorPrimario;
+
+	@ManyToOne(cascade = {CascadeType.PERSIST})
 	private ColorRGB colorSecundario;
+
+	@Transient
 	private BufferedImage imagenNormalizada;
+
+	@Enumerated(EnumType.STRING)
 	private ParteAbrigada pateAbrigada;
 
+	public Prenda(){
+		
+	}
+
+	private String rutaImagen;
 
 	public Prenda(TipoPrenda tipo, Material material, Trama trama, ColorRGB colorPrimario, ColorRGB colorSecundario) {
 		this.tipo = tipo;
@@ -20,6 +46,14 @@ public class Prenda {
 		this.trama = trama;
 		this.colorPrimario = colorPrimario;
 		this.colorSecundario = colorSecundario;
+	}
+
+	public String getRutaImagen() {
+		return rutaImagen;
+	}
+
+	public void setRutaImagen(String rutaImagen) {
+		this.rutaImagen = rutaImagen;
 	}
 
 	public boolean aceptaSuperponerPrenda(Prenda prenda) {
@@ -82,4 +116,33 @@ public class Prenda {
 			return 0;
 		}
     }
+
+	public void setTipo(TipoPrenda tipo) {
+		this.tipo = tipo;
+	}
+
+	public void setTrama(Trama trama) {
+		this.trama = trama;
+	}
+
+	public void setColorPrimario(ColorRGB colorPrimario) {
+		this.colorPrimario = colorPrimario;
+	}
+
+	public void setColorSecundario(ColorRGB colorSecundario) {
+		this.colorSecundario = colorSecundario;
+	}
+
+	public ParteAbrigada getPateAbrigada() {
+		return pateAbrigada;
+	}
+
+	public void setPateAbrigada(ParteAbrigada pateAbrigada) {
+		this.pateAbrigada = pateAbrigada;
+	}
+
+	public void imprimirRuta() {
+		System.out.println("hola");
+		System.out.println(rutaImagen);
+	}
 }

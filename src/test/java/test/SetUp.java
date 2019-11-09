@@ -1,11 +1,18 @@
 package test;
 
+import atuendo.Atuendo;
 import clima.MockAgradable;
 import clima.ServicioClimatico;
+import eventos.AsistenciaEvento;
+import eventos.Calendario;
+import eventos.Evento;
+import eventos.Frecuencia;
+import notificaciones.Informante;
 import prenda.*;
 import usuario.Guardarropa;
 import usuario.Usuario;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -78,7 +85,21 @@ public abstract class SetUp {
 
     Usuario pedro = new Usuario();
     Usuario pedro2 = new Usuario();
+    Usuario usuario1 = new Usuario();
+    Usuario peter = new Usuario();
 
+    Calendario calendario = new Calendario();
+    Evento superclasico = new Evento("Superclasico", LocalDateTime.now(),"Cancha de Boca", Frecuencia.UNICO);
+    Evento fiesta = new Evento("Fiesta",LocalDateTime.now(),"Capital",Frecuencia.UNICO);
+    Evento finalDelMundial = new Evento("Final del mundial",LocalDateTime.now(),"China",Frecuencia.UNICO);
+    Evento evento = new Evento("Prueba",LocalDateTime.now(),"UTN",Frecuencia.UNICO);
+    AsistenciaEvento asistenciaMundial = new AsistenciaEvento(finalDelMundial);
+    AsistenciaEvento asistenciaSuperclasico = new AsistenciaEvento(superclasico);
+    AsistenciaEvento asistenciaFiesta = new AsistenciaEvento(fiesta);
+    Atuendo atuendo1 = new Atuendo(remeraDe30Azul, pantalonDesabrigadoAzul, zapatillasVerde, guardarropa);
+    //Atuendo atuendo2 = new Atuendo(remeraDesabrigadaAzul, pantalonDesabrigado, zapatillasDesabrigadasAzules, guardarropa);
+
+    ColorRGB colorGenerico;
 
     public void setear(){
         ServicioClimatico.definirProvedor(new MockAgradable());
@@ -87,20 +108,24 @@ public abstract class SetUp {
         remeraDe30.setTiposAceptados(new ArrayList<TipoPrenda>(Arrays.asList(campera)));
         campera.setTiposAceptados(new ArrayList<TipoPrenda>(Arrays.asList(campera)));
 
-        borrador_remeraAzul.crearBorrador(new ColorRGB(255, 255, 0), remera, Material.ALGODON);
-        borrador_jeanRojo.crearBorrador(new ColorRGB(255, 0, 0), pantalon, Material.JEAN);
-        borrador_zapatilla.crearBorrador(new ColorRGB(55, 123, 60), zapatilla, Material.CUERO);
-        borrador_remeraDeportiva.crearBorrador(new ColorRGB(77, 4, 10), remera, Material.ALGODON);
-        borrador_jeanNegro.crearBorrador(new ColorRGB(255, 0, 255), pantalon, Material.JEAN);
-        borrador_ojotas.crearBorrador(new ColorRGB(0, 0, 0), ojota, Material.CUERO);
-        borrador_anteojos.crearBorrador(new ColorRGB(0, 0, 0), anteojo, Material.VIDRIO);
-        borrador_anteojosDeSol.crearBorrador(new ColorRGB(0, 0, 0), anteojo, Material.PLASTICO);
-        borrador_camperaGris.crearBorrador(new ColorRGB(245, 5, 128), campera, Material.LANA);
-        borrador_gorroLana.crearBorrador(new ColorRGB(255, 0, 0), gorro, Material.LANA);
-        borrador_remeraDesabrigada.crearBorrador(new ColorRGB(255, 0, 0), remeraDesabrigada, Material.SEDA);
-        borrador_remeraDe30.crearBorrador(new ColorRGB(255, 0, 0), remeraDe30, Material.ALGODON);
-        borrador_pantalonDesabrigado.crearBorrador(new ColorRGB(255, 0, 0), pantalonDesabrigado, Material.JEAN);
-        borrador_zapatillasDesabrigadas.crearBorrador(new ColorRGB(255, 0, 0), zapatillaDesabrigada, Material.CUERO);
+        colorGenerico = new ColorRGB(255, 255, 0);
+
+        borrador_remeraAzul.crearBorrador(colorGenerico, remera, Material.ALGODON);
+        borrador_jeanRojo.crearBorrador(colorGenerico, pantalon, Material.JEAN);
+        borrador_zapatilla.crearBorrador(colorGenerico, zapatilla, Material.CUERO);
+        borrador_remeraDeportiva.crearBorrador(colorGenerico, remera, Material.ALGODON);
+        borrador_jeanNegro.crearBorrador(colorGenerico, pantalon, Material.JEAN);
+        borrador_ojotas.crearBorrador(colorGenerico, ojota, Material.CUERO);
+        borrador_anteojos.crearBorrador(colorGenerico, anteojo, Material.VIDRIO);
+        borrador_anteojosDeSol.crearBorrador(colorGenerico, anteojo, Material.PLASTICO);
+        borrador_camperaGris.crearBorrador(colorGenerico, campera, Material.LANA);
+        borrador_gorroLana.crearBorrador(colorGenerico, gorro, Material.LANA);
+        borrador_remeraDesabrigada.crearBorrador(colorGenerico, remeraDesabrigada, Material.SEDA);
+        borrador_remeraDe30.crearBorrador(colorGenerico, remeraDe30, Material.ALGODON);
+        borrador_pantalonDesabrigado.crearBorrador(colorGenerico, pantalonDesabrigado, Material.JEAN);
+        borrador_zapatillasDesabrigadas.crearBorrador(colorGenerico, zapatillaDesabrigada, Material.CUERO);
+
+
 
         borrador_remeraAzul.definirTrama(Trama.RAYADA);
 
@@ -139,5 +164,41 @@ public abstract class SetUp {
         prendasJustito.add(remeraAzul);
         prendasJustito.add(jeanRojo);
         prendasJustito.add(zapatillasVerde);
+        usuario1.actualizarSubscripcionAPremium();
+        usuario1.agregarGuardarropa(guardarropa);
+        usuario1.agregarPrendas(guardarropa, prendasOrdenables);
+        usuario1.setMail("usuario1@gmail.com");
+        usuario1.setCalendarioEventos(calendario);
+        usuario1.asistirAEvento(finalDelMundial);
+        usuario1.asistirAEvento(superclasico);
+        usuario1.asistirAEvento(fiesta);
+        asistenciaMundial.generarSugerenciasParaEvento(usuario1);
+        asistenciaSuperclasico.generarSugerenciasParaEvento(usuario1);
+        asistenciaFiesta.generarSugerenciasParaEvento(usuario1);
+        //usuario1.setPreferenciasDeAbrigo(abrigo);
+        usuario1.agregarInformante(Informante.MockSMS);
+        usuario1.agregarInformante(Informante.CasillaDeMails);
+       // usuario1.aceptarAtuendo(atuendo1);
+        usuario1.rechazarAtuendo(atuendo1);
+
+        prendasJustito.add(remeraAzul);
+        prendasJustito.add(jeanRojo);
+        prendasJustito.add(zapatillasVerde);
+        peter.actualizarSubscripcionAPremium();
+        peter.agregarGuardarropa(guardarropa);
+        peter.agregarPrendas(guardarropa, prendasOrdenables);
+        peter.setMail("usuario1@gmail.com");
+        peter.setCalendarioEventos(calendario);
+        peter.asistirAEvento(finalDelMundial);
+        peter.asistirAEvento(superclasico);
+        peter.asistirAEvento(fiesta);
+        asistenciaMundial.generarSugerenciasParaEvento(peter);
+        asistenciaSuperclasico.generarSugerenciasParaEvento(peter);
+        asistenciaFiesta.generarSugerenciasParaEvento(peter);
+        //usuario1.setPreferenciasDeAbrigo(abrigo);
+        peter.agregarInformante(Informante.MockSMS);
+        peter.agregarInformante(Informante.CasillaDeMails);
+        // usuario1.aceptarAtuendo(atuendo1);
+        peter.rechazarAtuendo(atuendo1);
     }
 }

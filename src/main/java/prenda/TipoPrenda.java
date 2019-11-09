@@ -3,14 +3,34 @@ package prenda;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TipoPrenda {
+import javax.persistence.*;
+
+import db.EntidadPersistente;
+import db.EntityManagerHelper;
+
+@Entity
+public class TipoPrenda extends EntidadPersistente{
+
+	@Enumerated(EnumType.STRING)
 	public TipoUso TipoBasico;
+
 	public int nivelAbrigo;
+
+	@Enumerated(EnumType.STRING)
 	private Categoria categoria;
+
+	@ElementCollection(targetClass = Material.class)
+	@Enumerated(EnumType.STRING)
 	private List<Material> materialesPermitidos;
+
+	@ManyToMany(cascade = {CascadeType.PERSIST})
 	private List<TipoPrenda> tiposAceptados = new ArrayList<TipoPrenda>();
 
-	public TipoPrenda(Categoria categoria, List<Material> materialesPermitidos, int nivelAbrigo, TipoUso tipoBasico) {
+	public TipoPrenda(){
+		
+	}
+
+	public TipoPrenda(Categoria categoria, List<Material> materialesPermitidos, int nivelAbrigo, TipoUso tipoBasico){
 		super();
 		TipoBasico = tipoBasico;
 		this.nivelAbrigo = nivelAbrigo;

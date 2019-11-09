@@ -1,0 +1,78 @@
+{{#partial "contenido" }}
+    <div class="mt-4 pt-4 d-none d-md-flex col-md-4 col-lg-12 d-flex justify-content-start justify-content-center">
+        <h1 class="login-heading font-weight-light text-lg-left mt-4 mb-0">Sugerencia a puntuar</h1>
+    </div>
+        
+    <hr class="mt-2 mb-5"/>
+        
+    <div class="container">
+
+    <div class="row">
+
+        <div class="col col-md-8">
+            <div class="text-center text-lg-left">
+                <div class="card border-primary mb-3">
+                <h3 class="card-header border-primary mb-4">Atuendo {{atuendo.id}}</h3>
+                    <div class="row justify-content-start justify-content-center">
+                        <div class="col col-md-2"><img src="{{atuendo.superior.rutaImagen}}" class="card-img-top" alt="..."></div>
+                        <div class="col col-md-2"><img src="{{atuendo.inferior.rutaImagen}}" class="card-img-top" alt="..."></div>
+                        <div class="col col-md-2"><img src="{{atuendo.calzado.rutaImagen}}" class="card-img-top" alt="..."></div>
+                        {{#each atuendo.accesorios}}
+                            <div class="col col-md-2"><img src="{{rutaImagen}}" class="card-img-top" alt="..."></div>
+                        {{/each}}
+                        {{#each atuendo.capasAbrigos}}
+                            <div class="col col-md-2"><img src="{{rutaImagen}}" class="card-img-top" alt="..."></div>
+                        {{/each}}
+                    </div>
+                    <br>
+                    <div class="card-footer border-primary">
+                            <h5>Temperatura en la que se uso: {{temperaturaDeUso}}</h5>
+                            <h5>Fecha en la que se uso: {{fechaDeUso}}</h5>
+                            <h5>Guardarropa de origen: {{atuendo.guardarropaOrigen.id}}</h5>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>
+
+        <div class="col col-md-4">
+            <form action="/puntuarAtuendos/{{atuendo.id}}" method="POST">
+                <div class="form-label-group">
+                    <input type="number" name="cabezaPuntaje" value="0" class="form-control">
+                    <label for="inputEmail">Puntaje en la cabeza</label>
+                </div>
+                
+                <div class="form-label-group">
+                    <input type="number" name="cuelloPuntaje" value="0" class="form-control">
+                    <label for="inputPassword">Puntaje en el cuello</label>
+                </div>
+
+                <div class="form-label-group">
+                    <input type="number" name="pechoPuntaje" value="0" class="form-control">
+                    <label for="inputPassword">Puntaje en el pecho</label>
+                </div>
+
+                <div class="form-label-group">
+                    <input type="number" name="manosPuntaje" value="0" class="form-control">
+                    <label for="inputPassword">Puntaje en las manos</label>
+                </div>
+
+                <div class="form-label-group">
+                    <input type="number" name="piernasPuntaje" value="0" class="form-control">
+                    <label for="inputPassword">Puntaje en las piernas</label>
+                </div>
+
+                <div class="form-label-group">
+                    <input type="number" name="piesPuntaje" value="0" class="form-control">
+                    <label for="inputPassword">Puntaje en los pies</label>
+                </div>
+                
+                <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Puntuar</button>
+            </form>
+        </div>
+    </div>
+
+    </div>
+{{/partial}}
+
+{{> layout.hbs}}

@@ -6,17 +6,19 @@ import clima.MockAlertas;
 import clima.ServicioClimatico;
 import notificaciones.Informante;
 import eventos.Evento;
-import eventos.Unico;
-import notificaciones.InformanteMock;
+import eventos.Frecuencia;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import atuendo.*;
 import excepciones.*;
 import prenda.ParteAbrigada;
+import subscripciones.SubscripcionPremium;
 
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 class UsuarioTest extends SetUp {
 
@@ -40,8 +42,14 @@ class UsuarioTest extends SetUp {
 		pedro.agregarGuardarropa(guardarropa);
 		pedro.actualizarSubscripcionAPremium();
 		pedro.agregarPrendas(guardarropa, prendasGlobales);
-		// todo también chequearía que la subscripción cambió (es un detalle igual) Fede dice, hacer otro test.
 		assertEquals(9, guardarropa.cantidadDePrendas());
+	}
+
+	@Test
+	@DisplayName("Se actualiza correctamente la subscripcion a premium")
+	void actualizarPremium() {
+		pedro.actualizarSubscripcionAPremium();
+		assertEquals(SubscripcionPremium.class,pedro.getSubscripcion().getClass());
 	}
 
 	@Test
@@ -64,13 +72,10 @@ class UsuarioTest extends SetUp {
 		pedro.agregarPrendas(guardarropa, prendasJustito);
 
 		Set<Atuendo> sugerenciasPedro = pedro.pedirSugerencia();
-		//fixme usar findFirst devuelve un Optional, o sea que podría no tener ningún valor.
-		//Qué pasa si el optional no tiene nada? (Pista: el get() les va a explotar, sería bueno manejarlo por las dudas)
-		Atuendo atuendo = sugerenciasPedro.stream().findFirst().get();
+		Atuendo atuendo = sugerenciasPedro.stream().collect(Collectors.toList()).get(0);
 		pedro.aceptarAtuendo(atuendo);
-		assertTrue(pedro.getAceptados().contains(atuendo));
+		assertTrue(pedro.getAceptados().stream().map(uso -> uso.getAtuendo()).collect(Collectors.toSet()).contains(atuendo));
 		assertTrue(guardarropa.getPrendasUsadas().containsAll(atuendo.obtenerPrendasTotales()));
-		assertFalse(guardarropa.getSuperiores().contains(atuendo.getSuperior()));
 	}
 
 	@Test
@@ -84,7 +89,7 @@ class UsuarioTest extends SetUp {
 		Atuendo atuendo = sugerenciasPedro.stream().findFirst().get();
 		pedro.aceptarAtuendo(atuendo);
 		pedro.deshacerDecision();
-		assertTrue(guardarropa.prendasDisponibles().containsAll(atuendo.obtenerPrendasTotales()));
+		assertTrue(guardarropa.getPrendasDisponibles().containsAll(atuendo.obtenerPrendasTotales()));
 		assertFalse(guardarropa.getPrendasUsadas().contains(atuendo.getSuperior()));
 	}
 
@@ -126,7 +131,7 @@ class UsuarioTest extends SetUp {
 		SugerenciasClima sugerencias = sugerenciasPedro.stream().findFirst().get();
 		Atuendo atuendo = sugerencias.getExactas().get(0);
 		pedro.aceptarAtuendo(atuendo);
-		pedro.puntuarParteDeAtuendoEn(atuendo, 7, ParteAbrigada.CABEZA);
+		pedro.puntuarParteDeAtuendoEn(pedro.obtenerUso(atuendo), 7, ParteAbrigada.CABEZA);
 
 		assertEquals(7, pedro.getPuntajeEn(ParteAbrigada.CABEZA));
 		assertEquals(20.0, pedro.getAbrigoPreferidoEn(ParteAbrigada.CABEZA));
@@ -145,7 +150,7 @@ class UsuarioTest extends SetUp {
 		Atuendo atuendo = sugerencias.getExactas().get(0);
 		pedro.rechazarAtuendo(atuendo);
 
-		assertThrows(AtuendoException.class, () -> pedro.puntuarParteDeAtuendoEn(atuendo, 1, ParteAbrigada.CABEZA));
+		assertThrows(AtuendoException.class, () -> pedro.puntuarParteDeAtuendoEn(pedro.obtenerUso(atuendo), 1, ParteAbrigada.CABEZA));
 	}
 
 	@Test
@@ -160,8 +165,8 @@ class UsuarioTest extends SetUp {
 		SugerenciasClima sugerencias = sugerenciasPedro.stream().findFirst().get();
 		Atuendo atuendo = sugerencias.getExactas().get(0);
 		pedro.aceptarAtuendo(atuendo);
-		pedro.puntuarParteDeAtuendoEn(atuendo, 7, ParteAbrigada.CABEZA);
-		pedro.puntuarParteDeAtuendoEn(atuendo, 8, ParteAbrigada.CABEZA);
+		pedro.puntuarParteDeAtuendoEn(pedro.obtenerUso(atuendo), 7, ParteAbrigada.CABEZA);
+		pedro.puntuarParteDeAtuendoEn(pedro.obtenerUso(atuendo), 8, ParteAbrigada.CABEZA);
 
 		assertEquals(8, pedro.getPuntajeEn(ParteAbrigada.CABEZA));
 	}
@@ -178,8 +183,8 @@ class UsuarioTest extends SetUp {
 		SugerenciasClima sugerencias = sugerenciasPedro.stream().findFirst().get();
 		Atuendo atuendo = sugerencias.getExactas().get(0);
 		pedro.aceptarAtuendo(atuendo);
-		pedro.puntuarParteDeAtuendoEn(atuendo, 7, ParteAbrigada.CABEZA);
-		pedro.puntuarParteDeAtuendoEn(atuendo, 6, ParteAbrigada.CABEZA);
+		pedro.puntuarParteDeAtuendoEn(pedro.obtenerUso(atuendo), 7, ParteAbrigada.CABEZA);
+		pedro.puntuarParteDeAtuendoEn(pedro.obtenerUso(atuendo), 6, ParteAbrigada.CABEZA);
 
 		assertEquals(7, pedro.getPuntajeEn(ParteAbrigada.CABEZA));
 	}
@@ -192,10 +197,9 @@ class UsuarioTest extends SetUp {
 		pedro.agregarPrendas(guardarropa, prendasGlobales);
 
 		LocalDateTime fechaTorneo = LocalDateTime.now().plusHours(6);
-		Evento entrenamiento = new Evento("entrenar haciendo bailes de fortnite", fechaTorneo, "El templo", new Unico());
+		Evento entrenamiento = new Evento("entrenar haciendo bailes de fortnite", fechaTorneo, "El templo", Frecuencia.UNICO);
 
-		Informante informanteMockeado = new InformanteMock();
-		pedro.agregarInformante(informanteMockeado);
+		pedro.agregarInformante(Informante.MockSMS);
 
 		pedro.asistirAEvento(entrenamiento);
 
@@ -208,10 +212,9 @@ class UsuarioTest extends SetUp {
 	void notificarAlertas() throws InterruptedException{
 		ServicioClimatico.definirProvedor(new MockAlertas());
 		LocalDateTime fechaTorneo = LocalDateTime.now().plusHours(6);
-		Evento entrenamiento = new Evento("entrenar haciendo bailes de fortnite", fechaTorneo, "El templo", new Unico());
+		Evento entrenamiento = new Evento("entrenar haciendo bailes de fortnite", fechaTorneo, "El templo", Frecuencia.UNICO);
 
-		Informante informanteMockeado = new InformanteMock();
-		pedro.agregarInformante(informanteMockeado);
+		pedro.agregarInformante(Informante.MockSMS);
 
 		pedro.asistirAEvento(entrenamiento);
 

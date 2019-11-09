@@ -3,13 +3,8 @@ package eventos;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-
+import javax.persistence.*;
 import atuendo.SugerenciasClima;
-
 import excepciones.EventoException;
 import db.EntidadPersistente;
 import usuario.Usuario;
@@ -17,14 +12,18 @@ import usuario.Usuario;
 @Entity
 public class AsistenciaEvento extends EntidadPersistente{
 	
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.PERSIST})
 	private Evento evento;
 	
-	@ManyToMany
-	private Set<SugerenciasClima> sugerenciasEvento = new HashSet<>();
+	@OneToMany(cascade = {CascadeType.PERSIST})
+	@JoinColumn(name = "Id_AsistenciaEvento")
+	public Set<SugerenciasClima> sugerenciasEvento = new HashSet<>();
 
 	public AsistenciaEvento(Evento eventoAsignado) {
 		evento = eventoAsignado;
+	}
+
+	public AsistenciaEvento() {
 	}
 
     Set<SugerenciasClima> pedirSugerencias(){
@@ -33,12 +32,15 @@ public class AsistenciaEvento extends EntidadPersistente{
         return sugerenciasEvento;
     }
 
-	void generarSugerenciasParaEvento(Usuario usuario) {
+	public void generarSugerenciasParaEvento(Usuario usuario) {
 		sugerenciasEvento = usuario.pedirSugerenciaSegunClima(evento.getUbicacion());
 		usuario.notificarSugerenciasListas(this);
 	}
 	
-	
+	public boolean esDeFecha(Integer dia, Integer mes, Integer anio){
+		return evento.getFecha().getDayOfMonth() == dia && evento.getFecha().getMonthValue() == mes && evento.getFecha().getYear() == anio;
+	}
+
 	boolean ocurreEntre(LocalDateTime fechaMinima, LocalDateTime fechaMaxima){
 		return evento.getFecha().isAfter(fechaMinima) && evento.getFecha().isBefore(fechaMaxima);
 	}
@@ -58,4 +60,16 @@ public class AsistenciaEvento extends EntidadPersistente{
     public boolean esDeEvento(Evento eventoRecibido) {
 		return eventoRecibido.equals(evento);
     }
+
+	public Set<SugerenciasClima> getSugerenciasEvento() {
+		return sugerenciasEvento;
+	}
+
+	public void setSugerenciasEvento(Set<SugerenciasClima> sugerenciasEvento) {
+		this.sugerenciasEvento = sugerenciasEvento;
+	}
+
+	public LocalDateTime getFecha() {
+		return getEvento().getFecha();
+	}
 }

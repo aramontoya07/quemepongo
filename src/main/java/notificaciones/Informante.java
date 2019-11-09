@@ -1,18 +1,73 @@
 package notificaciones;
 
+import javax.persistence.Entity;
+
+//import org.springframework.mail.MailSender;
+//import org.springframework.mail.SimpleMailMessage;
+
+import db.EntidadPersistente;
 import eventos.AsistenciaEvento;
 import usuario.Usuario;
 
-public interface Informante {
 
-    /*
-    fixme tener 3 métodos distintos para estas cosas me hace pensar que
-    en el caso de querer agregar más alertas hay que seguir creando métodos
-    Quizás un enum pasado por parámetro evitaría tener que hacer un método
-     distinto por situación
-     */
-    void notificarTormenta(Usuario usuario);
-    void notificarGranizo(Usuario usuario);
-    void notificarNevada(Usuario usuario);
-    void notificarA(Usuario usuario, AsistenciaEvento evento);
+public enum Informante {
+    
+    CasillaDeMails(){
+        public void notificar(Usuario usuario) {
+            usuario.marcarNotificado();
+        }
+    
+        public void notificarGranizo(Usuario usuario) {
+            usuario.marcarNotificado();
+        }
+    
+        public void notificarNevada(Usuario usuario) {
+            usuario.marcarNotificado();
+        }
+    
+        public void notificarA(Usuario usuario, AsistenciaEvento evento) {
+            usuario.marcarNotificado();
+        }
+    },
+
+    MockSMS(){
+        public void notificarTormenta(Usuario usuario) {
+            usuario.marcarNotificado();
+        }
+    
+        public void notificarGranizo(Usuario usuario) {
+            usuario.marcarNotificado();
+        }
+    
+        public void notificarNevada(Usuario usuario) {
+            usuario.marcarNotificado();
+        }
+    
+        public void notificarA(Usuario usuario, AsistenciaEvento evento) {
+            usuario.marcarNotificado();
+        }
+    },
+
+    InformanteMock(){
+        public void notificarTormenta(Usuario usuario) {
+            usuario.marcarNotificado();
+        }
+    
+        public void notificarGranizo(Usuario usuario) {
+            usuario.marcarNotificado();
+        }
+    
+        public void notificarNevada(Usuario usuario) {
+            usuario.marcarNotificado();
+        }
+    
+        public void notificarA(Usuario usuario, AsistenciaEvento evento) {
+            usuario.marcarNotificado();
+        }
+    };
+
+    public void notificarA(Usuario usuario, AsistenciaEvento asistencia) {};
+    public void notificarTormenta(Usuario usuario) {};
+    public void notificarGranizo(Usuario usuario) {};
+    public void notificarNevada(Usuario usuario) {};
 }

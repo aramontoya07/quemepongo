@@ -3,11 +3,11 @@ package usuario;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
-
 import javax.persistence.*;
-
 import alertas.Alerta;
+import atuendo.UsoAtuendo;
 import db.EntidadPersistente;
+import db.EntityManagerHelper;
 import notificaciones.Informante;
 import alertas.RepoUsuarios;
 import alertas.TipoDeAlerta;
@@ -15,8 +15,6 @@ import atuendo.Atuendo;
 import atuendo.SugerenciasClima;
 import clima.ServicioClimatico;
 import decisiones.Decision;
-import decisiones.DecisionAceptar;
-import decisiones.DecisionRechazar;
 import eventos.AsistenciaEvento;
 import eventos.Calendario;
 import eventos.Evento;
@@ -32,41 +30,226 @@ import subscripciones.TipoSubscripcion;
 @Entity
 @Table(name = "Usuarios")
 public class Usuario extends EntidadPersistente {
-	
-	@OneToMany // PREGUNTAR
-	private List<Atuendo> atuendos = new ArrayList<>();
-	
-	//@OneToMany
-	@Transient //Estas dos colas se quedan en transient. No las necesitamos.
-	private Queue<Atuendo> aceptados = new LinkedList<>();
-	//@OneToMany
-	@Transient
-	private Queue<Atuendo> rechazados = new LinkedList<>();
-	//@ManyToMany
-	@Transient
+
+	@OneToMany(cascade = {CascadeType.PERSIST})
+	@JoinColumn(name = "Id_usuario")
+	private List<UsoAtuendo> atuendosUsados = new ArrayList<>();
+
+
+	@ManyToMany(cascade = {CascadeType.PERSIST})
 	private Set<Guardarropa> guardarropas = new HashSet<>();
-	//@OneToMany
-	@Transient
+
+
+	@ElementCollection(targetClass = Informante.class)
+	@Enumerated(EnumType.STRING)
 	private List<Informante> informantes = new ArrayList<>();
-	//@OneToOne
-	@Transient
+
+	String contrasenia;
+
+	@Enumerated(EnumType.STRING)
 	private Decision ultimaDecision;
-	@ManyToOne
+
+	@ManyToOne(cascade = {CascadeType.PERSIST})
 	private TipoSubscripcion subscripcion;
-	@OneToOne
+
+	@OneToOne(cascade = {CascadeType.PERSIST})
 	private Calendario calendarioEventos = new Calendario();
-	@OneToOne
+
+	@OneToOne(cascade = {CascadeType.PERSIST})
 	private PreferenciasDeAbrigo preferenciasDeAbrigo;
+
 	private String mail;
-	private boolean notificado = false;
+	private String nombre;
 
-
-	public void setAtuendos() {
-		 ArrayList<Atuendo> listaAux = new ArrayList<>();
-		listaAux.addAll(aceptados);
-		listaAux.addAll(rechazados);
-		atuendos = listaAux;
+	public Usuario() {
+		this.subscripcion = new SubscripcionGratuita();
+		RepoUsuarios.getInstance().agregarUsuario(this);
+		preferenciasDeAbrigo = new PreferenciasDeAbrigo();
 	}
+
+	public void setContrasenia(String contrasenia) {
+		this.contrasenia = contrasenia;
+	}
+
+	public AsistenciaEvento obtenerAsistencia(Evento evento){
+		return calendarioEventos.obtenerAsistencia(evento);
+	}
+
+	//GUARDARROPAS
+
+	public void agregarGuardarropa(Guardarropa guardarropa) {
+		if(guardarropas.contains(guardarropa)) throw new GuardarropaException("El guardarropa que se intento agregar ya existe");
+		guardarropas.add(guardarropa);
+	}
+
+	public void agregarPrendas(Guardarropa guardarropa, Set<Prenda> prendas) {
+		if(!guardarropas.contains(guardarropa)) throw new GuardarropaException("No se puede agregar la prenda ya que el guardarropa no existe");
+		prendas.forEach(prenda -> agregarPrenda(guardarropa, prenda));
+	}
+
+	public void agregarPrenda(Guardarropa guardarropa, Prenda prenda) {
+		if(!subscripcion.puedoAgregar(guardarropa.cantidadDePrendas())) throw new GuardarropaException("El guardarropa posee demasiadas prendas para ser agregado por un usuario con subscripcion gratuita");
+		guardarropa.agregarADisponibles(prenda);
+	}
+
+
+	//SUSCRIPCIONES
+
+	public void actualizarSubscripcionAPremium() {
+		subscripcion = new SubscripcionPremium();
+	}
+
+	public void cancelarPremium() {
+		subscripcion = new SubscripcionGratuita();
+	}
+
+	//SUGERENCIAS
+
+	public Set<Atuendo> pedirSugerencia(){ //se usa principalmente para tests
+		return guardarropas.stream().map(Guardarropa::generarSugerenciasPosibles)
+				.flatMap(Collection::stream).collect(Collectors.toSet());
+	}
+
+	public Set<SugerenciasClima> pedirSugerenciaSegunClima(String ubicacion){
+		return guardarropas.stream().map(unGuardarropa -> unGuardarropa.generarSugerenciasSegunClima(ubicacion))
+				.map(sugerencias -> sugerencias.ajustarAGustos(preferenciasDeAbrigo, ServicioClimatico.obtenerClima(ubicacion).getTemperatura())).collect(Collectors.toSet());
+	}
+
+	public Set<SugerenciasClima> pedirSugerenciaParaEvento(Evento evento) {
+		return calendarioEventos.pedirSugerenciasParaEvento(evento);
+	}
+
+	//EVENTOS
+
+	public void asistirAEvento(Evento evento){
+		calendarioEventos.agregarEvento(evento,this);
+	}
+
+	public boolean leInteresaLaUbicacion(String ubicacion){
+		return calendarioEventos.hayEventosCercanosEn(ubicacion);
+	}
+
+	public Set<AsistenciaEvento> obtenerEventosEntre(LocalDateTime fechaMinima, LocalDateTime fechaMaxima){
+		return calendarioEventos.obtenerEventosEntre(fechaMinima, fechaMaxima);
+	}
+	public void quitarEvento(Evento evento){
+		calendarioEventos.quitarEvento(evento);
+	}
+
+	//EVALUAR SUGERENCIAS
+
+	public void aceptarAtuendo(Atuendo atuendo) throws PrendaException {
+		chequearAtuendoDisponible(atuendo);
+		UsoAtuendo uso = new UsoAtuendo(atuendo,EstadoAtuendo.ACEPTADO);
+		atuendosUsados.add(uso);
+		atuendo.marcarPrendasComoUsadas();
+		ultimaDecision = Decision.ACEPTAR;
+	}
+
+	public void rechazarAtuendo(Atuendo atuendo) {
+		UsoAtuendo uso = new UsoAtuendo(atuendo,EstadoAtuendo.RECHAZADO);
+		atuendosUsados.add(uso);
+		ultimaDecision = Decision.RECHAZAR;
+	}
+
+	private void chequearAtuendoDisponible(Atuendo atuendo)throws PrendaException {
+		if(!atuendo.estaDisponible()){}
+	}
+
+	public Set<Atuendo> getRechazados(){
+		return atuendosUsados.stream().filter( usoAtuendo -> usoAtuendo.getEstado().equals(EstadoAtuendo.RECHAZADO)).
+			map( usoAtuendo -> usoAtuendo.getAtuendo()).
+				collect(Collectors.toSet());
+	}
+
+	public Set<UsoAtuendo> getUsosRechazados() {
+		return atuendosUsados.stream().filter(usoAtuendo -> usoAtuendo.getEstado().equals(EstadoAtuendo.RECHAZADO)).collect(Collectors.toSet());
+	}
+
+	public Set<UsoAtuendo> getAceptados() {
+		return atuendosUsados.stream().filter( usoAtuendo -> usoAtuendo.getEstado().equals(EstadoAtuendo.ACEPTADO)).collect(Collectors.toSet());
+	}
+
+	public UsoAtuendo obtenerUso(Atuendo atuendo){
+		return getAtuendosUsados().stream().filter( usoAtuendo -> usoAtuendo.getAtuendo().equals(atuendo)).collect(Collectors.toList()).get(0);
+	}
+
+	//DECISIONES
+
+	public void deshacerDecision() {
+		ultimaDecision.deshacerEn(this);
+	}
+
+	public void removerAceptado() {
+		List<UsoAtuendo> usosDeAceptados = atuendosUsados.stream().filter(uso -> uso.getEstado().
+			equals(EstadoAtuendo.ACEPTADO)).collect(Collectors.toList());
+		
+		UsoAtuendo usoARemover = usosDeAceptados.stream().sorted(Comparator.comparing(uso -> uso.getFechaDeUso())).collect(Collectors.toList()).get(0);
+		Atuendo atuendoARemover = usoARemover.getAtuendo();
+
+		atuendosUsados.remove(usoARemover);
+		
+		if(atuendoARemover != null){
+			atuendoARemover.liberarPrendasUsadas();
+		}
+	}
+
+	public void removerRechazado() {
+		List<UsoAtuendo> usosDeAceptados = atuendosUsados.stream().filter(uso -> uso.getEstado().
+		equals(EstadoAtuendo.RECHAZADO)).collect(Collectors.toList());
+	
+		UsoAtuendo usoARemover = usosDeAceptados.stream().sorted(Comparator.comparing(uso -> uso.getFechaDeUso())).collect(Collectors.toList()).get(0);
+		atuendosUsados.remove(usoARemover);
+	}
+
+	//NOTIFIACIONES
+
+	public void agregarInformante(Informante informante) {
+		informantes.add(informante);
+	}
+
+	public void quitarInformante(Informante informante){
+		informantes.remove(informante);
+	}
+
+	public void notificarAlerta(Informante informante, TipoDeAlerta alerta) {
+		alerta.notificarA(informante, this);
+	}
+
+	public void notificarSugerenciasListas(AsistenciaEvento asistencia) {
+		informantes.forEach(informante -> informante.notificarA(this, asistencia));
+	}
+
+	public void actuarAnte(Alerta alerta){
+		informantes.forEach(informante -> alerta.getTipo().notificarA(informante, this));
+	}
+
+	//PUNTUAR ATUENDOS
+
+	public void puntuarParteDeAtuendoEn(UsoAtuendo uso, Integer puntaje, ParteAbrigada parte) throws AtuendoException{
+		AdaptacionPuntuada nuevoPuntaje =  new AdaptacionPuntuada();
+		nuevoPuntaje.setPuntaje(puntaje);
+		nuevoPuntaje.setnivelDeAdaptacion(uso.getAtuendo().abrigoEn(parte), uso.getTemperaturaDeUso());
+		AdaptacionPuntuada puntajeAbrigo = preferenciasDeAbrigo.getPuntaje(parte);
+		puntajeAbrigo.setearElMejor(nuevoPuntaje);
+	}
+
+	public void resetearGustos(){
+		preferenciasDeAbrigo = new PreferenciasDeAbrigo();
+	}
+
+	public int getPuntajeEn(ParteAbrigada parte) {
+		return preferenciasDeAbrigo.getPuntaje(parte).getPuntaje();
+	}
+
+	public Double getAbrigoPreferidoEn(ParteAbrigada parte) {
+		return preferenciasDeAbrigo.getPuntaje(parte).getNivelDeAdaptacion();
+	}
+
+
+	/*------------------------------------GETTERS Y SETTERS-----------------------------------------*/
+
+
 	public List<Informante> getInformantes() {
 		return informantes;
 	}
@@ -91,16 +274,6 @@ public class Usuario extends EntidadPersistente {
 		this.subscripcion = subscripcion;
 	}
 
-	public void setAceptados(Queue<Atuendo> aceptados) {
-		this.aceptados = aceptados;
-		//aceptados.forEach(a -> a.setAceptado(true));
-	}
-
-	public void setRechazados(Queue<Atuendo> rechazados) {
-		this.rechazados = rechazados;
-		//rechazados.forEach(r -> r.setAceptado(false));
-	}
-
 	public void setGuardarropas(Set<Guardarropa> guardarropas) {
 		this.guardarropas = guardarropas;
 	}
@@ -116,26 +289,9 @@ public class Usuario extends EntidadPersistente {
 	public void setNotificado(boolean notificado) {
 		this.notificado = notificado;
 	}
-	public void marcarNotificado(){
-		notificado = true;
-	}
 
 	public boolean getNotificado(){
 		return notificado;
-	}
-
-	public Usuario() {
-		this.subscripcion = new SubscripcionGratuita();
-		RepoUsuarios.getInstance().agregarUsuario(this);
-		preferenciasDeAbrigo = new PreferenciasDeAbrigo();
-	}
-
-	public Queue <Atuendo> getRechazados() {
-		return rechazados;
-	}
-
-	public Queue <Atuendo> getAceptados() {
-		return aceptados;
 	}
 
 	public Set<Guardarropa> getGuardarropas() {
@@ -146,123 +302,8 @@ public class Usuario extends EntidadPersistente {
 		return mail;
 	}
 
-	public void actualizarSubscripcionAPremium() {
-		subscripcion = new SubscripcionPremium();
-	}
-
-	public void cancelarPremium() {
-		subscripcion = new SubscripcionGratuita();
-	}
-
-	public void agregarInformante(Informante informante) {
-		informantes.add(informante);
-	}
-
-	public void quitarInformante(Informante informante){
-		informantes.remove(informante);
-	}
-
-	public void agregarGuardarropa(Guardarropa guardarropa) {
-		if(guardarropas.contains(guardarropa)) throw new GuardarropaException("El guardarropa que se intento agregar ya existe");
-		guardarropas.add(guardarropa);
-	}
-
-	//fixme y esto? Maxi dice, que fede lo obligo a codearlo, Fede argumenta que se esta adelantando a un requerimiento.
-	public void resetearGustos(){
-		preferenciasDeAbrigo = new PreferenciasDeAbrigo();
-	}
-
-	public void agregarPrendas(Guardarropa guardarropa, Set<Prenda> prendas) {
-		if(!guardarropas.contains(guardarropa)) throw new GuardarropaException("No se puede agregar la prenda ya que el guardarropa no existe");
-		prendas.forEach(prenda -> agregarPrenda(guardarropa, prenda));
-	}
-
-	public void agregarPrenda(Guardarropa guardarropa, Prenda prenda) {
-		if(!subscripcion.puedoAgregar(guardarropa.cantidadDePrendas())) throw new GuardarropaException("El guardarropa posee demasiadas prendas para ser agregado por un usuario con subscripcion gratuita");
-		guardarropa.agregarADisponibles(prenda);
-	}
-
-	public void asistirAEvento(Evento evento){
-		calendarioEventos.agregarEvento(evento,this);
-	}
-
-	public Set<Atuendo> pedirSugerencia(){ //se usa principalmente para tests
-		return guardarropas.stream().map(Guardarropa::generarSugerenciasPosibles)
-				.flatMap(Collection::stream).collect(Collectors.toSet());
-	}
-
-	public Set<SugerenciasClima> pedirSugerenciaSegunClima(String ubicacion){
-		return guardarropas.stream().map(unGuardarropa -> unGuardarropa.generarSugerenciasSegunClima(ubicacion))
-				.map(sugerencias -> sugerencias.ajustarAGustos(preferenciasDeAbrigo, ServicioClimatico.obtenerClima(ubicacion).getTemperatura())).collect(Collectors.toSet());
-	}
-
-	public Set<SugerenciasClima> pedirSugerenciaParaEvento(Evento evento) {
-		return calendarioEventos.pedirSugerenciasParaEvento(evento);
-	}
-
-	public void aceptarAtuendo(Atuendo atuendo) throws PrendaException {
-		chequearAtuendoDisponible(atuendo);
-		aceptados.add(atuendo);
-		atuendo.setAceptado(true);
-		setAtuendos();
-		atuendo.marcarPrendasComoUsadas();
-		ultimaDecision = new DecisionAceptar();
-	}
-
-	private void chequearAtuendoDisponible(Atuendo atuendo)throws PrendaException {
-		if(!atuendo.estaDisponible()){
-			throw new PrendaException("Algunas prendas del atuendo elegido ya no se hallan disponibles");
-		}
-	}
-
-	public void rechazarAtuendo(Atuendo atuendo) {
-		rechazados.add(atuendo);
-		atuendo.setAceptado(false);
-		setAtuendos();
-		ultimaDecision = new DecisionRechazar();
-	}
-
-	public void deshacerDecision() {
-		ultimaDecision.deshacerEn(this);
-	}
-
-	public void removerAceptado() {
-		Atuendo atuendo = aceptados.poll();
-		if(atuendo != null){
-			atuendo.liberarPrendasUsadas();
-		}
-	}
-
-	public void removerRechazado() {
-		rechazados.poll();
-	}
-
-	public void puntuarParteDeAtuendoEn(Atuendo atuendo, Integer puntaje, ParteAbrigada parte) throws AtuendoException{
-			if(!aceptados.contains(atuendo)) throw new AtuendoException("No se puede puntuar un atuendo sin antes haberlo aceptado");
-			AdaptacionPuntuada nuevoPuntaje = new AdaptacionPuntuada(atuendo.abrigoEn(parte), atuendo.getTemperaturaDeUso(), puntaje);
-			AdaptacionPuntuada puntajeAbrigo = preferenciasDeAbrigo.getPuntaje(parte);
-			puntajeAbrigo.setearElMejor(nuevoPuntaje);
-	}
-
-	public void actuarAnte(Alerta alerta){
-		informantes.forEach(informante -> alerta.getTipo().notificarA(informante, this));
-	}
-
 	public PreferenciasDeAbrigo getPreferenciasDeAbrigo() {
 		return preferenciasDeAbrigo;
-	}
-
-	public void notificarAlerta(Informante informante, TipoDeAlerta alerta) {
-		alerta.notificarA(informante, this);
-	}
-
-	public void notificarSugerenciasListas(AsistenciaEvento asistencia) {
-		informantes.forEach(informante -> informante.notificarA(this, asistencia));
-	}
-
-
-	public void removerPuntuado(PreferenciasDeAbrigo preferenciaAntigua) {
-		preferenciasDeAbrigo = preferenciaAntigua;
 	}
 
 	public Calendario getCalendarioEventos() {
@@ -273,21 +314,26 @@ public class Usuario extends EntidadPersistente {
 		this.mail = mail;
 	}
 
-	public boolean leInteresaLaUbicacion(String ubicacion){
-		return calendarioEventos.hayEventosCercanosEn(ubicacion);
+	public List<UsoAtuendo> getAtuendosUsados() {
+		return atuendosUsados;
 	}
 
-	public Set<AsistenciaEvento> obtenerEventosEntre(LocalDateTime fechaMinima, LocalDateTime fechaMaxima){
-		return calendarioEventos.obtenerEventosEntre(fechaMinima, fechaMaxima);
-	}
-	public void quitarEvento(Evento evento){
-		calendarioEventos.quitarEvento(evento);
-	}
-	public int getPuntajeEn(ParteAbrigada parte) {
-		return preferenciasDeAbrigo.getPuntaje(parte).getPuntaje();
+	public void setAtuendosUsados(List<UsoAtuendo> atuendosUsados) {
+		this.atuendosUsados = atuendosUsados;
 	}
 
-	public Double getAbrigoPreferidoEn(ParteAbrigada parte) {
-		return preferenciasDeAbrigo.getPuntaje(parte).getNivelDeAdaptacion();
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
+	
+	/*----------------------------------------------PARA TEST--------------------------------------------*/
+	@Transient
+	private boolean notificado = false;
+	
+	public void marcarNotificado(){
+		notificado = true;
+	}
+
+
+
 }

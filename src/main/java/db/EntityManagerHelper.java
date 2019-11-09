@@ -2,11 +2,7 @@ package db;
 
 import java.util.function.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.persistence.*;
 
 public class EntityManagerHelper {
 
@@ -68,8 +64,8 @@ public class EntityManagerHelper {
         }
     }
 
-    public static Query createQuery(String query) {
-        return getEntityManager().createQuery(query);
+    public static TypedQuery createTypedQuery(String query, Class clase) {
+        return getEntityManager().createQuery(query,clase);
     }
 
     public static void persist(Object o){
