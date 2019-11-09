@@ -8,6 +8,10 @@ import javax.persistence.Enumerated;
 import org.quartz.Trigger;
 
 import db.EntidadPersistente;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Transient;
 
 @Entity
 public class Evento extends EntidadPersistente {

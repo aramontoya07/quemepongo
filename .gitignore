@@ -16,6 +16,8 @@ local.properties
 .loadpath
 .recommenders
 
+.vscode
+
 #algo raro de base de datos.
 */persistence.xml
 
