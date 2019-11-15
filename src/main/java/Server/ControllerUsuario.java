@@ -54,7 +54,7 @@ public class ControllerUsuario {
     }
 
     private String parsearFecha(String fechaRaw){
-        return fechaRaw.substring(8, 10) + "/" + fechaRaw.substring(5, 7) + "/" + fechaRaw.substring(0, 4);
+        return  fechaRaw.substring(5, 7) + "/" + fechaRaw.substring(8, 10)  + "/" + fechaRaw.substring(0, 4);
     }
 
     public ModelAndView listarEventos(Request req, Response res) {
@@ -138,7 +138,6 @@ public class ControllerUsuario {
             String idUsuario = req.session().attribute(ID_USUARIO);
             Usuario usuario = obtenerUsuario(idUsuario);
             String idAtuendo = req.params("idAtuendo");
-            System.out.println("el id essssssssssss " + idAtuendo);
             UsoAtuendo uso = obtenerUsoAtuendo(usuario, idAtuendo);
 
             int puntajeCabeza = Integer.parseInt(req.queryParams("cabezaPuntaje"));
@@ -155,6 +154,7 @@ public class ControllerUsuario {
             usuario.puntuarParteDeAtuendoEn(uso, puntajeManos, ParteAbrigada.MANOS);
             usuario.puntuarParteDeAtuendoEn(uso, puntajePiernas, ParteAbrigada.PIERNAS);
             usuario.puntuarParteDeAtuendoEn(uso, puntajePies, ParteAbrigada.PIES);
+            uso.setPuntuado(true);
             EntityManagerHelper.commit();
             
             res.redirect("/puntuarAtuendos");

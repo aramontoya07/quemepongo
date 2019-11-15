@@ -19,10 +19,12 @@
         </div>
     </div>
 
-    <h3 class="border-primary mb-4">Sugerencias disponibles</h3>
+    <h3 class="border-primary mb-4">Sugerencias exactas</h3>    
+    <h5 class="border-primary mb-4">Cantidad: {{cantidadExactos}}</h3>
 
-        {{#each atuendos}}
+        {{#each atuendosExactos}}
             <div class="col md-6 card border-primary mb-3">
+                <h3 class="card-header border-primary mb-4">Atuendo {{id}}</h3>
                 <div class="row justify-content-start justify-content-center">
                     <div class="col"><img src="{{superior.rutaImagen}}" class="card-img-top" alt="50"></div>
                     <div class="col"><img src="{{inferior.rutaImagen}}" class="card-img-top" alt="50"></div>
@@ -59,6 +61,50 @@
                     </div>
                 </div>
             </div>
+        {{/each}}
+
+        <h3 class="border-primary mb-4">Sugerencias aproximadas</h3>
+        <h5 class="border-primary mb-4">Cantidad: {{cantidadAproximadas}}</h3>
+        
+        {{#each atuendosAproximados}}
+        <div class="col md-6 card border-primary mb-3">
+            <h3 class="card-header border-primary mb-4">Atuendo {{id}}</h3>
+            <div class="row justify-content-start justify-content-center">
+                <div class="col"><img src="{{superior.rutaImagen}}" class="card-img-top" alt="50"></div>
+                <div class="col"><img src="{{inferior.rutaImagen}}" class="card-img-top" alt="50"></div>
+                <div class="col"><img src="{{calzado.rutaImagen}}" class="card-img-top" alt="50"></div>
+                {{#each accesorios}}
+                <div class="col"><img src="{{rutaImagen}}" class="card-img-top" alt="50"></div>
+                {{/each}}
+                {{#each capasAbrigos}}
+                <div class="col"><img src="{{rutaImagen}}" class="card-img-top" alt="50"></div>
+                {{/each}}
+            </div>
+        
+            <div class="card-footer border-primary">
+                <div class="row justify-content-start justify-content-center card-body">
+                    <div class="col col-md-4">
+                        <form action="/misEventos/{{asistencia.evento.id}}/aceptarSugerencia" method="POST">
+                            <fieldset>
+        
+                                <input type="hidden" name="idAtuendo" value={{id}}>
+                                <button type="submit" class="btn btn-success">Aceptar</button>
+        
+                            </fieldset>
+                        </form>
+                    </div>
+        
+                    <div class="col col-md-4">
+                        <form action="/misEventos/{{asistencia.evento.id}}/rechazarSugerencia" method="POST">
+                            <fieldset>
+                                <input type="hidden" name="idAtuendo" value={{id}}>
+                                <button type="submit" class="btn btn-danger">Rechazar</button>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         {{/each}}
 </div>
 

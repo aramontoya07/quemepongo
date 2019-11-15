@@ -13,16 +13,18 @@ import usuario.EstadoAtuendo;
 @Table(name = "Usos")
 public class UsoAtuendo extends EntidadPersistente{
     //el usoAtuendo sirve para cuando el usuario acepta la sugerencia hecha por el guardaropa, no existe la opcion de que haya varios usos para el mismo atuendo. es OneToOne
-    @OneToOne(cascade = {CascadeType.PERSIST})
+    @OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
     public Atuendo atuendo;
 
     @Enumerated(EnumType.STRING)
     public EstadoAtuendo estado;
 
+    private boolean puntuado = false;
+
     public LocalDateTime fechaDeUso;
+    public String fechaFormateada;
 
     public UsoAtuendo(){
-        
     }
 
     public Double temperaturaDeUso;
@@ -32,6 +34,8 @@ public class UsoAtuendo extends EntidadPersistente{
         atuendo = atuendo2;
         estado = estado2;
         temperaturaDeUso = ServicioClimatico.obtenerClimaEnDefault().getTemperatura();
+        fechaFormateada = fechaDeUso.getDayOfWeek().toString() + " " + fechaDeUso.getDayOfMonth() + " de "
+                + fechaDeUso.getMonth().toString() + " del " + fechaDeUso.getYear();
 	}
 
 	public Atuendo getAtuendo() {
@@ -64,5 +68,20 @@ public class UsoAtuendo extends EntidadPersistente{
 
     public void setFechaDeUso(LocalDateTime fechaDeUso) {
         this.fechaDeUso = fechaDeUso;
+    }
+
+    public boolean getPuntuado(){
+        return puntuado;
+    }
+    public void setPuntuado(boolean puntuo){
+        puntuado = puntuo;
+    }
+
+    public String getFechaFormateada() {
+        return fechaFormateada;
+    }
+
+    public void setFechaFormateada(String fecha) {
+        fechaFormateada = fecha;
     }
 }

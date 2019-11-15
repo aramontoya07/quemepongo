@@ -108,8 +108,6 @@ public class Atuendo extends EntidadPersistente {
 	}
 
 	public Boolean noEsDeId(List<Integer> ids){
-		System.out.println("el id " + this.getId() + " da: ");
-		System.out.println(ids.stream().allMatch(id -> (!this.mismaId(id))));
 		return ids.stream().allMatch(id -> (!this.mismaId(id)));
 	}
 

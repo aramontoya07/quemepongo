@@ -29,7 +29,6 @@ public class OpenWeather extends ProvedorClimatico {
 			return consultarClimaGuardado(nombre_ciudad);
 		}catch(ClimaException e){
 			String JsonRespuesta = obtenerJson(nombre_ciudad);
-			//System.out.println(JsonRespuesta);
 			Clima climaActual = parsearClima(JsonRespuesta);
 			
 			agregarClima(nombre_ciudad,climaActual);

@@ -26,45 +26,52 @@ import usuario.Usuario;
 public class ControllerEventos {
     private static final String ID_USUARIO = "idUsuario";
     private static final String ID_ASISTENCIA = "idEvento";
+    List<Atuendo> atuendosExactos;
+    List<Atuendo> atuendosAproximados;
 
     public ModelAndView detalleEvento(Request req, Response res) {
         String idAsistencia = req.params(ID_ASISTENCIA);
         String idUsuario = req.session().attribute(ID_USUARIO);
         Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
         AsistenciaEvento asistencia = RepositorioAsistenciaEventos.obtenerAsistencia(idAsistencia);
-        List<Atuendo> atuendos = new ArrayList<Atuendo>();
+
+        atuendosExactos = new ArrayList<Atuendo>();
+        atuendosAproximados = new ArrayList<Atuendo>();
+
         asistencia.getSugerenciasEvento().forEach( sc -> 
-            atuendos.addAll(sc.getExactas())
+            atuendosExactos.addAll(sc.getExactas())
         );
         asistencia.getSugerenciasEvento().forEach(sc -> 
-            atuendos.addAll(sc.getAproximadas())
+            atuendosAproximados.addAll(sc.getAproximadas())
         );
 
-        Set<UsoAtuendo> usos = usuario.getAceptados();
-        Set<UsoAtuendo> usos2 = usuario.getUsosRechazados();
-        usos.addAll(usos2);
-        List<Integer> ids = usos.stream().map(uso -> uso.getAtuendo().getId()).collect(Collectors.toList());
+        Set<UsoAtuendo> usosAceptados = usuario.getAceptados();
+        Set<UsoAtuendo> usosRechazados = usuario.getUsosRechazados();
+        List<Integer> idsAceptadas = usosAceptados.stream().map(uso -> uso.getAtuendo().getId()).collect(Collectors.toList());
+        List<Integer> idsRechazadas = usosRechazados.stream().map(uso -> uso.getAtuendo().getId()).collect(Collectors.toList());
 
-        List<Atuendo> atuendosFiltrados = atuendos.stream().filter(atuendo -> atuendo.noEsDeId(ids))
+        List<Integer> ids = new ArrayList<Integer>();
+        ids.addAll(idsAceptadas);
+        ids.addAll(idsRechazadas);
+
+        atuendosAproximados = atuendosAproximados.stream().filter(atuendo -> atuendo.noEsDeId(ids))
                 .collect(Collectors.toList());
-        
-        System.out.println("me quedo con: ");
-        atuendosFiltrados.forEach(atuendo -> System.out.println(atuendo.getId()));
-        
+        atuendosExactos = atuendosExactos.stream().filter(atuendo -> atuendo.noEsDeId(ids))
+                .collect(Collectors.toList());
+    
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("asistencia", asistencia);
-        model.put("atuendos", atuendosFiltrados);
+        model.put("atuendosExactos", atuendosExactos);
+        model.put("cantidadExactos", atuendosExactos.size());
+        model.put("atuendosAproximados", atuendosAproximados);
+        model.put("cantidadAproximadas", atuendosAproximados.size());
         return new ModelAndView(model, "detalleEvento.hbs");
     }
 
     public LocalDateTime formatearFecha(String fecha){
-        System.out.println(fecha);
         int mes = Integer.parseInt(fecha.substring(0,2));
         int dia = Integer.parseInt(fecha.substring(3,5));
         int anio = Integer.parseInt(fecha.substring(6,10));
-        System.out.println(dia);
-        System.out.println(mes);
-        System.out.println(anio);
         return LocalDateTime.of(anio,mes,dia,0,0);
     }
 

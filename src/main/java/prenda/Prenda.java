@@ -142,7 +142,6 @@ public class Prenda extends EntidadPersistente {
 	}
 
 	public void imprimirRuta() {
-		System.out.println("hola");
-		System.out.println(rutaImagen);
+		//System.out.println(rutaImagen);
 	}
 }

@@ -11,7 +11,7 @@
     {{#each aceptados}}
       <div class="card">
         <div class="card-body">
-          <h3 class="card-text ">Atuendo {{atuendo.id}}</h3>
+          <h3 class="card-text ">Atuendo {{atuendo.id}} {{#if puntuado}}   <p class="text-success"> PUNTUADO <p>{{/if}}</h3>
           <div class="row justify-content-start justify-content-center">
           <div class="col col-md-2"><img src="{{atuendo.superior.rutaImagen}}" class="card-img-top" alt="..."></div>
           <div class="col col-md-2"><img src="{{atuendo.inferior.rutaImagen}}" class="card-img-top" alt="..."></div>

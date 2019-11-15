@@ -39,7 +39,6 @@ public class AccuWeather extends ProvedorClimatico {
 			return consultarClimaGuardado(nombre_ciudad);
 		}catch(ClimaException e){
 			String JsonRespuesta = obtenerJson(nombre_ciudad);
-			//System.out.println(JsonRespuesta);
 			Clima climaActual = parsearClima(JsonRespuesta);
 			this.agregarClima(nombre_ciudad,climaActual);
 			return climaActual;

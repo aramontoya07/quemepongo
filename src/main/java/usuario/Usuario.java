@@ -27,18 +27,20 @@ import subscripciones.SubscripcionGratuita;
 import subscripciones.SubscripcionPremium;
 import subscripciones.TipoSubscripcion;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 @Entity
 @Table(name = "Usuarios")
 public class Usuario extends EntidadPersistente {
 
-	@OneToMany(cascade = {CascadeType.PERSIST})
+	@OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
 	@JoinColumn(name = "Id_usuario")
 	private List<UsoAtuendo> atuendosUsados = new ArrayList<>();
 
 
 	@ManyToMany(cascade = {CascadeType.PERSIST})
 	private Set<Guardarropa> guardarropas = new HashSet<>();
-
 
 	@ElementCollection(targetClass = Informante.class)
 	@Enumerated(EnumType.STRING)
@@ -67,8 +69,28 @@ public class Usuario extends EntidadPersistente {
 		preferenciasDeAbrigo = new PreferenciasDeAbrigo();
 	}
 
+	public String convertirSHA256(String password) {
+		MessageDigest md = null;
+		try {
+			md = MessageDigest.getInstance("SHA-256");
+		} 
+		catch (NoSuchAlgorithmException e) {		
+			e.printStackTrace();
+			return null;
+		}
+	    
+		byte[] hash = md.digest(password.getBytes());
+		StringBuffer sb = new StringBuffer();
+	    
+		for(byte b : hash) {        
+			sb.append(String.format("%02x", b));
+		}
+	    
+		return sb.toString();
+	}
+
 	public void setContrasenia(String contrasenia) {
-		this.contrasenia = contrasenia;
+		this.contrasenia = this.convertirSHA256(contrasenia);
 	}
 
 	public AsistenciaEvento obtenerAsistencia(Evento evento){

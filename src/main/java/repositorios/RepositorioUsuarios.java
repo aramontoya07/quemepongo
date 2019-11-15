@@ -19,21 +19,22 @@ public class RepositorioUsuarios {
         return usuario;
     }
 
-    public static void persistirUsuario(Usuario usuario) {
+    public static void persistirUsuario(Usuario usuario){
         EntityManagerHelper.beginTransaction();
         EntityManagerHelper.getEntityManager().persist(usuario);
         EntityManagerHelper.commit();
     }
 
-    public static Usuario obtenerUsuarioPorMailYContra(String mail, String contrasenia) throws RepositorioException {
+    public static Usuario obtenerUsuarioPorMailYContra(String mail, String contra) throws RepositorioException {
         try{
+            String contrasenia = new Usuario().convertirSHA256(contra);
             TypedQuery <Usuario> query = EntityManagerHelper.getEntityManager()
                     .createQuery("SELECT u FROM Usuario u WHERE mail = '" + mail +"' AND contrasenia = '" + contrasenia + "'"
                             , Usuario.class);
              List<Usuario> usuariosPosibles = query.getResultList();
              return usuariosPosibles.get(0);
         }catch(Exception e){
-            throw new RepositorioException("No se pudo encontrar al usuario con mail " + mail + " y contrasenia " + contrasenia);
+            throw new RepositorioException("No se pudo encontrar al usuario con mail " + mail + " y contrasenia " + contra);
         }
     }
 }

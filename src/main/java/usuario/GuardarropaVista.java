@@ -55,9 +55,7 @@ public class GuardarropaVista{
 
     public GuardarropaVista(Guardarropa guardarropa){
         id = guardarropa.getId();
-        System.out.println(guardarropa.cantidadDePrendas());
         superiores = guardarropa.getPrendasDeParte(Categoria.PARTE_SUPERIOR);
-        System.out.println(superiores.toString());
         inferiores = guardarropa.getPrendasDeParte(Categoria.PARTE_INFERIOR);
         calzado = guardarropa.getPrendasDeParte(Categoria.CALZADO);
         accesorios = guardarropa.getPrendasDeParte(Categoria.ACCESORIO);
