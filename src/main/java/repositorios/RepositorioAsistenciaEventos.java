@@ -1,5 +1,4 @@
 package repositorios;
-import org.hibernate.metamodel.binding.AssociationAttributeBinding;
 
 import db.EntityManagerHelper;
 import eventos.AsistenciaEvento;

@@ -2,7 +2,6 @@ package atuendo;
 
 import clima.Clima;
 import db.EntidadPersistente;
-import db.EntityManagerHelper;
 import usuario.PreferenciasDeAbrigo;
 
 import java.util.*;

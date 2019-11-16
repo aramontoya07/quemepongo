@@ -1,7 +1,6 @@
 package server;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +18,6 @@ import repositorios.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import usuario.Guardarropa;
 import usuario.Usuario;
 
 public class ControllerUsuario {
@@ -114,10 +112,15 @@ public class ControllerUsuario {
             usuario.setNombre(nombre);
             usuario.setMail(mail);
             usuario.setContrasenia(contrasenia);
-            RepositorioUsuarios.persistirUsuario(usuario);
-            req.session().attribute(ID_USUARIO, Integer.toString(usuario.getId()));
-            res.redirect("/perfil/" + usuario.getId());
-            return null;
+            try{
+                RepositorioUsuarios.persistirUsuario(usuario);
+                req.session().attribute(ID_USUARIO, Integer.toString(usuario.getId()));
+                res.redirect("/perfil");
+                return null;
+            }catch(RepositorioException e){
+                res.redirect("/registro");
+                return null;
+            }
         }
 
         public ModelAndView loguearUsuario(Request req, Response res){

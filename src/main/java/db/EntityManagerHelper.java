@@ -64,6 +64,7 @@ public class EntityManagerHelper {
         }
     }
 
+    @SuppressWarnings({"all"}) //suprimir warnings molestos por no especificar el tipo de Class y de Typedquery
     public static TypedQuery createTypedQuery(String query, Class clase) {
         return getEntityManager().createQuery(query,clase);
     }

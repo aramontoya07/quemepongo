@@ -8,7 +8,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import prenda.Categoria;
-import prenda.Prenda;
 import prenda.Trama;
 
 public class PrendaTest extends SetUp{

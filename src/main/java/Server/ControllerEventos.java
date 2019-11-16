@@ -3,13 +3,11 @@ package server;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import alertas.RepoUsuarios;
 import atuendo.Atuendo;
 import atuendo.UsoAtuendo;
 import db.EntityManagerHelper;

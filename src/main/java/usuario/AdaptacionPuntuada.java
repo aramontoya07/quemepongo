@@ -1,9 +1,6 @@
 package usuario;
 
-import db.EntidadPersistente;
-
 import javax.persistence.Embeddable;
-import javax.persistence.Entity;
 
 @Embeddable
 public class AdaptacionPuntuada{

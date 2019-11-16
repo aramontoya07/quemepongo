@@ -3,7 +3,6 @@ package server;
 import atuendo.Atuendo;
 import clima.MockAgradable;
 import clima.ServicioClimatico;
-import db.EntityManagerHelper;
 import eventos.AsistenciaEvento;
 import eventos.Calendario;
 import eventos.Evento;
@@ -218,9 +217,5 @@ public class SetUpUsuario {
 
         RepositorioUsuarios.persistirUsuario(usuario1);
         return;
-    }
-
-    public Usuario setear(){ //TODO: DEPRECATE. ya tenemos base de datos y el metodo cargarUsuario(), asi que hay que borrar este metodo que devuelve un usuario
-        return new Usuario();
     }
 }

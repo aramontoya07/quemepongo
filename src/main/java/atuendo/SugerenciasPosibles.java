@@ -1,7 +1,6 @@
 package atuendo;
 
 import db.EntidadPersistente;
-import db.EntityManagerHelper;
 
 import javax.persistence.*;
 

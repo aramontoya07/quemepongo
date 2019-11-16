@@ -7,7 +7,6 @@ import javax.persistence.*;
 import alertas.Alerta;
 import atuendo.UsoAtuendo;
 import db.EntidadPersistente;
-import db.EntityManagerHelper;
 import notificaciones.Informante;
 import alertas.RepoUsuarios;
 import alertas.TipoDeAlerta;
@@ -346,6 +345,10 @@ public class Usuario extends EntidadPersistente {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public String getNombre(){
+		return nombre;
 	}
 	
 	/*----------------------------------------------PARA TEST--------------------------------------------*/

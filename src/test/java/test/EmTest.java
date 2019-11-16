@@ -52,7 +52,7 @@ public class EmTest extends SetUp {
 		RepositorioUsuarios.persistirUsuario(usuario);
 		int id = usuario.getId();
 		String idChar = Integer.toString(id);
-		Usuario otroUsuario = RepositorioUsuarios.obtenerUsuario("1");
+		Usuario otroUsuario = RepositorioUsuarios.obtenerUsuario(idChar);
 		assertEquals("usuario1@gmail.com", otroUsuario.getMail());
 	}
 

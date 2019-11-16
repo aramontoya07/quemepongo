@@ -4,11 +4,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import atuendo.SugerenciasClima;
 import eventos.AsistenciaEvento;
 import eventos.Evento;
 import eventos.Frecuencia;
@@ -28,10 +26,7 @@ public class BuscadorEventos {
 	private boolean noTieneSugerencia;
 	private LocalDateTime fecha;
 
-	private Evento evento;
-	private Set<SugerenciasClima> sugerenciasEvento = new HashSet<>();
-
-	private Usuario usuario = new Usuario(); //Si no tiene un usuario ROMPE! FIXME
+	private Usuario usuario = new Usuario(); //Si no tiene un usuario rompe
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;

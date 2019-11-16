@@ -3,9 +3,6 @@ package server;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
-import javax.persistence.EntityManager;
 
 import db.EntityManagerHelper;
 import prenda.Categoria;
@@ -21,23 +18,12 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import usuario.Guardarropa;
-import usuario.GuardarropaVista;
-import usuario.Usuario;
 
 import java.util.HashMap;
 
 
 
 public class ControllerGuardarropas {
-
-    private Guardarropa obtenerGuardarropaSegunId(String idUsuario, String idGuardarropa){
-
-        //Guardarropa guardarropaActual = EntityManagerHelper.getEntityManager().find(Guardarropa.class, Integer.parseInt(idGuardarropa)); //@TODO: obtener guardarropa idGuardarropa del usuario correspondiente
-        Usuario usuario = (new SetUpUsuario()).setear();
-        Guardarropa guardarropaActual = usuario.getGuardarropas().stream()
-                .filter(guardarropa -> (Integer.parseInt(idGuardarropa)) == (new Integer(guardarropa.getId()))).findFirst().orElse(null);
-        return guardarropaActual;
-    }
 
     public ModelAndView detalleGuardarropa(Request req, Response res) {
         String id = req.params("idGuardarropas");
@@ -72,7 +58,7 @@ public class ControllerGuardarropas {
         int nivelDeAbrigo = Integer.parseInt(req.queryParams("nivelDeAbrigo"));//
         TipoUso tipoUso = parsearTipoUso(req.queryParams("tipoUso"));//
         Material material = parsearMaterial(req.queryParams("material"));//
-        List<Material> materialPermitido = new ArrayList<Material>(); //TODO: preguntar si se tiene que ingresar al crear la prenda
+        List<Material> materialPermitido = new ArrayList<Material>(); //
         Categoria categoria = parsearCategoria(req.queryParams("categoria"));
         Trama trama = parsearTrama(req.queryParams("trama"));//
         ColorRGB colorPrimario = parsearColor(req.queryParams("colorPrimario"));//

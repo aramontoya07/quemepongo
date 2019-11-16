@@ -34,8 +34,8 @@ public class UsoAtuendo extends EntidadPersistente{
         atuendo = atuendo2;
         estado = estado2;
         temperaturaDeUso = ServicioClimatico.obtenerClimaEnDefault().getTemperatura();
-        fechaFormateada = fechaDeUso.getDayOfWeek().toString() + " " + fechaDeUso.getDayOfMonth() + " de "
-                + fechaDeUso.getMonth().toString() + " del " + fechaDeUso.getYear();
+        fechaFormateada = traducirDia(fechaDeUso.getDayOfWeek().toString()) + " " + fechaDeUso.getDayOfMonth() + " de "
+                + traducirMes(fechaDeUso.getMonth().toString()) + " del " + fechaDeUso.getYear();
 	}
 
 	public Atuendo getAtuendo() {
@@ -83,5 +83,57 @@ public class UsoAtuendo extends EntidadPersistente{
 
     public void setFechaFormateada(String fecha) {
         fechaFormateada = fecha;
+    }
+
+    private String traducirDia(String day){
+        switch(day){
+            case "MONDAY":
+                return "lunes";
+            case "TUESDAY":
+                return "martes";
+            case "WEDNESDAY":
+                return "miercoles";
+            case "THRUSDAY":
+                return "jueves";
+            case "FRIDAY":
+                return "viernes";
+            case "SATURDAY":
+                return "sabado";
+            case "SUNDAY":
+                return "domingo";
+            default:
+                return "ERROR EN EL DIA";
+        }
+    }
+
+    private String traducirMes(String month) {
+        switch (month) {
+        case "JANUARY":
+            return "enero";
+        case "FEBRUARY":
+            return "febrero";
+        case "MARCH":
+            return "marzo";
+        case "APRIL":
+            return "abril";
+        case "MAY":
+            return "mayo";
+        case "JUNE":
+            return "junio";
+        case "JULY":
+            return "julio";
+        case "AUGUST":
+            return "agosto";
+        case "SEPTEMBER":
+            return "septiembre";
+        case "OCTOBER":
+            return "octubre";
+        case "NOVEMBER":
+            return "noviembre";
+        case "DECEMBER":
+            return "diciembre";
+        default:
+            return "ERROR EN EL MES";
+        }
     }
 }

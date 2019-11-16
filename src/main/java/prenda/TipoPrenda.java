@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.*;
 
 import db.EntidadPersistente;
-import db.EntityManagerHelper;
 
 @Entity
 public class TipoPrenda extends EntidadPersistente{

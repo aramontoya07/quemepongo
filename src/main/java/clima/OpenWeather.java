@@ -7,7 +7,6 @@ import com.sun.jersey.api.client.WebResource;
 
 import excepciones.ClimaException;
 import excepciones.HttpCodeException;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashSet;
@@ -49,7 +48,6 @@ public class OpenWeather extends ProvedorClimatico {
 
 	private Set<Alerta> parsearAlertas(String JSON) {
 		Set<Alerta> alertas = new HashSet <>();
-		//TODO implementar alertas en openweather
 		return alertas;
 	}
 

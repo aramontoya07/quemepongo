@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.*;
 
 import db.EntidadPersistente;
-import db.EntityManagerHelper;
 
 import java.awt.image.BufferedImage;
 

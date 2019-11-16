@@ -8,10 +8,6 @@ import javax.persistence.Enumerated;
 import org.quartz.Trigger;
 
 import db.EntidadPersistente;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Transient;
 
 @Entity
 public class Evento extends EntidadPersistente {
@@ -27,8 +23,8 @@ public class Evento extends EntidadPersistente {
 		this.tituloEvento = titulo;
 		this.fecha = fecha;
 		this.ubicacion = ubicacion;
-		this.fechaFormateada = fecha.getDayOfWeek().toString() + " " + fecha.getDayOfMonth() + " de "
-				+ fecha.getMonth().toString() + " del " + fecha.getYear();
+		this.fechaFormateada = traducirDia(fecha.getDayOfWeek().toString()) + " " + fecha.getDayOfMonth() + " de "
+				+ traducirMes(fecha.getMonth().toString()) + " del " + fecha.getYear();
 	}
 
 	public String getFechaFormateada() {
@@ -81,5 +77,57 @@ public class Evento extends EntidadPersistente {
 
 	public void setTituloEvento(String tituloEvento) {
 		this.tituloEvento = tituloEvento;
+	}
+
+	private String traducirDia(String day) {
+		switch (day) {
+		case "MONDAY":
+			return "lunes";
+		case "TUESDAY":
+			return "martes";
+		case "WEDNESDAY":
+			return "miercoles";
+		case "THRUSDAY":
+			return "jueves";
+		case "FRIDAY":
+			return "viernes";
+		case "SATURDAY":
+			return "sabado";
+		case "SUNDAY":
+			return "domingo";
+		default:
+			return "ERROR EN EL DIA";
+		}
+	}
+
+	private String traducirMes(String month) {
+		switch (month) {
+		case "JANUARY":
+			return "enero";
+		case "FEBRUARY":
+			return "febrero";
+		case "MARCH":
+			return "marzo";
+		case "APRIL":
+			return "abril";
+		case "MAY":
+			return "mayo";
+		case "JUNE":
+			return "junio";
+		case "JULY":
+			return "julio";
+		case "AUGUST":
+			return "agosto";
+		case "SEPTEMBER":
+			return "septiembre";
+		case "OCTOBER":
+			return "octubre";
+		case "NOVEMBER":
+			return "noviembre";
+		case "DECEMBER":
+			return "diciembre";
+		default:
+			return "ERROR EN EL MES";
+		}
 	}
 }
