@@ -199,9 +199,9 @@ public class SetUpUsuario {
         usuario1.asistirAEvento(finalDelMundial);
         usuario1.asistirAEvento(superclasico);
         usuario1.asistirAEvento(fiesta);
-        usuario1.setMail("nico.gomez.mbc@gmail.com");
-        usuario1.setContrasenia("469925199");
-        usuario1.setNombre("NicoxxxKpo");
+        usuario1.setMail("usuarioEjemplo@mail.com");
+        usuario1.setContrasenia("1234"); 
+        usuario1.setNombre("UserTest");
         asistenciaMundial.generarSugerenciasParaEvento(usuario1);
         asistenciaSuperclasico.generarSugerenciasParaEvento(usuario1);
         asistenciaFiesta.generarSugerenciasParaEvento(usuario1);
