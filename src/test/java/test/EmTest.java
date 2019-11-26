@@ -31,7 +31,7 @@ public class EmTest extends SetUp {
 		assertTrue(EntityManagerHelper.getEntityManager().contains(usuario1));
 	}
 
-	@Disabled
+	/*@Disabled
 	@Test
 	public void testQuery(){
 		String mail = "usuario@gmail.com";
@@ -40,7 +40,7 @@ public class EmTest extends SetUp {
 				.createQuery("SELECT u FROM Usuario u WHERE mail = '" + mail +"' AND contrasenia = '" + contrasenia + "'", Usuario.class);
 		Usuario usuario = query.getSingleResult();
 		assertEquals(7, usuario.getId());
-	}
+	}*/
 
 	@Disabled
 	@Test
