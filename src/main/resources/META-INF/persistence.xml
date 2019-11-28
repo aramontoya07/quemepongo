@@ -10,24 +10,25 @@
 
         <properties>
               <property name="hibernate.archive.autodetection" value="class"/>
-              <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-              <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver" />
-              <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/prueba" />
-              <property name="hibernate.connection.username" value="root" />
-              <property name="hibernate.connection.password" value="root" />
-              <property name="hibernate.show_sql" value="false" />
-              <property name="hibernate.format_sql" value="true" />
-              <property name="use_sql_comments" value="true" />
-              <property name="hibernate.hbm2ddl.auto" value="update" />
+            <!--  <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver" />
+         <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/prueba" />
+       <property name="hibernate.connection.username" value="root" />
+       <property name="hibernate.connection.password" value="root" />-->
+       <property name="hibernate.show_sql" value="false" />
+       <property name="hibernate.format_sql" value="true" />
+       <property name="use_sql_comments" value="true" />
+       <property name="hibernate.hbm2ddl.auto" value="update" />
 
-            <!-- <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
-             <property name="hibernate.connection.url" value = "jdbc:mysql://uc8xnhq2hpwlxv5z:ihjikipwptr3i1jk@jsftj8ez0cevjz8v.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/rbunsqmmbfc33rrc"/>
-             <property name="hibernate.connection.username" value="	uc8xnhq2hpwlxv5z"/>
-             <property name="hibernate.connection.password" value="ihjikipwptr3i1jk"/>
-             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>-->
+            <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="javax.persistence.validation.mode" value = "none"/>
+            <property name="hibernate.connection.url" value = "jdbc:mysql://xme5h6gc8m76wcs9:gas1j0kasonjttw2@ryvdxs57afyjk41z.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/bm8xtvh71sk7hu1c"/>
+            <property name="hibernate.connection.username" value="xme5h6gc8m76wcs9"/>
+            <property name="hibernate.connection.password" value="gas1j0kasonjttw2"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
 
-         </properties>
+           </properties>
 
-      </persistence-unit>
+        </persistence-unit>
 
-  </persistence>
+    </persistence>

@@ -1,5 +1,6 @@
 package server;
 
+
 import spark.Spark;
 import spark.debug.DebugScreen;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -7,8 +8,9 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class Server{
     public static void main(String[] args) {
         Spark.port(getHerokuAssignedPort());
-       // Spark.port(9000);
+
         Spark.init();
+
 
         ControllerSistema sistemaC = new ControllerSistema();
         ControllerUsuario usuarioC =new ControllerUsuario();
@@ -54,5 +56,6 @@ public class Server{
 
         return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
     }
+
 
 }
