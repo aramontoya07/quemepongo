@@ -3,6 +3,7 @@ package server;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -35,6 +36,10 @@ public class ControllerEventos {
 
         atuendosExactos = new ArrayList<Atuendo>();
         atuendosAproximados = new ArrayList<Atuendo>();
+
+        if(asistencia.getSugerenciasEvento() == null){
+            asistencia.sugerenciasEvento = new HashSet<>();
+        }
 
         asistencia.getSugerenciasEvento().forEach( sc -> 
             atuendosExactos.addAll(sc.getExactas())
