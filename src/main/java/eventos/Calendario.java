@@ -102,4 +102,8 @@ public class Calendario extends EntidadPersistente{
 	public boolean hayEventosCercanosEn(String ubicacion) {
 		return eventos.stream().anyMatch(asistencia -> asistencia.esCercanaYEsEn(ubicacion));
 	}
+
+	public void generarSugerenciasNecesarias(Usuario usuario){
+		eventos.forEach(e -> e.generarSugerenciasParaEvento(usuario));
+	}
 }

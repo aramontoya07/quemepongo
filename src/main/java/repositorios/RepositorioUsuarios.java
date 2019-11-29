@@ -6,6 +6,7 @@ import usuario.Usuario;
 
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 public class RepositorioUsuarios {
 
@@ -54,5 +55,12 @@ public class RepositorioUsuarios {
         }catch(NoResultException e){
             throw new RepositorioException(excepcion);
         }
+    }
+
+    public static List<Usuario> obtenerUsuariosTotales(){
+        TypedQuery<Usuario> query = EntityManagerHelper.getEntityManager().createQuery(
+                "SELECT u FROM Usuario u",
+                Usuario.class);
+        return query.getResultList();
     }
 }

@@ -26,17 +26,19 @@ public class AsistenciaEvento extends EntidadPersistente{
 	public AsistenciaEvento() {
 	}
 
+	public void generarSugerenciasParaEvento(Usuario usuario) {
+		if(!evento.esEventoLejano()){
+			sugerenciasEvento = usuario.pedirSugerenciaSegunClima(evento.getUbicacion());
+			usuario.notificarSugerenciasListas(this);
+		}
+	}
+
     Set<SugerenciasClima> pedirSugerencias(){
         if(evento.esEventoLejano()) throw new EventoException("Falta mucho para el evento"); //Lo pidio muy antes
         if(sugerenciasEvento.isEmpty()) throw new EventoException("No hay sugerencias que se adapten al evento"); //No hay sugerencias que se adapten
         return sugerenciasEvento;
     }
 
-	public void generarSugerenciasParaEvento(Usuario usuario) {
-		sugerenciasEvento = usuario.pedirSugerenciaSegunClima(evento.getUbicacion());
-		usuario.notificarSugerenciasListas(this);
-	}
-	
 	public boolean esDeFecha(Integer dia, Integer mes, Integer anio){
 		return evento.getFecha().getDayOfMonth() == dia && evento.getFecha().getMonthValue() == mes && evento.getFecha().getYear() == anio;
 	}

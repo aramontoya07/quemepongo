@@ -113,6 +113,9 @@ public class Usuario extends EntidadPersistente {
 		guardarropa.agregarADisponibles(prenda);
 	}
 
+	public void generarSugerenciasNecesarias(){
+		calendarioEventos.generarSugerenciasNecesarias(this);
+	}
 
 	//SUSCRIPCIONES
 

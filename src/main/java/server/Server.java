@@ -1,9 +1,13 @@
 package server;
 
 
+import db.EntityManagerHelper;
+import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import spark.Spark;
 import spark.debug.DebugScreen;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+
+import java.util.concurrent.Executors;
 
 public class Server{
     public static void main(String[] args) {
@@ -15,6 +19,8 @@ public class Server{
         ControllerUsuario usuarioC =new ControllerUsuario();
         ControllerGuardarropas guardarropasC =new ControllerGuardarropas();
         ControllerEventos eventosC =new ControllerEventos();
+
+        Spark.after((req, res) -> EntityManagerHelper.closeEntityManager());
 
         Spark.get("/", sistemaC::landing, new HandlebarsTemplateEngine());
         Spark.get("/registro", sistemaC::registro, new HandlebarsTemplateEngine());
@@ -48,7 +54,9 @@ public class Server{
         
         Spark.get("/favicon.ico", null, new HandlebarsTemplateEngine()); 
 
-        DebugScreen.enableDebugScreen();
+        if (System.getenv("QUE_ME_PONGO_ENV").equals("DEVELOPMENT")) {
+            DebugScreen.enableDebugScreen();
+        }
     }
     static int getHerokuAssignedPort() {
         ProcessBuilder processBuilder = new ProcessBuilder();
