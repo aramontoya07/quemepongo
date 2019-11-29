@@ -18,6 +18,7 @@ import repositorios.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import usuario.Guardarropa;
 import usuario.Usuario;
 
 public class ControllerUsuario {
@@ -49,6 +50,16 @@ public class ControllerUsuario {
         String idUsuario = req.session().attribute(ID_USUARIO);
         Usuario usuario = obtenerUsuario(idUsuario);
         return new ModelAndView(usuario, "misGuardarropas.hbs");
+    }
+
+    public ModelAndView agregarGuardarropas(Request req, Response res){
+        String idUsuario = req.session().attribute(ID_USUARIO);
+        Usuario usuario = obtenerUsuario(idUsuario);
+        EntityManagerHelper.beginTransaction();
+        usuario.agregarGuardarropa(new Guardarropa());
+        EntityManagerHelper.commit();
+        res.redirect("/misGuardarropas");
+        return null;
     }
 
     private String parsearFecha(String fechaRaw){
@@ -105,6 +116,7 @@ public class ControllerUsuario {
             String nombre = req.queryParams("inputNombre");
             String contraseniaRepetida = req.queryParams("inputRepeticionContrasenia");
             if(!contrasenia.equals(contraseniaRepetida)) {
+                res.header("Error","Las constrasenias ingresadas deben coincidir");
                 res.redirect("/registro");
                 return null;
             }
@@ -118,6 +130,7 @@ public class ControllerUsuario {
                 res.redirect("/perfil");
                 return null;
             }catch(RepositorioException e){
+                res.header("Error", "Ese nombre de usuario ya esta en uso");
                 res.redirect("/registro");
                 return null;
             }
@@ -132,6 +145,7 @@ public class ControllerUsuario {
                 res.redirect("/perfil");
                 return null;
             }catch(RepositorioException e){
+                res.header("Error", "El usuario ingresado no existe");
                 res.redirect("/");
                 return null;
             }

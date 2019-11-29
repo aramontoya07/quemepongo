@@ -4,15 +4,15 @@
     <h1 class="login-heading font-weight-light text-lg-left mt-4 mb-0">Mis Eventos</h1>
 </div>
 
-<div class="col-lg-2">
-    <a href="creadorEventos" type="button" class="btn btn-primary btn-lg btn-block">Agregar evento</a>
-</div>
-
 {{#each fechas}}
     <div class="fechas">{{this}}</div>
 {{/each}} 
 
 <hr class="mt-2 mb-5" />
+
+<div class="col-lg-2">
+    <a href="creadorEventos" type="button" class="btn btn-primary btn-lg btn-block">Agregar evento</a>
+</div>
 <div class="container">
 
     <h1>{{fecha}}</h1>

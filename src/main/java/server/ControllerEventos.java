@@ -89,4 +89,16 @@ public class ControllerEventos {
         res.redirect("/misEventos");
         return null;
     }
+    
+    public ModelAndView generarSugerencias(Request req, Response res){
+        String idUsuario = req.session().attribute(ID_USUARIO);
+        Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
+        String idAsistencia = req.params(ID_ASISTENCIA);
+        AsistenciaEvento asistencia = RepositorioAsistenciaEventos.obtenerAsistencia(idAsistencia);
+        EntityManagerHelper.beginTransaction();
+        asistencia.generarSugerenciasParaEvento(usuario);
+        EntityManagerHelper.commit();
+        res.redirect("/misEventos/" + idAsistencia);
+        return null;
+    }
 }

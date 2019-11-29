@@ -11,7 +11,6 @@ public class Server{
 
         Spark.init();
 
-
         ControllerSistema sistemaC = new ControllerSistema();
         ControllerUsuario usuarioC =new ControllerUsuario();
         ControllerGuardarropas guardarropasC =new ControllerGuardarropas();
@@ -25,12 +24,15 @@ public class Server{
         Spark.get("/misGuardarropas/:idGuardarropas", guardarropasC::detalleGuardarropa, new HandlebarsTemplateEngine());
         Spark.get("/misGuardarropas/:idGuardarropas/creadorPrendas", sistemaC::creadorPrendas, new HandlebarsTemplateEngine());
         Spark.get("/tipo", guardarropasC::wizardTipoPrenda, new HandlebarsTemplateEngine()); // :idGuardarropas/creadorPrendas/
+        Spark.get("/misGuardarropas/nuevo", usuarioC::agregarGuardarropas, new HandlebarsTemplateEngine());
+
         Spark.get("/caracteristicas", guardarropasC::wizardCaracteristicas, new HandlebarsTemplateEngine());
         Spark.get("/imagen", guardarropasC::wizardAdjuntarImagen, new HandlebarsTemplateEngine());
 
         Spark.get("/misEventos", usuarioC::listarEventos, new HandlebarsTemplateEngine());
         Spark.get("/misEventos/:mes/:dia/:anio", usuarioC::listarEventosPorFecha, new HandlebarsTemplateEngine());
         Spark.get("/misEventos/:idEvento", eventosC::detalleEvento, new HandlebarsTemplateEngine());
+        Spark.get("/misEventos/:idEvento/generarSugerencias", eventosC::generarSugerencias, new HandlebarsTemplateEngine());
         Spark.get("/creadorEventos", sistemaC::creadorEventos, new HandlebarsTemplateEngine());
 
         Spark.get("/puntuarAtuendos", usuarioC::listarAceptados, new HandlebarsTemplateEngine());
