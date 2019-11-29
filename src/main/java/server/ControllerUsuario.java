@@ -116,7 +116,8 @@ public class ControllerUsuario {
             String nombre = req.queryParams("inputNombre");
             String contraseniaRepetida = req.queryParams("inputRepeticionContrasenia");
             if(!contrasenia.equals(contraseniaRepetida)) {
-                res.header("Error","Las constrasenias ingresadas deben coincidir");
+                //res.header("Error","Las constrasenias ingresadas deben coincidir");
+                res.body("Las constrasenias ingresadas deben coincidir");
                 res.redirect("/registro");
                 return null;
             }
@@ -130,7 +131,8 @@ public class ControllerUsuario {
                 res.redirect("/perfil");
                 return null;
             }catch(RepositorioException e){
-                res.header("Error", "Ese nombre de usuario ya esta en uso");
+                //res.header("Error", "Ese nombre de usuario ya esta en uso");
+                res.body("Ese nombre de usuario ya esta en uso");
                 res.redirect("/registro");
                 return null;
             }
@@ -145,7 +147,8 @@ public class ControllerUsuario {
                 res.redirect("/perfil");
                 return null;
             }catch(RepositorioException e){
-                res.header("Error", "El usuario ingresado no existe");
+                //res.header("Error", "El usuario ingresado no existe");
+                res.body("El usuario ingresado no existe");
                 res.redirect("/");
                 return null;
             }
