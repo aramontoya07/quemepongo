@@ -20,7 +20,7 @@ public class Server{
         ControllerGuardarropas guardarropasC =new ControllerGuardarropas();
         ControllerEventos eventosC =new ControllerEventos();
 
-        Spark.after((req, res) -> EntityManagerHelper.closeEntityManager());
+        //Spark.after((req, res) -> EntityManagerHelper.closeEntityManager());
 
         Spark.get("/", sistemaC::landing, new HandlebarsTemplateEngine());
         Spark.get("/registro", sistemaC::registro, new HandlebarsTemplateEngine());
@@ -54,9 +54,8 @@ public class Server{
         
         Spark.get("/favicon.ico", null, new HandlebarsTemplateEngine()); 
 
-        if (System.getenv("QUE_ME_PONGO_ENV").equals("DEVELOPMENT")) {
-            DebugScreen.enableDebugScreen();
-        }
+        DebugScreen.enableDebugScreen();
+
     }
     static int getHerokuAssignedPort() {
         ProcessBuilder processBuilder = new ProcessBuilder();

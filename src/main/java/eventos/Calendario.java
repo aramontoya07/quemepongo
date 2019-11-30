@@ -79,6 +79,8 @@ public class Calendario extends EntidadPersistente{
 				.withIdentity("Job" + evento.getNombre(), "Eventos")
 				.build();
 
+
+
 		Trigger trigger = evento.getActivador();
 
 		try {

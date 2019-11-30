@@ -11,6 +11,9 @@ public class GeneradorSugerencias {
     private static final Logger LOGGER = LoggerFactory.getLogger(GeneradorSugerencias.class);
 
     public static void main(String[] args) {
-        LOGGER.info("Genere sugerencias :)");
+        List<Usuario> usuarios = RepositorioUsuarios.obtenerUsuariosTotales();
+
+        usuarios.forEach(Usuario::generarSugerenciasNecesarias);
+        LOGGER.info("Genere sugerencias :");
     }
 }
