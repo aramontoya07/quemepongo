@@ -6,6 +6,7 @@ import usuario.Usuario;
 
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 public class RepositorioUsuarios {
 
@@ -14,8 +15,14 @@ public class RepositorioUsuarios {
                 "SELECT u FROM Usuario u WHERE id = " + id, Usuario.class);
         String excepcion = "No se pudo encontrar al usuario con id " + id + " en el respositorio";
         Usuario usuario = obtenerUsuarioConQuery(query, excepcion);
-        EntityManagerHelper.closeEntityManager();
         return usuario;
+    }
+
+    public static List<Usuario> ObtenerUsuariosTotales() throws RepositorioException{
+        TypedQuery<Usuario> query = EntityManagerHelper.getEntityManager().createQuery(
+                "SELECT u FROM Usuario u", Usuario.class);
+        List<Usuario> usuarios = query.getResultList();
+        return usuarios;
     }
 
     public static void persistirUsuario(Usuario usuario) throws RepositorioException{
@@ -25,7 +32,6 @@ public class RepositorioUsuarios {
             EntityManagerHelper.beginTransaction();
             EntityManagerHelper.getEntityManager().persist(usuario);
             EntityManagerHelper.commit();
-            EntityManagerHelper.closeEntityManager();
             return;
         }
             throw new RepositorioException("El mail que se intento ingresar pertenece a un usuario ya creado");
@@ -47,7 +53,6 @@ public class RepositorioUsuarios {
                 Usuario.class);
         String excepcion = "No se pudo encontrar al usuario con mail " + mail + " y contrasenia " + contra;
         Usuario usuario = obtenerUsuarioConQuery(query, excepcion);
-        EntityManagerHelper.closeEntityManager();
         return usuario;
     }
 

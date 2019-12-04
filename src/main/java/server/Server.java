@@ -1,6 +1,7 @@
 package server;
 
 
+import db.EntityManagerHelper;
 import spark.Spark;
 import spark.debug.DebugScreen;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -10,6 +11,9 @@ public class Server{
         Spark.port(getHerokuAssignedPort());
 
         Spark.init();
+
+        Spark.before("/*", (q, a) -> EntityManagerHelper.getEntityManager());
+        Spark.after("/*", (q, a) -> EntityManagerHelper.closeEntityManager());
 
         ControllerSistema sistemaC = new ControllerSistema();
         ControllerUsuario usuarioC =new ControllerUsuario();

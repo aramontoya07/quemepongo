@@ -47,6 +47,12 @@ public class Calendario extends EntidadPersistente{
 		return eventos;
 	}
 
+	public void generarSugerenciasNecesarias(Usuario usuario){
+		eventos.stream()
+				.filter(asistencia -> !asistencia.getEvento().esEventoLejano())
+				.forEach(asistencia ->asistencia.generarSugerenciasParaEvento(usuario));
+	}
+
 	public void setEventos(Set<AsistenciaEvento> eventos) {
 		this.eventos = eventos;
 	}

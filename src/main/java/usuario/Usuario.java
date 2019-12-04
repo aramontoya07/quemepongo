@@ -146,6 +146,10 @@ public class Usuario extends EntidadPersistente {
 		calendarioEventos.agregarEvento(evento,this);
 	}
 
+	public void generarSugerenciasNecesarias(){
+		calendarioEventos.generarSugerenciasNecesarias(this);
+	}
+
 	public boolean leInteresaLaUbicacion(String ubicacion){
 		return calendarioEventos.hayEventosCercanosEn(ubicacion);
 	}
