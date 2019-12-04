@@ -58,6 +58,7 @@ public class ControllerUsuario {
         EntityManagerHelper.beginTransaction();
         usuario.agregarGuardarropa(new Guardarropa());
         EntityManagerHelper.commit();
+        EntityManagerHelper.closeEntityManager();
         res.redirect("/misGuardarropas");
         return null;
     }
@@ -176,6 +177,7 @@ public class ControllerUsuario {
             usuario.puntuarParteDeAtuendoEn(uso, puntajePies, ParteAbrigada.PIES);
             uso.setPuntuado(true);
             EntityManagerHelper.commit();
+            EntityManagerHelper.closeEntityManager();
             
             res.redirect("/puntuarAtuendos");
             return null;
@@ -191,6 +193,7 @@ public class ControllerUsuario {
             EntityManagerHelper.beginTransaction();
             usuario.aceptarAtuendo(atuendomaxi); //deberia persistirse el cambio
             EntityManagerHelper.commit();
+            EntityManagerHelper.closeEntityManager();
             
             res.redirect("/misEventos/" + idEvento);
             return null;
@@ -206,6 +209,7 @@ public class ControllerUsuario {
             EntityManagerHelper.beginTransaction();
             usuario.rechazarAtuendo(atuendomaxi);
             EntityManagerHelper.commit();
+            EntityManagerHelper.closeEntityManager();
 
             res.redirect("/misEventos/" + idEvento);
             return null;

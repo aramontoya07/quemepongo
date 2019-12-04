@@ -76,6 +76,7 @@ public class ControllerGuardarropas {
         EntityManagerHelper.beginTransaction();
         guardarropaActual.agregarADisponibles(prenda);
         EntityManagerHelper.commit();
+        EntityManagerHelper.closeEntityManager();
     
         res.redirect("/misGuardarropas/" + idGuardarropas);
         return null;

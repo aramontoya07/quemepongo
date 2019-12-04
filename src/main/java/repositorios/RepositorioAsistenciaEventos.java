@@ -7,6 +7,8 @@ public class RepositorioAsistenciaEventos{
 
     public static AsistenciaEvento obtenerAsistencia(String id){
         int idAsistencia = Integer.parseInt(id);
-        return EntityManagerHelper.getEntityManager().find(AsistenciaEvento.class, idAsistencia);
+        final AsistenciaEvento asistenciaEvento = EntityManagerHelper.getEntityManager().find(AsistenciaEvento.class, idAsistencia);
+        EntityManagerHelper.closeEntityManager();
+        return asistenciaEvento;
     }
 }

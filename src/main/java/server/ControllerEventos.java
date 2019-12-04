@@ -90,6 +90,7 @@ public class ControllerEventos {
         EntityManagerHelper.beginTransaction();
         usuario.asistirAEvento(evento);
         EntityManagerHelper.commit();
+        EntityManagerHelper.closeEntityManager();
 
         res.redirect("/misEventos");
         return null;
@@ -103,6 +104,7 @@ public class ControllerEventos {
         EntityManagerHelper.beginTransaction();
         asistencia.generarSugerenciasParaEvento(usuario);
         EntityManagerHelper.commit();
+        EntityManagerHelper.closeEntityManager();
         res.redirect("/misEventos/" + idAsistencia);
         return null;
     }

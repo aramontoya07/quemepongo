@@ -14,6 +14,7 @@ public class RepositorioUsuarios {
                 "SELECT u FROM Usuario u WHERE id = " + id, Usuario.class);
         String excepcion = "No se pudo encontrar al usuario con id " + id + " en el respositorio";
         Usuario usuario = obtenerUsuarioConQuery(query, excepcion);
+        EntityManagerHelper.closeEntityManager();
         return usuario;
     }
 
@@ -24,6 +25,7 @@ public class RepositorioUsuarios {
             EntityManagerHelper.beginTransaction();
             EntityManagerHelper.getEntityManager().persist(usuario);
             EntityManagerHelper.commit();
+            EntityManagerHelper.closeEntityManager();
             return;
         }
             throw new RepositorioException("El mail que se intento ingresar pertenece a un usuario ya creado");
@@ -34,6 +36,7 @@ public class RepositorioUsuarios {
                     "SELECT u FROM Usuario u WHERE mail = '" + mail + "'", Usuario.class);
             String excepcion = "No se pudo encontrar al usuario con mail " + mail;
             Usuario usuario = obtenerUsuarioConQuery(query, excepcion);
+            EntityManagerHelper.closeEntityManager();
             return usuario;
     }
 
@@ -44,6 +47,7 @@ public class RepositorioUsuarios {
                 Usuario.class);
         String excepcion = "No se pudo encontrar al usuario con mail " + mail + " y contrasenia " + contra;
         Usuario usuario = obtenerUsuarioConQuery(query, excepcion);
+        EntityManagerHelper.closeEntityManager();
         return usuario;
     }
 

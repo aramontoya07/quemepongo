@@ -21,14 +21,16 @@ public class EmTest extends SetUp {
 
 	@Test
 	public void persistirCosas(){
+		boolean respuesta;
 		EntityManagerHelper.beginTransaction();
 
 		EntityManagerHelper.getEntityManager().persist(usuario1);
 		usuario1.setNombre("Jorge");
 
 		EntityManagerHelper.commit();
-
-		assertTrue(EntityManagerHelper.getEntityManager().contains(usuario1));
+		respuesta = EntityManagerHelper.getEntityManager().contains(usuario1);
+		EntityManagerHelper.closeEntityManager();
+		assertTrue(respuesta);
 	}
 
 	@Disabled
