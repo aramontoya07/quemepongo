@@ -1,2 +1,2 @@
-web: java -jar ./target/QueMePongo-0.0.1-SNAPSHOT-jar-with-dependencies.jar
-worker: java -jar GeneradorSugerencias.java
+web: java -jar ./target/server-jar-with-dependencies.jar
+worker: java -jar ./target/worker-jar-with-dependencies.jar
