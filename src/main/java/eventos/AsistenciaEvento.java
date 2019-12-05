@@ -34,7 +34,6 @@ public class AsistenciaEvento extends EntidadPersistente{
 
 	public void generarSugerenciasParaEvento(Usuario usuario) {
 		sugerenciasEvento = usuario.pedirSugerenciaSegunClima(evento.getUbicacion());
-		usuario.notificarSugerenciasListas(this);
 	}
 	
 	public boolean esDeFecha(Integer dia, Integer mes, Integer anio){
