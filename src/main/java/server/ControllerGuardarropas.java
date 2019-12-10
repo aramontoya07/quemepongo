@@ -55,16 +55,16 @@ public class ControllerGuardarropas {
     
     public ModelAndView agregarPrenda(Request req, Response res) {
         
-        int nivelDeAbrigo = Integer.parseInt(req.queryParams("nivelDeAbrigo"));//
-        TipoUso tipoUso = parsearTipoUso(req.queryParams("tipoUso"));//
-        Material material = parsearMaterial(req.queryParams("material"));//
-        List<Material> materialPermitido = new ArrayList<Material>(); //
+        int nivelDeAbrigo = Integer.parseInt(req.queryParams("nivelDeAbrigo"));
+        TipoUso tipoUso = parsearTipoUso(req.queryParams("tipoUso"));
+        Material material = parsearMaterial(req.queryParams("material"));
+        List<Material> materialPermitido = new ArrayList<Material>(); 
         Categoria categoria = parsearCategoria(req.queryParams("categoria"));
-        Trama trama = parsearTrama(req.queryParams("trama"));//
-        ColorRGB colorPrimario = parsearColor(req.queryParams("colorPrimario"));//
-        ColorRGB colorSecundario = parsearColor(req.queryParams("colorSecundario"));//
-        String rutaImagen = req.queryParams("rutaImagen");//
-        ParteAbrigada parteAbrigada = parsearParteAbrigada(req.queryParams("parteAbrigada"));//
+        Trama trama = parsearTrama(req.queryParams("trama"));
+        ColorRGB colorPrimario = parsearColor(req.queryParams("colorPrimario"));
+        ColorRGB colorSecundario = parsearColor(req.queryParams("colorSecundario"));
+        String rutaImagen = req.queryParams("rutaImagen");
+        ParteAbrigada parteAbrigada = parsearParteAbrigada(req.queryParams("parteAbrigada"));
         String idGuardarropas = req.params("idGuardarropas");
         Guardarropa guardarropaActual = RepositorioGuardarropa.obtenerGuardarropa(idGuardarropas);
         

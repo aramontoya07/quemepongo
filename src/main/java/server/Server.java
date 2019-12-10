@@ -8,7 +8,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class Server{
     public static void main(String[] args) {
-        Spark.port(getHerokuAssignedPort());
+        Spark.port(getAssignedPort());
 
         Spark.init();
 
@@ -23,6 +23,11 @@ public class Server{
         Spark.get("/", sistemaC::landing, new HandlebarsTemplateEngine());
         Spark.get("/registro", sistemaC::registro, new HandlebarsTemplateEngine());
         Spark.get("/perfil", usuarioC::perfil, new HandlebarsTemplateEngine());
+        Spark.get("/actualizarFoto", usuarioC::perfil, new HandlebarsTemplateEngine());
+        Spark.get("/actualizarNombre", usuarioC::perfil, new HandlebarsTemplateEngine());
+        Spark.get("/actualizarContra", usuarioC::perfil, new HandlebarsTemplateEngine());
+        Spark.get("/actualizarMail", usuarioC::perfil, new HandlebarsTemplateEngine());
+        Spark.get("/actualizarSuscripcion", usuarioC::subscripcionPremium, new HandlebarsTemplateEngine());
 
         Spark.get("/misGuardarropas", usuarioC::listarGuardarropas, new HandlebarsTemplateEngine());
         Spark.get("/misGuardarropas/:idGuardarropas", guardarropasC::detalleGuardarropa, new HandlebarsTemplateEngine());
@@ -54,7 +59,7 @@ public class Server{
 
         DebugScreen.enableDebugScreen();
     }
-    static int getHerokuAssignedPort() {
+    static int getAssignedPort() {
         ProcessBuilder processBuilder = new ProcessBuilder();
         if (processBuilder.environment().get("PORT") != null) {
             return Integer.parseInt(processBuilder.environment().get("PORT"));

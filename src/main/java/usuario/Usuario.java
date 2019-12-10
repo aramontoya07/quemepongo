@@ -61,7 +61,11 @@ public class Usuario extends EntidadPersistente {
 
 	private String mail;
 	private String nombre;
+	public String rutaFotoPerfil = "https://i.imgur.com/z0i6Zmy.png";
 
+    public String getRutaFotoPerfil(){
+        return rutaFotoPerfil;
+    }
 	public Usuario() {
 		this.subscripcion = new SubscripcionGratuita();
 		RepoUsuarios.getInstance().agregarUsuario(this);
@@ -90,6 +94,10 @@ public class Usuario extends EntidadPersistente {
 
 	public void setContrasenia(String contrasenia) {
 		this.contrasenia = this.convertirSHA256(contrasenia);
+	}
+    
+	public void setRutaFotoPerfil(String nuevo) {
+		this.rutaFotoPerfil = nuevo;
 	}
 
 	public AsistenciaEvento obtenerAsistencia(Evento evento){

@@ -117,7 +117,6 @@ public class ControllerUsuario {
             String nombre = req.queryParams("inputNombre");
             String contraseniaRepetida = req.queryParams("inputRepeticionContrasenia");
             if(!contrasenia.equals(contraseniaRepetida)) {
-                //res.header("Error","Las constrasenias ingresadas deben coincidir");
                 res.body("Las constrasenias ingresadas deben coincidir");
                 res.redirect("/registro");
                 return null;
@@ -132,7 +131,6 @@ public class ControllerUsuario {
                 res.redirect("/perfil");
                 return null;
             }catch(RepositorioException e){
-                //res.header("Error", "Ese nombre de usuario ya esta en uso");
                 res.body("Ese nombre de usuario ya esta en uso");
                 res.redirect("/registro");
                 return null;
@@ -148,7 +146,6 @@ public class ControllerUsuario {
                 res.redirect("/perfil");
                 return null;
             }catch(RepositorioException e){
-                //res.header("Error", "El usuario ingresado no existe");
                 res.body("El usuario ingresado no existe");
                 res.redirect("/");
                 return null;
@@ -182,6 +179,8 @@ public class ControllerUsuario {
             res.redirect("/puntuarAtuendos");
             return null;
         }
+        
+        
 
         public ModelAndView aceptarSugerencia(Request req, Response res) {
             String idUsuario = req.session().attribute(ID_USUARIO);
@@ -196,6 +195,17 @@ public class ControllerUsuario {
             EntityManagerHelper.closeEntityManager();
             
             res.redirect("/misEventos/" + idEvento);
+            return null;
+        } 
+        
+        public ModelAndView subscripcionPremium(Request req, Response res) {
+            String idUsuario = req.session().attribute(ID_USUARIO);
+            Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
+            
+            EntityManagerHelper.beginTransaction();
+            usuario.actualizarSubscripcionAPremium();
+            EntityManagerHelper.commit();
+            res.redirect("/perfil");
             return null;
         } 
 

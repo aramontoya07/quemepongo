@@ -37,6 +37,7 @@ public class Prenda extends EntidadPersistente {
 		
 	}
 
+    @Column(length = 3200)
 	private String rutaImagen;
 
 	public Prenda(TipoPrenda tipo, Material material, Trama trama, ColorRGB colorPrimario, ColorRGB colorSecundario) {
@@ -141,6 +142,5 @@ public class Prenda extends EntidadPersistente {
 	}
 
 	public void imprimirRuta() {
-		//System.out.println(rutaImagen);
 	}
 }

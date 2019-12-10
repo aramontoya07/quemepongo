@@ -9,7 +9,6 @@ import spark.Response;
 
 public class ControllerSistema {
     public ModelAndView landing(Request req, Response res) {
-        //String mensajeDeError = req.headers("Error");
         String mensajeDeError = req.body();
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("Error", mensajeDeError);
@@ -17,7 +16,6 @@ public class ControllerSistema {
     }
 
     public ModelAndView registro(Request req, Response res) {
-        //String mensajeDeError = req.headers("Error");
         String mensajeDeError = req.body();
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("Error", mensajeDeError);

@@ -7,7 +7,6 @@ public class RepositorioGuardarropa {
     public static Guardarropa obtenerGuardarropa(String id){
         int idUsuario = Integer.parseInt(id);
         Guardarropa guardarropa = EntityManagerHelper.getEntityManager().find(Guardarropa.class, idUsuario);
-       // EntityManagerHelper.closeEntityManager();
         return guardarropa;
     }
 
