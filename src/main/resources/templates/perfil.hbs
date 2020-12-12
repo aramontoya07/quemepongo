@@ -6,41 +6,69 @@
     <hr class="mt-2 mb-5" />
 
     <div class="container-fluid mt-15">
-        <div class="row no-gutter ml-4 mr-4 pr-2">
-            <div class="col col-md-6">
-                <div class="ml-5 d-none d-md-flex col-md-4 col-lg-6 d-flex justify-content-center">
-                    <img height="300" width="300" src={{rutaFotoPerfil}} alt=""
-                        class="rounded-circle">
+        <div class="center">
+            <div class="row ml-4 mr-4 pr-2 justfy-content-center">
+                <div class="col col-md-6">
+                    <div class="ml-5 d-none d-md-flex col-md-4 d-flex">
+                        <div class="imagen">
+                            <img height="300" width="300" src={{rutaFotoPerfil}} alt=""
+                            class="rounded-circle">
+                        </div>
+
+                    </div>
                 </div>
-            </div>
-            <div class="col col-md-6">
-                <div class="card">
-                    <div class="row">
-                        <div class="mt-4 d-none d-md-flex col-md-4 col-lg-6 d-flex">
-                            Nombre: {{nombre}}
+                <div class="col col-md-6">
+                    <div class="filas">
+                        <div class="row">
+                            <div class="etiq">Usuario: {{nombre}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="etiq">Email: {{mail}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="etiq">Tu tipo de suscripcion: {{subscripcion.nombreSuscripcion}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="center suscripcion">
+                                <a id="actualizarSuscripcion" href="/actualizarSuscripcion" type="button"
+                                   class="btn btn-primary btn-block">Actualiza tu suscripcion </a>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="mt-4 d-none d-md-flex col-md-4 col-lg-6 d-flex">
-                            Email: {{mail}}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="mt-4 col col-md-6">
-                            Tu tipo de suscripcion: {{subscripcion.nombreSuscripcion}}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="mt-4 col col-md-6">
-                            <a id="actualizarSuscripcion" href="/actualizarSuscripcion" type="button"
-                               class="btn btn-primary btn-sm btn-block">Actualiza tu suscripcion </a>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
+
     </div>
-    
+
+    <style>
+        .center {
+            margin: auto; max-width: 65%;
+        }
+
+        .imagen {
+            margin: auto;
+        }
+        .card{
+            outline: 2px solid #ccc;
+            width: 50%;
+        }
+        .filas {
+            margin-top: 10px;
+        }
+        .etiq {
+            font-size: 25;
+            margin-left: 20px;
+            margin-top: 20px;
+        }
+
+        .suscripcion {
+            margin-top: 30px;
+
+        }
+    </style>
+
 {{/partial}}
 
 {{> layout.hbs}}
