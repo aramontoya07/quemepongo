@@ -10,22 +10,22 @@
 
         <properties>
         <property name="hibernate.archive.autodetection" value="class"/>
-        <!--  <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+         <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
         <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver" />
-        <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/prueba" />
+        <property name="hibernate.connection.url" value="jdbc:mysql://localhost/quemepongo" />
         <property name="hibernate.connection.username" value="root" />
-        <property name="hibernate.connection.password" value="root" />-->
+        <property name="hibernate.connection.password" value="root" />
         <property name="hibernate.show_sql" value="false" />
         <property name="hibernate.format_sql" value="true" />
         <property name="use_sql_comments" value="true" />
         <property name="hibernate.hbm2ddl.auto" value="update" />
 
-            <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>
+            <!--<property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>-->
             <property name="javax.persistence.validation.mode" value = "none"/>
-            <property name="hibernate.connection.url" value = "jdbc:mysql://mpxtgyzqe9u5g4ll:hvg0o1ucaelgiiki@jsftj8ez0cevjz8v.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/ts5buyame00syosg"/>
+           <!-- <property name="hibernate.connection.url" value = "jdbc:mysql://mpxtgyzqe9u5g4ll:hvg0o1ucaelgiiki@jsftj8ez0cevjz8v.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/ts5buyame00syosg"/>
             <property name="hibernate.connection.username" value="mpxtgyzqe9u5g4ll"/>
             <property name="hibernate.connection.password" value="hvg0o1ucaelgiiki"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>-->
 
            </properties>
 

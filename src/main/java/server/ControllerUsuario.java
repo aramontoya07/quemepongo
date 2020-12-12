@@ -1,12 +1,5 @@
 package server;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import atuendo.Atuendo;
 import atuendo.UsoAtuendo;
 import db.EntityManagerHelper;
@@ -20,6 +13,13 @@ import spark.Request;
 import spark.Response;
 import usuario.Guardarropa;
 import usuario.Usuario;
+
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ControllerUsuario {
     private static final String ID_USUARIO = "idUsuario";
@@ -131,6 +131,7 @@ public class ControllerUsuario {
                 res.redirect("/perfil");
                 return null;
             }catch(RepositorioException e){
+                e.printStackTrace();
                 res.body("Ese nombre de usuario ya esta en uso");
                 res.redirect("/registro");
                 return null;
@@ -146,6 +147,7 @@ public class ControllerUsuario {
                 res.redirect("/perfil");
                 return null;
             }catch(RepositorioException e){
+                e.printStackTrace();
                 res.body("El usuario ingresado no existe");
                 res.redirect("/");
                 return null;

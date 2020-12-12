@@ -1,11 +1,4 @@
 
-    create table AdaptacionPuntuada (
-        id integer not null auto_increment,
-        nivelDeAdaptacion double precision,
-        puntaje integer,
-        primary key (id)
-    )
-
     create table Alerta (
         id integer not null auto_increment,
         ubicacion varchar(255),
@@ -28,6 +21,12 @@
         primary key (id)
     )
 
+    create table Atuendos_Prendas (
+        Atuendos_id integer not null,
+        capasAbrigos_id integer not null,
+        accesorios_id integer not null
+    )
+
     create table Calendarios (
         id integer not null auto_increment,
         primary key (id)
@@ -44,6 +43,7 @@
     create table Evento (
         id integer not null auto_increment,
         fecha tinyblob,
+        fechaFormateada varchar(255),
         tituloEvento varchar(255),
         ubicacion varchar(255),
         primary key (id)
@@ -54,21 +54,20 @@
         primary key (id)
     )
 
-    create table Guardarropas_Prendas (
-        Guardarropas_id integer not null,
-        usadas_id integer not null,
-        disponibles_id integer not null,
-        primary key (Guardarropas_id, disponibles_id)
-    )
-
     create table PreferenciasDeAbrigo (
         id integer not null auto_increment,
-        abrigoCabeza_id integer,
-        abrigoCuello_id integer,
-        abrigoManos_id integer,
-        abrigoPecho_id integer,
-        abrigoPiernas_id integer,
-        abrigoPies_id integer,
+        NIVEL_CABEZA double precision,
+        PUNTAJE_CABEZA integer,
+        NIVEL_CUELLO double precision,
+        PUNTAJE_CUELLO integer,
+        NIVEL_MANOS double precision,
+        PUNTAJE_MANOS integer,
+        NIVEL_PECHO double precision,
+        PUNTAJE_PECHO integer,
+        NIVEL_PIERNAS double precision,
+        PUNTAJE_PIERNAS integer,
+        NIVEL_PIES double precision,
+        PUNTAJE_PIES integer,
         primary key (id)
     )
 
@@ -76,11 +75,13 @@
         id integer not null auto_increment,
         material varchar(255),
         pateAbrigada varchar(255),
+        rutaImagen longtext,
         trama varchar(255),
         colorPrimario_id integer,
         colorSecundario_id integer,
         tipo_id integer,
-        id_atuendo integer,
+        id_Guardarropa_usadas integer,
+        id_Guardarropa_disponibles integer,
         primary key (id)
     )
 
@@ -120,6 +121,7 @@
     create table TipoSubscripcion (
         tipo_Suscripcion varchar(31) not null,
         id integer not null auto_increment,
+        nombreSuscripcion varchar(255),
         cantidadMaxima integer,
         primary key (id)
     )
@@ -128,6 +130,8 @@
         id integer not null auto_increment,
         estado varchar(255),
         fechaDeUso tinyblob,
+        fechaFormateada varchar(255),
+        puntuado bit not null,
         temperaturaDeUso double precision,
         atuendo_id integer,
         Id_usuario integer,
@@ -141,19 +145,21 @@
 
     create table Usuarios (
         id integer not null auto_increment,
+        contrasenia varchar(255),
         mail varchar(255),
-        notificado bit not null,
+        nombre varchar(255),
+        rutaFotoPerfil varchar(255),
         calendarioEventos_id integer,
         preferenciasDeAbrigo_id integer,
         subscripcion_id integer,
         primary key (id)
     )
 
-    alter table Guardarropas_Prendas 
-        add constraint UK_8xnv6ejh82gn7xlthewpe0x90  unique (usadas_id)
-
-    alter table Guardarropas_Prendas 
-        add constraint UK_o4l8g7o63mmdo1h6vbmcc03ue  unique (disponibles_id)
+    create table Usuarios_Guardarropas (
+        Usuarios_id integer not null,
+        guardarropas_id integer not null,
+        primary key (Usuarios_id, guardarropas_id)
+    )
 
     alter table AsistenciaEvento 
         add constraint FK_k9e48673ix245yb5lbakmuo4q 
@@ -185,50 +191,20 @@
         foreign key (superior_id) 
         references Prendas (id)
 
-    alter table Guardarropas_Prendas 
-        add constraint FK_8xnv6ejh82gn7xlthewpe0x90 
-        foreign key (usadas_id) 
+    alter table Atuendos_Prendas 
+        add constraint FK_cj8fhhw9uc88s378g6fmwnegu 
+        foreign key (capasAbrigos_id) 
         references Prendas (id)
 
-    alter table Guardarropas_Prendas 
-        add constraint FK_fwyw5alow9p4o3c7euqnq39qv 
-        foreign key (Guardarropas_id) 
-        references Guardarropas (id)
+    alter table Atuendos_Prendas 
+        add constraint FK_6up2sj23nli5nhsltsbh6fl3r 
+        foreign key (Atuendos_id) 
+        references Atuendos (id)
 
-    alter table Guardarropas_Prendas 
-        add constraint FK_o4l8g7o63mmdo1h6vbmcc03ue 
-        foreign key (disponibles_id) 
+    alter table Atuendos_Prendas 
+        add constraint FK_ig421k1byymkpuxhmgmx15ns9 
+        foreign key (accesorios_id) 
         references Prendas (id)
-
-    alter table PreferenciasDeAbrigo 
-        add constraint FK_g2w8lykuxy4la064ljmynsyh7 
-        foreign key (abrigoCabeza_id) 
-        references AdaptacionPuntuada (id)
-
-    alter table PreferenciasDeAbrigo 
-        add constraint FK_l6ujtn93i740r74j3qt3494qk 
-        foreign key (abrigoCuello_id) 
-        references AdaptacionPuntuada (id)
-
-    alter table PreferenciasDeAbrigo 
-        add constraint FK_247272twbo7o4mwx28hp2jgkj 
-        foreign key (abrigoManos_id) 
-        references AdaptacionPuntuada (id)
-
-    alter table PreferenciasDeAbrigo 
-        add constraint FK_846cohbthg2s3oseutlb5q05q 
-        foreign key (abrigoPecho_id) 
-        references AdaptacionPuntuada (id)
-
-    alter table PreferenciasDeAbrigo 
-        add constraint FK_qj00t0g5ye7auoh9pqmmv50ge 
-        foreign key (abrigoPiernas_id) 
-        references AdaptacionPuntuada (id)
-
-    alter table PreferenciasDeAbrigo 
-        add constraint FK_7db2v7h4umkf7ireucuhsmpxl 
-        foreign key (abrigoPies_id) 
-        references AdaptacionPuntuada (id)
 
     alter table Prendas 
         add constraint FK_75aovfoa4yffujh8mdws222fc 
@@ -246,9 +222,14 @@
         references TipoPrenda (id)
 
     alter table Prendas 
-        add constraint FK_b95fy9l421l2ftp2vpys39ip8 
-        foreign key (id_atuendo) 
-        references Atuendos (id)
+        add constraint FK_amwly5b0aee317a06day2kk49 
+        foreign key (id_Guardarropa_usadas) 
+        references Guardarropas (id)
+
+    alter table Prendas 
+        add constraint FK_m6acnib4un92cfyuvxumk5k2s 
+        foreign key (id_Guardarropa_disponibles) 
+        references Guardarropas (id)
 
     alter table Sugerencias 
         add constraint FK_k5n7fglalc4ueb0n5ikgl8cc3 
@@ -309,3 +290,13 @@
         add constraint FK_fqanxhf5g55g2mv6hrne1yaf3 
         foreign key (subscripcion_id) 
         references TipoSubscripcion (id)
+
+    alter table Usuarios_Guardarropas 
+        add constraint FK_tkbrfu90vy45ol3n4a94hwdhs 
+        foreign key (guardarropas_id) 
+        references Guardarropas (id)
+
+    alter table Usuarios_Guardarropas 
+        add constraint FK_6bu50dfm1dqaos9laj773l629 
+        foreign key (Usuarios_id) 
+        references Usuarios (id)
