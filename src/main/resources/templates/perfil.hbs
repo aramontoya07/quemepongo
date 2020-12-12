@@ -14,28 +14,33 @@
                 </div>
             </div>
             <div class="col col-md-6">
-                <div class="row">
-                    <div class="mt-4 d-none d-md-flex col-md-4 col-lg-6 d-flex">
-                        Nombre: {{nombre}}
+                <div class="card">
+                    <div class="row">
+                        <div class="mt-4 d-none d-md-flex col-md-4 col-lg-6 d-flex">
+                            Nombre: {{nombre}}
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="mt-4 d-none d-md-flex col-md-4 col-lg-6 d-flex">
-                        Email: {{mail}}
+                    <div class="row">
+                        <div class="mt-4 d-none d-md-flex col-md-4 col-lg-6 d-flex">
+                            Email: {{mail}}
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="mt-4 col col-md-6">
-                        Tu tipo de suscripcion: {{subscripcion.nombreSuscripcion}}
+                    <div class="row">
+                        <div class="mt-4 col col-md-6">
+                            Tu tipo de suscripcion: {{subscripcion.nombreSuscripcion}}
+                        </div>
                     </div>
-                    <div class="mt-4 col col-md-6">
-                        <a id="actualizarSuscripcion" href="/actualizarSuscripcion" type="button"
-                            class="btn btn-primary btn-sm btn-block">Actualiza tu suscripcion </a>
+                    <div class="row">
+                        <div class="mt-4 col col-md-6">
+                            <a id="actualizarSuscripcion" href="/actualizarSuscripcion" type="button"
+                               class="btn btn-primary btn-sm btn-block">Actualiza tu suscripcion </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
 {{/partial}}
 
 {{> layout.hbs}}
