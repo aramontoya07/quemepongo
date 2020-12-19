@@ -1,14 +1,5 @@
 package server;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import atuendo.Atuendo;
 import atuendo.UsoAtuendo;
 import db.EntityManagerHelper;
@@ -22,6 +13,10 @@ import spark.Request;
 import spark.Response;
 import usuario.Usuario;
 
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
+
 public class ControllerEventos {
     private static final String ID_USUARIO = "idUsuario";
     private static final String ID_ASISTENCIA = "idEvento";
@@ -33,7 +28,7 @@ public class ControllerEventos {
         String idUsuario = req.session().attribute(ID_USUARIO);
         Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
         AsistenciaEvento asistencia = RepositorioAsistenciaEventos.obtenerAsistencia(idAsistencia);
-
+        usuario.generarSugerenciasNecesarias();
         atuendosExactos = new ArrayList<Atuendo>();
         atuendosAproximados = new ArrayList<Atuendo>();
 
