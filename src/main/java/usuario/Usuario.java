@@ -1,18 +1,13 @@
 package usuario;
 
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
-import javax.persistence.*;
 import alertas.Alerta;
-import atuendo.UsoAtuendo;
-import db.EntidadPersistente;
-import notificaciones.Informante;
 import alertas.RepoUsuarios;
 import alertas.TipoDeAlerta;
 import atuendo.Atuendo;
 import atuendo.SugerenciasClima;
+import atuendo.UsoAtuendo;
 import clima.ServicioClimatico;
+import db.EntidadPersistente;
 import decisiones.Decision;
 import eventos.AsistenciaEvento;
 import eventos.Calendario;
@@ -20,14 +15,19 @@ import eventos.Evento;
 import excepciones.AtuendoException;
 import excepciones.GuardarropaException;
 import excepciones.PrendaException;
+import notificaciones.Informante;
 import prenda.ParteAbrigada;
 import prenda.Prenda;
 import subscripciones.SubscripcionGratuita;
 import subscripciones.SubscripcionPremium;
 import subscripciones.TipoSubscripcion;
 
+import javax.persistence.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "Usuarios")
@@ -172,11 +172,13 @@ public class Usuario extends EntidadPersistente {
 	//EVALUAR SUGERENCIAS
 
 	public void aceptarAtuendo(Atuendo atuendo) throws PrendaException {
-		chequearAtuendoDisponible(atuendo);
+		//chequearAtuendoDisponible(atuendo);
+		//if(atuendo.estaDisponible()){
 		UsoAtuendo uso = new UsoAtuendo(atuendo,EstadoAtuendo.ACEPTADO);
 		atuendosUsados.add(uso);
 		atuendo.marcarPrendasComoUsadas();
 		ultimaDecision = Decision.ACEPTAR;
+
 	}
 
 	public void rechazarAtuendo(Atuendo atuendo) {

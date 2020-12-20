@@ -1,23 +1,21 @@
 package usuario;
 
+import atuendo.Atuendo;
+import atuendo.SugerenciasClima;
+import clima.ServicioClimatico;
+import com.google.common.collect.Sets;
+import db.EntidadPersistente;
+import excepciones.GuardarropaException;
+import excepciones.PrendaException;
+import prenda.Categoria;
+import prenda.Imagen;
+import prenda.Prenda;
+
+import javax.persistence.*;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import javax.persistence.*;
-
-import atuendo.SugerenciasClima;
-import prenda.Categoria;
-
-import com.google.common.collect.Sets;
-
-import atuendo.Atuendo;
-import clima.ServicioClimatico;
-import db.EntidadPersistente;
-import excepciones.GuardarropaException;
-import excepciones.PrendaException;
-import prenda.*;
 
 @Entity
 @Table(name = "Guardarropas")
@@ -29,6 +27,8 @@ public class Guardarropa extends EntidadPersistente{
 	@OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_Guardarropa_disponibles")
 	public Set<Prenda> disponibles = new HashSet<>();
+	@OneToMany(cascade = {CascadeType.ALL})
+	public Set<Atuendo> atuendos = new HashSet<>();
 
 	public Guardarropa(){}
 
@@ -95,15 +95,29 @@ public class Guardarropa extends EntidadPersistente{
 		return disponibles;
 	}
 
-	@SuppressWarnings("unchecked")
+
 	public Set<Atuendo> generarSugerenciaBasica(){
-		return Sets
+		Set<Atuendo> atuendosBasicos = Sets
 				.cartesianProduct(prendasPrimarias(
 					getPrendasDeParte(Categoria.PARTE_SUPERIOR)), 
 					getPrendasDeParte(Categoria.PARTE_INFERIOR), 
 					getPrendasDeParte(Categoria.CALZADO))
 				.stream().map((list) -> new Atuendo(list.get(0), list.get(1), list.get(2), this))
 				.collect(Collectors.toSet());
+		try {
+			for (Atuendo atuendoBasico : atuendosBasicos) {
+				Atuendo atuendoNuevo = new Atuendo();
+				atuendoNuevo.setGuardarropaOrigen(this);
+				atuendoNuevo.setSuperior(atuendoBasico.getSuperior());
+				atuendoNuevo.setInferior(atuendoBasico.getInferior());
+				atuendoNuevo.setCalzado(atuendoBasico.getCalzado());
+				this.atuendos.add(atuendoNuevo);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		return atuendosBasicos;
 	}
 
 	public Set<Prenda> getPrendasDeParte(Categoria categoria) {

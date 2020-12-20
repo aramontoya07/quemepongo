@@ -1,14 +1,15 @@
 package atuendo;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.*;
 import clima.Clima;
+import db.EntidadPersistente;
 import excepciones.PrendaException;
 import prenda.ParteAbrigada;
 import prenda.Prenda;
-import db.EntidadPersistente;
 import usuario.Guardarropa;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Atuendos")
@@ -34,6 +35,30 @@ public class Atuendo extends EntidadPersistente {
 
 	public Atuendo(){
 	
+	}
+
+	public void setSuperior(Prenda superior) {
+		this.superior = superior;
+	}
+
+	public void setInferior(Prenda inferior) {
+		this.inferior = inferior;
+	}
+
+	public void setCalzado(Prenda calzado) {
+		this.calzado = calzado;
+	}
+
+	public void setAccesorios(List<Prenda> accesorios) {
+		this.accesorios = accesorios;
+	}
+
+	public void setCapasAbrigos(List<Prenda> capasAbrigos) {
+		this.capasAbrigos = capasAbrigos;
+	}
+
+	public void setGuardarropaOrigen(Guardarropa guardarropaOrigen) {
+		this.guardarropaOrigen = guardarropaOrigen;
 	}
 
 	public Guardarropa getGuardarropaOrigen() {

@@ -1,13 +1,14 @@
 package eventos;
 
+import atuendo.SugerenciasClima;
+import db.EntidadPersistente;
+import excepciones.EventoException;
+import usuario.Usuario;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
-import atuendo.SugerenciasClima;
-import excepciones.EventoException;
-import db.EntidadPersistente;
-import usuario.Usuario;
 
 @Entity
 public class AsistenciaEvento extends EntidadPersistente{
@@ -15,7 +16,7 @@ public class AsistenciaEvento extends EntidadPersistente{
 	@OneToOne(cascade = {CascadeType.PERSIST})
 	private Evento evento;
 	
-	@OneToMany(cascade = {CascadeType.PERSIST})
+	@OneToMany(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "Id_AsistenciaEvento")
 	public Set<SugerenciasClima> sugerenciasEvento = new HashSet<>();
 
@@ -33,7 +34,7 @@ public class AsistenciaEvento extends EntidadPersistente{
     }
 
 	public void generarSugerenciasParaEvento(Usuario usuario) {
-		sugerenciasEvento = usuario.pedirSugerenciaSegunClima(evento.getUbicacion());
+		this.sugerenciasEvento = usuario.pedirSugerenciaSegunClima(evento.getUbicacion());
 	}
 	
 	public boolean esDeFecha(Integer dia, Integer mes, Integer anio){

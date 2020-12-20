@@ -24,46 +24,59 @@ public class ControllerEventos {
     List<Atuendo> atuendosAproximados;
 
     public ModelAndView detalleEvento(Request req, Response res) {
-        String idAsistencia = req.params(ID_ASISTENCIA);
-        String idUsuario = req.session().attribute(ID_USUARIO);
-        Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
-        AsistenciaEvento asistencia = RepositorioAsistenciaEventos.obtenerAsistencia(idAsistencia);
-        usuario.generarSugerenciasNecesarias();
-        atuendosExactos = new ArrayList<Atuendo>();
-        atuendosAproximados = new ArrayList<Atuendo>();
-
-        if(asistencia.getSugerenciasEvento() == null){
-            asistencia.sugerenciasEvento = new HashSet<>();
-        }
-
-        asistencia.getSugerenciasEvento().forEach( sc -> 
-            atuendosExactos.addAll(sc.getExactas())
-        );
-        asistencia.getSugerenciasEvento().forEach(sc -> 
-            atuendosAproximados.addAll(sc.getAproximadas())
-        );
-
-        Set<UsoAtuendo> usosAceptados = usuario.getAceptados();
-        Set<UsoAtuendo> usosRechazados = usuario.getUsosRechazados();
-        List<Integer> idsAceptadas = usosAceptados.stream().map(uso -> uso.getAtuendo().getId()).collect(Collectors.toList());
-        List<Integer> idsRechazadas = usosRechazados.stream().map(uso -> uso.getAtuendo().getId()).collect(Collectors.toList());
-
-        List<Integer> ids = new ArrayList<Integer>();
-        ids.addAll(idsAceptadas);
-        ids.addAll(idsRechazadas);
-
-        atuendosAproximados = atuendosAproximados.stream().filter(atuendo -> atuendo.noEsDeId(ids))
-                .collect(Collectors.toList());
-        atuendosExactos = atuendosExactos.stream().filter(atuendo -> atuendo.noEsDeId(ids))
-                .collect(Collectors.toList());
-    
         Map<String, Object> model = new HashMap<String, Object>();
-        model.put("asistencia", asistencia);
-        model.put("atuendosExactos", atuendosExactos);
-        model.put("cantidadExactos", atuendosExactos.size());
-        model.put("atuendosAproximados", atuendosAproximados);
-        model.put("cantidadAproximadas", atuendosAproximados.size());
-        return new ModelAndView(model, "detalleEvento.hbs");
+        /*try{*/
+            String idAsistencia = req.params(ID_ASISTENCIA);
+            String idUsuario = req.session().attribute(ID_USUARIO);
+            Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
+            AsistenciaEvento asistencia = RepositorioAsistenciaEventos.obtenerAsistencia(idAsistencia);
+
+
+            usuario.generarSugerenciasNecesarias();
+
+
+
+            atuendosExactos = new ArrayList<Atuendo>();
+            atuendosAproximados = new ArrayList<Atuendo>();
+
+            if(asistencia.getSugerenciasEvento() == null){
+                asistencia.sugerenciasEvento = new HashSet<>();
+            }
+
+            asistencia.getSugerenciasEvento().forEach( sc ->
+                    atuendosExactos.addAll(sc.getExactas())
+            );
+            asistencia.getSugerenciasEvento().forEach(sc ->
+                    atuendosAproximados.addAll(sc.getAproximadas())
+            );
+
+            Set<UsoAtuendo> usosAceptados = usuario.getAceptados();
+            Set<UsoAtuendo> usosRechazados = usuario.getUsosRechazados();
+            List<Integer> idsAceptadas = usosAceptados.stream().map(uso -> uso.getAtuendo().getId()).collect(Collectors.toList());
+            List<Integer> idsRechazadas = usosRechazados.stream().map(uso -> uso.getAtuendo().getId()).collect(Collectors.toList());
+
+            List<Integer> ids = new ArrayList<Integer>();
+            ids.addAll(idsAceptadas);
+            ids.addAll(idsRechazadas);
+
+            atuendosAproximados = atuendosAproximados.stream().filter(atuendo -> atuendo.noEsDeId(ids))
+                    .collect(Collectors.toList());
+            atuendosExactos = atuendosExactos.stream().filter(atuendo -> atuendo.noEsDeId(ids))
+                    .collect(Collectors.toList());
+
+
+            model.put("asistencia", asistencia);
+            model.put("atuendosExactos", atuendosExactos);
+            model.put("cantidadExactos", atuendosExactos.size());
+            model.put("atuendosAproximados", atuendosAproximados);
+            model.put("cantidadAproximadas", atuendosAproximados.size());
+            return new ModelAndView(model, "detalleEvento.hbs");
+        /*} catch(Exception e){
+            e.printStackTrace();
+            return new ModelAndView(model, "detalleEvento.hbs");
+        }*/
+
+
     }
 
     public LocalDateTime formatearFecha(String fecha){
