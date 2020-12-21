@@ -1,7 +1,6 @@
 package server;
 
 import atuendo.Atuendo;
-import atuendo.UsoAtuendo;
 import db.EntityManagerHelper;
 import eventos.AsistenciaEvento;
 import eventos.Evento;
@@ -15,7 +14,6 @@ import usuario.Usuario;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ControllerEventos {
     private static final String ID_USUARIO = "idUsuario";
@@ -32,9 +30,7 @@ public class ControllerEventos {
             AsistenciaEvento asistencia = RepositorioAsistenciaEventos.obtenerAsistencia(idAsistencia);
 
 
-            usuario.generarSugerenciasNecesarias();
-
-
+            //usuario.generarSugerenciasNecesarias();
 
             atuendosExactos = new ArrayList<Atuendo>();
             atuendosAproximados = new ArrayList<Atuendo>();
@@ -43,14 +39,14 @@ public class ControllerEventos {
                 asistencia.sugerenciasEvento = new HashSet<>();
             }
 
-            asistencia.getSugerenciasEvento().forEach( sc ->
-                    atuendosExactos.addAll(sc.getExactas())
+            asistencia.getSugerenciasEvento().forEach( sugerenciasClima ->
+                    atuendosExactos.addAll(sugerenciasClima.getExactas())
             );
-            asistencia.getSugerenciasEvento().forEach(sc ->
-                    atuendosAproximados.addAll(sc.getAproximadas())
+            asistencia.getSugerenciasEvento().forEach(sugerenciasClima ->
+                    atuendosAproximados.addAll(sugerenciasClima.getAproximadas())
             );
 
-            Set<UsoAtuendo> usosAceptados = usuario.getAceptados();
+            /*Set<UsoAtuendo> usosAceptados = usuario.getAceptados();
             Set<UsoAtuendo> usosRechazados = usuario.getUsosRechazados();
             List<Integer> idsAceptadas = usosAceptados.stream().map(uso -> uso.getAtuendo().getId()).collect(Collectors.toList());
             List<Integer> idsRechazadas = usosRechazados.stream().map(uso -> uso.getAtuendo().getId()).collect(Collectors.toList());
@@ -62,10 +58,11 @@ public class ControllerEventos {
             atuendosAproximados = atuendosAproximados.stream().filter(atuendo -> atuendo.noEsDeId(ids))
                     .collect(Collectors.toList());
             atuendosExactos = atuendosExactos.stream().filter(atuendo -> atuendo.noEsDeId(ids))
-                    .collect(Collectors.toList());
+                    .collect(Collectors.toList());*/
 
 
             model.put("asistencia", asistencia);
+            model.put("sugerenciasEvento", asistencia.getSugerenciasEvento());
             model.put("atuendosExactos", atuendosExactos);
             model.put("cantidadExactos", atuendosExactos.size());
             model.put("atuendosAproximados", atuendosAproximados);

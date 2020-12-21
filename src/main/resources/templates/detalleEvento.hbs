@@ -18,6 +18,13 @@
             </div>
         </div>
     </div>
+    
+    <form action="/misEventos/{{asistencia.evento.id}}/generarSugerencias" method="GET">
+        <fieldset>
+            <button type="submit" class="btn btn-success">Generar sugerencias</button>
+        </fieldset>
+    </form>
+
     <h3 class="border-primary mb-4">Sugerencias exactas</h3>    
     <h3 class="border-primary mb-4">Cantidad: {{cantidadExactos}}</h3>
 
@@ -64,7 +71,7 @@
 
         <h3 class="border-primary mb-4">Sugerencias aproximadas</h3>
         <h3 class="border-primary mb-4">Cantidad: {{cantidadAproximadas}}</h3>
-        
+
         {{#each atuendosAproximados}}
         <div class="col md-6 card border-primary mb-3">
             <h3 class="card-header border-primary mb-4">Atuendo {{id}}</h3>

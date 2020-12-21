@@ -187,7 +187,7 @@ public class ControllerUsuario {
     String idUsuario = req.session().attribute(ID_USUARIO);
     Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
     String idEvento = req.params("idEvento");
-    String idAtuendo = req.queryParams("idAtuendo");
+    String idAtuendo = req.queryParams("idAtuendo"); //TODO porque aca llega el atuendo de id 0? porque genero cada vez que abro el detalle del evento
 
     try {
         Atuendo atuendomaxi = RepositorioAtuendos.obtenerAtuendo(idAtuendo);
@@ -196,7 +196,7 @@ public class ControllerUsuario {
         EntityManagerHelper.commit();
         EntityManagerHelper.closeEntityManager();
     } catch(Exception e){
-        System.out.println("El atuendo de id" + idAtuendo + "no existe");
+        System.out.println("El atuendo de id" + " " + idAtuendo + " " + "no existe");
         e.printStackTrace();
     }
 
