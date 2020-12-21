@@ -18,7 +18,7 @@
             </div>
         </div>
     </div>
-    
+
     <form action="/misEventos/{{asistencia.evento.id}}/generarSugerencias" method="GET">
         <fieldset>
             <button type="submit" class="btn btn-success">Generar sugerencias</button>
@@ -88,8 +88,8 @@
             </div>
         
             <div class="card-footer border-primary">
-                <div class="row justify-content-start justify-content-center card-body">
-                    <div class="col col-md-4">
+                <div class="botones row justify-content-start justify-content-center card-body">
+                    <div class="col col-md-2">
                         <form action="/misEventos/{{asistencia.evento.id}}/aceptarSugerencia" method="POST">
                             <fieldset>
         
@@ -100,7 +100,7 @@
                         </form>
                     </div>
         
-                    <div class="col col-md-4">
+                    <div class="col col-md-2">
                         <form action="/misEventos/{{asistencia.evento.id}}/rechazarSugerencia" method="POST">
                             <fieldset>
                                 <input type="hidden" name="idAtuendo" value={{id}}>
@@ -113,6 +113,12 @@
         </div>
         {{/each}}
 </div>
+
+    <style>
+        .botones {
+            margin-left: 40px;
+        }
+    </style>
 
 {{/partial}}
 
