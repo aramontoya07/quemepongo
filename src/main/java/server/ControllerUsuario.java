@@ -68,18 +68,22 @@ public class ControllerUsuario {
     }
 
     public ModelAndView listarEventos(Request req, Response res) {
+        Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
+        if(idUsuario == null){
+            return new ModelAndView(model, "error.hbs");
+        }
         Usuario usuario = obtenerUsuario(idUsuario);
         Set<AsistenciaEvento> asistencias = usuario.getCalendarioEventos().getEventos();
         List<LocalDateTime> fechasDate = asistencias.stream()
             .map(asistencia -> asistencia.getFecha()).collect(Collectors.toList());
         List<String> fechass = fechasDate.stream().map(fecha -> fecha.toString()).collect(Collectors.toList());
         List<String> fechas = fechass.stream().map(fecha -> parsearFecha(fecha)).collect(Collectors.toList());
-        Map<String, Object> model = new HashMap<String, Object>();
+
         model.put(ID_USUARIO,idUsuario);
         model.put("asistencias", asistencias);
         model.put("fechas", fechas);
-    return new ModelAndView(model, "misEventos.hbs");
+        return new ModelAndView(model, "misEventos.hbs");
         }
 
     public ModelAndView listarEventosPorFecha(Request req, Response res) {
@@ -154,6 +158,19 @@ public class ControllerUsuario {
         }
     }
 
+    public ModelAndView cerrarSesion(Request req, Response res){
+        try{
+            req.session().removeAttribute(ID_USUARIO);
+            res.redirect("/");
+            return null;
+        }catch(RepositorioException e){
+            e.printStackTrace();
+            res.body("No habia un usuario logueado");
+            res.redirect("/");
+            return null;
+        }
+    }
+
     public ModelAndView puntuarAtuendo(Request req, Response res) {
         String idUsuario = req.session().attribute(ID_USUARIO);
         Usuario usuario = obtenerUsuario(idUsuario);
@@ -187,8 +204,7 @@ public class ControllerUsuario {
     String idUsuario = req.session().attribute(ID_USUARIO);
     Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
     String idEvento = req.params("idEvento");
-    String idAtuendo = req.queryParams("idAtuendo"); //TODO porque aca llega el atuendo de id 0? porque genero cada vez que abro el detalle del evento
-
+    String idAtuendo = req.queryParams("idAtuendo");
     try {
         Atuendo atuendomaxi = RepositorioAtuendos.obtenerAtuendo(idAtuendo);
         EntityManagerHelper.beginTransaction();
