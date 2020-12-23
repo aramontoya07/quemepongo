@@ -1,35 +1,33 @@
 package server;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import db.EntityManagerHelper;
-import prenda.Categoria;
-import prenda.ColorRGB;
-import prenda.Material;
-import prenda.ParteAbrigada;
-import prenda.Prenda;
-import prenda.TipoPrenda;
-import prenda.TipoUso;
-import prenda.Trama;
+import prenda.*;
 import repositorios.RepositorioGuardarropa;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import usuario.Guardarropa;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 
 public class ControllerGuardarropas {
+    private static final String ID_USUARIO = "idUsuario";
 
     public ModelAndView detalleGuardarropa(Request req, Response res) {
+        Map<String, Object> model = new HashMap<String, Object>();
+        String idUsuario = req.session().attribute(ID_USUARIO);
+        if(idUsuario == null){
+            return new ModelAndView(model, "error.hbs");
+        }
         String id = req.params("idGuardarropas");
         Guardarropa guardarropa = RepositorioGuardarropa.obtenerGuardarropa(id);
 
-        Map<String, Object> model = new HashMap<String, Object>();
+        model.put(ID_USUARIO,idUsuario);
         model.put("inferiores", guardarropa.getPrendasDeParte(Categoria.PARTE_INFERIOR));
         model.put("superiores", guardarropa.getPrendasDeParte(Categoria.PARTE_SUPERIOR));
         model.put("accesorios", guardarropa.getPrendasDeParte(Categoria.ACCESORIO));
@@ -39,22 +37,41 @@ public class ControllerGuardarropas {
     }
     
     public ModelAndView wizardTipoPrenda(Request req, Response res) {
+        Map<String, Object> model = new HashMap<String, Object>();
+        String idUsuario = req.session().attribute(ID_USUARIO);
+        if(idUsuario == null){
+            return new ModelAndView(model, "error.hbs");
+        }
     	Guardarropa guardarropa = new Guardarropa();
         return new ModelAndView(guardarropa, "wizardTipoPrenda.hbs");
     }
 
     public ModelAndView wizardCaracteristicas(Request req, Response res) {
+        Map<String, Object> model = new HashMap<String, Object>();
+        String idUsuario = req.session().attribute(ID_USUARIO);
+        if(idUsuario == null){
+            return new ModelAndView(model, "error.hbs");
+        }
         Guardarropa guardarropa = new Guardarropa();
         return new ModelAndView(guardarropa, "wizardCaracteristicas.hbs");
     }
 
     public ModelAndView wizardAdjuntarImagen(Request req, Response res) {
+        Map<String, Object> model = new HashMap<String, Object>();
+        String idUsuario = req.session().attribute(ID_USUARIO);
+        if(idUsuario == null){
+            return new ModelAndView(model, "error.hbs");
+        }
         Guardarropa guardarropa = new Guardarropa();
         return new ModelAndView(guardarropa, "wizardAdjuntarImagen.hbs");
     }
     
     public ModelAndView agregarPrenda(Request req, Response res) {
-        
+        Map<String, Object> model = new HashMap<String, Object>();
+        String idUsuario = req.session().attribute(ID_USUARIO);
+        if(idUsuario == null){
+            return new ModelAndView(model, "error.hbs");
+        }
         int nivelDeAbrigo = Integer.parseInt(req.queryParams("nivelDeAbrigo"));
         TipoUso tipoUso = parsearTipoUso(req.queryParams("tipoUso"));
         Material material = parsearMaterial(req.queryParams("material"));
