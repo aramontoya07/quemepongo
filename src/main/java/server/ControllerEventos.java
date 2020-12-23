@@ -25,7 +25,10 @@ public class ControllerEventos {
         Map<String, Object> model = new HashMap<String, Object>();
         /*try{*/
             String idAsistencia = req.params(ID_ASISTENCIA);
-            String idUsuario = req.session().attribute(ID_USUARIO);
+        String idUsuario = req.session().attribute(ID_USUARIO);
+        if(idUsuario == null){
+            return new ModelAndView(model, "error.hbs");
+        }
             Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
             AsistenciaEvento asistencia = RepositorioAsistenciaEventos.obtenerAsistencia(idAsistencia);
 
@@ -84,7 +87,11 @@ public class ControllerEventos {
     }
 
     public ModelAndView agregarEvento(Request req, Response res) {
+        Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
+        if(idUsuario == null){
+            return new ModelAndView(model, "error.hbs");
+        }
         Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
         String titulo = req.queryParams("titulo");
         LocalDateTime fecha = formatearFecha(req.queryParams("fecha"));
@@ -102,7 +109,11 @@ public class ControllerEventos {
     }
     
     public ModelAndView generarSugerencias(Request req, Response res){
+        Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
+        if(idUsuario == null){
+            return new ModelAndView(model, "error.hbs");
+        }
         Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
         String idAsistencia = req.params(ID_ASISTENCIA);
         AsistenciaEvento asistencia = RepositorioAsistenciaEventos.obtenerAsistencia(idAsistencia);

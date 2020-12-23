@@ -7,10 +7,12 @@ import spark.debug.DebugScreen;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class Server{
+
     public static void main(String[] args) {
         Spark.port(getAssignedPort());
 
         Spark.init();
+
 
         Spark.before("/*", (q, a) -> EntityManagerHelper.getEntityManager());
         Spark.after("/*", (q, a) -> EntityManagerHelper.closeEntityManager());
@@ -22,6 +24,7 @@ public class Server{
 
         Spark.get("/", sistemaC::landing, new HandlebarsTemplateEngine());
         Spark.get("/registro", sistemaC::registro, new HandlebarsTemplateEngine());
+        Spark.post("/", usuarioC::logout, new HandlebarsTemplateEngine());
         Spark.get("/perfil", usuarioC::perfil, new HandlebarsTemplateEngine());
         Spark.get("/actualizarFoto", usuarioC::perfil, new HandlebarsTemplateEngine());
         Spark.get("/actualizarNombre", usuarioC::perfil, new HandlebarsTemplateEngine());
@@ -49,7 +52,7 @@ public class Server{
 
         Spark.post("/registro", usuarioC::registrarUsuario, new HandlebarsTemplateEngine());
         Spark.post("/login", usuarioC::loguearUsuario, new HandlebarsTemplateEngine());
-        Spark.post("/", usuarioC::cerrarSesion, new HandlebarsTemplateEngine());
+
         Spark.post("/misGuardarropas/:idGuardarropas/creadorPrendas", guardarropasC::agregarPrenda, new HandlebarsTemplateEngine());
         Spark.post("/creadorEventos", eventosC::agregarEvento, new HandlebarsTemplateEngine());
         Spark.post("/misEventos/:idEvento/aceptarSugerencia", usuarioC::aceptarSugerencia, new HandlebarsTemplateEngine());

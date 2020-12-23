@@ -39,7 +39,11 @@ public class ControllerUsuario {
     }
 
     public ModelAndView puntuadorAtuendos(Request req, Response res) {
+        Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
+        if(idUsuario == null){
+            return new ModelAndView(model, "error.hbs");
+        }
         String idAtuendo = req.params(ID_ATUENDO);
         Usuario usuario = obtenerUsuario(idUsuario);
         UsoAtuendo uso = obtenerUsoAtuendo(usuario, idAtuendo);
@@ -47,13 +51,21 @@ public class ControllerUsuario {
     }
 
     public ModelAndView listarGuardarropas(Request req, Response res){
+        Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
+        if(idUsuario == null){
+            return new ModelAndView(model, "error.hbs");
+        }
         Usuario usuario = obtenerUsuario(idUsuario);
         return new ModelAndView(usuario, "misGuardarropas.hbs");
     }
 
     public ModelAndView agregarGuardarropas(Request req, Response res){
+        Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
+        if(idUsuario == null){
+            return new ModelAndView(model, "error.hbs");
+        }
         Usuario usuario = obtenerUsuario(idUsuario);
         EntityManagerHelper.beginTransaction();
         usuario.agregarGuardarropa(new Guardarropa());
@@ -87,14 +99,17 @@ public class ControllerUsuario {
         }
 
     public ModelAndView listarEventosPorFecha(Request req, Response res) {
+        Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
+        if(idUsuario == null){
+            return new ModelAndView(model, "error.hbs");
+        }
         Usuario usuario = obtenerUsuario(idUsuario);
         Integer dia = new Integer(req.params("dia"));
         Integer mes = new Integer(req.params("mes"));
         Integer anio = new Integer(req.params("anio"));
         Set<AsistenciaEvento> asistencias = usuario.getCalendarioEventos().getEventos();
         Set<AsistenciaEvento> asistenciasFiltradas = asistencias.stream().filter(asistencia -> asistencia.esDeFecha(dia,mes,anio)).collect(Collectors.toSet());
-        Map<String, Object> model = new HashMap<String, Object>();
         model.put(ID_USUARIO, idUsuario);
         model.put("asistencias", asistenciasFiltradas);
         model.put("fecha", dia + "-" + mes + "-" + anio);
@@ -102,15 +117,23 @@ public class ControllerUsuario {
     }
 
     public ModelAndView listarAceptados(Request req, Response res) {
-        String idUsuario = req.session().attribute(ID_USUARIO);
-        Usuario usuario = obtenerUsuario(idUsuario);
         Map<String, Object> model = new HashMap<String, Object>();
+        String idUsuario = req.session().attribute(ID_USUARIO);
+        if(idUsuario == null){
+            return new ModelAndView(model, "error.hbs");
+        }
+        Usuario usuario = obtenerUsuario(idUsuario);
         model.put("aceptados",usuario.getAceptados());
         return new ModelAndView(model, "misAtuendosAceptados.hbs");
     }
 
     public ModelAndView perfil(Request req, Response res) {
+
+        Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
+        if(idUsuario == null){
+            return new ModelAndView(model, "error.hbs");
+        }
         Usuario usuario = obtenerUsuario(idUsuario);
         return new ModelAndView(usuario, "perfil.hbs");
     }
@@ -158,21 +181,29 @@ public class ControllerUsuario {
         }
     }
 
-    public ModelAndView cerrarSesion(Request req, Response res){
-        try{
-            req.session().removeAttribute(ID_USUARIO);
-            res.redirect("/");
-            return null;
-        }catch(RepositorioException e){
-            e.printStackTrace();
-            res.body("No habia un usuario logueado");
-            res.redirect("/");
-            return null;
-        }
+    public ModelAndView logout(Request req, Response res){
+            try {
+                String id = req.session().id();
+                System.out.println(id);
+                req.session().removeAttribute(ID_USUARIO);
+                System.out.println("Removiendo ID_USUARIO" + " " + ID_USUARIO);
+                req.session().invalidate();
+                return null;
+                /*res.redirect("/");*/
+            } catch(Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+
+
     }
 
     public ModelAndView puntuarAtuendo(Request req, Response res) {
+        Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
+        if(idUsuario == null){
+            return new ModelAndView(model, "error.hbs");
+        }
         Usuario usuario = obtenerUsuario(idUsuario);
         String idAtuendo = req.params("idAtuendo");
         UsoAtuendo uso = obtenerUsoAtuendo(usuario, idAtuendo);
@@ -201,7 +232,11 @@ public class ControllerUsuario {
 
     public ModelAndView aceptarSugerencia(Request req, Response res) {
 
-    String idUsuario = req.session().attribute(ID_USUARIO);
+        Map<String, Object> model = new HashMap<String, Object>();
+        String idUsuario = req.session().attribute(ID_USUARIO);
+        if(idUsuario == null){
+            return new ModelAndView(model, "error.hbs");
+        }
     Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
     String idEvento = req.params("idEvento");
     String idAtuendo = req.queryParams("idAtuendo");
@@ -221,7 +256,11 @@ public class ControllerUsuario {
     }
 
     public ModelAndView subscripcionPremium(Request req, Response res) {
+        Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
+        if(idUsuario == null){
+            return new ModelAndView(model, "error.hbs");
+        }
         Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
 
         EntityManagerHelper.beginTransaction();
@@ -232,7 +271,11 @@ public class ControllerUsuario {
     }
 
     public ModelAndView rechazarSugerencia(Request req, Response res) {
+        Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
+        if(idUsuario == null){
+            return new ModelAndView(model, "error.hbs");
+        }
         Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
         String idEvento = req.params("idEvento");
         String idAtuendo = req.queryParams("idAtuendo");
