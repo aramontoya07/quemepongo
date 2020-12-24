@@ -15,10 +15,7 @@ import usuario.Guardarropa;
 import usuario.Usuario;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ControllerUsuario {
@@ -186,6 +183,7 @@ public class ControllerUsuario {
                 String id = req.session().id();
                 System.out.println(id);
                 req.session().removeAttribute(ID_USUARIO);
+
                 System.out.println("Removiendo ID_USUARIO" + " " + ID_USUARIO);
                 req.session().invalidate();
                 return null;
