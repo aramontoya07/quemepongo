@@ -13,6 +13,7 @@ import spark.Request;
 import spark.Response;
 import usuario.Guardarropa;
 import usuario.Usuario;
+import utils.JwtManager;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -21,8 +22,12 @@ import java.util.stream.Collectors;
 public class ControllerUsuario {
     private static final String ID_USUARIO = "idUsuario";
     private static final String ID_ATUENDO = "idAtuendo";
+    private JwtManager jwtManager;
+
+    List<String> tokens = new ArrayList<>();
 
     public ControllerUsuario() {
+        this.jwtManager = JwtManager.instancia();
     }
 
     public Usuario obtenerUsuario(String idUsuario) {
@@ -38,7 +43,7 @@ public class ControllerUsuario {
     public ModelAndView puntuadorAtuendos(Request req, Response res) {
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
-        if(idUsuario == null){
+        if(!this.tokens.contains(req.cookie("token"))) {
             return new ModelAndView(model, "error.hbs");
         }
         String idAtuendo = req.params(ID_ATUENDO);
@@ -50,17 +55,19 @@ public class ControllerUsuario {
     public ModelAndView listarGuardarropas(Request req, Response res){
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
-        if(idUsuario == null){
+        if(!this.tokens.contains(req.cookie("token"))) {
             return new ModelAndView(model, "error.hbs");
+        } else {
+            Usuario usuario = obtenerUsuario(idUsuario);
+            return new ModelAndView(usuario, "misGuardarropas.hbs");
         }
-        Usuario usuario = obtenerUsuario(idUsuario);
-        return new ModelAndView(usuario, "misGuardarropas.hbs");
+
     }
 
     public ModelAndView agregarGuardarropas(Request req, Response res){
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
-        if(idUsuario == null){
+        if(!this.tokens.contains(req.cookie("token"))) {
             return new ModelAndView(model, "error.hbs");
         }
         Usuario usuario = obtenerUsuario(idUsuario);
@@ -79,26 +86,27 @@ public class ControllerUsuario {
     public ModelAndView listarEventos(Request req, Response res) {
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
-        if(idUsuario == null){
+        if(!this.tokens.contains(req.cookie("token"))) {
             return new ModelAndView(model, "error.hbs");
         }
         Usuario usuario = obtenerUsuario(idUsuario);
         Set<AsistenciaEvento> asistencias = usuario.getCalendarioEventos().getEventos();
         List<LocalDateTime> fechasDate = asistencias.stream()
-            .map(asistencia -> asistencia.getFecha()).collect(Collectors.toList());
+                .map(asistencia -> asistencia.getFecha()).collect(Collectors.toList());
         List<String> fechass = fechasDate.stream().map(fecha -> fecha.toString()).collect(Collectors.toList());
         List<String> fechas = fechass.stream().map(fecha -> parsearFecha(fecha)).collect(Collectors.toList());
 
-        model.put(ID_USUARIO,idUsuario);
+        model.put(ID_USUARIO, idUsuario);
         model.put("asistencias", asistencias);
         model.put("fechas", fechas);
         return new ModelAndView(model, "misEventos.hbs");
+
         }
 
     public ModelAndView listarEventosPorFecha(Request req, Response res) {
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
-        if(idUsuario == null){
+        if(!this.tokens.contains(req.cookie("token"))) {
             return new ModelAndView(model, "error.hbs");
         }
         Usuario usuario = obtenerUsuario(idUsuario);
@@ -106,33 +114,41 @@ public class ControllerUsuario {
         Integer mes = new Integer(req.params("mes"));
         Integer anio = new Integer(req.params("anio"));
         Set<AsistenciaEvento> asistencias = usuario.getCalendarioEventos().getEventos();
-        Set<AsistenciaEvento> asistenciasFiltradas = asistencias.stream().filter(asistencia -> asistencia.esDeFecha(dia,mes,anio)).collect(Collectors.toSet());
+        Set<AsistenciaEvento> asistenciasFiltradas = asistencias.stream().filter(asistencia -> asistencia.esDeFecha(dia, mes, anio)).collect(Collectors.toSet());
         model.put(ID_USUARIO, idUsuario);
         model.put("asistencias", asistenciasFiltradas);
         model.put("fecha", dia + "-" + mes + "-" + anio);
         return new ModelAndView(model, "misEventos.hbs");
+
     }
 
     public ModelAndView listarAceptados(Request req, Response res) {
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
-        if(idUsuario == null){
+        if(!this.tokens.contains(req.cookie("token"))) {
             return new ModelAndView(model, "error.hbs");
         }
         Usuario usuario = obtenerUsuario(idUsuario);
         model.put("aceptados",usuario.getAceptados());
         return new ModelAndView(model, "misAtuendosAceptados.hbs");
+
     }
 
     public ModelAndView perfil(Request req, Response res) {
 
-        Map<String, Object> model = new HashMap<String, Object>();
-        String idUsuario = req.session().attribute(ID_USUARIO);
-        if(idUsuario == null){
-            return new ModelAndView(model, "error.hbs");
+        try {
+            Map<String, Object> model = new HashMap<String, Object>();
+            String idUsuario = req.session().attribute(ID_USUARIO);
+            if(!this.tokens.contains(req.cookie("token"))) {
+                return new ModelAndView(model, "error.hbs");
+            }
+            Usuario usuario = obtenerUsuario(idUsuario);
+            return new ModelAndView(usuario, "perfil.hbs");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-        Usuario usuario = obtenerUsuario(idUsuario);
-        return new ModelAndView(usuario, "perfil.hbs");
+
     }
 
     public ModelAndView registrarUsuario(Request req, Response res) {
@@ -162,44 +178,73 @@ public class ControllerUsuario {
         }
     }
 
-    public ModelAndView loguearUsuario(Request req, Response res){
+   /* public ModelAndView loguearUsuario(Request req, Response res){
         String contrasenia = req.queryParams("inputPassword");
         String mail = req.queryParams("inputEmail");
         try{
-            Usuario usuario = RepositorioUsuarios.obtenerUsuarioPorMailYContra(mail,contrasenia);
-            req.session().attribute(ID_USUARIO, Integer.toString(usuario.getId()));
-            res.redirect("/perfil");
-            return null;
+            Usuario usuarioBuscado = RepositorioUsuarios.obtenerUsuarioPorMailYContra(mail,contrasenia);
+            if(usuarioBuscado == null) {
+                res.body("Mail o password incorrectos");
+
+                return null;
+            } else {
+                req.session().attribute(ID_USUARIO, Integer.toString(usuarioBuscado.getId()));
+                res.redirect("/perfil");
+                return null;
+            }
         }catch(RepositorioException e){
             e.printStackTrace();
             res.body("El usuario ingresado no existe");
             res.redirect("/");
             return null;
         }
+    }*/
+
+    public ModelAndView loguearUsuario(Request req, Response res){
+
+        try {
+            String password = req.queryParams("inputPassword");
+            String mail = req.queryParams("inputEmail");
+
+            Usuario usuarioBuscado = RepositorioUsuarios.obtenerUsuarioPorMailYContra(mail,password);
+
+            if (usuarioBuscado.convertirSHA256(password).equals(usuarioBuscado.getContrasenia())) {
+                req.session().attribute(ID_USUARIO, Integer.toString(usuarioBuscado.getId()));
+                String token = UUID.randomUUID().toString();
+                tokens.add(token);
+                res.cookie("token", token, 3600);
+                res.redirect("/perfil");
+            } else
+                res.body("Username or password wrong.");
+            return null;
+        } catch(Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     public ModelAndView logout(Request req, Response res){
-            try {
-                String id = req.session().id();
-                System.out.println(id);
-                req.session().removeAttribute(ID_USUARIO);
-
-                System.out.println("Removiendo ID_USUARIO" + " " + ID_USUARIO);
-                req.session().invalidate();
-                return null;
-                /*res.redirect("/");*/
-            } catch(Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-
-
+        try {
+            String token = req.cookie("token");
+            if (tokens.remove(token)) {
+                res.removeCookie("token");
+                res.body( "Successfully logged out.");
+                System.out.println(token);
+                res.redirect("/");
+            } else
+                res.body("You were not logged in.");
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public ModelAndView puntuarAtuendo(Request req, Response res) {
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
-        if(idUsuario == null){
+        if(!this.tokens.contains(req.cookie("token"))) {
             return new ModelAndView(model, "error.hbs");
         }
         Usuario usuario = obtenerUsuario(idUsuario);
@@ -232,31 +277,30 @@ public class ControllerUsuario {
 
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
-        if(idUsuario == null){
+        if(!this.tokens.contains(req.cookie("token"))) {
             return new ModelAndView(model, "error.hbs");
         }
-    Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
-    String idEvento = req.params("idEvento");
-    String idAtuendo = req.queryParams("idAtuendo");
-    try {
-        Atuendo atuendomaxi = RepositorioAtuendos.obtenerAtuendo(idAtuendo);
-        EntityManagerHelper.beginTransaction();
-        usuario.aceptarAtuendo(atuendomaxi); //deberia persistirse el cambio
-        EntityManagerHelper.commit();
-        EntityManagerHelper.closeEntityManager();
-    } catch(Exception e){
-        System.out.println("El atuendo de id" + " " + idAtuendo + " " + "no existe");
-        e.printStackTrace();
-    }
-
-    res.redirect("/misEventos/" + idEvento);
-    return null;
+        Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
+        String idEvento = req.params("idEvento");
+        String idAtuendo = req.queryParams("idAtuendo");
+        try {
+            Atuendo atuendomaxi = RepositorioAtuendos.obtenerAtuendo(idAtuendo);
+            EntityManagerHelper.beginTransaction();
+            usuario.aceptarAtuendo(atuendomaxi); //deberia persistirse el cambio
+            EntityManagerHelper.commit();
+            EntityManagerHelper.closeEntityManager();
+        } catch(Exception e){
+            System.out.println("El atuendo de id" + " " + idAtuendo + " " + "no existe");
+            e.printStackTrace();
+        }
+        res.redirect("/misEventos/" + idEvento);
+        return null;
     }
 
     public ModelAndView subscripcionPremium(Request req, Response res) {
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
-        if(idUsuario == null){
+        if(!this.tokens.contains(req.cookie("token"))) {
             return new ModelAndView(model, "error.hbs");
         }
         Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
@@ -271,7 +315,7 @@ public class ControllerUsuario {
     public ModelAndView rechazarSugerencia(Request req, Response res) {
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
-        if(idUsuario == null){
+        if(!this.tokens.contains(req.cookie("token"))) {
             return new ModelAndView(model, "error.hbs");
         }
         Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
