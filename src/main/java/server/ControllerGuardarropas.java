@@ -27,7 +27,7 @@ public class ControllerGuardarropas {
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
         if(!server.getTokens().contains(req.cookie("token"))) {
-            return new ModelAndView(model, "error.hbs");
+            return new ModelAndView(model, "error403.hbs");
         }
         String id = req.params("idGuardarropas");
         Guardarropa guardarropa = RepositorioGuardarropa.obtenerGuardarropa(id);
@@ -45,7 +45,7 @@ public class ControllerGuardarropas {
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
         if(!server.getTokens().contains(req.cookie("token"))) {
-            return new ModelAndView(model, "error.hbs");
+            return new ModelAndView(model, "error403.hbs");
         }
     	Guardarropa guardarropa = new Guardarropa();
         return new ModelAndView(guardarropa, "wizardTipoPrenda.hbs");
@@ -55,7 +55,7 @@ public class ControllerGuardarropas {
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
         if(!server.getTokens().contains(req.cookie("token"))) {
-            return new ModelAndView(model, "error.hbs");
+            return new ModelAndView(model, "error403.hbs");
         }
         Guardarropa guardarropa = new Guardarropa();
         return new ModelAndView(guardarropa, "wizardCaracteristicas.hbs");
@@ -65,7 +65,7 @@ public class ControllerGuardarropas {
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
         if(!server.getTokens().contains(req.cookie("token"))) {
-            return new ModelAndView(model, "error.hbs");
+            return new ModelAndView(model, "error403.hbs");
         }
         Guardarropa guardarropa = new Guardarropa();
         return new ModelAndView(guardarropa, "wizardAdjuntarImagen.hbs");
@@ -75,7 +75,7 @@ public class ControllerGuardarropas {
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
         if(!server.getTokens().contains(req.cookie("token"))) {
-            return new ModelAndView(model, "error.hbs");
+            return new ModelAndView(model, "error403.hbs");
         }
         int nivelDeAbrigo = Integer.parseInt(req.queryParams("nivelDeAbrigo"));
         TipoUso tipoUso = parsearTipoUso(req.queryParams("tipoUso"));

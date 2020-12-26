@@ -32,7 +32,7 @@ public class ControllerEventos {
             String idAsistencia = req.params(ID_ASISTENCIA);
         String idUsuario = req.session().attribute(ID_USUARIO);
         if(!server.getTokens().contains(req.cookie("token"))) {
-            return new ModelAndView(model, "error.hbs");
+            return new ModelAndView(model, "error403.hbs");
         }
             Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
             AsistenciaEvento asistencia = RepositorioAsistenciaEventos.obtenerAsistencia(idAsistencia);
@@ -92,7 +92,7 @@ public class ControllerEventos {
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
         if(!server.getTokens().contains(req.cookie("token"))) {
-            return new ModelAndView(model, "error.hbs");
+            return new ModelAndView(model, "error403.hbs");
         }
         Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
         String titulo = req.queryParams("titulo");
@@ -114,7 +114,7 @@ public class ControllerEventos {
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
         if(!server.getTokens().contains(req.cookie("token"))) {
-            return new ModelAndView(model, "error.hbs");
+            return new ModelAndView(model, "error403.hbs");
         }
         Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
         String idAsistencia = req.params(ID_ASISTENCIA);

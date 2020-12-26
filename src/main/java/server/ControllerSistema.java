@@ -34,7 +34,7 @@ public class ControllerSistema {
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
         if(!server.getTokens().contains(req.cookie("token"))) {
-            return new ModelAndView(model, "error.hbs");
+            return new ModelAndView(model, "error403.hbs");
         }
         String id = req.params("idGuardarropas");
         model.put("id", id);
@@ -45,7 +45,7 @@ public class ControllerSistema {
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
         if(!server.getTokens().contains(req.cookie("token"))) {
-            return new ModelAndView(model, "error.hbs");
+            return new ModelAndView(model, "error403.hbs");
         }
         return new ModelAndView(null, "creadorEventos.hbs");
     }

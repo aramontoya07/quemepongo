@@ -46,7 +46,7 @@ public class ControllerUsuario {
         String idUsuario = req.session().attribute(ID_USUARIO);
         Usuario usuario = obtenerUsuario(idUsuario);
         if(!server.getTokens().contains(req.cookie("token"))) {
-            return new ModelAndView(model, "error.hbs");
+            return new ModelAndView(model, "error403.hbs");
         }
         String idAtuendo = req.params(ID_ATUENDO);
 
@@ -59,7 +59,7 @@ public class ControllerUsuario {
         String idUsuario = req.session().attribute(ID_USUARIO);
         Usuario usuario = obtenerUsuario(idUsuario);
         if(!server.getTokens().contains(req.cookie("token"))) {
-            return new ModelAndView(model, "error.hbs");
+            return new ModelAndView(model, "error403.hbs");
         }
         return new ModelAndView(usuario, "misGuardarropas.hbs");
     }
@@ -69,7 +69,7 @@ public class ControllerUsuario {
         String idUsuario = req.session().attribute(ID_USUARIO);
         Usuario usuario = obtenerUsuario(idUsuario);
         if(!server.getTokens().contains(req.cookie("token"))) {
-            return new ModelAndView(model, "error.hbs");
+            return new ModelAndView(model, "error403.hbs");
         }
 
         EntityManagerHelper.beginTransaction();
@@ -89,7 +89,7 @@ public class ControllerUsuario {
         String idUsuario = req.session().attribute(ID_USUARIO);
         Usuario usuario = obtenerUsuario(idUsuario);
         if(!server.getTokens().contains(req.cookie("token"))) {
-            return new ModelAndView(model, "error.hbs");
+            return new ModelAndView(model, "error403.hbs");
         }
 
         Set<AsistenciaEvento> asistencias = usuario.getCalendarioEventos().getEventos();
@@ -110,7 +110,7 @@ public class ControllerUsuario {
         String idUsuario = req.session().attribute(ID_USUARIO);
         Usuario usuario = obtenerUsuario(idUsuario);
         if(!server.getTokens().contains(req.cookie("token"))) {
-            return new ModelAndView(model, "error.hbs");
+            return new ModelAndView(model, "error403.hbs");
         }
 
         Integer dia = new Integer(req.params("dia"));
@@ -130,7 +130,7 @@ public class ControllerUsuario {
         String idUsuario = req.session().attribute(ID_USUARIO);
         Usuario usuario = obtenerUsuario(idUsuario);
         if(!server.getTokens().contains(req.cookie("token"))) {
-            return new ModelAndView(model, "error.hbs");
+            return new ModelAndView(model, "error403.hbs");
         }
         model.put("aceptados",usuario.getAceptados());
         return new ModelAndView(model, "misAtuendosAceptados.hbs");
@@ -144,7 +144,7 @@ public class ControllerUsuario {
             String idUsuario = req.session().attribute(ID_USUARIO);
             Usuario usuario = obtenerUsuario(idUsuario);
             if(!server.getTokens().contains(req.cookie("token"))) {
-                return new ModelAndView(model, "error.hbs");
+                return new ModelAndView(model, "error403.hbs");
             }
             return new ModelAndView(usuario, "perfil.hbs");
         } catch (Exception e) {
@@ -248,7 +248,7 @@ public class ControllerUsuario {
         String idUsuario = req.session().attribute(ID_USUARIO);
         Usuario usuario = obtenerUsuario(idUsuario);
         if(!server.getTokens().contains(req.cookie("token"))) {
-            return new ModelAndView(model, "error.hbs");
+            return new ModelAndView(model, "error403.hbs");
         }
 
         String idAtuendo = req.params("idAtuendo");
@@ -282,7 +282,7 @@ public class ControllerUsuario {
         String idUsuario = req.session().attribute(ID_USUARIO);
         Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
         if(!server.getTokens().contains(req.cookie("token"))) {
-            return new ModelAndView(model, "error.hbs");
+            return new ModelAndView(model, "error403.hbs");
         }
         String idEvento = req.params("idEvento");
         String idAtuendo = req.queryParams("idAtuendo");
@@ -305,7 +305,7 @@ public class ControllerUsuario {
         String idUsuario = req.session().attribute(ID_USUARIO);
         Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
         if(!server.getTokens().contains(req.cookie("token"))) {
-            return new ModelAndView(model, "error.hbs");
+            return new ModelAndView(model, "error403.hbs");
         }
 
         EntityManagerHelper.beginTransaction();
@@ -320,7 +320,7 @@ public class ControllerUsuario {
         String idUsuario = req.session().attribute(ID_USUARIO);
         Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
         if(!server.getTokens().contains(req.cookie("token"))) {
-            return new ModelAndView(model, "error.hbs");
+            return new ModelAndView(model, "error403.hbs");
         }
         String idEvento = req.params("idEvento");
         String idAtuendo = req.queryParams("idAtuendo");
