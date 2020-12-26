@@ -17,11 +17,16 @@ import java.util.Map;
 
 public class ControllerGuardarropas {
     private static final String ID_USUARIO = "idUsuario";
+    private Server server;
+
+    public ControllerGuardarropas() {
+        this.server = Server.instancia();
+    }
 
     public ModelAndView detalleGuardarropa(Request req, Response res) {
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
-        if(idUsuario == null){
+        if(!server.getTokens().contains(req.cookie("token"))) {
             return new ModelAndView(model, "error.hbs");
         }
         String id = req.params("idGuardarropas");
@@ -39,7 +44,7 @@ public class ControllerGuardarropas {
     public ModelAndView wizardTipoPrenda(Request req, Response res) {
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
-        if(idUsuario == null){
+        if(!server.getTokens().contains(req.cookie("token"))) {
             return new ModelAndView(model, "error.hbs");
         }
     	Guardarropa guardarropa = new Guardarropa();
@@ -49,7 +54,7 @@ public class ControllerGuardarropas {
     public ModelAndView wizardCaracteristicas(Request req, Response res) {
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
-        if(idUsuario == null){
+        if(!server.getTokens().contains(req.cookie("token"))) {
             return new ModelAndView(model, "error.hbs");
         }
         Guardarropa guardarropa = new Guardarropa();
@@ -59,7 +64,7 @@ public class ControllerGuardarropas {
     public ModelAndView wizardAdjuntarImagen(Request req, Response res) {
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
-        if(idUsuario == null){
+        if(!server.getTokens().contains(req.cookie("token"))) {
             return new ModelAndView(model, "error.hbs");
         }
         Guardarropa guardarropa = new Guardarropa();
@@ -69,7 +74,7 @@ public class ControllerGuardarropas {
     public ModelAndView agregarPrenda(Request req, Response res) {
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
-        if(idUsuario == null){
+        if(!server.getTokens().contains(req.cookie("token"))) {
             return new ModelAndView(model, "error.hbs");
         }
         int nivelDeAbrigo = Integer.parseInt(req.queryParams("nivelDeAbrigo"));

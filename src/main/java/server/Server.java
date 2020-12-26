@@ -6,25 +6,56 @@ import spark.Spark;
 import spark.debug.DebugScreen;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Server{
+
+    private static Server instancia = null;
+    private List<String> tokens = new ArrayList<>();
+
+    public static Server instancia(){
+        if(instancia == null){
+            instancia = new Server();
+        }
+        return instancia;
+    }
+
+    public List<String> getTokens() {
+        return tokens;
+    }
+
+    public void agregarToken(String token) {
+        tokens.add(token);
+    }
+
+    public boolean removerToken(String token) {
+        return tokens.remove(token);
+    }
 
     public static void main(String[] args) {
         Spark.port(getAssignedPort());
-
         Spark.init();
-
-
-        Spark.before("/*", (q, a) -> EntityManagerHelper.getEntityManager());
-        Spark.after("/*", (q, a) -> EntityManagerHelper.closeEntityManager());
 
         ControllerSistema sistemaC = new ControllerSistema();
         ControllerUsuario usuarioC =new ControllerUsuario();
         ControllerGuardarropas guardarropasC =new ControllerGuardarropas();
         ControllerEventos eventosC =new ControllerEventos();
 
+        //Spark.staticFileLocation("public");
+
+        /*Spark.exception(Exception.class, (exception, request, response) -> {
+            exception.printStackTrace();
+        });*/
+
+        Spark.before("/*", (q, a) -> EntityManagerHelper.getEntityManager());
+        Spark.after("/*", (q, a) -> EntityManagerHelper.closeEntityManager());
+
         Spark.get("/", sistemaC::landing, new HandlebarsTemplateEngine());
         Spark.get("/registro", sistemaC::registro, new HandlebarsTemplateEngine());
-        Spark.post("/", usuarioC::logout, new HandlebarsTemplateEngine());
+        Spark.post("/registro", usuarioC::registrarUsuario, new HandlebarsTemplateEngine());
+        Spark.post("/login", usuarioC::loguearUsuario, new HandlebarsTemplateEngine());
+
         Spark.get("/perfil", usuarioC::perfil, new HandlebarsTemplateEngine());
         Spark.get("/actualizarFoto", usuarioC::perfil, new HandlebarsTemplateEngine());
         Spark.get("/actualizarNombre", usuarioC::perfil, new HandlebarsTemplateEngine());
@@ -50,9 +81,8 @@ public class Server{
         Spark.get("/puntuarAtuendos", usuarioC::listarAceptados, new HandlebarsTemplateEngine());
         Spark.get("/puntuarAtuendos/:idAtuendo", usuarioC::puntuadorAtuendos, new HandlebarsTemplateEngine());
 
-        Spark.post("/registro", usuarioC::registrarUsuario, new HandlebarsTemplateEngine());
-        Spark.post("/login", usuarioC::loguearUsuario, new HandlebarsTemplateEngine());
 
+        Spark.get("/logout", usuarioC::logout, new HandlebarsTemplateEngine());
         Spark.post("/misGuardarropas/:idGuardarropas/creadorPrendas", guardarropasC::agregarPrenda, new HandlebarsTemplateEngine());
         Spark.post("/creadorEventos", eventosC::agregarEvento, new HandlebarsTemplateEngine());
         Spark.post("/misEventos/:idEvento/aceptarSugerencia", usuarioC::aceptarSugerencia, new HandlebarsTemplateEngine());

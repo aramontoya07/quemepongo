@@ -63,7 +63,7 @@ public class Usuario extends EntidadPersistente {
 	private String nombre;
 	public String rutaFotoPerfil = "https://i.imgur.com/z0i6Zmy.png";
 
-    public String getRutaFotoPerfil(){
+	public String getRutaFotoPerfil(){
         return rutaFotoPerfil;
     }
 	public Usuario() {
@@ -104,7 +104,10 @@ public class Usuario extends EntidadPersistente {
 		return calendarioEventos.obtenerAsistencia(evento);
 	}
 
-	//GUARDARROPAS
+	public String getContrasenia() {
+		return contrasenia;
+	}
+//GUARDARROPAS
 
 	public void agregarGuardarropa(Guardarropa guardarropa) {
 		if(guardarropas.contains(guardarropa)) throw new GuardarropaException("El guardarropa que se intento agregar ya existe");

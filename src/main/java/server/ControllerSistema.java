@@ -8,8 +8,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ControllerSistema {
+    private Server server;
 
     private static final String ID_USUARIO = "idUsuario";
+
+    public ControllerSistema() {
+        this.server = Server.instancia();
+    }
 
     public ModelAndView landing(Request req, Response res) {
         String mensajeDeError = req.body();
@@ -28,7 +33,7 @@ public class ControllerSistema {
     public ModelAndView creadorPrendas(Request req, Response res) {
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
-        if(idUsuario == null){
+        if(!server.getTokens().contains(req.cookie("token"))) {
             return new ModelAndView(model, "error.hbs");
         }
         String id = req.params("idGuardarropas");
@@ -39,7 +44,7 @@ public class ControllerSistema {
     public ModelAndView creadorEventos(Request req, Response res){
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
-        if(idUsuario == null){
+        if(!server.getTokens().contains(req.cookie("token"))) {
             return new ModelAndView(model, "error.hbs");
         }
         return new ModelAndView(null, "creadorEventos.hbs");

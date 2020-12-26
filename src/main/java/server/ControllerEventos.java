@@ -20,20 +20,22 @@ public class ControllerEventos {
     private static final String ID_ASISTENCIA = "idEvento";
     List<Atuendo> atuendosExactos;
     List<Atuendo> atuendosAproximados;
+    private Server server;
+
+    public ControllerEventos() {
+        this.server = Server.instancia();
+    }
 
     public ModelAndView detalleEvento(Request req, Response res) {
         Map<String, Object> model = new HashMap<String, Object>();
         /*try{*/
             String idAsistencia = req.params(ID_ASISTENCIA);
         String idUsuario = req.session().attribute(ID_USUARIO);
-        if(idUsuario == null){
+        if(!server.getTokens().contains(req.cookie("token"))) {
             return new ModelAndView(model, "error.hbs");
         }
             Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
             AsistenciaEvento asistencia = RepositorioAsistenciaEventos.obtenerAsistencia(idAsistencia);
-
-
-            //usuario.generarSugerenciasNecesarias();
 
             atuendosExactos = new ArrayList<Atuendo>();
             atuendosAproximados = new ArrayList<Atuendo>();
@@ -89,7 +91,7 @@ public class ControllerEventos {
     public ModelAndView agregarEvento(Request req, Response res) {
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
-        if(idUsuario == null){
+        if(!server.getTokens().contains(req.cookie("token"))) {
             return new ModelAndView(model, "error.hbs");
         }
         Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
@@ -111,7 +113,7 @@ public class ControllerEventos {
     public ModelAndView generarSugerencias(Request req, Response res){
         Map<String, Object> model = new HashMap<String, Object>();
         String idUsuario = req.session().attribute(ID_USUARIO);
-        if(idUsuario == null){
+        if(!server.getTokens().contains(req.cookie("token"))) {
             return new ModelAndView(model, "error.hbs");
         }
         Usuario usuario = RepositorioUsuarios.obtenerUsuario(idUsuario);
