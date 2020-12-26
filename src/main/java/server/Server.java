@@ -6,7 +6,32 @@ import spark.Spark;
 import spark.debug.DebugScreen;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Server{
+
+    private static Server instancia = null;
+    private List<String> tokens = new ArrayList<>();
+
+    public static Server instancia(){
+        if(instancia == null){
+            instancia = new Server();
+        }
+        return instancia;
+    }
+
+    public List<String> getTokens() {
+        return tokens;
+    }
+
+    public void agregarToken(String token) {
+        tokens.add(token);
+    }
+
+    public boolean removerToken(String token) {
+        return tokens.remove(token);
+    }
 
     public static void main(String[] args) {
         Spark.port(getAssignedPort());
@@ -26,17 +51,10 @@ public class Server{
         Spark.before("/*", (q, a) -> EntityManagerHelper.getEntityManager());
         Spark.after("/*", (q, a) -> EntityManagerHelper.closeEntityManager());
 
-
-
-
         Spark.get("/", sistemaC::landing, new HandlebarsTemplateEngine());
         Spark.get("/registro", sistemaC::registro, new HandlebarsTemplateEngine());
         Spark.post("/registro", usuarioC::registrarUsuario, new HandlebarsTemplateEngine());
         Spark.post("/login", usuarioC::loguearUsuario, new HandlebarsTemplateEngine());
-        /*Spark.before("/protected/*", (req, res) -> {
-            if (!usuarioC.tokens.contains(req.cookie("token")))
-                Spark.halt(401, "You can't access this page.");
-        });*/
 
         Spark.get("/perfil", usuarioC::perfil, new HandlebarsTemplateEngine());
         Spark.get("/actualizarFoto", usuarioC::perfil, new HandlebarsTemplateEngine());

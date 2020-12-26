@@ -23,6 +23,8 @@ public class JwtManager {
         return instancia;
     }
 
+    //TODO Puedo crear una clase singleton como esta de JWT, con un generarToken que funcione similar a este. De
+    //esa forma, puedo acceder de todos los controllers
     public String generarToken(Usuario usuarioBuscado) {
         return Jwts.builder()
                 .signWith(key) //Clave

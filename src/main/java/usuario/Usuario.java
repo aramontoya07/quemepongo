@@ -63,7 +63,7 @@ public class Usuario extends EntidadPersistente {
 	private String nombre;
 	public String rutaFotoPerfil = "https://i.imgur.com/z0i6Zmy.png";
 
-    public String getRutaFotoPerfil(){
+	public String getRutaFotoPerfil(){
         return rutaFotoPerfil;
     }
 	public Usuario() {
