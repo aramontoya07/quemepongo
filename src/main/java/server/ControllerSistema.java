@@ -23,6 +23,13 @@ public class ControllerSistema {
         return new ModelAndView(model, "landing.hbs");
     }
 
+    public ModelAndView error404(Request req, Response res) {
+        String mensajeDeError = req.body();
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("Error", mensajeDeError);
+        return new ModelAndView(model, "error404.hbs");
+    }
+
     public ModelAndView registro(Request req, Response res) {
         String mensajeDeError = req.body();
         Map<String, Object> model = new HashMap<String, Object>();

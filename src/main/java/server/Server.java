@@ -88,7 +88,7 @@ public class Server{
         Spark.post("/misEventos/:idEvento/aceptarSugerencia", usuarioC::aceptarSugerencia, new HandlebarsTemplateEngine());
         Spark.post("/misEventos/:idEvento/rechazarSugerencia", usuarioC::rechazarSugerencia, new HandlebarsTemplateEngine());
         Spark.post("/puntuarAtuendos/:idAtuendo", usuarioC::puntuarAtuendo, new HandlebarsTemplateEngine());
-        
+        Spark.get("*",sistemaC::error404, new HandlebarsTemplateEngine());
         Spark.get("/favicon.ico", null, new HandlebarsTemplateEngine()); 
 
         DebugScreen.enableDebugScreen();
