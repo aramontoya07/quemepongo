@@ -24,11 +24,10 @@ public class ControllerUsuario {
     private static final String ID_ATUENDO = "idAtuendo";
     private JwtManager jwtManager;
     private Server server;
-    private List<String> tokens;
+
 
     public ControllerUsuario() {
         this.jwtManager = JwtManager.instancia();
-       // this.tokens = new ArrayList<>(); //TODO creo que tengo que hacer al sever un singleton
         this.server = Server.instancia();
     }
 
