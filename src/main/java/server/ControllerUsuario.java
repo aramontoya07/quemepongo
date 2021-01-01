@@ -154,6 +154,16 @@ public class ControllerUsuario {
 
     }
 
+    public ModelAndView actualizarPerfil(Request req, Response res) {
+        Map<String, Object> model = new HashMap<String, Object>();
+        String idUsuario = req.session().attribute(ID_USUARIO);
+        Usuario usuario = obtenerUsuario(idUsuario);
+        if(!server.getTokens().contains(req.cookie("token"))) {
+            return new ModelAndView(model, "error403.hbs");
+        }
+        return new ModelAndView(model, "nuevoPerfil.hbs");
+    }
+
     public ModelAndView registrarUsuario(Request req, Response res) {
         String contrasenia = req.queryParams("inputContrasenia");
         String mail = req.queryParams("inputEmail");

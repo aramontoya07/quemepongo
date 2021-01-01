@@ -62,6 +62,7 @@ public class Server{
         Spark.get("/actualizarContra", usuarioC::perfil, new HandlebarsTemplateEngine());
         Spark.get("/actualizarMail", usuarioC::perfil, new HandlebarsTemplateEngine());
         Spark.get("/actualizarSuscripcion", usuarioC::subscripcionPremium, new HandlebarsTemplateEngine());
+        Spark.get("/actualizarPerfil", usuarioC::actualizarPerfil, new HandlebarsTemplateEngine());
 
         Spark.get("/misGuardarropas", usuarioC::listarGuardarropas, new HandlebarsTemplateEngine());
         Spark.get("/misGuardarropas/:idGuardarropas", guardarropasC::detalleGuardarropa, new HandlebarsTemplateEngine());
