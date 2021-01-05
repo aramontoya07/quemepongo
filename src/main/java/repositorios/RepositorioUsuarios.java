@@ -46,6 +46,14 @@ public class RepositorioUsuarios {
             return usuario;
     }
 
+    public static List<Usuario> obtenerUsuariosPorMail(String mailUsuario) throws RepositorioException {
+        return EntityManagerHelper.getEntityManager().createNativeQuery("SELECT * from usuarios u WHERE u.mail = :mail").setParameter("mail", mailUsuario).getResultList();
+    }
+
+    public static List<Usuario> obtenerUsuarioPorNombre(String nombreUsuario) throws RepositorioException{
+        return EntityManagerHelper.getEntityManager().createNativeQuery("SELECT * from usuarios u WHERE u.nombre = :nombre").setParameter("nombre", nombreUsuario).getResultList();
+    }
+
     public static Usuario obtenerUsuarioPorMailYContra(String mail, String contra) throws RepositorioException {
         String contrasenia = new Usuario().convertirSHA256(contra);
         TypedQuery<Usuario> query = EntityManagerHelper.getEntityManager().createQuery(

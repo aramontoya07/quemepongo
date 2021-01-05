@@ -10,7 +10,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                         </div>
-                        <input name="inputNombre" class="form-control" placeholder="Nombre completo" type="text">
+                        <input name="inputNombre" class="form-control" placeholder="Nombre completo" type="text" value={{nombre}}>
                     </div> <!-- form-group// -->
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
@@ -22,7 +22,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                         </div>
-                        <input name="inputContrasenia" class="form-control" placeholder="Crear contrasenia" type="password">
+                        <input name="inputContrasenia" class="form-control" placeholder="Crear contrasenia" type="password" value={{contrasenia}}>
                     </div> <!-- form-group// -->
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
@@ -30,8 +30,20 @@
                         </div>
                         <input name="inputRepeticionContrasenia" class="form-control" placeholder="Repetir contrasenia" type="password">
                     </div> <!-- form-group// -->
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-image" aria-hidden="true"></i> </span>
+                        </div>
+                        <input name="inputImagen" class="form-control" placeholder="Subir imagen de perfil" type="text" readonly>
+                    </div> <!-- form-group// -->
+                    <div class="form-group input-group">
+                        <form name="subida-imagenes" type="POST" enctype="multipart/formdata" >
+                            <input type="file" name="imagen" />
+                        </form>
+                    </div>
+
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block"> Guardar </button>
+                        <button type="submit" class="btn btn-primary btn-block"> Guardar  </button>
                     </div> <!-- form-group// -->
                 </fieldset>
             </form>
