@@ -11,6 +11,7 @@ import repositorios.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import sun.usagetracker.UsageTrackerClient;
 import usuario.Guardarropa;
 import usuario.Usuario;
 import utils.JwtManager;
@@ -154,6 +155,62 @@ public class ControllerUsuario {
 
     }
 
+    public ModelAndView actualizarPerfil(Request req, Response res) {
+        Map<String, Object> model = new HashMap<String, Object>();
+        String idUsuario = req.session().attribute(ID_USUARIO);
+        Usuario usuario = obtenerUsuario(idUsuario);
+        if(!server.getTokens().contains(req.cookie("token"))) {
+            return new ModelAndView(model, "error403.hbs");
+        }
+
+        try{
+        String contrasenia = req.queryParams("inputContrasenia");
+        String mail = req.queryParams("inputEmail");
+        String nombre = req.queryParams("inputNombre");
+        String contraseniaRepetida = req.queryParams("inputRepeticionContrasenia");
+        String imagen =  req.queryParams("inputImagen");
+        if(!contrasenia.equals(contraseniaRepetida)) {
+            res.body("Las constrasenias ingresadas deben coincidir");
+            res.redirect("/actualizarPerfil");
+            return null;
+        }
+        List<Usuario> usuariosEncontrados = RepositorioUsuarios.obtenerUsuarioPorNombre(nombre);
+        if(usuariosEncontrados.size() != 0) {
+            if(usuariosEncontrados.get(0)== usuario) {
+                usuario.setNombre(nombre);
+            } else {
+                res.body("Ya existe un usuario con ese nombre");
+            }
+        } else {
+            usuario.setNombre(nombre);
+        }
+
+        List<Usuario> usuariosEncontradosMail = RepositorioUsuarios.obtenerUsuariosPorMail(mail);
+        if(usuariosEncontrados.size() != 0) {
+            if(usuariosEncontradosMail.get(0)== usuario) {
+                usuario.setMail(mail);
+            } else {
+                res.body("Ya existe un usuario con ese mail");
+            }
+        } else {
+            usuario.setMail(mail);
+        }
+        usuario.setContrasenia(contrasenia);
+        usuario.setRutaFotoPerfil(imagen);
+
+            EntityManagerHelper.beginTransaction();
+            EntityManagerHelper.getEntityManager().persist(usuario);
+            EntityManagerHelper.commit();
+            req.session().attribute(ID_USUARIO, Integer.toString(usuario.getId()));
+            res.redirect("/perfil");
+            return null;
+        }catch(RepositorioException e){
+            e.printStackTrace();
+            res.redirect("/perfil");
+            return null;
+        }
+    }
+
     public ModelAndView registrarUsuario(Request req, Response res) {
         String contrasenia = req.queryParams("inputContrasenia");
         String mail = req.queryParams("inputEmail");
@@ -171,7 +228,7 @@ public class ControllerUsuario {
         try{
             RepositorioUsuarios.persistirUsuario(usuario);
             req.session().attribute(ID_USUARIO, Integer.toString(usuario.getId()));
-            res.redirect("/perfil");
+            res.redirect("/");
             return null;
         }catch(RepositorioException e){
             e.printStackTrace();
@@ -179,6 +236,22 @@ public class ControllerUsuario {
             res.redirect("/registro");
             return null;
         }
+    }
+
+    public ModelAndView actualizacion(Request req, Response res) {
+        Map<String, Object> model = new HashMap<String, Object>();
+        String idUsuario = req.session().attribute(ID_USUARIO);
+        try {
+            Usuario usuario = obtenerUsuario(idUsuario);
+            if(!server.getTokens().contains(req.cookie("token"))) {
+                return new ModelAndView(model, "error403.hbs");
+            }
+            return new ModelAndView(usuario, "nuevoPerfil.hbs");
+        } catch(Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
    /* public ModelAndView loguearUsuario(Request req, Response res){
