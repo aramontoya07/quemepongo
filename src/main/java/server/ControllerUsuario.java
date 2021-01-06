@@ -176,8 +176,7 @@ public class ControllerUsuario {
         }
         List<Usuario> usuariosEncontrados = RepositorioUsuarios.obtenerUsuarioPorNombre(nombre);
         if(usuariosEncontrados.size() != 0) {
-            Usuario usuarioEncontrado = usuariosEncontrados.get(0);
-            if(usuarioEncontrado == usuario) {
+            if(usuariosEncontrados.get(0)== usuario) {
                 usuario.setNombre(nombre);
             } else {
                 res.body("Ya existe un usuario con ese nombre");
@@ -188,8 +187,7 @@ public class ControllerUsuario {
 
         List<Usuario> usuariosEncontradosMail = RepositorioUsuarios.obtenerUsuariosPorMail(mail);
         if(usuariosEncontrados.size() != 0) {
-            Usuario usuarioEncontradoPorMail = usuariosEncontradosMail.get(0);
-            if(usuarioEncontradoPorMail == usuario) {
+            if(usuariosEncontradosMail.get(0)== usuario) {
                 usuario.setMail(mail);
             } else {
                 res.body("Ya existe un usuario con ese mail");
