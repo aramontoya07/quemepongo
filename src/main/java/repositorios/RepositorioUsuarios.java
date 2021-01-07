@@ -46,12 +46,22 @@ public class RepositorioUsuarios {
             return usuario;
     }
 
-    public static List<Usuario> obtenerUsuariosPorMail(String mailUsuario) throws RepositorioException {
-        return EntityManagerHelper.getEntityManager().createNativeQuery("SELECT * from usuarios u WHERE u.mail = :mail").setParameter("mail", mailUsuario).getResultList();
+    /*public static List<Usuario> obtenerUsuariosPorMail(String mailUsuario) throws RepositorioException {
+        return EntityManagerHelper.getEntityManager().createNativeQuery("SELECT * from Usuarios u WHERE u.mail = :mail").setParameter("mail", mailUsuario).getResultList();
+    }*/
+
+    /*public static List<Usuario> obtenerUsuarioPorNombre(String nombreUsuario) throws RepositorioException{
+        return EntityManagerHelper.getEntityManager().createNativeQuery("SELECT * from Usuarios u WHERE u.nombre = :nombre").setParameter("nombre", nombreUsuario).getResultList();
+    }*/
+
+    public static List<Usuario> obtenerUsuarioPorNombre(String nombreUsuario){
+        String query = "from Usuario u where u.nombre = :nombre";
+        return EntityManagerHelper.createQuery(query).setParameter("nombre", nombreUsuario).getResultList();
     }
 
-    public static List<Usuario> obtenerUsuarioPorNombre(String nombreUsuario) throws RepositorioException{
-        return EntityManagerHelper.getEntityManager().createNativeQuery("SELECT * from usuarios u WHERE u.nombre = :nombre").setParameter("nombre", nombreUsuario).getResultList();
+    public static List<Usuario> obtenerUsuariosPorMail(String mailUsuario){
+        String query = "from Usuario u where u.mail = :mail";
+        return EntityManagerHelper.createQuery(query).setParameter("mail", mailUsuario).getResultList();
     }
 
     public static Usuario obtenerUsuarioPorMailYContra(String mail, String contra) throws RepositorioException {

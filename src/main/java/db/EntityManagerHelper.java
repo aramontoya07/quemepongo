@@ -90,4 +90,8 @@ public class EntityManagerHelper {
             throw e;
         }
     }
+
+    public static Query createQuery(String query) {
+        return getEntityManager().createQuery(query);
+    }
 }

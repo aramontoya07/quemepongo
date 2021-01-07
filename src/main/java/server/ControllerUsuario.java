@@ -11,7 +11,6 @@ import repositorios.RepositorioUsuarios;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import sun.usagetracker.UsageTrackerClient;
 import usuario.Guardarropa;
 import usuario.Usuario;
 import utils.JwtManager;
